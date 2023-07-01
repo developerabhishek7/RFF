@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "889841388445",
+    "project_id": "rewardflightfinder-63b96",
+    "storage_bucket": "rewardflightfinder-63b96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889841388445:android:ffb4b407ddf416ac7dfd74",
+        "android_client_info": {
+          "package_name": "com.rewardflightfinder.app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889841388445-up9kdlcvvlh7gfn2e8vd42tpvssbs50f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rewardflightfinder.app.android",
+            "certificate_hash": "9d63772edcfd8b5319d84875abcd84bdd7d275be"
+          }
+        },
+        {
+          "client_id": "889841388445-bv8l44l19ik7jtpf1i6j5qq6glc0q9kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsxd2HIxCSx-Ma6ASYlD9oaFSkrMEHN8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889841388445-bv8l44l19ik7jtpf1i6j5qq6glc0q9kp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "889841388445-qe3iquc02n3ig862pn5nsvirgj8b0j5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rewardflightfinder.app.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

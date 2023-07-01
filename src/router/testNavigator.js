@@ -1,0 +1,411 @@
+
+import * as React from 'react';
+import 'react-native-gesture-handler';
+import { Button, View, Text } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import LoadingScreen from "../screens/loading/loading-screen";
+import LoginComponent from "../screens/login/LoginComponent";
+import SignUpComponent from "../screens/signUp/SignUpComponent";
+import AlertsScreen from "../screens/alerts/alerts-screen";
+import EditAlertScreen from "../screens/alerts/editAlertScreen";
+import TransLoader from "../components/loader/index";
+import NotificationsContainer from "../screens/notifications/NotificationsContainer";
+import ProfileScreenContainer from "../screens/profile/ProfileScreenContainer";
+import UserProfileScreenContainer from "../screens/profileDetails/ProfileScreenContainer";
+import ProfileDetailsScreenContainer from "../screens/profileDetails/ProfileDetailsScreenContainer";
+import NotificationSettingsContainer from "../screens/notificationSettings/NotificationSettingsContainer";
+import ChangePasswordContainer from "../screens/changePassword/ChangePasswordContainer";
+import CountryListComponent from "../screens/profileDetails/countryListComponent";
+import MembershipContainer from "../screens/membership/membershipContainer";
+import CalenderContainer from "../screens/calender/calenderContainer";
+import FindFlightContainer from "../screens/findFlights/findFlightContainer";
+import PricingContainer from "../screens/pricingPage/pricingPageContainer";
+import MapSearchContainer from "../screens/mapSearch/mapSearchContainer";
+import airlineMembershipComponent from "../screens/findFlights/airlineMembershipComponent";
+import sourceDestinationListComponent from "../screens/findFlights/sourceDestinationListComponent";
+import CreateAlertCalender from "../screens/calender/createAlertCalendar";
+import NotificationDetailComponent from "../screens/notifications/notificationDetails/NotificationDetailsComponent";
+import MapComponent from "../screens/mapSearch/mapViewComponent";
+import MoreComponent from "../screens/more/moreComponent";
+import OnboardingContainer from "../screens/onBoardingScreens/onBoardingContainer";
+import ManageContactDetailsContainer from "../screens/manageContactDetails/manageContactDetailsContainer";
+import UpdateProfileContainer from "../screens/updateProfile/UpdateProfileContainer";
+import UpdateCountryListComponent from "../screens/updateProfile/countryListComponent";
+import FlightDetailsContainer from "../screens/flightDetails/flightDetailsContainer";
+import DestinationsComponent from "../screens/mapSearch/DestinationsComponent";
+import DestinationDetailsComponent from "../screens/mapSearch/DestinationDetailsComponent"
+import findFlightDetails1 from '../screens/calender/flightDetailsContainer'
+import PriceDetailsScreen from '../screens/calender/PriceDetailScreen'
+import DrawerView from '../screens/Drawer/drawerModal'
+import Test from '../../Test'
+import * as IMAGE_CONST from "../constants/ImageConst";
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+// const Drawer = createDrawerNavigator();
+// const Stack = createStackNavigator();
+
+{/* Add Drawer.Navigation to a function.*/ }
+
+const drawerViewModel = (navigation) => {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      {/* <DraweView navigation={navigation} /> */}
+      <DrawerView navigation={navigation} />
+    </View>
+  );
+};
+function Root() {
+  return (
+    <Drawer.Navigator drawerContent={drawerViewModel}
+    
+      screenOptions={{ headerShown: false, drawerType: "front" ,}}
+    >
+      <Drawer.Screen name="FindFlightContainerScreen" component={FindFlightContainer} />
+      <Drawer.Screen name="ProfileScreen" component={AlertsScreen} />
+      <Drawer.Screen name="MapSearchContainerScreen" component={MapSearchContainer} />
+      <Drawer.Screen name="PricingContainerScreen" component={PricingContainer} />
+      <Drawer.Screen name="MembershipContainerScreen" component={MembershipContainer} />
+      <Drawer.Screen name="MoreComponentScreen" component={MoreComponent} />
+      <Drawer.Screen name="FlightDetailsComponent" component={FlightDetailsContainer} />
+    </Drawer.Navigator>
+  );
+}
+
+
+
+ function AuthenticatedStack() {
+  return (
+
+      <Stack.Navigator screenOptions={{ headerShown: false }} 
+          initialRouteName="FindFlightContainerScreen"
+      >
+        <Stack.Screen name="Root" component={Root}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FindFlightContainerScreen"
+          component={FindFlightContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="test"
+          component={Test}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="MapSearchContainerScreen"
+          component={MapSearchContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="MapComponentScreen"
+          component={MapComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="airlineMembershipScreen"
+          component={airlineMembershipComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="UserProfileScreen"
+          component={UserProfileScreenContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="findFlightDetails1"
+          component={findFlightDetails1}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="sourceDestinationListScreen"
+          component={sourceDestinationListComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="Alerts"
+          component={AlertsScreen}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="EditAlert"
+          component={EditAlertScreen}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="CalenderContainerScreen"
+          component={CalenderContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="CreateAlertCalenderScreen"
+          component={CreateAlertCalender}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreenContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="priceDetails"
+          component={PriceDetailsScreen}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="ManageContactDetails"
+          component={ManageContactDetailsContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="CountryListSCreen"
+          component={CountryListComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="ProfileDetailsScreen"
+          component={ProfileDetailsScreenContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="ChangePasswordScreen"
+          component={ChangePasswordContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="destinationscomponent"
+          component={DestinationsComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="SignIn"
+          component={LoginComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="destinationdetailscomponent"
+          component={DestinationDetailsComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="NotificationsScreen"
+          component={NotificationsContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+
+        <Stack.Screen
+          name="NotificationDetailScreen"
+          component={NotificationDetailComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="UpdateCountryListComponent"
+          component={UpdateCountryListComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+
+
+
+
+
+
+
+      </Stack.Navigator>
+
+  );
+}
+
+function AnonymousStack() {
+  return (
+      <Stack.Navigator screenOptions={{ headerShown: false }} 
+      >
+        <Stack.Screen name="Root" component={Root}
+          options={{ headerShown: false }}
+
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={LoginComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+       
+        <Stack.Screen
+          name="SignUp"
+          component={SignUpComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+<Stack.Screen
+          name="FindFlightContainerScreen"
+          component={FindFlightContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="UpdateProfileScreen"
+          component={UpdateProfileContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="CountryListSCreen"
+          component={CountryListComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+        <Stack.Screen
+          name="sourceDestinationListScreen"
+          component={sourceDestinationListComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+      </Stack.Navigator>
+  );
+}
+
+
+function OnBoardingStack() {
+  return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* <Stack.Screen name="Root" component={Root}
+          options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="OnBoarding"
+          component={OnboardingContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+       
+      </Stack.Navigator>
+
+  );
+}
+
+
+
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }} 
+        initialRouteName="Loading"
+        >
+
+<Stack.Screen name="Root" component={Root}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Loading" component={LoadingScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen name="Authenticated" component={AuthenticatedStack}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen name="Anonymous" component={AnonymousStack}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen name="OnBoarding" component={OnBoardingStack}
+          options={{ headerShown: false }}
+        />
+
+      </Stack.Navigator>
+
+    </NavigationContainer>
+  );
+}
+
+
+
+
+
+
