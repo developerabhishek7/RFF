@@ -12,6 +12,8 @@ import {
   TextInput,
   BackHandler, Modal, Dimensions, ImageBackground
 } from "react-native";
+import FastImage from 'react-native-fast-image'
+
 import styles from "./flightDetailsStyles";
 import * as STRING_CONST from "../../constants/StringConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
@@ -217,7 +219,7 @@ class FlightDetailsCompoent extends Component {
           >
             <View style={[styles.titleView]}>
               <TouchableOpacity onPress={() => { }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
                   style={{ marginRight: scale(10) }}
                 />
@@ -268,7 +270,7 @@ class FlightDetailsCompoent extends Component {
               onPress={() => { }}
             >
               <View style={{ flexDirection: "row", marginRight: scale(30) }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.BIG_TAKE_OFF}
                   style={{ marginRight: scale(10) }}
                 />
@@ -280,7 +282,7 @@ class FlightDetailsCompoent extends Component {
                 >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
               </View>
               <View style={{ flexDirection: "row" }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.BIG_LANDING}
                   style={{ marginRight: scale(10) }}
                 />
@@ -704,7 +706,7 @@ class FlightDetailsCompoent extends Component {
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <FastImage
             source={IMAGE_CONST.BIG_TAKE_OFF}
             style={{ marginRight: scale(10) }}
           />
@@ -714,7 +716,7 @@ class FlightDetailsCompoent extends Component {
         </View>
         <Text style={styles.flightDetailText}>{` - `}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <FastImage
             source={IMAGE_CONST.BIG_LANDING}
             style={{ marginRight: scale(10) }}
           />
@@ -914,12 +916,12 @@ class FlightDetailsCompoent extends Component {
   noflightDataFunction() {
     const { flightCount } = this.state
     return (
-      <ImageBackground
+      <FastImage
         source={require('../../assets/calendar/flightdetail.png')}
         resizeMode="contain"
         style={{ flex: 1, justifyContent: "center", alignItems: "center", height: scale(200), width: scale(270), alignSelf: 'center' }}
       >
-        <Image source={IMAGE_CONST.UPGRADE_MEMBERSHIP} style={{ alignSelf: 'center', marginTop: scale(10), marginBottom: scale(30), height: scale(60), width: scale(60) }} />
+        <FastImage source={IMAGE_CONST.UPGRADE_MEMBERSHIP} style={{ alignSelf: 'center', marginTop: scale(10), marginBottom: scale(30), height: scale(60), width: scale(60) }} />
         <Text style={styles.noflight}>{`There are ${flightCount} flights scheduled on this date`}</Text>
         <Text style={styles.noflight}>{`${"Upgrade to Silver/Gold to see flight details"}`}</Text>
         <TouchableOpacity
@@ -930,7 +932,7 @@ class FlightDetailsCompoent extends Component {
           style={styles.upgrade}>
           <Text style={styles.bookOnBAText}>{"Upgrade Now"}</Text>
         </TouchableOpacity>
-      </ImageBackground>
+      </FastImage>
     )
   }
 
@@ -1013,14 +1015,14 @@ class FlightDetailsCompoent extends Component {
               </View>
               {this.availabilityTable()}
               <View style={styles.bookOnBAButton}>
-                <Image source={IMAGE_CONST.BA_BIG_LOGO} style={{ alignSelf: 'center', marginTop: scale(20) }} />
+                <FastImage source={IMAGE_CONST.BA_BIG_LOGO} style={{ alignSelf: 'center', marginTop: scale(20) }} />
                 <Text
                   style={[styles.titleText, { marginTop: verticalScale(10), alignSelf: 'center' }]}
                 >{`${STRING_CONST.BA_SCHEDULED_FLIGHTS}`}</Text>
                 {
                   this.state.noflightschedule ?
                     <View style={{ justifyContent: "center", alignItems: 'center', marginTop: scale(20) }}>
-                      <Image source={require('../../assets/sad_imogi.png')} style={{ height: scale(80), width: scale(80), margin: scale(10) }} resizeMode="contain" />
+                      <FastImage source={require('../../assets/sad_imogi.png')} style={{ height: scale(80), width: scale(80), margin: scale(10) }} resizeMode="contain" />
                       <Text
                         style={[
                           styles.subTitleText2,
@@ -1075,7 +1077,7 @@ class FlightDetailsCompoent extends Component {
                     }
                   }}
                 >
-                  <Image source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
+                  <FastImage source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
                   <Text style={styles.bookOnBAText}>
                     {STRING_CONST.BOOK_ON_BA}
                   </Text>

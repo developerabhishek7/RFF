@@ -4,13 +4,14 @@ import 'react-native-gesture-handler'
 import { Provider } from "react-redux";
 import configureStore from "./src/store/index";
 import { AppState, View, SafeAreaView,Platform,Dimensions ,StatusBar } from "react-native";
-// import { fcm } from "./src/utils/firebaseHelper";
+import { fcm } from "./src/utils/firebaseHelper";
 import 'react-native-get-random-values'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Orientation from "react-native-orientation-locker";
 import TransLoader from "./src/components/loader/index";
 console.disableYellowBox = true;
-
+import PostHog from 'posthog-react-native'
+import { NativeBaseProvider } from 'native-base';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,34 +25,29 @@ class App extends React.Component {
   }
 
 
-
-
-
- 
-
-
-  async componentDidMount() {
+   componentDidMount = async() => {
     console.disableYellowBox = true;
-
-
     // crashlytics().log("App mounted.-------------");
     // this.logCrashlytics()
-    // Orientation.lockToPortrait();
-    // fcm.setStore(this.state.store);
-    await PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
-      // app.posthog.com
-      captureApplicationLifecycleEvents: true,
-      ios:{
-        captureInAppPurchases:true,
-        capturePushNotifications:true
+    Orientation.lockToPortrait();
+    fcm.setStore(this.state.store);
+    PostHog.initAsync('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv',{
+      host:'https://d29t15mip7grca.cloudfront.net',      
+    })
+    //  PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
+    //   // app.posthog.com
+    //   captureApplicationLifecycleEvents: true,
+    //   ios:{
+    //     captureInAppPurchases:true,
+    //     capturePushNotifications:true
+    //   },
+    //   host:'https://d29t15mip7grca.cloudfront.net',
+    //   captureDeepLinks: true,
+    //   recordScreenViews: true,
+    //   flushInterval: 5,
+    //   flushAt: 1,
+    // });
 
-      },
-      host:'https://d29t15mip7grca.cloudfront.net',
-      captureDeepLinks: true,
-      recordScreenViews: true,
-      flushInterval: 5,
-      flushAt: 1,
-    });
 
   }
 
@@ -90,7 +86,7 @@ class App extends React.Component {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === "active"
     ) {
-      // await fcm.initAlways();
+      await fcm.initAlways();
     }
     this.setState({ appState: nextAppState });
   };
@@ -103,12 +99,14 @@ class App extends React.Component {
 
   render() {
     return (
+      <NativeBaseProvider>
       <View style={{ flex:1}}>
         <Provider store={this.state.store}>
             <Appcontainer />
                <TransLoader />
         </Provider>
     </View>
+    </NativeBaseProvider>
     );
   }
 }

@@ -11,6 +11,7 @@ const KEYS_TO_FILTERS = ['city_name', 'country_name', 'code', 'Hewanorra', 'SLU'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+import FastImage from 'react-native-fast-image'
 
 export default class DestinationsComponent extends Component {
   constructor(props) {
@@ -98,7 +99,7 @@ export default class DestinationsComponent extends Component {
         <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(40),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
-              <Image source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             </TouchableOpacity>
   
             <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
@@ -116,7 +117,7 @@ export default class DestinationsComponent extends Component {
                 onChangeText={(term) => { this.searchUpdated(term) }}
               style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
               <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-              <Image source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
               </TouchableOpacity>
            </View>
      </View>
@@ -335,7 +336,7 @@ export default class DestinationsComponent extends Component {
                         })
                       }}>
                         {
-                              <Image resizeMode='contain' source={require("../../assets/common/rightArrow.png")} style={{ height: scale(20), width: scale(20), padding: scale(4), marginStart: scale(7) }} />
+                              <FastImage resizeMode='contain' source={require("../../assets/common/rightArrow.png")} style={{ height: scale(20), width: scale(20), padding: scale(4), marginStart: scale(7) }} />
                         }
                           </TouchableOpacity>
                     </View>

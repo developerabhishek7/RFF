@@ -10,7 +10,7 @@ import {DrawerActions,NavigationContainer} from '@react-navigation/native';
 // import FirstPage from '../screens/login';
 // import SecondPage from '../screens/signup';
 // import ThirdPage from '../screens/ThirdScreen'
-
+import FastImage from 'react-native-fast-image';
 import 'react-native-gesture-handler'
 
 const Stack = createNativeStackNavigator();
@@ -220,7 +220,7 @@ export default function App() {
               onPress={() => this.props.navigation.dispatch(DrawerActions.toggleDrawer())}
            
               >
-                 <Image
+                 <FastImage
               // style={styles.backIcon}
               source={
                   IMAGE_CONST.DARK_NOTIFICATION_BELL_ICON

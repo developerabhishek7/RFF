@@ -16,6 +16,7 @@ import { CalendarList,LocaleConfig } from "react-native-calendars";
 import moment from "moment";
 import { getCalendarLocals } from "../../utils/commonMethods";
 import * as STRING_CONST from "../../constants/StringConst";
+import FastImage from 'react-native-fast-image'
 
 export default class CalenderComponent extends Component {
   constructor(props) {
@@ -155,7 +156,7 @@ export default class CalenderComponent extends Component {
         <TouchableOpacity onPress={() => {
              
               this.props.navigation.goBack() }}>
-              <Image source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             </TouchableOpacity>
             <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headingText}</Text>
   
@@ -173,7 +174,7 @@ export default class CalenderComponent extends Component {
   
            
               <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-              <Image source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             
   
               </TouchableOpacity>
@@ -194,7 +195,7 @@ export default class CalenderComponent extends Component {
     return (
       <View>
         <View style={styles.headingContainerStyle}>
-          <Image
+          <FastImage
             source={IMG_CONST.DARK_BLUE_TAKE_OFF}
             style={styles.takeOffIcon}
           />

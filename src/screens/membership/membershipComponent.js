@@ -1,3 +1,4 @@
+
 import React, { Component, Fragment } from "react";
 import {
   View,
@@ -19,8 +20,10 @@ import { colours } from "../../constants/ColorConst";
 import CustomButton from "../../components/customComponents/CustomButton";
 import * as Config from "../../helpers/config";
 import { isAndroid } from "../../utils/commonMethods";
-import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import FontAwesome from "react-native-vector-icons/Feather";
+import FastImage from 'react-native-fast-image'
+
 import {
   getGoldFeatures,
   getSilverFeatures,
@@ -32,8 +35,13 @@ import RNRestart from 'react-native-restart';
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
 let buildVersion = 0
 let isAppReviewSuccess = false
-export default class PricingPageComponent extends Component {
-  constructor(props) {
+
+
+
+class MembershipComponent extends Component{
+
+
+    constructor(props) {
     super(props);
     this.state = {
       isYearly: true,
@@ -73,9 +81,6 @@ export default class PricingPageComponent extends Component {
               }
             })
       }
-
-      console.log("yes insdie the function buildVersion = = = = = =  ",buildVersion)
-      console.log("yes insdie the function isAppReviewSuccess = = = = = =  ",isAppReviewSuccess)
   }
 
  async componentDidMount() {
@@ -87,13 +92,9 @@ export default class PricingPageComponent extends Component {
     this.setState({
       accesstoken,userId
     })
-
-
-
     setTimeout(() => {
       this.getBuildVersionData()
     }, 2000);
-  
 
     let featureArray = [];
     let member = "";
@@ -184,7 +185,7 @@ export default class PricingPageComponent extends Component {
     return daysLeft
   }
 
-  membershipView() {
+  membershipView  =  async() => {
     const {userData} = this.props
     let currentPlan = ""
     let userId = ""
@@ -195,52 +196,37 @@ export default class PricingPageComponent extends Component {
     let gold_to_silver_downgrade = "" 
     let current_plan =  ""
     let txt = ""
-    if(userData && Object.keys(userData).length !== 0){
-       currentPlan = userData.current_plan;
-       userId = userData.id;
-      // let daysLeft = this.getFreeTrialRemainingDays(expiryTime)
-       yearly = userData.current_plan.period_unit
-       bronze_member = userData.bronze_member
-  
-      // code here for showing text after this.........
-       txt = ""
-       current_subscription_expiry = userData.current_subscription_expiry
-       current_plan = userData.current_plan.on_trial
-       cancelled_subscription = userData.cancelled_subscription
-       gold_to_silver_downgrade = userData.gold_to_silver_downgrade
+    // if(userData && Object.keys(userData).length !== 0){
+    //    currentPlan = userData.current_plan;
+    //    userId = userData.id;
+    //    yearly = userData.current_plan.period_unit
+    //    bronze_member = userData.bronze_member
+    //    txt = ""
+    //    current_subscription_expiry = userData.current_subscription_expiry
+    //    current_plan = userData.current_plan.on_trial
+    //    cancelled_subscription = userData.cancelled_subscription
+    //    gold_to_silver_downgrade = userData.gold_to_silver_downgrade
      
-    }
-    const today = moment().format('DD-MM-YYYY')
-    const todaysdate = moment(today, 'DD-MM-YYYY')
-    const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
-    const datediff = moment(eventdate, 'DD-MM-YYYY')
-    const daysLeft = datediff.diff(todaysdate, 'days')
+    // }
+    // const today = moment().format('DD-MM-YYYY')
+    // const todaysdate = moment(today, 'DD-MM-YYYY')
+    // const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
+    // const datediff = moment(eventdate, 'DD-MM-YYYY')
+    // const daysLeft = datediff.diff(todaysdate, 'days')
  
-
-    let expireTime =   moment.unix(current_subscription_expiry).format('MMMM Do, YYYY')
-      
-   
-    if(current_subscription_expiry && current_plan){
-      txt = `${daysLeft} days left of free trial`
-    }
-    if(cancelled_subscription && current_subscription_expiry) {
-       txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
-    }
-
-    let silver_member = userData.silver_member
-
-    let gold_member = userData.gold_member
-
-
-    console.log("yes check here build version and reviewKey on membership  - -   - -  - - -",buildVersion,   isAppReviewSuccess)
-
-
-
+    // let expireTime =   moment.unix(current_subscription_expiry).format('MMMM Do, YYYY')
+    // if(current_subscription_expiry && current_plan){
+    //   txt = `${daysLeft} days left of free trial`
+    // }
+    // if(cancelled_subscription && current_subscription_expiry) {
+    //    txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
+    // }
+    // let silver_member = userData.silver_member
+    // let gold_member = userData.gold_member
     return (
       <View>
-        <View style={styles.emailIdsInnerView}>
-
-          {
+        {/* <View style={styles.emailIdsInnerView}>
+           {
             txt ?
             <View>
             <Text style={styles.memberText}>
@@ -255,15 +241,11 @@ export default class PricingPageComponent extends Component {
                 : "Bronze"
               }
             </Text>
-              {/* {currentPlan} */}
             <Text style={[styles.memberText1,{fontSize:scale(13),color:colours.darkBlueTheme}]}>  
               {txt ?  `(${txt})` :  ""}
             </Text>
             </View>
-
             : 
-
-
             <View>
             <Text style={styles.memberText}>
               {
@@ -277,26 +259,11 @@ export default class PricingPageComponent extends Component {
                 : "Bronze"
               }
             </Text>
-              {/* {currentPlan} */}
-            {/* <Text style={[styles.memberText1,{fontSize:scale(13),color:colours.darkBlueTheme}]}>  
-              {txt ?  `(${txt})` :  ""}
-            </Text> */}
             </View>
-
-          }
-         
-        
-          {/* {isAndroid() ? ( */}
-          {/* console.log("yes update this when pricing implemented.") */}
-          {
-              // !userData.isAppReviewSuccess ?
-              
+          } 
+         {              
                isAppReviewSuccess  == false|| buildVersion == 0 ?
-
                <Fragment>
-
-
-        
              <Menu
               style={{ marginTop: verticalScale(25), width:scale(155) }}
               ref={this.setMenuRef}
@@ -307,29 +274,13 @@ export default class PricingPageComponent extends Component {
                     this.showMenu();
                   }}
                 >
-
                 <FontAwesome name="more-vertical" 
                     color={colours.darkBlueTheme}
                     size={scale(22)} />
                 </TouchableOpacity>
               }
             >
-              {/* <MenuItem
-                onPress={() => {
-                  this.hideMenu();
-                  let url = `$${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
-                  // Linking.openURL(
-                  //   url
-                  // );
-                }}
-                style={styles.menuStyle}
-                textStyle={styles.menuTextStyle}
-              >
-                {STRING_CONST.VIEW_BILLING_DATA}
-              </MenuItem> */}
-              {/* <MenuDivider style={{ marginHorizontal: scale(30) }} /> */}
-            
-                <MenuItem
+                 <MenuItem
                 onPress={() => {
                   this.hideMenu();
                   this.reloaderApp()
@@ -345,17 +296,151 @@ export default class PricingPageComponent extends Component {
                   ? STRING_CONST.CANCEL_TRIAL
                   : STRING_CONST.CHANGE_PLAN}
               </MenuItem>
-            
             </Menu>
-
             </Fragment> : null
-  }
-          {/* ) : null} */}
-        </View>
-        <View style={styles.line}
-        />
+          } 
+        </View> */}
+        {/* <View style={styles.line}
+        /> */}
       </View>
     );
+  }
+
+
+
+  membershipViewList(){
+    const {userData} = this.props
+    let currentPlan = ""
+    let userId = ""
+    let yearly = ""
+    let bronze_member = ""
+    let current_subscription_expiry = ""
+    let cancelled_subscription = ""
+    let gold_to_silver_downgrade = "" 
+    let current_plan =  ""
+    let txt = ""
+
+     if(userData && Object.keys(userData).length !== 0){
+       currentPlan = userData.current_plan;
+       userId = userData.id;
+       yearly = userData.current_plan.period_unit
+       bronze_member = userData.bronze_member
+       txt = ""
+       current_subscription_expiry = userData.current_subscription_expiry
+       current_plan = userData.current_plan.on_trial
+       cancelled_subscription = userData.cancelled_subscription
+       gold_to_silver_downgrade = userData.gold_to_silver_downgrade
+     
+    }
+
+    const today = moment().format('DD-MM-YYYY')
+    const todaysdate = moment(today, 'DD-MM-YYYY')
+    const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
+    const datediff = moment(eventdate, 'DD-MM-YYYY')
+    const daysLeft = datediff.diff(todaysdate, 'days')
+ 
+    let expireTime =   moment.unix(current_subscription_expiry).format('MMMM Do, YYYY')
+    if(current_subscription_expiry && current_plan){
+      txt = `${daysLeft} days left of free trial`
+    }
+    if(cancelled_subscription && current_subscription_expiry) {
+       txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
+    }
+    let silver_member = userData.silver_member
+    let gold_member = userData.gold_member
+
+    return(
+      <View>
+       <View style={styles.emailIdsInnerView}>
+         {
+          txt ?
+          <View>
+          <Text style={styles.memberText}>
+            {
+              !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
+              <Fragment>
+               {this.state.member}
+              {
+                yearly == "year" ? " Yearly" : " Monthly"
+              }
+              </Fragment>
+              : "Bronze"
+            }
+          </Text>
+          <Text style={[styles.memberText1,{fontSize:scale(13),color:colours.darkBlueTheme}]}>  
+            {txt ?  `(${txt})` :  ""}
+          </Text>
+          </View>
+          : 
+          <View>
+          <Text style={styles.memberText}>
+            {
+              !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
+              <Fragment>
+               {this.state.member}
+              {
+                yearly == "year" ? " Yearly" : " Monthly"
+              }
+              </Fragment>
+              : "Bronze"
+            }
+          </Text>
+          </View>
+        } 
+      {              
+             isAppReviewSuccess  == false|| buildVersion == 0 ?
+             <Fragment>
+           <Menu
+            style={{ marginTop: verticalScale(25), width:scale(155) }}
+            ref={this.setMenuRef}
+            button={
+              <TouchableOpacity
+                style={{ paddingHorizontal: scale(15), marginTop: verticalScale(5) }}
+                onPress={() => {
+                  this.showMenu();
+                }}
+              >
+              <FontAwesome name="more-vertical" 
+                  color={colours.darkBlueTheme}
+                  size={scale(22)} />
+              </TouchableOpacity>
+            }
+          
+          >
+               <MenuItem
+              onPress={() => {
+                this.hideMenu();
+                this.reloaderApp()
+                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+                Linking.openURL(
+                  url
+                );
+              }}
+              style={styles.menuStyle}
+              textStyle={styles.menuTextStyle}
+            >
+              {currentPlan && currentPlan.chargebee_plan_id == "gold-free"
+                ? STRING_CONST.CANCEL_TRIAL
+                : STRING_CONST.CHANGE_PLAN}
+            </MenuItem>
+          </Menu>
+          </Fragment> : null
+        }  
+      </View> 
+       <View style={styles.line}
+      /> 
+    </View>
+    )
+
+
+
+
+
+
+
+
+
+
   }
 
 
@@ -368,7 +453,7 @@ export default class PricingPageComponent extends Component {
   renderListItem(item) {
     return (
       <View style={styles.descritionItemView}>
-        <Image
+        <FastImage
           source={IMAGE_CONST.TICK_MARK}
           style={styles.tickMarkIcon}
         />
@@ -440,7 +525,7 @@ export default class PricingPageComponent extends Component {
 
         <Fragment>
         <View style={styles.upgradeView}>
-        <Image
+        <FastImage
           source={IMAGE_CONST.UPGRADE_IMAGE}
           style={styles.upgradeImage}
         />
@@ -476,19 +561,22 @@ export default class PricingPageComponent extends Component {
     );
   }
 
-  render() {
-    let userData = this.props.userData;
-    return (
-      <SafeAreaView style={styles.container}>
-        {this.renderHeader()}
-        <ScrollView style={styles.container}>
-          <View style={{ marginHorizontal: scale(20) }}>
-            {this.membershipView()}
-            {this.featureList()}
-            {isAndroid() && !userData.gold_member && this.upgradeView()}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
+  render(){
+  let userData = this.props.userData;
+      return (
+        <SafeAreaView style={styles.container}>
+          {this.renderHeader()}
+          <ScrollView style={styles.container}>
+            <View style={{ marginHorizontal: scale(20) }}>
+              {/* {this.membershipView()} */}
+              {this.membershipViewList()}
+              {this.featureList()}
+              {isAndroid() && !userData.gold_member && this.upgradeView()}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      );
+    }
 }
+
+export default MembershipComponent

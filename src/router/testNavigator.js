@@ -378,8 +378,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }} 
         initialRouteName="Loading"
         >
-
-<Stack.Screen name="Root" component={Root}
+        <Stack.Screen name="Root" component={Root}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Loading" component={LoadingScreen}

@@ -54,7 +54,7 @@ var uuid = require('react-native-uuid');
 import moment from 'moment'
 // import Purchases from 'react-native-purchases';
 import DeviceInfo from "react-native-device-info";
-import PostHog from 'posthog-react-native';
+import { usePostHog, PostHogProvider } from 'posthog-react-native'
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -81,6 +81,9 @@ class FindFlightContainer extends Component {
       userConfigDetails:this.props.userConfigDetails
     };
   }
+
+
+
   async componentDidMount() {
     const accesstoken = await getAccessToken();
     this.setState({
@@ -335,7 +338,7 @@ class FindFlightContainer extends Component {
 
   render() {
     const {deviceName, deviecBrand, isEmulator, isTablet} = this.state
-  
+
     return (
       <View style={{ flex: 1 }}>
         {this.renderLoader()}
@@ -383,7 +386,9 @@ class FindFlightContainer extends Component {
               }
 
               setTimeout(() => {
-                PostHog.capture('Search', trackData);
+                const posthog = usePostHog()
+
+                posthog.capture('Search', trackData);
               }, 1000);
                
               // this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)
@@ -409,7 +414,8 @@ class FindFlightContainer extends Component {
                   inboundEndDate: 'N/A since Calendar Page search'
                 },
               }
-               PostHog.capture('Search', trackData);
+              const posthog = usePostHog()
+              posthog.capture('Search', trackData);
              
             }
             this.setState({

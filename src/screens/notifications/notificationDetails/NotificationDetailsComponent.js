@@ -19,6 +19,8 @@ import styles from "./NotificationDetailsStyles";
 import ScreenHeader from "../../../components/header/Header";
 import * as STRING_CONST from "../../../constants/StringConst";
 import * as IMG_CONST from "../../../constants/ImageConst";
+import FastImage from 'react-native-fast-image'
+
 import moment from "moment";
 import {
   markNotificationAsRead,
@@ -215,7 +217,7 @@ class NotificationDetailComponent extends Component {
             justifyContent: 'center',
           }}>
             <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-              <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+              <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
             </View>
           </View>
         </View>
@@ -522,7 +524,7 @@ class NotificationDetailComponent extends Component {
 
           <View style={{flexDirection:"row",justifyContent:"center",alignItems:'center'}}>
           <View style={styles.iconContainer}>
-            <Image style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
+            <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
           </View>
           <Text style={styles.alertHeadingText1}>
             {` ${
@@ -536,7 +538,7 @@ class NotificationDetailComponent extends Component {
           </View>
        
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image
+            <FastImage
               source={IMAGE_CONST.WHITE_USER}
               style={{ marginRight: scale(6) }}
             />
@@ -552,7 +554,7 @@ class NotificationDetailComponent extends Component {
             {STRING_CONST.DEPARTURE_DATE_RANGE}
           </Text>
           <View style={{ flexDirection: "row", marginTop: verticalScale(11) }}>
-            <Image
+            <FastImage
               source={IMAGE_CONST.SOLID_TAKE_OFF}
               style={{
                 marginRight: scale(8),
@@ -575,7 +577,7 @@ class NotificationDetailComponent extends Component {
             <View
               style={{ flexDirection: "row", marginTop: verticalScale(11) }}
             >
-              <Image
+              <FastImage
                 source={IMAGE_CONST.SOLID_LANDING}
                 style={{
                   marginRight: scale(8),

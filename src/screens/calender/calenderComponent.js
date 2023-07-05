@@ -38,8 +38,8 @@ import Entypo from "react-native-vector-icons/dist/Entypo";
 var uuid = require('react-native-uuid');
 import DeviceInfo from "react-native-device-info";
 // import Slider from '@react-native-community/slider';
-import PostHog from 'posthog-react-native';
-const classes1 = ["Economy","Premium Economy","Businness", "First"]
+import {usePostHog} from 'posthog-react-native';
+ classes1 = ["Economy","Premium Economy","Businness", "First"]
 let getEmptyObj = {}
 
 import {
@@ -2369,7 +2369,8 @@ export default class CalenderComponent extends Component {
               inboundEndDate: 'N/A',
             }
           }
-          PostHog.capture('Alert', trackData);
+          const posthog = usePostHog()
+          posthog.capture('Alert', trackData);
           this.props.onSubmitAlertPress(body);
           this.setState({
             departStartDate: "",
@@ -2499,8 +2500,8 @@ export default class CalenderComponent extends Component {
             }
           }
     
-
-          PostHog.capture('Alert', trackData);
+          const posthog = usePostHog()
+          posthog.capture('Alert', trackData);
         
           this.props.onSubmitAlertPress(body);
           this.setState({

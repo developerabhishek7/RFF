@@ -17,6 +17,7 @@ import { colours } from "../../constants/ColorConst";
 import { TextInput, FlatList, ScrollView } from "react-native-gesture-handler";
 import { appFonts, AIRLINE_NOT_AVAILABLE, BRITISH_AIRWAYS } from "../../constants/StringConst";
 import { getAirlinesLogo, getAirwaysDisplayName } from "../../utils/commonMethods";
+import FastImage from 'react-native-fast-image'
 
 export default class AirlineMembershipComponent extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ export default class AirlineMembershipComponent extends Component {
         }}
         style={styles.membershipScreenCrossIconStyle}
       >
-        <Image
+        <FastImage
           style={{
             justifyContent: "flex-end",
             height: scale(18),
@@ -146,7 +147,7 @@ export default class AirlineMembershipComponent extends Component {
       <View>
         {itemObject.airline == BRITISH_AIRWAYS && <View style={{ marginTop: verticalScale(20) }}>
           <View style={styles.airlineContainer}>
-            <Image source={getAirlinesLogo(BRITISH_AIRWAYS)} style={{ marginRight: scale(10) }} />
+            <FastImage source={getAirlinesLogo(BRITISH_AIRWAYS)} style={{ marginRight: scale(10) }} />
             <Text style={styles.membershipListTextStyle}>{itemObject.airline}</Text>
           </View>
           <FlatList
@@ -172,7 +173,7 @@ export default class AirlineMembershipComponent extends Component {
               return this.renderListItem(item, index);
             }}
           /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 height: scale(94), width: scale(106)

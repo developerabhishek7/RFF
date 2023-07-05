@@ -16,6 +16,7 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import Utils from "../../utils/commonMethods";
 import scale from "../../helpers/scale";
 import moment from "moment";
+import FastImage from 'react-native-fast-image'
 
 export default class NotificationsComponent extends Component {
   constructor(props) {
@@ -193,7 +194,7 @@ export default class NotificationsComponent extends Component {
     const isAlreadyRead = false;
     return (
       <View style={styles.emptyViewContainer}>
-        <Image
+        <FastImage
           style={styles.emptyImage}
           source={IMAGE_CONST.NO_NOTIFICATION_IMAGE}
         />

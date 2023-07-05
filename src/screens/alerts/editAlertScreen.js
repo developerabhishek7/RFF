@@ -12,6 +12,8 @@ import  Ionicons  from "react-native-vector-icons/Ionicons";
 import { getformattedDate, isEmptyString, getLocationNameWithCode } from "../../utils/commonMethods";
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import moment from "moment";
+import FastImage from 'react-native-fast-image'
+
 import styles from "./editAlertStyle";
 import PopUpComponent from "../../shared/popUpComponent";
 import {
@@ -21,7 +23,7 @@ import {
   resetAlertUpdate,
   getAlerts
 } from "../../actions/alertActions";
-import PostHog from 'posthog-react-native';
+import {usePostHog} from 'posthog-react-native';
 const classes = ["economy", "premium_economy", "business", "first"];
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 class EditAlertComponent extends Component {
@@ -579,7 +581,7 @@ class EditAlertComponent extends Component {
                 }}
               >
                 {this.state.selectedIndex == 0 ? (
-                  <Image source={IMG_CONST.RADIO_BUTTON} 
+                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -602,7 +604,7 @@ class EditAlertComponent extends Component {
                 }}
               >
                 {this.state.selectedIndex == 1 ? (
-                  <Image source={IMG_CONST.RADIO_BUTTON} 
+                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -699,6 +701,8 @@ class EditAlertComponent extends Component {
     const { returnStartDate, classSelectedArray, selectedIndex } = this.state;
 
     const {userInfo} = this.state
+
+
 
     let goldMember = userInfo.gold_member
     let silverMember = userInfo.silver_member
@@ -950,8 +954,8 @@ class EditAlertComponent extends Component {
               : 'N/A',
             }
           }
-
-          PostHog.capture('Alert',trackData);
+          const posthog = usePostHog()
+          posthog.capture('Alert',trackData);
           // PostHog.capture('Alert', trackData1);
 
           this.props.editAlertAction(editAlertData, this.state.id);
@@ -1031,7 +1035,8 @@ class EditAlertComponent extends Component {
             }
           }
 
-          PostHog.capture('Alert',trackData);
+          const posthog = usePostHog()
+          posthog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1228,8 +1233,8 @@ class EditAlertComponent extends Component {
                 }
                  
                 
-                
-                PostHog.capture('Alert',trackData);
+                const posthog = usePostHog()
+                posthog.capture('Alert',trackData);
 
 
 

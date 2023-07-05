@@ -12,6 +12,7 @@ import {
   BackHandler
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import FastImage from 'react-native-fast-image'
 
 import { Dimensions } from "react-native";
 import Modal from "react-native-modal";
@@ -102,7 +103,7 @@ const ListFooterWithNoAlerts = () => (
     <TouchableOpacity
       style={{ alignItems: "center", justifyContent: "center" }}
     >
-      <Image
+      <FastImage
         source={IMG_CONST.NO_ALERTS}
         style={{ height: scale(94), width: scale(106) }}
       />
@@ -298,7 +299,7 @@ const AlertCard = (props) => {
               props.onNotificationIconPress(id);
             }}
           >
-            <Image
+            <FastImage
               source={IMG_CONST.DARK_BELL}
               style={{ marginRight: scale(5) }}
             />
@@ -311,7 +312,7 @@ const AlertCard = (props) => {
         </View>
         <View style={styles.rowContainer}>
           <View style={styles.iconContainer}>
-            <Image style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
+            <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
           </View>
           <Text style={styles.rightValueText}>
             {getAirways(airlineName)}
@@ -333,7 +334,7 @@ const AlertCard = (props) => {
         <View style={{ flexDirection: "row" }}>
           <View style={[styles.rowContainer]}>
             <View style={styles.iconContainer}>
-              <Image source={IMG_CONST.USER_ICON} style={styles.infoIcon} />
+              <FastImage source={IMG_CONST.USER_ICON} style={styles.infoIcon} />
             </View>
             <Text style={styles.rightValueText}>
               {numberOfPassengers}{" "}
@@ -351,7 +352,7 @@ const AlertCard = (props) => {
             ]}
           >
             <View style={styles.iconContainer}>
-              <Image
+              <FastImage
                 style={styles.infoIcon}
                 source={IMG_CONST.ON_THE_WAY_ICON}
               />
@@ -368,7 +369,7 @@ const AlertCard = (props) => {
         <View style={styles.line} />
         <View style={styles.nextRowContainer}>
           <View style={styles.iconContainer}>
-            <Image style={styles.infoIcon} source={IMG_CONST.FLIGHT_ICON} />
+            <FastImage style={styles.infoIcon} source={IMG_CONST.FLIGHT_ICON} />
           </View>
           <Text style={styles.rightValueText}>{`${formatDate(
             startDate
@@ -378,7 +379,7 @@ const AlertCard = (props) => {
         {arrivalStartDate && arrivalEndDate ? (
           <View style={styles.nextRowContainer}>
             <View style={styles.iconContainer}>
-              <Image
+              <FastImage
                 style={styles.infoIcon}
                 source={IMG_CONST.LANDING_FLIGHT_ICON}
               />
@@ -400,7 +401,7 @@ const AlertCard = (props) => {
           ]}
         >
           <View style={styles.iconContainer}>
-            <Image style={styles.infoIcon} source={IMG_CONST.ECONOMY_ICON} />
+            <FastImage style={styles.infoIcon} source={IMG_CONST.ECONOMY_ICON} />
           </View>
           {travelClassView(travelClass.split(","))}
         </View>
@@ -842,7 +843,7 @@ class AlertsScreen extends React.Component {
                     );
                   }}
                 >
-                  <Image
+                  <FastImage
                     style={styles.sortIcon}
                     source={
                       showReverseList &&
@@ -892,7 +893,7 @@ class AlertsScreen extends React.Component {
                     );
                   }}
                 >
-                  <Image
+                  <FastImage
                     style={styles.sortIcon}
                     source={
                       showReverseList && selectedSortOption == STR_CONST.ORIGIN
@@ -941,7 +942,7 @@ class AlertsScreen extends React.Component {
                     );
                   }}
                 >
-                  <Image
+                  <FastImage
                     style={styles.sortIcon}
                     source={
                       showReverseList &&
@@ -994,7 +995,7 @@ class AlertsScreen extends React.Component {
           justifyContent: 'center',          
         }}>
           <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
         </View>

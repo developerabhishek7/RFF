@@ -20,7 +20,7 @@ class MembershipContainer extends Component {
   render() {
     return (
       <MembershipComponent
-      // {...this.props}
+      {...this.props}
       navigation={this.props.navigation}
       userData = {this.props.userData}
       userConfigDetails={this.props.userConfigDetails}

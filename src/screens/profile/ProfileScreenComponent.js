@@ -11,7 +11,7 @@ import {
   BackHandler
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import FastImage from 'react-native-fast-image'
 import ScreenHeader from "../../components/header/Header";
 import * as STRING_CONST from "../../constants/StringConst";
 import scale, { verticalScale } from "../../helpers/scale";
@@ -158,7 +158,7 @@ renderListItem(itemObject, index) {
         }
       }}
     >
-      <Image source={itemObject.icon} />
+      <FastImage source={itemObject.icon} />
       <Text style={styles.profileOptionText}>{itemObject.text}</Text>
     </TouchableOpacity>
   );

@@ -12,6 +12,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import FastImage from 'react-native-fast-image'
 
 import { colours } from "../../constants/ColorConst";
 import * as IMG_CONST from "../../constants/ImageConst";
@@ -39,7 +40,7 @@ import jwt_decode from "jwt-decode";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONFIG from "../../helpers/config";
 import { Platform } from "react-native";
-var uuid = require('react-native-uuid');
+import { v4 as uuid } from 'uuid'
 
 const FIRST = 1;
 const LAST = 2;
@@ -293,7 +294,7 @@ class SignUpComponent extends Component {
     console.log("yes checke here on the create user succes 0--------------")
     const { navigation } = this.props;
     this.setState({ isLoading: false });
-    navigation.navigate("Authenticated");
+    navigation.navigate("FindFlightContainerScreen");
   }
 
   // Sign Up Failure Call Back
@@ -531,7 +532,7 @@ class SignUpComponent extends Component {
   socialLoginSuccessCallBack(res, eventText) {
     const { navigation } = this.props;
     this.setState({ isLoading: false });
-    navigation.navigate("Authenticated");
+    navigation.navigate("FindFlightContainerScreen");
     // trackEventDetails(eventText, null, this.props.userData);
   }
 
@@ -544,7 +545,7 @@ class SignUpComponent extends Component {
   renderLogoContainer() {
     return (
       <View style={styles.logoContainer}>
-        <Image style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
+        <FastImage style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
       </View>
     );
   }
@@ -759,7 +760,7 @@ class SignUpComponent extends Component {
             onPress={() => this.setState({ isHidePassword: !isHidePassword })}
             style={styles.eyeContainer}
           >
-            <Image
+            <FastImage
               style={isHidePassword ? styles.visibleEye : styles.inVisibleEye}
               source={
                 isHidePassword ? IMG_CONST.EYE_INVISIBLE : IMG_CONST.EYE_VISIBLE
@@ -824,7 +825,7 @@ class SignUpComponent extends Component {
             }
             style={styles.eyeContainer}
           >
-            <Image
+            <FastImage
               style={
                 isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
               }
@@ -867,20 +868,20 @@ class SignUpComponent extends Component {
             onPress={() => this.onPressGoogleSocialLogin()}
             style={styles.google}
           >
-            <Image style={styles.googleButton} source={IMG_CONST.GOOGLE_ICON} />
+            <FastImage style={styles.googleButton} source={IMG_CONST.GOOGLE_ICON} />
           </TouchableOpacity>
           <TouchableOpacity
             // onPress={() => this.onPressFBSocialLogin()}
             style={styles.fb}
           >
-            <Image style={styles.fbButton} source={IMG_CONST.FB_ICON} />
+            <FastImage style={styles.fbButton} source={IMG_CONST.FB_ICON} />
           </TouchableOpacity>
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}
               style={styles.fb}
             >
-              <Image style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
+              <FastImage style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
             </TouchableOpacity>
           )}
         </View>

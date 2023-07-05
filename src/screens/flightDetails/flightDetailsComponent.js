@@ -27,6 +27,8 @@ import moment from "moment";
 import Entypo from "react-native-vector-icons/dist/Entypo";
 import CalendarDate from "../../components/calendarDate/calendarDateComponent";
 import {NavigationAction} from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
+
 export default class FlightDetailsCompoent extends Component {
   constructor(props) {
     super(props);
@@ -151,7 +153,7 @@ export default class FlightDetailsCompoent extends Component {
           >
             <View style={[styles.titleView]}>
               <TouchableOpacity onPress={() => { }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
                   style={{ marginRight: scale(10) }}
                 />
@@ -198,7 +200,7 @@ export default class FlightDetailsCompoent extends Component {
               onPress={() => {}}
             >
               <View style={{ flexDirection: "row", marginRight: scale(30) }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.BIG_TAKE_OFF}
                   style={{ marginRight: scale(10) }}
                 />
@@ -210,7 +212,7 @@ export default class FlightDetailsCompoent extends Component {
                 >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
               </View>
               <View style={{ flexDirection: "row" }}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.BIG_LANDING}
                   style={{ marginRight: scale(10) }}
                 />
@@ -571,7 +573,7 @@ export default class FlightDetailsCompoent extends Component {
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <FastImage
             source={IMAGE_CONST.BIG_TAKE_OFF}
             style={{ marginRight: scale(10) }}
           />
@@ -581,7 +583,7 @@ export default class FlightDetailsCompoent extends Component {
         </View>
         <Text style={styles.flightDetailText}>{` - `}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Image
+          <FastImage
             source={IMAGE_CONST.BIG_LANDING}
             style={{ marginRight: scale(10) }}
           />
@@ -648,7 +650,7 @@ export default class FlightDetailsCompoent extends Component {
               </View>
               {this.availabilityTable()}
               <View style={styles.bookOnBAButton}>
-                <Image source={IMAGE_CONST.BA_BIG_LOGO} />
+                <FastImage source={IMAGE_CONST.BA_BIG_LOGO} />
                 <Text
                   style={[styles.titleText, { marginTop: verticalScale(10) }]}
                 >{`${STRING_CONST.BA_SCHEDULED_FLIGHTS}`}</Text>
@@ -665,7 +667,7 @@ export default class FlightDetailsCompoent extends Component {
                     Linking.openURL(CONFIG.BA_URL);
                   }}
                 >
-                  <Image source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
+                  <FastImage source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
                   <Text style={styles.bookOnBAText}>
                     {STRING_CONST.BOOK_ON_BA}
                   </Text>

@@ -16,6 +16,8 @@ import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import { Dimensions } from 'react-native';
 import * as STRING_CONST from "../../constants/StringConst";
+import FastImage from 'react-native-fast-image'
+
 const { height, width } = Dimensions.get('window');
 import { appFonts, LOCATION_NOT_AVAILABLE } from "../../constants/StringConst";
 import ScreenHeader from "../../components/header/Header";
@@ -83,7 +85,7 @@ export default class SourceDestinationListComponent extends Component {
         }}
         style={styles.membershipScreenCrossIconStyle}
       >
-        <Image
+        <FastImage
           style={{
             justifyContent: "flex-end",
             height: scale(18),
@@ -203,7 +205,7 @@ export default class SourceDestinationListComponent extends Component {
               }
             }}
           /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 height: scale(94), width: scale(106)
@@ -241,7 +243,7 @@ export default class SourceDestinationListComponent extends Component {
               }
             }}
           /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 height: scale(94), width: scale(106)
@@ -275,7 +277,7 @@ export default class SourceDestinationListComponent extends Component {
                 return this.renderListItem(item, index);
             }}
           /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 height: scale(94), width: scale(106)
@@ -342,7 +344,7 @@ renderHeader() {
       <TouchableOpacity onPress={() => {
            
             this.props.navigation.goBack() }}>
-            <Image source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
           </TouchableOpacity>
 
           <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
@@ -360,7 +362,7 @@ renderHeader() {
               placeholderTextColor="#FFFFFF"
             style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
             <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-            <Image source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             </TouchableOpacity>
          </View>
    </View>

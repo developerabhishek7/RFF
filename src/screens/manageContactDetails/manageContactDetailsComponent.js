@@ -19,7 +19,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import  Octicons  from "react-native-vector-icons/Feather";
 import CustomButton from "../../components/customComponents/CustomButton";
 import Validators from "../../helpers/Validator";
-import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+
 import { getAccessToken } from "../../constants/DataConst";
 import { isEmptyString, getCountryCodes, getISOCode, storeCountryData, isAndroid } from "../../utils/commonMethods";
 import PhoneInput from "react-native-phone-input";
@@ -397,7 +398,7 @@ export default class ProfileScreenComponent extends Component {
               </Text>
           }
 
-          {item.verified ? (
+         {item.verified ? (
             item.is_primary ? (
               <View
                 style={[
@@ -443,7 +444,7 @@ export default class ProfileScreenComponent extends Component {
               }
 
             </View>
-          )}
+          )} 
          
           <Menu
             style={{ marginTop: verticalScale(25) }}
@@ -517,7 +518,7 @@ export default class ProfileScreenComponent extends Component {
               </MenuItem>
             ) : null}
           
-          </Menu>
+          </Menu> 
         </View>
         {
           index == 0 ?
@@ -533,7 +534,7 @@ export default class ProfileScreenComponent extends Component {
           ]}
         />
           : null
-        }
+        } 
         {
             index == 0 ?
               <View style={{flex:1, justifyContent: "flex-end", alignItems: 'center', borderWidth: 0, marginTop: scale(10) }}>
@@ -563,7 +564,7 @@ export default class ProfileScreenComponent extends Component {
                 }
               </View>
               : null
-        }
+        } 
         {
           index !== 0 ?
            <View
