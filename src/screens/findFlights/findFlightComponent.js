@@ -14,6 +14,8 @@ import {
   Alert,
   ImageBackground
 } from "react-native";
+import FastImage from 'react-native-fast-image'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from "./findFlightStyles";
 import TravellersAndClassModal from "./travellersAndClassModal";
@@ -28,7 +30,9 @@ import { getStoreData, getUserId } from "../../constants/DataConst";
 import Modal from "react-native-modal";
 var uuid = require('react-native-uuid');
 import { getUserInfo } from "../../actions/userActions";
-import PostHog from 'posthog-react-native';
+
+import { usePostHog, PostHogProvider } from 'posthog-react-native'
+
 import DeviceInfo from "react-native-device-info";
 import RouteNavigation from '../../router/RouteNavigation'
 export default class FindFlightComponent extends Component {
@@ -182,17 +186,16 @@ export default class FindFlightComponent extends Component {
 
     const userData  = this.props.userData
 
+    const posthog = usePostHog()
+
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
-
     let trackData = {}
     let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
-
-
     if(this.props.isLoggedIn){
-      this.logCrashlytics()
+      // this.logCrashlytics()
     }
 
 
@@ -213,7 +216,7 @@ export default class FindFlightComponent extends Component {
 
     setTimeout(() => {
         if(this.props.isLoggedIn){
-          PostHog.identify(this.props.userData.email, {
+          posthog.identify(this.props.userData.email, {
             email: this.props.userData.email,
             deviceName: deviceName,
             deviecBrand:deviecBrand,
@@ -228,7 +231,7 @@ export default class FindFlightComponent extends Component {
  
     setTimeout(() => {
       if(isNewSignUp){
-        PostHog.capture('New Sign Up', trackData);
+        posthog.capture('New Sign Up', trackData);
       }
     }, 1000);
 
@@ -338,7 +341,7 @@ export default class FindFlightComponent extends Component {
           justifyContent: 'center',          
         }}>
           <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
         </View>
@@ -416,8 +419,8 @@ export default class FindFlightComponent extends Component {
 
   goToNotifications() {
     const { navigation } = this.props;
-    Alert.alert("YES CALLING THIS ON FINDFLIGHT!")
-    // this.props.navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN, { fromAlertScreen: false });
+    // Alert.alert("YES CALLING THIS ON FINDFLIGHT!")
+    this.props.navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN, { fromAlertScreen: false });
   }
 
   renderHeader() {
@@ -670,7 +673,7 @@ export default class FindFlightComponent extends Component {
             });
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.SEAT_ICON}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -697,7 +700,7 @@ export default class FindFlightComponent extends Component {
             });
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.TRAVELLER_ICON}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -1022,7 +1025,7 @@ export default class FindFlightComponent extends Component {
 
           style={{borderWidth:0,width:scale(40),alignSelf:'center'}}
         >
-          <Image resizeMode="contain" source={IMAGE_CONST.RETURN_ICON}
+          <FastImage resizeMode="contain" source={IMAGE_CONST.RETURN_ICON}
             style={[styles.returnIcon]} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -1127,7 +1130,7 @@ export default class FindFlightComponent extends Component {
                   alignItems: "center",
                 }}
               >
-                <Image
+                <FastImage
                   source={getAirlinesLogo(STRING_CONST.BRITISH_AIRWAYS)}
                   style={{ marginRight: scale(10) }}
                 />
@@ -1160,7 +1163,7 @@ export default class FindFlightComponent extends Component {
     let bronzeMember = userData.bronze_member
 
        return (
-          <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
+          <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
           <SafeAreaView >
           <View style={styles.outerViewStyle}>
             {this.renderHeader()}
@@ -1278,7 +1281,7 @@ export default class FindFlightComponent extends Component {
             </ScrollView>
           </View>
           </SafeAreaView>
-          </ImageBackground>
+          </FastImage>
     );
   }
 }

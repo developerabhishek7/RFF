@@ -17,6 +17,7 @@ import { TextInput, FlatList, ScrollView } from "react-native-gesture-handler";
 import { Dimensions } from 'react-native';
 const { height, width } = Dimensions.get('window');
 import { appFonts, LOCATION_NOT_AVAILABLE } from "../../constants/StringConst";
+import FastImage from 'react-native-fast-image'
 
 export default class SourceDestinationListComponent extends Component {
   constructor(props) {
@@ -77,7 +78,7 @@ export default class SourceDestinationListComponent extends Component {
         }}
         style={styles.membershipScreenCrossIconStyle}
       >
-        <Image
+        <FastImage
           style={{
             justifyContent: "flex-end",
             height: scale(18),
@@ -200,7 +201,7 @@ export default class SourceDestinationListComponent extends Component {
               return this.renderListItem(item, index);
             }}
           /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 height: scale(94), width: scale(106)

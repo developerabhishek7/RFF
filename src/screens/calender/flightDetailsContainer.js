@@ -116,7 +116,7 @@
          AsyncStorage.removeItem("userId");
          AsyncStorage.removeItem("searchDetails");
          Alert.alert(STRING_CONST.SESSION_EXPIRED_MSG);
-         this.props.navigation.navigate("Anonymous");
+        //  this.props.navigation.navigate("Anonymous");
           // ----->
           this.props.navigation.navigate("login");
         

@@ -14,6 +14,7 @@ import BaseComponent from "./baseComponent";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 const { height, width } = Dimensions.get("window");
+import FastImage from 'react-native-fast-image'
 
 let componentIndex = 0;
 
@@ -76,7 +77,7 @@ export default class ModalPicker extends BaseComponent {
       <TouchableOpacity key={option.key} onPress={() => this.onChange(option)}>
         <View style={styles.optionStyle}>
           <View style={{ flex: 0.15 }}>
-            <Image
+            <FastImage
               source={option.image}
               resizeMode="stretch"
               style={{ width: scale(30), height: verticalScale(16) }}

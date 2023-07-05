@@ -10,7 +10,7 @@ import { getOnboardingData } from "../../utils/commonMethods";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import * as STRING_CONST from "../../constants/StringConst";
 import { isNotched } from "../../utils/commonMethods";
-
+import FastImage from "react-native-fast-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class OnboardingComponent extends Component {
@@ -61,7 +61,7 @@ export default class OnboardingComponent extends Component {
       <View style={{ flex: 1 }}>
 
           <View style={{ flex: 1 }}>
-          <ImageBackground
+          <FastImage
             source={item.image}
             // style={{
             //   marginTop: isNotched()
@@ -106,7 +106,7 @@ export default class OnboardingComponent extends Component {
             <Text style={styles.subtextStyle}>{item.description}</Text>
             {index == 5 && this.renderButtonContainer()}
           </View> */}
-          </ImageBackground>  
+          </FastImage>  
           </View>     
           
           {/* <View style={styles.textView}>

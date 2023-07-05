@@ -17,11 +17,13 @@ import * as STRING_CONST from "../../constants/StringConst";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import styles from "./ProfileDetailsScreenStyles";
+import FastImage from 'react-native-fast-image'
+
 import * as IMG_CONST from "../../constants/ImageConst";
 import * as STR_CONST from "../../constants/StringConst";
 // import ImagePicker from "react-native-image-picker";
 import CustomButton from "../../components/customComponents/CustomButton";
-import FastImage from "react-native-fast-image";
+
 import { isEmptyString, getCountryCodes } from "../../utils/commonMethods";
 import ModalDropdown from "react-native-modal-dropdown";
 import { postcodeValidator } from "postcode-validator";
@@ -398,7 +400,7 @@ renderLoader() {
           justifyContent: 'center',
         }}>
           <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
       </View>
@@ -498,15 +500,13 @@ isAlert = () => {
 
   profileImage() {
     const {userData} = this.props
-
-    console.log("yes check here user details  - - - - ",userData)
     return (
-      <ImageBackground
+      <FastImage
         source={IMG_CONST.PROFILE_IMAGE_RING}
         style={styles.imageBackgroundStyle}
       >
         <TouchableOpacity onPress={this.chooseFile.bind(this)}>
-          <ImageBackground
+          <FastImage
             source={null}
             style={[
               styles.profileImage,
@@ -532,9 +532,9 @@ isAlert = () => {
                 {this.state.lastName && this.state.lastName[0].toUpperCase()}
               </Text>
             )}
-          </ImageBackground>
+          </FastImage>
         </TouchableOpacity>
-      </ImageBackground>
+      </FastImage>
     );
   }
   renderRow(option) {
@@ -643,7 +643,7 @@ isAlert = () => {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -684,7 +684,7 @@ isAlert = () => {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -722,7 +722,7 @@ isAlert = () => {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -764,7 +764,7 @@ isAlert = () => {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -808,7 +808,7 @@ isAlert = () => {
             editable={selectedCountry.sortname !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -1221,7 +1221,7 @@ isAlert = () => {
               {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
               
               <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{width:scale(20),height:scale(20),marginTop:scale(50),margin:scale(10)}}>
-              <Image source= {require("../../assets/back2.png")} style={{height:verticalScale(30), width:verticalScale(30)}} />
+              <FastImage source= {require("../../assets/back2.png")} style={{height:verticalScale(30), width:verticalScale(30)}} />
               </TouchableOpacity>
 
               <View style={{ flex:1,justifyContent:"center",alignItems:"center"}}>
@@ -1353,7 +1353,7 @@ isAlert = () => {
         <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(40),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
-              <Image source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             </TouchableOpacity>
   
             <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),marginStart:scale(30),color:"#FFF"}}>Profile</Text>
@@ -1371,7 +1371,7 @@ isAlert = () => {
               <TouchableOpacity style={{}}
                   onPress={()=>{this.props.navigation.navigate("ProfileDetailsScreen")}}
               >
-              <Image source={require("../../assets/profile/edit.png")} resizeMode="contain" style={{height:scale(20),margin:scale(10),width:scale(20),}} />
+              <FastImage source={require("../../assets/profile/edit.png")} resizeMode="contain" style={{height:scale(20),margin:scale(10),width:scale(20),}} />
               </TouchableOpacity>
          
            </View>
@@ -1428,7 +1428,7 @@ isAlert = () => {
           <View style={styles.informationContainer}>
 
               <View style={{flexDirection:"row",}}>
-                  <Image source={IMG_CONST.AIRPORT} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
+                  <FastImage source={IMG_CONST.AIRPORT} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
                   <View style={{justifyContent:"center",alignItems:"center"}}>
                         <Text style={styles.membershipText1}>{airpotName}</Text>
                         <Text style={{
@@ -1448,7 +1448,7 @@ isAlert = () => {
           <View style={{flexDirection:"row",justifyContent:"space-between",width:scale(340)}}>
           <View style={styles.informationContainer1}>
             <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                <Image source={IMG_CONST.AGE_GRP} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
+                <FastImage source={IMG_CONST.AGE_GRP} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
                 <View style={{justifyContent:"center",alignItems:"center"}}>
                       <Text style={[styles.membershipText1,{
                         textAlign:"center",marginBottom:scale(-3),
@@ -1462,7 +1462,7 @@ isAlert = () => {
 
             <View style={styles.informationContainer1}>
             <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                <Image source={IMG_CONST.EQUALITY} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
+                <FastImage source={IMG_CONST.EQUALITY} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
                 <View style={{justifyContent:"center",alignItems:"center"}}>
                       <Text style={[styles.membershipText1,{
                          textAlign:"center",marginBottom:scale(-3),
@@ -1481,7 +1481,7 @@ isAlert = () => {
 <View style={styles.informationContainer}>
 
 <View style={{flexDirection:"row",alignSelf:"flex-start"}}>
-    <Image source={IMG_CONST.LIKELY} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
+    <FastImage source={IMG_CONST.LIKELY} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
     <View style={{}}>
           <Text style={styles.membershipText1}>
           {userData.flights_taken_annually}
@@ -1509,7 +1509,7 @@ isAlert = () => {
 <View style={styles.informationContainer}>
 
 <View style={{flexDirection:"row",alignSelf:"flex-start"}}>
-    <Image source={IMG_CONST.TRAVEL} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
+    <FastImage source={IMG_CONST.TRAVEL} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
     <View style={{}}>
           <Text style={styles.membershipText1}>{userData.travelling_abroad_in_next_12_months}</Text>
           <Text style={{

@@ -20,6 +20,7 @@ import PasswordCheckView from '../../components/passwordPattern/PasswordPatternC
 import * as Utils from '../../utils/commonMethods'
 import * as IMG_CONST from "../../constants/ImageConst";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import FastImage from 'react-native-fast-image'
 
 export default class ChangePasswordComponent extends Component {
   constructor(props) {
@@ -153,7 +154,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <Image
+                <FastImage
                   style={
                     this.state.oldPswdEye
                       ? styles.inVisibleEye
@@ -217,7 +218,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <Image
+                <FastImage
                   style={
                     this.state.newPswdEye
                       ? styles.inVisibleEye
@@ -284,7 +285,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <Image
+                <FastImage
                   style={
                     this.state.cnfmPswdEye
                       ? styles.inVisibleEye

@@ -10,6 +10,7 @@ import {
   Linking
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import FastImage from 'react-native-fast-image'
 
 import { connect } from "react-redux";
 import styles from "./drawerMenuStyles";
@@ -21,7 +22,7 @@ import { colours } from "../../constants/ColorConst";
 import scale, { verticalScale } from "../../helpers/scale";
 import { logoutUser } from "../../actions/loginActions";
 import { resetSession } from "../../actions/commonActions";
-import FastImage from "react-native-fast-image";
+
 import {DrawerActions,NavigationContainer} from '@react-navigation/native';
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
@@ -51,7 +52,7 @@ class DrawerComponentComponent extends Component {
     AsyncStorage.removeItem("authorizationHeader");
     AsyncStorage.removeItem("userId");
     AsyncStorage.removeItem("searchDetails");
-    navigation.navigation.navigate("Anonymous");
+    navigation.navigation.navigate("SignIn");
   }
 
 
@@ -110,7 +111,7 @@ class DrawerComponentComponent extends Component {
     ) {
       this.resetData();
       this.props.resetSessionAction();
-      this.props.navigation.navigation.navigate("Anonymous");
+      this.props.navigation.navigation.navigate("SignIn");
     }
   }
   getMembershipText(userData){
@@ -175,7 +176,7 @@ class DrawerComponentComponent extends Component {
                 {this.state.userData.last_name &&
                   this.state.userData.last_name[0].toUpperCase()}
               </Text> :
-              <Image style={[styles.RFFImage,{ backgroundColor: colours.white}]} source={IMAGE_CONST.PLANE_LOGO} />
+              <FastImage style={[styles.RFFImage,{ backgroundColor: colours.white}]} source={IMAGE_CONST.PLANE_LOGO} />
             ) : (
               <FastImage
                 style={[styles.RFFImage, { backgroundColor: colours.white}]}
@@ -261,7 +262,7 @@ class DrawerComponentComponent extends Component {
   }
   getMenuOptionImage(image){
     return (
-      <Image
+      <FastImage
         source={image}
         resizeMode="cover"
         style={styles.infoIcon}
@@ -346,7 +347,6 @@ class DrawerComponentComponent extends Component {
             }}
           >
             {this.getMenuOptionImage(IMAGE_CONST.PRICE_TAG)}      
-
             <Text style={styles.screenTitle}>
               {STR_CONST.PRICING_SCREEN_TITLE}
             </Text>
@@ -354,7 +354,7 @@ class DrawerComponentComponent extends Component {
           <TouchableOpacity
             style={styles.screenButtonStyle}
             onPress={() => {
-              navigation.navigate(STR_CONST.MORE_SCREEN);
+              navigation.navigate("MoreOptions");
               navigation.dispatch(DrawerActions.closeDrawer());
             }}
           >

@@ -14,6 +14,7 @@ import scale from "../../helpers/scale";
 import * as STR_CONST from "../../constants/StringConst";
 import { getUserInfo } from "../../actions/userActions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FastImage from 'react-native-fast-image'
 
 import {DrawerActions,NavigationContainer} from '@react-navigation/native';
 class ScreenHeader extends Component {
@@ -106,7 +107,7 @@ class ScreenHeader extends Component {
             </Fragment>
           : null
          } 
-          <Image
+          <FastImage
             style={styles.backIcon}
             source={
               isLoggedIn
@@ -134,7 +135,7 @@ class ScreenHeader extends Component {
         }}
       >
         <View>
-          <Image
+          <FastImage
             style={styles.backIcon}
             source={
               isLoggedIn ? IMAGE_CONST.SORTING_ICON : IMAGE_CONST.BELL_IMAGE

@@ -37,11 +37,13 @@ import PopUpComponent from "../../shared/popUpComponent";
 import * as Config from "../../helpers/config";
 import moment from "moment";
 import { getStoreData, getUserId ,getAccessToken} from "../../constants/DataConst";
-import PostHog from 'posthog-react-native';
+import {usePostHog} from 'posthog-react-native';
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 import { Platform } from "react-native";
 var uuid = require("react-native-uuid");
 const { height, width } = Dimensions.get("window");
+import FastImage from 'react-native-fast-image'
+
 let isAppReviewSuccess =false
 let buildVersion = 0
 export default class FindFlightComponent extends Component {
@@ -465,7 +467,7 @@ export default class FindFlightComponent extends Component {
             });
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.SEAT_ICON}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -492,7 +494,7 @@ export default class FindFlightComponent extends Component {
             });
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.TRAVELLER_ICON}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -663,7 +665,7 @@ export default class FindFlightComponent extends Component {
           }
 
      
-          PostHog.capture('Search', trackData);
+          // PostHog.capture('Search', trackData);
         
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }
@@ -708,7 +710,7 @@ export default class FindFlightComponent extends Component {
             });
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.DEPARTURE}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -796,7 +798,7 @@ export default class FindFlightComponent extends Component {
               }
             }}
           >
-            <Image
+            <FastImage
               source={IMAGE_CONST.LANDING}
               style={[styles.infoIcon, { marginRight: scale(7) }]}
             />
@@ -912,7 +914,7 @@ export default class FindFlightComponent extends Component {
             );
           }}
         >
-          <Image
+          <FastImage
             source={IMAGE_CONST.PLANE}
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
@@ -972,7 +974,7 @@ export default class FindFlightComponent extends Component {
                             this.setState({ checked: key, })
                           }}
                             style={{ flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
-                            <Image source={require("../../assets/common/radio_btn_check.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
+                            <FastImage source={require("../../assets/common/radio_btn_check.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
                             <Text style={{ fontSize: scale(13), padding: scale(2), paddingStart: scale(4), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
                           </TouchableOpacity>
                           :
@@ -983,7 +985,7 @@ export default class FindFlightComponent extends Component {
                             })
                           }}
                             style={{ flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
-                            <Image source={require("../../assets/common/radio_btn_uncheck.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
+                            <FastImage source={require("../../assets/common/radio_btn_uncheck.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
                             <Text style={{ fontSize: scale(13), padding: scale(2), paddingStart: scale(4), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
                           </TouchableOpacity>
                       }
@@ -1127,7 +1129,7 @@ export default class FindFlightComponent extends Component {
           });
         }}
       >
-        <Image
+        <FastImage
           source={IMAGE_CONST.LOCATION_PIN}
           style={[styles.infoIcon, { marginRight: scale(7) }]}
         />
@@ -1229,7 +1231,7 @@ export default class FindFlightComponent extends Component {
 
     return (
 
-      <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
+      <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
       <SafeAreaView style={styles.container}>
           {this.renderHeader()}
           <ScrollView>
@@ -1357,7 +1359,7 @@ export default class FindFlightComponent extends Component {
                       </View>
                     </View>
                     
-                    <Image
+                    <FastImage
                       source={IMAGE_CONST.LOGIN_ICON}
                       style={{ marginTop: verticalScale(35), width:scale(106), height:scale(94),alignSelf:'center' }}
                     />
@@ -1382,7 +1384,7 @@ export default class FindFlightComponent extends Component {
                           this.setState({
                                   showLoginPopup: false,
                                 });
-                                this.props.navigation.navigate("Anonymous");
+                                this.props.navigation.navigate("SignIn");
                         }}
                       >
                         <Text style={styles.leftButtonTextStyle}>
@@ -1397,7 +1399,7 @@ export default class FindFlightComponent extends Component {
             )}
         </ScrollView>
       </SafeAreaView>
-      </ImageBackground>
+      </FastImage>
     );
   }
 }

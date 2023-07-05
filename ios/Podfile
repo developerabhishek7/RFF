@@ -1,9 +1,8 @@
 # Resolve react_native_pods.rb with node to allow for hoisting
-
-$RNFirebaseAsStaticFramework = true
 # $RNMapboxMapsImpl = 'mapbox-gl'
 # $RNMapboxMapsVersion = '~> 5.9.0' 
 
+$FirebaseSDKVersion = '10.11.0'
 
 
 require Pod::Executable.execute_command('node', ['-p',
@@ -38,9 +37,13 @@ end
 target 'RewardFlightFinder' do
   config = use_native_modules!
   use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+
   # use_frameworks!
 
   pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+  pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
+
   # pod 'Firebase/Analytics'
   # pod 'Firebase/Messaging'
   # pod 'React',:path => "../node_modules/react-native"

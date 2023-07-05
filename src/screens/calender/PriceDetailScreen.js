@@ -14,6 +14,7 @@ import moment from "moment";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import ModalDropdown from "react-native-modal-dropdown";
 import * as STR_CONST from "../../constants/StringConst";
+import FastImage from 'react-native-fast-image'
 
 import styles from "./PriceDetailsStyle";
 import {
@@ -311,7 +312,7 @@ componentDidMount(){
           style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
         
           >
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 marginEnd:scale(10),
@@ -391,7 +392,7 @@ componentDidMount(){
           style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
         
           >
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 marginEnd:scale(10),
@@ -493,7 +494,7 @@ componentDidMount(){
           }}
             style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
           >
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 marginEnd:scale(10),
@@ -559,7 +560,7 @@ componentDidMount(){
           style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
         
           >
-            <Image
+            <FastImage
               style={{
                 justifyContent: "flex-end",
                 marginEnd:scale(10),
@@ -912,7 +913,7 @@ componentDidMount(){
                 }}
               >
                 {this.state.selectedIndex == 0 ? (
-                  <Image source={IMG_CONST.RADIO_BUTTON} 
+                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -934,7 +935,7 @@ componentDidMount(){
                 }}
               >
                 {this.state.selectedIndex == 1 ? (
-                  <Image source={IMG_CONST.RADIO_BUTTON} 
+                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -1073,7 +1074,7 @@ componentDidMount(){
       >
         {
             headerTxt ==  "Booking Details" ? 
-              <Image source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
+              <FastImage source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
             : null
         }
          {
@@ -1093,7 +1094,7 @@ componentDidMount(){
        >
         {
              headerTxt ==  "Booking Details" ? 
-             <Image source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
+             <FastImage source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
             : null
         }
           {

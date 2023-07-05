@@ -15,6 +15,7 @@ import { colours } from "../../constants/ColorConst";
 import { TextInput, FlatList, ScrollView } from "react-native-gesture-handler";
 import { LOCATION_NOT_AVAILABLE } from "../../constants/StringConst";
 import * as STR_CONST from "../../constants/StringConst";
+import FastImage from 'react-native-fast-image'
 
 export default class CountryList extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export default class CountryList extends Component {
         }}
         style={styles.crossIconButton}
       >
-        <Image
+        <FastImage
           style={styles.crossIconImage}
           source={IMAGE_CONST.DARK_BLUE_CROSS_ICON}
         />
@@ -116,7 +117,7 @@ export default class CountryList extends Component {
           />
         ) : (
           <View style={styles.noLocationView}>
-            <Image
+            <FastImage
               style={styles.noLocationImage}
               source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
             />

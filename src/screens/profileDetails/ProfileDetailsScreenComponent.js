@@ -13,6 +13,8 @@ import {
   SafeAreaView
 } from "react-native";
 import Validators from "../../helpers/Validator";
+import FastImage from 'react-native-fast-image'
+
 import ScreenHeader from "../../components/header/Header";
 import * as STRING_CONST from "../../constants/StringConst";
 import scale, { verticalScale } from "../../helpers/scale";
@@ -22,7 +24,6 @@ import * as IMG_CONST from "../../constants/ImageConst";
 import * as STR_CONST from "../../constants/StringConst";
 // import ImagePicker from "react-native-image-picker";
 import CustomButton from "../../components/customComponents/CustomButton";
-import FastImage from "react-native-fast-image";
 import { isEmptyString, getCountryCodes } from "../../utils/commonMethods";
 import ModalDropdown from "react-native-modal-dropdown";
 import { postcodeValidator } from "postcode-validator";
@@ -398,7 +399,7 @@ renderLoader() {
           justifyContent: 'center',
         }}>
           <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
       </View>
@@ -640,7 +641,7 @@ isAlert = () => {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -681,7 +682,7 @@ isAlert = () => {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -719,7 +720,7 @@ isAlert = () => {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -761,7 +762,7 @@ isAlert = () => {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -805,7 +806,7 @@ isAlert = () => {
             editable={selectedCountry.sortname !== ""}
           />
           <TouchableOpacity onPress={() => { }}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -1218,7 +1219,7 @@ isAlert = () => {
               {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
               
               <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{width:scale(20),height:scale(20),marginTop:scale(50),margin:scale(10)}}>
-              <Image source= {require("../../assets/back2.png")} style={{height:verticalScale(30), width:verticalScale(30)}} />
+              <FastImage source= {require("../../assets/back2.png")} style={{height:verticalScale(30), width:verticalScale(30)}} />
               </TouchableOpacity>
 
               <View style={{ flex:1,justifyContent:"center",alignItems:"center"}}>
@@ -1393,7 +1394,7 @@ marginTop:scale(-20),
                   maxLength={10}
                 />
                 <TouchableOpacity style={{height:scale(20),marginStart:scale(-10),width:scale(80),justifyContent:"center",alignItems:"center"}} onPress={() => { this.firstName.focus()}}>
-                  <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+                  <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -1434,7 +1435,7 @@ marginTop:scale(-20),
                   maxLength={10}
                 />
                  <TouchableOpacity style={{height:scale(20),width:scale(80),marginStart:scale(-10),justifyContent:"center",alignItems:"center"}} onPress={() => { this.lastName.focus()}}>
-                  <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+                  <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
             </View>

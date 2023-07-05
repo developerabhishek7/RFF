@@ -82,7 +82,7 @@ class ProfileScreenContainer extends Component {
       if (
         this.props.addUserDetailsSuccess 
       ) {
-        this.props.navigation.navigate("Authenticated");
+        this.props.navigation.navigate("FindFlightContainerScreen");
       }
     }
   }

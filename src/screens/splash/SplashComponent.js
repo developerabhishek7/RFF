@@ -6,6 +6,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image';
  class Splash extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +38,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
         //   backgroundColor: '#fff',          
         }}>
           <StatusBar hidden={true} />
-        <ImageBackground
+        <FastImage
           resizeMode="stretch"
           style={{
             width: '100%',
@@ -47,7 +48,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
           source={require('../../assets/splash.png')}
           // source={require('../../assets/splash.png')}
         > 
-        </ImageBackground>
+        </FastImage>
       </View>
     );
   }

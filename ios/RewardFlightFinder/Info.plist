@@ -41,7 +41,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.354611927309-hbud98mlun01449j456275cbvu007khl</string>
+				<string>com.googleusercontent.apps.889841388445-qe3iquc02n3ig862pn5nsvirgj8b0j5j</string>
 			</array>
 		</dict>
 	</array>
@@ -51,8 +51,6 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<!-- <key>MBXAccessToken</key>
-	<string>pk.eyJ1IjoicmZmYWRtaW4iLCJhIjoiY2tiY2llOXIwMDI2dzJ5azA0c2k0Nno0ZCJ9.gXz54nUwCAgY170oY8wHcA</string> -->
 	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
 	<string>YES</string>
 	<key>Mapbox</key>

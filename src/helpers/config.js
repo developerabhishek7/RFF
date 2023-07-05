@@ -30,6 +30,8 @@ export const TERMS_CONDITIONS_URL = `${'https://rewardflightfinder.com'}/terms-o
 export const DISCLAIMER_URL = `${'https://rewardflightfinder.com'}/disclaimer`;
 export const MEMBERSHIP_URL = `${WEB_BASE_URL}/dashboard/membership`;
 export const WEB_CLIENT_URL = '354611927309-1q1dbpo92q1931f66b45f6d56srmegap.apps.googleusercontent.com';
+                                
+
 export const MAPBOX_TOKEN = "pk.eyJ1IjoicmZmYWRtaW4iLCJhIjoiY2tiY2llOXIwMDI2dzJ5azA0c2k0Nno0ZCJ9.gXz54nUwCAgY170oY8wHcA";
 // export const MAPBOX_TOKEN = "pk.eyJ1IjoiZmxpZ2h0bWFwcHJvamVjdCIsImEiOiJjbDFkd2VtajIwZzRrM2NueGlkNjMwaXloIn0.79HzZ8IKZFzUgiH1i_RJfQ"
 export const FORGET_PASSWORD_URL = `${WEB_BASE_URL}/forgot-password`;

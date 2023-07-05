@@ -595,6 +595,9 @@ import { getAccessToken } from "../../constants/DataConst";
 import DeviceInfo from "react-native-device-info";
 var uuid = require('react-native-uuid');
 import { DrawerActions } from "@react-navigation/drawer";
+import FastImage from 'react-native-fast-image'
+
+
 export default class NotificationSettingsComponent extends Component {
   constructor(props) {
     super(props);
@@ -1056,7 +1059,7 @@ export default class NotificationSettingsComponent extends Component {
                 this.selectproducts("newsletters");
               }}
             >
-              <Image
+              <FastImage
                 source={
                   notificationSettings && notificationSettings.newsletters
                     ? IMG_CONST.CHECK
@@ -1079,7 +1082,7 @@ export default class NotificationSettingsComponent extends Component {
                 this.selectproducts("offers");
               }}
             >
-              <Image
+              <FastImage
                 source={
                   notificationSettings && notificationSettings.offers
                     ? IMG_CONST.CHECK
@@ -1102,7 +1105,7 @@ export default class NotificationSettingsComponent extends Component {
                 this.selectproducts("associate_offers");
               }}
             >
-              <Image
+              <FastImage
                 source={
                   notificationSettings && notificationSettings.associate_offers
                     ? IMG_CONST.CHECK

@@ -13,6 +13,8 @@ import {
   BackHandler
 } from "react-native";
 import { Dimensions } from "react-native";
+import FastImage from 'react-native-fast-image'
+
 const { height, width } = Dimensions.get("window");
 import styles from "./calenderStyles";
 import * as STRING_CONST from "../../constants/StringConst";

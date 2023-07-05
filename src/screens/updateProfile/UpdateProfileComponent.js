@@ -20,6 +20,7 @@ import CustomButton from "../../components/customComponents/CustomButton";
 import { isEmptyString, getCountryCodes } from "../../utils/commonMethods";
 import ModalDropdown from "react-native-modal-dropdown";
 import { postcodeValidator } from "postcode-validator";
+import FastImage from 'react-native-fast-image'
 
 export default class UpdateProfileComponent extends Component {
   constructor(props) {
@@ -383,7 +384,7 @@ export default class UpdateProfileComponent extends Component {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => {}}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -424,7 +425,7 @@ export default class UpdateProfileComponent extends Component {
             maxLength={70}
           />
           <TouchableOpacity onPress={() => {}}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -462,7 +463,7 @@ export default class UpdateProfileComponent extends Component {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => {}}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -504,7 +505,7 @@ export default class UpdateProfileComponent extends Component {
             editable={selectedCountry !== ""}
           />
           <TouchableOpacity onPress={() => {}}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -548,7 +549,7 @@ export default class UpdateProfileComponent extends Component {
             editable={selectedCountry.sortname !== ""}
           />
           <TouchableOpacity onPress={() => {}}>
-            <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+            <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -961,7 +962,7 @@ export default class UpdateProfileComponent extends Component {
                   maxLength={20}
                 />
                 <TouchableOpacity onPress={() => {}}>
-                  <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+                  <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -1001,7 +1002,7 @@ export default class UpdateProfileComponent extends Component {
                   maxLength={20}
                 />
                 <TouchableOpacity onPress={() => {}}>
-                  <Image source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
+                  <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

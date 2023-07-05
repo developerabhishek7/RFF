@@ -5,6 +5,7 @@ import scale, { verticalScale } from "../helpers/scale";
 import Modal from "react-native-modal";
 import  Entypo from "react-native-vector-icons/Entypo";
 import styles from "./popUpComponentStyles";
+import FastImage from 'react-native-fast-image'
 
 export default class PopUpComponent extends Component {
   constructor(props) {
@@ -91,7 +92,7 @@ export default class PopUpComponent extends Component {
                   )}
                 </TouchableOpacity>
               </View>
-              <Image
+              <FastImage
                 source={this.state.image}
                 style={{ marginTop: verticalScale(35), width:scale(106), height:scale(94) }}
               />

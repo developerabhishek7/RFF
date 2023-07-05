@@ -23,7 +23,7 @@ import CountryListComponent from "../screens/profileDetails/countryListComponent
 import MembershipContainer from "../screens/membership/membershipContainer";
 import CalenderContainer from "../screens/calender/calenderContainer";
 import FindFlightContainer from "../screens/findFlights/findFlightContainer";
-import PricingContainer from "../screens/pricingPage/pricingPageContainer";
+// import PricingContainerScreen from "../screens/pricingPage/pricingPageContainer";
 import MapSearchContainer from "../screens/mapSearch/mapSearchContainer";
 import airlineMembershipComponent from "../screens/findFlights/airlineMembershipComponent";
 import sourceDestinationListComponent from "../screens/findFlights/sourceDestinationListComponent";
@@ -43,7 +43,7 @@ import PriceDetailsScreen from '../screens/calender/PriceDetailScreen'
 import DrawerView from '../screens/Drawer/drawerModal'
 import Test from '../../Test'
 import * as IMAGE_CONST from "../constants/ImageConst";
-
+import MoreOptions from '../screens/moreoptions'
 import SplashComponent from '../screens/splash/SplashComponent'
 import { connect } from "react-redux";
 
@@ -80,7 +80,7 @@ const drawerViewModel = (navigation) => {
           component={SplashComponent}
           options={{
             headerShown: false,
-            gestureEnabled:false
+            fullScreenGestureEnabled:false
           }}
         />
 
@@ -89,7 +89,8 @@ const drawerViewModel = (navigation) => {
           component={LoadingScreen}
           options={{
             headerShown: false,
-            gestureEnabled:false
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
       <Stack.Screen
@@ -97,7 +98,8 @@ const drawerViewModel = (navigation) => {
           component={SignUpComponent}
           options={{
             headerShown: false,
-            gestureEnabled:false
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
        <Stack.Screen
@@ -105,7 +107,8 @@ const drawerViewModel = (navigation) => {
           component={LoginComponent}
           options={{
             headerShown: false,
-            gestureEnabled:false
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
        <Stack.Screen
@@ -113,6 +116,16 @@ const drawerViewModel = (navigation) => {
           component={FindFlightContainer}
           options={{
             headerShown: false
+          }}
+        />
+
+<Stack.Screen
+          name="MoreOptions"
+          component={MoreOptions}
+          options={{
+            headerShown: false,
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
   
@@ -153,8 +166,8 @@ const drawerViewModel = (navigation) => {
           component={SplashComponent}
           options={{
             headerShown: false,
-            gestureEnabled:false
-          }}
+            gestureEnabled: false          }}
+          
         />
 
 <Stack.Screen
@@ -204,6 +217,15 @@ const drawerViewModel = (navigation) => {
           }}
         />
         <Stack.Screen
+          name="MoreOptions"
+          component={MoreOptions}
+          options={{
+            headerShown: false,
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
+          }}
+        />
+        <Stack.Screen
           name="airlineMembershipScreen"
           component={airlineMembershipComponent}
           options={{
@@ -238,6 +260,16 @@ const drawerViewModel = (navigation) => {
             headerShown: false
           }}
         />
+
+ <Stack.Screen
+          name="NotificationSettingsScreen"
+          component={NotificationSettingsContainer}
+          options={{
+            headerShown: false
+          }}
+        />
+
+
         <Stack.Screen
           name="Alerts"
           component={AlertsScreen}
@@ -323,14 +355,21 @@ const drawerViewModel = (navigation) => {
             headerShown: false
           }}
         />
-
-<Stack.Screen
+        <Stack.Screen
           name="MembershipContainerScreen"
           component={MembershipContainer}
           options={{
             headerShown: false
           }}
         />
+        {/* <Stack.Screen
+          name="PricingContainerScreen" 
+          component={PricingContainerScreen}
+          options={{
+            headerShown: false
+          }}
+        /> */}
+        
         <Stack.Screen
           name="NotificationsScreen"
           component={NotificationsContainer}
@@ -361,24 +400,17 @@ function MainStack() {
   
     return (
       <NavigationContainer >
-        {/* <Drawer.Navigator
-          screenOptions={{
-            drawerStyle: {
-              backgroundColor: "white",
-              zIndex: 100,
-            },
-            drawerPosition: "right",
-          }}
-          
-        > */}
+        
          <Drawer.Navigator drawerContent={drawerViewModel}
-      screenOptions={{ headerShown: false, drawerType: "front" , }}
+      screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false }}
+
     >
           {/* {isLoggedIn ? ( */}
             <Drawer.Screen
               name="ProtectedStack"
               component={ProtectedStack}
-              options={{ headerShown:false }}
+              
+              options={{ headerShown:false, }}
             />
              {/* ) : ( */}
             <Drawer.Screen

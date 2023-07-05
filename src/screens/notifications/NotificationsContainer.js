@@ -49,9 +49,9 @@ class NotificationsContainer extends Component {
   }
 
   callGetNotifications(pageNo) {
-    const { navigation } = this.props
-    if(navigation.state.params.fromAlertScreen){
-      this.props.getAlertNotifications(navigation.state.params.alertId,pageNo, RECORDS_PER_PAGE)
+    const { navigation,route } = this.props
+    if(route.params.fromAlertScreen){
+      this.props.getAlertNotifications(route.params.alertId,pageNo, RECORDS_PER_PAGE)
     }else{
       this.props.getNotifications(pageNo, RECORDS_PER_PAGE);
     }

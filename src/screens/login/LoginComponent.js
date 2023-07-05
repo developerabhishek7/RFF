@@ -26,6 +26,8 @@ import * as STR_CONST from "../../constants/StringConst";
 import * as IMG_CONST from "../../constants/ImageConst";
 import * as KEY_CONST from "../../helpers/config";
 import 'react-native-get-random-values'
+import FastImage from 'react-native-fast-image'
+
 import { v4 as uuid } from 'uuid'
 
 // import { trackEventDetails } from "../../helpers/segmentMethods";
@@ -37,7 +39,7 @@ import {
   setLoginStatus
 } from "../../actions/loginActions";
 import * as CustomAlert from "../../utils/showAlert";
-import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
+import { GoogleSignin,statusCodes } from "@react-native-google-signin/google-signin";
 import { colours } from "../../constants/ColorConst";
 import * as Utils from "../../utils/commonMethods";
 import { resetNetworkStatus } from "../../actions/commonActions";
@@ -45,7 +47,6 @@ import PopUpComponent from "../../shared/popUpComponent";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import jwt_decode from "jwt-decode";
 import { getCountryList } from "../../actions/userActions";
-// var uuid = require('react-native-uuid');
  
 import {GenerateUUID}  from "react-native-uuid"
 // import crashlytics from "@react-native-firebase/crashlytics";
@@ -245,7 +246,7 @@ class LoginComponent extends Component {
         userDetails.age_band &&
         userDetails.flights_taken_annually
       ) {
-        this.props.navigation.navigate("Authenticated");
+        this.props.navigation.navigate("FindFlightContainerScreen");
       } else {
 
         let email = ""
@@ -305,7 +306,7 @@ class LoginComponent extends Component {
       isLoginPressed: true,
     });
     const email = this.state.email.trim();
-    // let sessionId = uuid.v4()
+    let sessionId = uuid.v4()
 
 
     const password = this.state.password.trim();
@@ -320,7 +321,7 @@ class LoginComponent extends Component {
         user: {
           email,
           password,
-          sessionId:"vvnfjnefuiewuroiwncapaowe9387r934u9f3fb83yr93fb"
+          sessionId:sessionId
         },
       };
       this.props.signInAction(userData);
@@ -385,6 +386,10 @@ class LoginComponent extends Component {
 
   onPressGoogleSocialLogin = async () => {
     this.setState({ isLoading: true });
+
+
+
+  
     try {
       try {
         let imageObject = {};
@@ -413,7 +418,10 @@ class LoginComponent extends Component {
           imageObject["fileName"] = "RFFUser";
         }
 
-        // let sessionId = uuid.v4()
+        let sessionId = uuid.v4()
+
+
+        console.log("yes chek here session id - - - - -",sessionId)
 
         const userInfo = {};
 
@@ -467,7 +475,7 @@ class LoginComponent extends Component {
   socialLoginSuccessCallBack(res, eventText) {
     const { navigation } = this.props;
     this.setState({ isLoading: false });
-    navigation.navigate("Authenticated");
+    navigation.navigate("FindFlightContainerScreen");
     // trackEventDetails(eventText, null, this.props.userData)
   }
 
@@ -480,7 +488,7 @@ class LoginComponent extends Component {
   renderLogoContainer() {
     return (
       <View style={styles.logoContainer}>
-        <Image style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
+        <FastImage style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
       </View>
     );
   }
@@ -573,7 +581,7 @@ class LoginComponent extends Component {
             }
             style={styles.eyeContainer}
           >
-            <Image
+            <FastImage
               style={
                {height:scale(20),width:scale(20),marginBottom:scale(4),marginRight:scale(5)}
               }
@@ -641,7 +649,7 @@ class LoginComponent extends Component {
             }
             style={styles.eyeContainer}
           >
-            <Image
+            <FastImage
               style={
                 this.state.isHidePassword
                   ? styles.inVisibleEye
@@ -686,7 +694,7 @@ class LoginComponent extends Component {
             onPress={() => this.onPressGoogleSocialLogin()}
             style={styles.googleFb}
           >
-            <Image style={styles.googleButton} resizeMode="contain" source={IMG_CONST.GOOGLE_ICON} />
+            <FastImage style={styles.googleButton} resizeMode="contain" source={IMG_CONST.GOOGLE_ICON} />
             {/* <Text
             style={styles.iconTxt}
           > Google</Text> */}
@@ -700,7 +708,7 @@ class LoginComponent extends Component {
             // onPress={() => this.onPressFBSocialLogin()}
             style={styles.googleFb}
           >
-            <Image style={styles.fbButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
+            <FastImage style={styles.fbButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
             {/* <Text
             style={styles.iconTxt}
           > Facebook</Text> */}
@@ -713,7 +721,7 @@ class LoginComponent extends Component {
               onPress={() => this.onAppleButtonPress()}
               style={styles.fb}
             >
-              <Image style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
+              <FastImage style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
             </TouchableOpacity>
           )}
         </View>
@@ -753,7 +761,7 @@ class LoginComponent extends Component {
   render() {
     return (
 
-        <ImageBackground source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",justifyContent:'center',alignItems:"center"}}
+        <FastImage source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",justifyContent:'center',alignItems:"center"}}
           imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
         >
         <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(200)}}>
@@ -788,7 +796,7 @@ class LoginComponent extends Component {
           />
         )}
         </View>
-        </ImageBackground>
+        </FastImage>
    
     );
   }

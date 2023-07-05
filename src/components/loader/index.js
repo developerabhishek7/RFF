@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import scale, { verticalScale } from '../../helpers/scale';
 import { colours } from '../../constants/ColorConst';
+import FastImage from 'react-native-fast-image'
 
 class TransLoader extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class TransLoader extends Component {
             return (
                 <View style={appStyle.loaderContainer}>
                   <View style={{height:verticalScale(130), width:verticalScale(130), backgroundColor:colours.white, justifyContent:'center', alignItems:'center', borderRadius:verticalScale(10), overflow:'hidden'}}>
-                    <Image source= {IMAGE_CONST.LOADER} style={{height:verticalScale(200), width:verticalScale(200)}} />
+                    <FastImage source= {IMAGE_CONST.LOADER} style={{height:verticalScale(200), width:verticalScale(200)}} />
                   </View>
                 </View>
             );

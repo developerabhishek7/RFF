@@ -9,6 +9,7 @@ import Modal from "react-native-modal";
 import * as STRING_CONST from "../../constants/StringConst";
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import CustomButton from "../../components/customComponents/CustomButton";
+import FastImage from 'react-native-fast-image'
 
 export default class TravellersAndClassModal extends Component {
   constructor(props) {
@@ -291,7 +292,7 @@ export default class TravellersAndClassModal extends Component {
                   }}
                   style={{ paddingHorizontal: scale(10) }}
                 >
-                  <Image
+                  <FastImage
                     style={{
                       justifyContent: "flex-end",
                       height: verticalScale(28), width: scale(28)
@@ -301,7 +302,7 @@ export default class TravellersAndClassModal extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.travellersCountViewStyle}>
-                <Image
+                <FastImage
                   source={IMAGE_CONST.LIGHT_BLUE_USER}
                   resizeMode="cover"
                   style={styles.passengerIcon}

@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Text, Modal,TouchableOpacity, BackHandler,Dime
 import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-// import MapboxGL from "@react-native-mapbox-gl/maps";
+import MapboxGL from "@react-native-mapbox-gl/maps";
 import * as IMG_CONST from "../../constants/ImageConst";
 import * as STRING_CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
@@ -15,14 +15,12 @@ import * as CONFIG from "../../helpers/config";
 import  Entypo from 'react-native-vector-icons/Entypo';
 const { height, width } = Dimensions.get("window");
 import * as IMAGE_CONST from "../../constants/ImageConst";
+import FastImage from 'react-native-fast-image'
+
 var uuid = require("react-native-uuid");
-
 import { getAccessToken } from "../../constants/DataConst";
-
 import {updateGuestUserPostHog,updateLoggedInUserPostHog} from '../../actions/userActions'
-
 import DeviceInfo from "react-native-device-info";
-
 import {
   getAirlinesMembership,
   getPossibleRoutes,
@@ -32,9 +30,7 @@ import {
   getFlightSchedule
 } from "../../actions/findFlightActions";
 import styles from "./masSearchStyles";
-
 const coordinates = [];
-
 class MapComponent extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +52,6 @@ class MapComponent extends Component {
   }
 
 
-
   postHogAnalytics = (body) => {
     if(this.props.isLoggedIn){
       this.props.updateLoggedInUserPostHogAction(body)
@@ -75,7 +70,7 @@ class MapComponent extends Component {
       const accesstoken = await getAccessToken();
        setTimeout(() => {
         this.setState({isLoader:false,})
-      }, 2000);
+      }, 3000);
 
       let MAP_TOKEN = await AsyncStorage.getItem("MAP_TOKEN")
     
@@ -88,13 +83,13 @@ class MapComponent extends Component {
         deviecBrand,deviceName,isTablet,isEmulator
       })
 
-    // MapboxGL.setAccessToken(
-    //   MAP_TOKEN ? MAP_TOKEN : CONFIG.MAPBOX_TOKEN
-    // );
+      MapboxGL.setAccessToken(
+        MAP_TOKEN ? MAP_TOKEN : CONFIG.MAPBOX_TOKEN
+      );
 
 
     // MapboxGL.setAccessToken(CONFIG.MAPBOX_TOKEN);
-    // MapboxGL.setTelemetryEnabled(true);
+    MapboxGL.setTelemetryEnabled(true);
     
     let uuid_Key = uuid.v4()
     let userId = this.props.userInfo.id
@@ -352,7 +347,7 @@ class MapComponent extends Component {
             justifyContent: 'center',          
           }}>
             <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-              <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+              <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
             </View>
           </View>
           </View>
@@ -384,9 +379,10 @@ class MapComponent extends Component {
         <Fragment>
 
           <View style={{ flex: 1,backgroundColor:"#FFF" }}>
-          {/* <MapboxGL.MapView
+            <MapboxGL.MapView
             styleURL={MapboxGL.StyleURL.Street}
-            zoomLevel={10}
+            
+  
             // style={styles.container}
             style={{ 
               flex: 1,              
@@ -398,10 +394,10 @@ class MapComponent extends Component {
             rotateEnabled={false}
             zoomEnabled={true}
           >
-            <MapboxGL.Camera
-              minZoomLevel={0}
+           <MapboxGL.Camera
+              // minZoomLevel={3}
               centerCoordinate={this.state.centerCoordinate}
-                          
+              // maxZoomLevel={9}     
             />
             {destinations && destinations.map((item, index) => {
               let economy = false
@@ -532,84 +528,84 @@ class MapComponent extends Component {
                     {
                     economy && premium && business && first ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && premium && business && !first ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c2.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c2.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && premium && first && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c3.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c3.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && business && first && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c4.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c4.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     business && premium && first && !economy ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c5.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c5.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && premium && !first && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c6.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c6.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && business && !first && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c7.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c7.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && first && !business && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c8.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c8.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     premium && business && !first && !economy ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c9.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c9.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     premium && first && !economy && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     business && first && !economy && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     economy && !first && !business && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c12.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c12.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
@@ -617,14 +613,14 @@ class MapComponent extends Component {
                   {
                     business && !first && !economy && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c13.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c13.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
                   {
                     premium && !first && !economy && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c14.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c14.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
@@ -632,7 +628,7 @@ class MapComponent extends Component {
                   {
                     first && !premium && !economy && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c15.png")} style={{ height: scale(30), width: scale(19) }} />
+                        <FastImage resizeMode="contain" source={require("../../assets/mapIcon/c15.png")} style={{ height: scale(30), width: scale(19) }} />
                       </View>
                       : null
                   }
@@ -645,8 +641,8 @@ class MapComponent extends Component {
                 
                 </MapboxGL.MarkerView>
               );
-            })}
-          </MapboxGL.MapView>  */}
+            })} 
+          </MapboxGL.MapView>  
           <View
             style={{
               position: "absolute",

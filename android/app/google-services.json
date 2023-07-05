@@ -7,6 +7,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:889841388445:android:decd4aad0932a0ce7dfd74",
+        "android_client_info": {
+          "package_name": "com.rewardflightfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889841388445-blhfkinuj5vfjbomdtvh32fa02la4bna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rewardflightfinder",
+            "certificate_hash": "9d63772edcfd8b5319d84875abcd84bdd7d275be"
+          }
+        },
+        {
+          "client_id": "889841388445-bv8l44l19ik7jtpf1i6j5qq6glc0q9kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsxd2HIxCSx-Ma6ASYlD9oaFSkrMEHN8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889841388445-bv8l44l19ik7jtpf1i6j5qq6glc0q9kp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "889841388445-qe3iquc02n3ig862pn5nsvirgj8b0j5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rewardflightfinder.app.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:889841388445:android:ffb4b407ddf416ac7dfd74",
         "android_client_info": {
           "package_name": "com.rewardflightfinder.app.android"
