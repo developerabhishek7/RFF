@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment,useContext } from "react";
 import { View, Text, Image, Alert,BackHandler } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import { getformattedDate, isEmptyString, getLocationNameWithCode } from "../../
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import moment from "moment";
 import FastImage from 'react-native-fast-image'
+import PosthogComponent from '../posthog/index'
 
 import styles from "./editAlertStyle";
 import PopUpComponent from "../../shared/popUpComponent";
@@ -23,7 +24,7 @@ import {
   resetAlertUpdate,
   getAlerts
 } from "../../actions/alertActions";
-import {usePostHog} from 'posthog-react-native';
+
 const classes = ["economy", "premium_economy", "business", "first"];
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 class EditAlertComponent extends Component {
@@ -100,6 +101,8 @@ class EditAlertComponent extends Component {
     data = this.props.route.params.alertData;
     let searchData = this.props.route.params.data;
 
+
+
     this.setState({
       passengerCount: searchData.passengerCount,
       selectedIndex: searchData.isReturn ? 1 : 0,
@@ -122,8 +125,11 @@ class EditAlertComponent extends Component {
       isEconomy:searchData.classSelected[0],
       isPremium:searchData.classSelected[1],
       isBusiness:searchData.classSelected[2],
-      isFirst:searchData.classSelected[3]
+      isFirst:searchData.classSelected[3],
     });
+
+
+
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
   );
@@ -753,8 +759,6 @@ class EditAlertComponent extends Component {
       return false
     }
 
-
-
     if (goldMember) {
       expireDate = new Date(goldExpireDate).getTime()
       departureEndDate = new Date(alertDate).getTime()
@@ -954,10 +958,8 @@ class EditAlertComponent extends Component {
               : 'N/A',
             }
           }
-          const posthog = usePostHog()
-          posthog.capture('Alert',trackData);
-          // PostHog.capture('Alert', trackData1);
-
+        
+           PosthogComponent(trackData)
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1035,9 +1037,9 @@ class EditAlertComponent extends Component {
             }
           }
 
-          const posthog = usePostHog()
-          posthog.capture('Alert',trackData);
-          this.props.editAlertAction(editAlertData, this.state.id);
+          let name = ('Alert',trackData)
+          PosthogComponent(name)
+          // this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
           //   departEndDate: "",
@@ -1231,13 +1233,9 @@ class EditAlertComponent extends Component {
                     inboundEndDate: 'N/A',
                   }
                 }
-                 
                 
-                const posthog = usePostHog()
-                posthog.capture('Alert',trackData);
-
-
-
+                let name = ('Alert',trackData)
+                PosthogComponent(name)
                 this.props.cancelAlertAction(this.state.id,screenType)
                 // this.props.route.params.props.cancelAlertAction(
                 //   this.state.id

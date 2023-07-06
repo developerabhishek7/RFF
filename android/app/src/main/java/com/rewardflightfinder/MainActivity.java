@@ -1,4 +1,4 @@
-package com.rewardflightfinder;
+package com.rewardflightfinder.app.android;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

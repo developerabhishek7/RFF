@@ -20,7 +20,7 @@ import { colours } from "../../constants/ColorConst";
 import CustomButton from "../../components/customComponents/CustomButton";
 import * as Config from "../../helpers/config";
 import { isAndroid } from "../../utils/commonMethods";
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 import FontAwesome from "react-native-vector-icons/Feather";
 import FastImage from 'react-native-fast-image'
 
@@ -387,10 +387,11 @@ class MembershipComponent extends Component{
           </Text>
           </View>
         } 
-      {              
-             isAppReviewSuccess  == false|| buildVersion == 0 ?
+          {              
+            isAppReviewSuccess  == false|| buildVersion == 0 ?
              <Fragment>
-           <Menu
+           <Menu 
+            visible={true}
             style={{ marginTop: verticalScale(25), width:scale(155) }}
             ref={this.setMenuRef}
             button={
@@ -405,9 +406,8 @@ class MembershipComponent extends Component{
                   size={scale(22)} />
               </TouchableOpacity>
             }
-          
           >
-               <MenuItem
+            <MenuItem
               onPress={() => {
                 this.hideMenu();
                 this.reloaderApp()

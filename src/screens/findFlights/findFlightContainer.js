@@ -385,11 +385,11 @@ class FindFlightContainer extends Component {
                 },
               }
 
-              setTimeout(() => {
-                const posthog = usePostHog()
+              // setTimeout(() => {
+              //   const posthog = usePostHog()
 
-                posthog.capture('Search', trackData);
-              }, 1000);
+              //   posthog.capture('Search', trackData);
+              // }, 1000);
                
               // this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)
             }
@@ -414,8 +414,8 @@ class FindFlightContainer extends Component {
                   inboundEndDate: 'N/A since Calendar Page search'
                 },
               }
-              const posthog = usePostHog()
-              posthog.capture('Search', trackData);
+              // const posthog = usePostHog()
+              // posthog.capture('Search', trackData);
              
             }
             this.setState({

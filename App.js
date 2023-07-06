@@ -10,9 +10,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Orientation from "react-native-orientation-locker";
 import TransLoader from "./src/components/loader/index";
 console.disableYellowBox = true;
-import PostHog from 'posthog-react-native'
+// import PostHog from 'posthog-react-native'
 import { NativeBaseProvider } from 'native-base';
 import crashlytics from "@react-native-firebase/crashlytics";
+import { PostHogProvider, posthog } from 'posthog-react-native';
 
 class App extends React.Component {
   constructor(props) {
@@ -34,9 +35,12 @@ class App extends React.Component {
     this.logCrashlytics()
     Orientation.lockToPortrait();
     fcm.setStore(this.state.store);
-      await PostHog.initAsync('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv',{
-      host:'https://d29t15mip7grca.cloudfront.net',      
-    })
+  
+    await posthog.initAsync({
+      apiKey: 'phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv',
+      host:'https://d29t15mip7grca.cloudfront.net',  
+      captureApplicationLifecycleEvents: true, // Optional: captures app lifecycle events
+    });
     //  PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
     //   // app.posthog.com
     //   captureApplicationLifecycleEvents: true,
@@ -94,10 +98,11 @@ class App extends React.Component {
     this.setState({ appState: nextAppState });
   };
 
+
+
   // componentWillUnmount() {
   //   AppState.removeEventListener("change", this._handleAppStateChange);
   // }
-
 
 
   render() {

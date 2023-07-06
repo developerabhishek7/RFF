@@ -2369,8 +2369,8 @@ export default class CalenderComponent extends Component {
               inboundEndDate: 'N/A',
             }
           }
-          const posthog = usePostHog()
-          posthog.capture('Alert', trackData);
+          // const posthog = usePostHog()
+          // posthog.capture('Alert', trackData);
           this.props.onSubmitAlertPress(body);
           this.setState({
             departStartDate: "",
@@ -2500,8 +2500,8 @@ export default class CalenderComponent extends Component {
             }
           }
     
-          const posthog = usePostHog()
-          posthog.capture('Alert', trackData);
+          // const posthog = usePostHog()
+          // posthog.capture('Alert', trackData);
         
           this.props.onSubmitAlertPress(body);
           this.setState({

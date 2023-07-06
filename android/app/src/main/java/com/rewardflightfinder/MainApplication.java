@@ -1,4 +1,4 @@
-package com.rewardflightfinder;
+package com.rewardflightfinder.app.android;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

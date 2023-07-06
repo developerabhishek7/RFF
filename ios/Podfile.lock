@@ -115,6 +115,7 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - PostHog (1.4.4)
   - PromisesObjC (2.2.0)
   - PromisesSwift (2.2.0):
     - PromisesObjC (= 2.2.0)
@@ -594,6 +595,9 @@ PODS:
   - RNGoogleSignin (10.0.1):
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - RNPostHog (1.1.5):
+    - PostHog (~> 1.4.4)
+    - React
   - RNReanimated (3.3.0):
     - DoubleConversion
     - FBLazyVector
@@ -700,6 +704,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNPostHog (from `../node_modules/posthog-react-native`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -730,6 +735,7 @@ SPEC REPOS:
     - Mapbox-iOS-SDK
     - MapboxMobileEvents
     - nanopb
+    - PostHog
     - PromisesObjC
     - PromisesSwift
     - SDWebImage
@@ -854,6 +860,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNPostHog:
+    :path: "../node_modules/posthog-react-native"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -894,6 +902,7 @@ SPEC CHECKSUMS:
   Mapbox-iOS-SDK: 02590a60fe300810c55432219a0caaa1338fbafb
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  PostHog: 4b6321b521569092d4ef3a02238d9435dbaeb99f
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -948,6 +957,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: 3aca7a5b3b1f79a9ee75026662ea57693436a338
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNGoogleSignin: ccaa4a81582cf713eea562c5dd9dc1961a715fd0
+  RNPostHog: 5ad77e4a4d52ca151da444f11095125681d0cf68
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
   RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
