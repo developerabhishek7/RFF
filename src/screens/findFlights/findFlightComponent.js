@@ -231,11 +231,11 @@ export default class FindFlightComponent extends Component {
     }, 2000);
 
  
-    setTimeout(() => {
-      if(isNewSignUp){
-        posthog.capture('New Sign Up', trackData);
-      }
-    }, 1000);
+    // setTimeout(() => {
+    //   if(isNewSignUp){
+    //     posthog.capture('New Sign Up', trackData);
+    //   }
+    // }, 1000);
 
     setTimeout(async() => {
       if(isNewSignUp){
@@ -1179,13 +1179,12 @@ export default class FindFlightComponent extends Component {
                   </Text>
              
                 {this.renderBottomButton(STRING_CONST.MAP_SEARCH_TITLE, colours.darkBlueTheme, () => {
-                  this.logCrash()
-            // this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
-                  //   airLinesMembershipDetailsObject: this.props
-                  //     .airlinesMembershipDetails,
-                  //   airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
-                  //   locationsObject: this.props.locationsObject,
-                  // });
+                this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
+                    airLinesMembershipDetailsObject: this.props
+                      .airlinesMembershipDetails,
+                    airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
+                    locationsObject: this.props.locationsObject,
+                  });
                 })}
               </Fragment> 
                 // : null

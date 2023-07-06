@@ -201,8 +201,6 @@ class DrawerComponentComponent extends Component {
             </View>
             : null
           }
-
-         
            {
             buildVersion  == 0  || isAppReviewSuccess == false ?
               <Fragment>
