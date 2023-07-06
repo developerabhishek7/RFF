@@ -15,6 +15,7 @@ import {
   ImageBackground
 } from "react-native";
 import FastImage from 'react-native-fast-image'
+import crashlytics from "@react-native-firebase/crashlytics";
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from "./findFlightStyles";
@@ -150,37 +151,38 @@ export default class FindFlightComponent extends Component {
   };
 
 
-  // logCrashlytics = async () => {
+  logCrashlytics = async () => {
     
-  //   const userData  = this.props.userData
+    const userData  = this.props.userData
 
-  //   crashlytics().log("Dummy Details Added just for added ");
-  //   await Promise.all([
-  //     crashlytics().setUserId("101"),
-  //     crashlytics().setAttribute("credits", String(50)),
-  //     crashlytics().setAttributes({
-  //       email: userData.email,
-  //     }),
-  //   ]);
-  // };
+    crashlytics().log("Dummy Details Added just for added ");
+    await Promise.all([
+      crashlytics().setUserId("101"),
+      crashlytics().setAttribute("credits", String(50)),
+      crashlytics().setAttributes({
+        email: userData.email,
+      }),
+    ]);
+  };
 
-  //  logCrash = async (user) => {
-  //   crashlytics().crash();
-  // };
+   logCrash = async (user) => {
+    console.log("yes chekcking its calling  - -  - - - -")
+    crashlytics().crash();
+  };
 
-  //  logError = async (user) => {
-  //   crashlytics().log("Updating user count.");
-  //   try {
-  //     if (users) {
-  //       // An empty array is truthy, but not actually true.
-  //       // Therefore the array was never initialised.
-  //       setUserCounts(userCounts.push(users.length));
-  //     }
-  //   } catch (error) {
-  //     crashlytics().recordError(error);
-  //     console.log(error);
-  //   }
-  // };
+   logError = async (user) => {
+    crashlytics().log("Updating user count.");
+    try {
+      if (users) {
+        // An empty array is truthy, but not actually true.
+        // Therefore the array was never initialised.
+        setUserCounts(userCounts.push(users.length));
+      }
+    } catch (error) {
+      crashlytics().recordError(error);
+      console.log(error);
+    }
+  };
 
   componentDidMount = async () => {
 
@@ -1177,12 +1179,13 @@ export default class FindFlightComponent extends Component {
                   </Text>
              
                 {this.renderBottomButton(STRING_CONST.MAP_SEARCH_TITLE, colours.darkBlueTheme, () => {
-                  this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
-                    airLinesMembershipDetailsObject: this.props
-                      .airlinesMembershipDetails,
-                    airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
-                    locationsObject: this.props.locationsObject,
-                  });
+                  this.logCrash()
+            // this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
+                  //   airLinesMembershipDetailsObject: this.props
+                  //     .airlinesMembershipDetails,
+                  //   airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
+                  //   locationsObject: this.props.locationsObject,
+                  // });
                 })}
               </Fragment> 
                 // : null

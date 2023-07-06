@@ -48,7 +48,7 @@ target 'RewardFlightFinder' do
   # pod 'Firebase/Messaging'
   # pod 'React',:path => "../node_modules/react-native"
   # pod 'React-Core', :path => "../node_modules/react-native"
-  # pod 'react-native-branch', path: '../node_modules/react-native-branch'
+  pod 'react-native-branch', path: '../node_modules/react-native-branch'
 
 
   # Flags change depending on the env values.

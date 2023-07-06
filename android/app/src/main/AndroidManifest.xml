@@ -20,6 +20,30 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+
+
+         <!-- Branch URI scheme -->
+            <intent-filter>
+                <data android:scheme="rewardflightfinder.app.link" android:host="open" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+
+            <!-- Branch App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="rewardflightfinder.app.link" />
+            </intent-filter>
+
       </activity>
+
+              <!-- Branch init -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ixocaoR0upNIPP7mEi3slfjmBwhl2rSH" />
+        <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
+
     </application>
 </manifest>
