@@ -14,6 +14,7 @@ import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons"
 import moment from "moment";
 import FastImage from 'react-native-fast-image'
 import PosthogComponent from '../posthog/index'
+import PostHog from 'posthog-react-native';
 
 import styles from "./editAlertStyle";
 import PopUpComponent from "../../shared/popUpComponent";
@@ -959,7 +960,7 @@ class EditAlertComponent extends Component {
             }
           }
         
-           PosthogComponent(trackData)
+          PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1037,8 +1038,8 @@ class EditAlertComponent extends Component {
             }
           }
 
-          let name = ('Alert',trackData)
-          PosthogComponent(name)
+          PostHog.capture('Alert',trackData);
+         
           // this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1234,8 +1235,8 @@ class EditAlertComponent extends Component {
                   }
                 }
                 
-                let name = ('Alert',trackData)
-                PosthogComponent(name)
+                PostHog.capture('Alert',trackData);
+         
                 this.props.cancelAlertAction(this.state.id,screenType)
                 // this.props.route.params.props.cancelAlertAction(
                 //   this.state.id

@@ -54,7 +54,7 @@ var uuid = require('react-native-uuid');
 import moment from 'moment'
 // import Purchases from 'react-native-purchases';
 import DeviceInfo from "react-native-device-info";
-import { usePostHog, PostHogProvider } from 'posthog-react-native'
+import PostHog from 'posthog-react-native';
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -385,11 +385,10 @@ class FindFlightContainer extends Component {
                 },
               }
 
-              // setTimeout(() => {
-              //   const posthog = usePostHog()
-
-              //   posthog.capture('Search', trackData);
-              // }, 1000);
+              setTimeout(() => {
+            
+                PostHog.capture('Search', trackData);
+              }, 1000);
                
               // this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)
             }
@@ -414,8 +413,7 @@ class FindFlightContainer extends Component {
                   inboundEndDate: 'N/A since Calendar Page search'
                 },
               }
-              // const posthog = usePostHog()
-              // posthog.capture('Search', trackData);
+              PostHog.capture('Search', trackData);
              
             }
             this.setState({
