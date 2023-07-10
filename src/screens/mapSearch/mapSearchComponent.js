@@ -37,7 +37,7 @@ import PopUpComponent from "../../shared/popUpComponent";
 import * as Config from "../../helpers/config";
 import moment from "moment";
 import { getStoreData, getUserId ,getAccessToken} from "../../constants/DataConst";
-import {usePostHog} from 'posthog-react-native';
+import PostHog from 'posthog-react-native';
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 import { Platform } from "react-native";
 var uuid = require("react-native-uuid");
@@ -576,16 +576,11 @@ export default class FindFlightComponent extends Component {
             //     "plateform": "Mobile",
             //   }
             // }
-
             // Alert.alert("yes here on post hog !")
-
-
-
             this.setState({
               showPopUp: true,
             });
           } else {
-
             // this.props.navigation.navigate(STRING_CONST.PRICING_SCREEN);
           }
         } else {
@@ -665,7 +660,7 @@ export default class FindFlightComponent extends Component {
           }
 
      
-          // PostHog.capture('Search', trackData);
+          PostHog.capture('Search', trackData);
         
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }
@@ -879,9 +874,7 @@ export default class FindFlightComponent extends Component {
       returnEndDate,
       
     } = this.state;
-
     let travel_classes = getBAClassesString(classSelected);
-
     return (
       <View style={styles.informationContainer}>
         {this.tabView()}
@@ -1039,22 +1032,7 @@ export default class FindFlightComponent extends Component {
                 }
               }
 
-
-
-              console.log("yes hcekc here inside the posthog analytics .   . .  . .   .",)
-
-
-
-             
-
-
-
-
-
-
-
-
-
+              // console.log("yes hcekc here inside the posthog analytics .   . .  . .   .",)
               // this.postHogAnalytics(guestUserPostHog)
 
               this.setState({
