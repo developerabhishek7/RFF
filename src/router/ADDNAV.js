@@ -440,15 +440,6 @@ function MainStack() {
     );
   };
   
-  const mapStateToProps = (state) => {
-    const { userInfo, } = state;
-    // console.log("yes check here userInfo - - - -  - - -",userInfo)
-    return {
-      userData: userInfo.userData,
-    };
-  };
 
-  export default connect(
-    mapStateToProps,
-    null
-  )(MainStack);
+
+  export default MainStack;

@@ -95,8 +95,8 @@ export default class DestinationsComponent extends Component {
 
   renderHeader() {
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:scale(-50)}}>
-        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(40),alignSelf:"center"}}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-50) :scale(-20) }}>
+        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(45),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
               <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
@@ -107,7 +107,7 @@ export default class DestinationsComponent extends Component {
             <Text>          </Text>
            </View>
   
-           <View style={{marginTop:scale(20),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+           <View style={{marginTop:scale(10),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
            <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(0),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
               <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
               </TouchableOpacity>

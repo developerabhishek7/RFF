@@ -1,5 +1,5 @@
 import React, { Component, Fragment,useContext } from "react";
-import { View, Text, Image, Alert,BackHandler } from "react-native";
+import { View, Text, Image, Alert,BackHandler, Platform } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import { connect } from "react-redux";
 import {SafeAreaView} from 'react-native'
@@ -221,7 +221,8 @@ class EditAlertComponent extends Component {
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+        Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
         <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}

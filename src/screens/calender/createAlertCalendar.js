@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
@@ -151,10 +152,9 @@ export default class CalenderComponent extends Component {
     const headingText = this.props.route.params.headingText;
 
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(70),borderBottomLeftRadius:scale(50),borderBottomRightRadius:scale(50),width:"100%",marginTop:scale(-12)}}>
-        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(10)}}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(50),borderBottomRightRadius:scale(50),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-50) }}>
+        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(43)}}>
         <TouchableOpacity onPress={() => {
-             
               this.props.navigation.goBack() }}>
               <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
             </TouchableOpacity>
