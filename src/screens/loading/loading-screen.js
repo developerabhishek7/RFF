@@ -28,6 +28,12 @@ export default class LoadingScreen extends React.Component {
     this.navigateToCorrectScreen();
   }
 
+
+  componentDidMount(){
+    StatusBar.setHidden(false);
+
+  }
+
   navigateToCorrectScreen = async () => {
     const { navigation } = this.props;
     const authorizationHeader = await getStoreData("authorizationHeader")

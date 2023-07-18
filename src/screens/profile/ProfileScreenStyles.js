@@ -242,19 +242,21 @@ export default StyleSheet.create({
   },
 
   profileOption: {
-    backgroundColor: "#D7F2F8",
+    backgroundColor: "#FFF",
     borderRadius: scale(8),
     paddingVertical: verticalScale(20),
     paddingHorizontal: verticalScale(15),
     alignItems: "center",
+    justifyContent:"center",
     marginBottom: verticalScale(20),
     width: scale(160),
+    height:scale(150)
   },
   profileOptionText: {
     textAlign: "center",
     marginTop: verticalScale(12),
     fontSize: scale(14),
-    color: colours.darkBlueTheme,
+    color: colours.gray,
     fontFamily:appFonts.INTER_SEMI_BOLD,
     fontWeight:Platform.OS === "android" ? "700" : "600"
   },

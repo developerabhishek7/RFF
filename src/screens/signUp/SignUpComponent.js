@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
+import * as IMAGE_CONST from "../../constants/ImageConst";
 
 import { colours } from "../../constants/ColorConst";
 import * as IMG_CONST from "../../constants/ImageConst";
@@ -49,7 +50,7 @@ const PASSWORD = 4;
 const CONFIRM_PASSWORD = 5;
 class SignUpComponent extends Component {
   constructor(props) {
-    
+
     super(props);
     GoogleSignin.configure({
       webClientId: KEY_CONST.WEB_CLIENT_URL,
@@ -114,15 +115,15 @@ class SignUpComponent extends Component {
       let sessionId = uuid.v4()
       const userData = {
         user: {
-          email:email,
-          password:password,
-          sessionId:sessionId
+          email: email,
+          password: password,
+          sessionId: sessionId
         },
       };
-      if(email && password){
+      if (email && password) {
         this.props.signInAction(userData);
       }
-     
+
       // this.props.navigation.navigate("SignIn", { email: email, password: password });
       // trackEventDetails(STR_CONST.SIGN_UP_EVENT, null, this.props.userDetails);
     }
@@ -160,7 +161,7 @@ class SignUpComponent extends Component {
   //   });
   //   // let firstName = this.state.firstName.trim();
   //   // let lastName = this.state.lastName.trim();
-   
+
 
   //   // let email = `https://apilayer.net/api/check?access_key=${'11af6296a4f704d25f59a41a337ba930'}&email=${this.state.email}`
   //   let email = this.state.email.trim();
@@ -211,7 +212,7 @@ class SignUpComponent extends Component {
   //   // Method to send user details for sign up
   //   this.signUp();
   // }
-  validation = () =>  {
+  validation = () => {
     // console.log("yes inside the validation ####### ")
     this.validateArray = [];
     this.setState({
@@ -228,23 +229,23 @@ class SignUpComponent extends Component {
     } else if (!Validators.validName(lastName)) {
       this.validateArray.push(LAST);
       return;
-    } else 
-    if (!email || !Validators.validEmail(email)) {
-      this.validateArray.push(EMAIL);
-      return;
-    } else if (
-      !password ||
-      password.length < 8 ||
-      !Utils.hasLowerCase(password) ||
-      !Utils.hasUpperCase(password) ||
-      !Utils.hasNumber(password)
-    ) {
-      this.validateArray.push(PASSWORD);
-      return;
-    } else if (password !== confirmPassword) {
-      this.validateArray.push(CONFIRM_PASSWORD);
-      return;
-    }
+    } else
+      if (!email || !Validators.validEmail(email)) {
+        this.validateArray.push(EMAIL);
+        return;
+      } else if (
+        !password ||
+        password.length < 8 ||
+        !Utils.hasLowerCase(password) ||
+        !Utils.hasUpperCase(password) ||
+        !Utils.hasNumber(password)
+      ) {
+        this.validateArray.push(PASSWORD);
+        return;
+      } else if (password !== confirmPassword) {
+        this.validateArray.push(CONFIRM_PASSWORD);
+        return;
+      }
     // Method to send user details for sign up
     this.signUp();
   }
@@ -261,13 +262,13 @@ class SignUpComponent extends Component {
     userInfo["password"] = password;
     userInfo["password_confirmation"] = password;
     userInfo["affiliate_id"] = "",
-    userInfo["currency"] = "",
-    userInfo["membership_type"] = "",
-    userInfo["selected_plan"] = "",
-    userInfo["no_trial"] = false
+      userInfo["currency"] = "",
+      userInfo["membership_type"] = "",
+      userInfo["selected_plan"] = "",
+      userInfo["no_trial"] = false
     userInfo["sessionId"] = uuid.v4()
 
-    
+
     this.setState({ isLoading: true });
 
 
@@ -284,7 +285,7 @@ class SignUpComponent extends Component {
       (res) => this.createUserSuccessCallBack(res),
       (res) => this.createUserFailureCallBack(res)
     );
-   
+
   };
 
 
@@ -433,7 +434,7 @@ class SignUpComponent extends Component {
 
         this.setState({ userInfo: userGoogleInfo });
 
-        console.log("yes chekc here  - - - - - - ",userGoogleInfo.user.photo)
+        console.log("yes chekc here  - - - - - - ", userGoogleInfo.user.photo)
 
         const image = await Utils.getImageInfo(userGoogleInfo.user.photo);
         // imageObject["uri"] = userGoogleInfo.user.photo;
@@ -442,9 +443,9 @@ class SignUpComponent extends Component {
 
         // console.log("yes check here iomag ##### ",image)
 
-        if(userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null){
-          imageObject["uri"] = userGoogleInfo.user.photo ?  userGoogleInfo.user.photo :  null
-          imageObject["type"] =  image ? image.type.split("/")[1] : null
+        if (userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null) {
+          imageObject["uri"] = userGoogleInfo.user.photo ? userGoogleInfo.user.photo : null
+          imageObject["type"] = image ? image.type.split("/")[1] : null
           imageObject["fileName"] = "RFFUser";
         }
 
@@ -476,7 +477,7 @@ class SignUpComponent extends Component {
           { user: userInfo },
           (res) => this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_IN_GOOGLE_EVENT),
           (res) => this.socialLoginFailureCallBack(res),
-          imageObject?imageObject : null,
+          imageObject ? imageObject : null,
           imageObject.type ? imageObject.type : null
         );
       } catch (error) {
@@ -506,7 +507,7 @@ class SignUpComponent extends Component {
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
     var decoded = jwt_decode(appleAuthRequestResponse.identityToken);
-    const userInfo = {};       
+    const userInfo = {};
     userInfo.auth_uid = appleAuthRequestResponse.user;
     userInfo.auth_token = appleAuthRequestResponse.identityToken;
     userInfo.provider = "apple";
@@ -545,7 +546,7 @@ class SignUpComponent extends Component {
   renderLogoContainer() {
     return (
       <View style={styles.logoContainer}>
-        <FastImage style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
+        <FastImage resizeMode="contain" style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
       </View>
     );
   }
@@ -583,7 +584,7 @@ class SignUpComponent extends Component {
           >
             {STR_CONST.FIRST_NAME}
           </Text>
-          <TextInput
+          {/* <TextInput
           underlineColorAndroid='rgba(0,0,0,0)'
             style={[
               styles.input,
@@ -606,14 +607,46 @@ class SignUpComponent extends Component {
             blurOnSubmit={false}
             maxLength={15}
             returnKeyType="next"
+          /> */}
+        </View>
+
+
+        <View style={styles.passContainer1}>
+          <TextInput
+            ref={(input) => {
+              this.secondTextInput = input;
+            }}
+            style={[
+              styles.input,
+              {
+                borderBottomColor:
+                  isSignUpPressed && Utils.isEmptyString(password)
+                    ? colours.errorColor
+                    : colours.borderBottomLineColor,
+              },
+            ]}
+            underlineColorAndroid={'#FFFFFF'}
+            placeholder=""
+            autoCapitalize={"words"}
+            onChangeText={(firstName) => {
+              this.setState({ firstName });
+            }}
+            value={firstName}
+            onSubmitEditing={() => {
+              this.secondTextInput.focus();
+            }}
+            blurOnSubmit={false}
+            maxLength={15}
+            returnKeyType="next"
           />
         </View>
+
         {isSignUpPressed && !this.validateName(firstName) && (
           <Text style={styles.errorMessageTextStyle}>
             {STR_CONST.PLEASE_ENTER_FIRST_NAME}
           </Text>
         )}
-        <View style={styles.fieldContainer}>
+        {/* <View style={styles.fieldContainer}>
           <Text
             style={[
               styles.emailText,
@@ -654,12 +687,59 @@ class SignUpComponent extends Component {
             maxLength={15}
             returnKeyType="next"
           />
+        </View>  */}
+        <View style={styles.fieldContainer}>
+          <Text
+            style={[
+              styles.emailText,
+              {
+                color:
+                  isSignUpPressed && Utils.isEmptyString(lastName)
+                    ? colours.errorColor
+                    : colours.lightGreyish,
+              },
+            ]}
+          >
+            {STR_CONST.LAST_NAME}
+          </Text>
+          <View style={styles.passContainer1}>
+            <TextInput
+              ref={(input) => {
+                this.secondTextInput = input;
+              }}
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    isSignUpPressed && Utils.isEmptyString(password)
+                      ? colours.errorColor
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+              placeholder=""
+              autoCapitalize={"words"}
+              onChangeText={(lastName) => {
+                this.setState({ lastName });
+              }}
+              value={lastName}
+              onSubmitEditing={() => {
+                this.thirdTextInput.focus();
+              }}
+              blurOnSubmit={false}
+              maxLength={15}
+              returnKeyType="next"
+            />
+          </View>
         </View>
+
         {isSignUpPressed && !this.validateName(lastName) && (
           <Text style={styles.errorMessageTextStyle}>
             {STR_CONST.PLEASE_ENTER_LAST_NAME}
           </Text>
         )}
+
+
+
 
         <View style={styles.fieldContainer}>
           <Text
@@ -675,42 +755,60 @@ class SignUpComponent extends Component {
           >
             {STR_CONST.EMAIL}
           </Text>
-          
-          <TextInput
-          underlineColorAndroid='rgba(0,0,0,0)'
-            ref={(input) => {
-              this.thirdTextInput = input;
-            }}
-            style={[
-              styles.input,
-              {
-                borderBottomColor:
-                  isSignUpPressed && Utils.isEmptyString(email)
-                    ? colours.errorColor
-                    : colours.borderBottomLineColor,
-              },
-            ]}
-            placeholder=""
-            autoCapitalize={"none"}
-            onChangeText={(email) => {
-              this.setState({ email });
-            }}
-            value={email}
-            keyboardType={"email-address"}
-            onSubmitEditing={() => {
-              this.fourthTextInput.focus();
-            }}
-            blurOnSubmit={false}
-            returnKeyType="next"
-            maxLength={70}
-          />
+
+          <View style={styles.passContainer1}>
+
+
+            <TextInput
+              ref={(input) => {
+                this.secondTextInput = input;
+              }}
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    isSignUpPressed && Utils.isEmptyString(password)
+                      ? colours.errorColor
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+              placeholder=""
+              autoCapitalize="none"
+              onChangeText={(email) => {
+                this.setState({ email });
+              }}
+              keyboardType={"email-address"}
+              value={this.state.email}
+              onSubmitEditing={() => {
+                this.secondTextInput.focus();
+              }}
+              blurOnSubmit={false}
+              returnKeyType="next"
+              underlineColorAndroid={'#FFFFFF'}
+            />
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({ isHidePassword: !this.state.isHidePassword })
+              }
+              style={styles.eyeContainer}
+            >
+              <FastImage
+                style={
+                  { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
+                }
+                resizeMode="contain"
+                source={IMG_CONST.EMAIL_LOGO
+                }
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         {isSignUpPressed && email !== "" && !Validators.validEmail(email) && (
           <Text style={styles.errorMessageTextStyle}>
             {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
           </Text>
         )}
-        <View style={styles.fieldContainer}>
+        {/* <View style={styles.fieldContainer}>
           <Text
             style={[
               styles.emailText,
@@ -767,11 +865,83 @@ class SignUpComponent extends Component {
               }
             />
           </TouchableOpacity>
-        </View>
-        <View style={{marginStart:Platform.OS === "android" ? scale(16) : scale(0)}}>
-        {password.length !== 0 && <PasswordCheckView password={password} />}
-        </View>
+        </View> */}
+
+
         <View style={styles.fieldContainer}>
+          <Text
+            style={[
+              styles.emailText,
+              {
+                color:
+                  isSignUpPressed && Utils.isEmptyString(password)
+                    ? colours.errorColor
+                    : colours.lightGreyish,
+              },
+            ]}
+          >
+            {STR_CONST.PASSWORD}
+          </Text>
+
+
+          <View style={styles.passContainer1}>
+
+            <TextInput
+              ref={(input) => {
+                this.secondTextInput = input;
+              }}
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    isSignUpPressed && Utils.isEmptyString(password)
+                      ? colours.errorColor
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+              placeholder=""
+              autoCapitalize="none"
+              onChangeText={(password) => {
+                this.setState({ password });
+              }}
+              maxLength={20}
+              secureTextEntry={this.state.isHidePassword}
+              value={this.state.password}
+              returnKeyType="done"
+              underlineColorAndroid={'#FFFFFF'}
+
+              onSubmitEditing={() => {
+                this.validation();
+
+              }}
+            />
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({ isHidePassword: !this.state.isHidePassword })
+              }
+              style={styles.eyeContainer}
+            >
+              <FastImage
+                style={
+                  this.state.isHidePassword
+                    ? styles.inVisibleEye
+                    : styles.visibleEye
+                }
+                source={
+                  this.state.isHidePassword
+                    ? IMG_CONST.EYE_INVISIBLE
+                    : IMG_CONST.EYE_VISIBLE
+                }
+              />
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+        <View style={{ marginStart: Platform.OS === "android" ? scale(10) : scale(0) }}>
+          {password.length !== 0 && <PasswordCheckView password={password} />}
+        </View>
+        {/* <View style={styles.fieldContainer}>
           <Text
             style={[
               styles.emailText,
@@ -836,7 +1006,86 @@ class SignUpComponent extends Component {
               }
             />
           </TouchableOpacity>
+        </View> */}
+
+
+
+
+        <View style={styles.fieldContainer}>
+          <Text
+            style={[
+              styles.emailText,
+              {
+                color:
+                  isSignUpPressed &&
+                    (Utils.isEmptyString(confirmPassword) ||
+                      this.verifyValidation(CONFIRM_PASSWORD))
+                    ? colours.errorColor
+                    : colours.lightGreyish,
+              },
+            ]}
+          >
+            {STR_CONST.CONFIRM_PASSWORD}
+          </Text>
+          <View style={styles.passContainer1}>
+            <TextInput
+              underlineColorAndroid='rgba(0,0,0,0)'
+              ref={(input) => {
+                this.fivethTextInput = input;
+              }}
+              style={[
+                styles.input,
+                {
+                  borderBottomColor:
+                    isSignUpPressed &&
+                      (Utils.isEmptyString(confirmPassword) ||
+                        this.verifyValidation(CONFIRM_PASSWORD))
+                      ? colours.errorColor
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+              placeholder=""
+              autoCapitalize={"none"}
+              onChangeText={(confirmPassword) => {
+                this.setState({ confirmPassword });
+              }}
+              textContentType={"password"}
+              secureTextEntry={isHideConfirmPassword}
+              value={confirmPassword}
+              blurOnSubmit={false}
+              onSubmitEditing={() => {
+                Keyboard.dismiss(), this.validation();
+              }}
+              returnKeyType="done"
+            />
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({
+                isHideConfirmPassword: !isHideConfirmPassword,
+              })
+            }
+            style={styles.eyeContainer}
+          >
+            <FastImage
+              style={
+                isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
+              }
+              source={
+                isHideConfirmPassword
+                  ? IMG_CONST.EYE_INVISIBLE
+                  : IMG_CONST.EYE_VISIBLE
+              }
+            />
+          </TouchableOpacity>
+          </View>
+
         </View>
+
+
+
+
+
+
         {isSignUpPressed &&
           confirmPassword !== "" &&
           confirmPassword !== password && (
@@ -859,29 +1108,77 @@ class SignUpComponent extends Component {
     );
   }
 
+  // renderGoogleFBButtonContainer() {
+  //   return (
+  //     <View style={styles.googleFBContainer}>
+  //       <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_UP}</Text>
+  //       <View style={styles.buttonContainer}>
+  //         <TouchableOpacity
+  //           onPress={() => this.onPressGoogleSocialLogin()}
+  //           style={styles.google}
+  //         >
+  //           <FastImage style={styles.googleButton} source={IMG_CONST.GOOGLE_ICON} />
+  //         </TouchableOpacity>
+  //         <TouchableOpacity
+  //           // onPress={() => this.onPressFBSocialLogin()}
+  //           style={styles.fb}
+  //         >
+  //           <FastImage style={styles.fbButton} source={IMG_CONST.FB_ICON} />
+  //         </TouchableOpacity>
+  //         {!Utils.isAndroid() && (
+  //           <TouchableOpacity
+  //             onPress={() => this.onAppleButtonPress()}
+  //             style={styles.fb}
+  //           >
+  //             <FastImage style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
+  //           </TouchableOpacity>
+  //         )}
+  //       </View>
+  //     </View>
+  //   );
+  // }
+
+
+
+
   renderGoogleFBButtonContainer() {
     return (
       <View style={styles.googleFBContainer}>
-        <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_UP}</Text>
+        <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_IN}</Text>
         <View style={styles.buttonContainer}>
+        
           <TouchableOpacity
             onPress={() => this.onPressGoogleSocialLogin()}
-            style={styles.google}
+            style={styles.googleFb}
           >
-            <FastImage style={styles.googleButton} source={IMG_CONST.GOOGLE_ICON} />
+            <FastImage style={styles.googleButton} resizeMode="contain" source={IMG_CONST.GOOGLE_ICON} />
+            {/* <Text
+            style={styles.iconTxt}
+          > Google</Text> */}
+       
           </TouchableOpacity>
+
+        
+   
+
           <TouchableOpacity
             // onPress={() => this.onPressFBSocialLogin()}
-            style={styles.fb}
+            style={styles.googleFb}
           >
-            <FastImage style={styles.fbButton} source={IMG_CONST.FB_ICON} />
+            <FastImage style={styles.googleButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
+            {/* <Text
+            style={styles.iconTxt}
+          > Facebook</Text> */}
+          
+         
           </TouchableOpacity>
+        
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}
-              style={styles.fb}
+              style={styles.googleFb}
             >
-              <FastImage style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
+              <FastImage style={styles.googleButton} source={IMG_CONST.APPLE_ICON} />
             </TouchableOpacity>
           )}
         </View>
@@ -906,9 +1203,15 @@ class SignUpComponent extends Component {
     );
   }
 
+
+
+
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <FastImage source={IMAGE_CONST.SIGN_UP_BG} resizeMode="cover" style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
+
+        {/* <SafeAreaView style={styles.container}> */}
+
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps={"always"}
           contentContainerStyle={styles.container}
@@ -961,7 +1264,8 @@ class SignUpComponent extends Component {
             }}
           />
         )}
-      </SafeAreaView>
+        {/* </SafeAreaView> */}
+      </FastImage>
     );
   }
 }

@@ -5,24 +5,21 @@ import * as STRING_CONST from "../../constants/StringConst";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
 
-
-
 import * as CONST from "../../constants/StringConst";
-
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: colours.white,
     // backgroundColor:"#75cff0"
   },
   infoIcon: {
-    height:scale(28), 
-    width:scale(28)
-  },
-  infoIcon1: {
     height:scale(24), 
     width:scale(24)
+  },
+  infoIcon1: {
+    height:scale(19), 
+    width:scale(19),
+    marginLeft:scale(1)
   },
   outerViewStyle: {
     paddingHorizontal: verticalScale(16),

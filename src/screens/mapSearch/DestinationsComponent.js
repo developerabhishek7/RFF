@@ -108,17 +108,18 @@ export default class DestinationsComponent extends Component {
            </View>
   
            <View style={{marginTop:scale(20),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+           <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(0),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
+              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              </TouchableOpacity>
               <TextInput 
-                //  onChangeText={(searchText) => {
-                //   this.onSearch(searchText)
-                // }}
+                //  onChangeText={(searchText) => { 
+                //   this.onSearch(searchText) 
+                // }} 
                 placeholder='Search Available Routes'
                 placeholderTextColor="#FFF"
                 onChangeText={(term) => { this.searchUpdated(term) }}
-              style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
-              <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
-              </TouchableOpacity>
+              style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
+             
            </View>
      </View>
     );
@@ -127,25 +128,25 @@ export default class DestinationsComponent extends Component {
   renderClasses() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf9fc",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ padding: scale(4), borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#2044FF" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf9fc",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
           <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#FEA41D" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf9fc",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
           <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#A905F6" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf9fc",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
           <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#EB186F" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}</Text>
@@ -194,18 +195,13 @@ export default class DestinationsComponent extends Component {
           {this.renderClasses()}
           {
             sortedArray.map((singleMap, index) => {
-
               // console.log("yes chec k on destination list commponent  ####### ",singleMap)
-
               let pointsData1 = []
               let pointsData2 = []
               let pointsData = []
-
               pointsData1 = singleMap.points.BA
               pointsData2 = singleMap.points.SS
-
               pointsData = [...pointsData1, ...pointsData2]
-
               let economy = false
               let premium_economy = false
               let business = false
@@ -221,7 +217,6 @@ export default class DestinationsComponent extends Component {
                   oubound: [],
                   inbound: [],
                 };
-
                 /// Code for oubound
                 Object.keys(singleMap.availability.outbound).map((outboundDate) => {
                   const dateKeys = Object.keys(singleMap.availability.outbound[outboundDate]);
@@ -237,7 +232,6 @@ export default class DestinationsComponent extends Component {
                     });
                   }
                 });
-
                 /// Code for inbound
                 Object.keys(singleMap.availability.inbound).map((inboundDate) => {
                   const dateKeys = Object.keys(singleMap.availability.inbound[inboundDate]);

@@ -50,34 +50,33 @@ class FlightDetailsCompoent extends Component {
       selectedFlight: {},
       Alert_Visibility2: false,
       locationsObject: this.props.locationsObject,
-      dateString: this.props.route.params.dateString,
-      date: this.props.route.params.flightDate,
-      seatsAvailabilityData: this.props.route.params
-        .seatsAvailabilityData,
-      isOutBounded: this.props.route.params.isOutBounded,
-      classSelected: this.props.route.params.classSelected,
-      selectedDate: this.props.route.params.selectedDate,
-      passengerCount: this.props.route.params.passengerCount,
-      isOffPeakValue: this.props.route.params.isOffPeakValue,
-      economyPoints: this.props.route.params.economyPoints,
-      premiumPoints: this.props.route.params.premiumPoints,
-      businessPoints: this.props.route.params.businessPoints,
-      firstPoints: this.props.route.params.firstPoints,
-      // businessSeats:this.props.route.params.businessSeats,
-      // economySeats:this.props.route.params.economySeats,
-      // premiumSeats:this.props.route.params.premiumSeats,
-      noflightschedule: this.props.route.params.noflightschedule,
-      searchData: this.props.route.params.searchData,
-      multipleFlightScheduleData: this.props.route.params.multipleFlightScheduleData,
-      selectedIndex: this.props.route.params.selectedIndex,
-      cabinClassData: this.props.route.params.cabinClassData,
-      trip_type: this.props.route.params.trip_type,
-      source: this.props.route.params.source,
-      destination: this.props.route.params.destination,
-      flightCount: this.props.route.params.checkFlightCount,
+      dateString: this.props.dateString,
+      date: this.props.flightDate,
+      seatsAvailabilityData: this.props.seatsAvailabilityData,
+      isOutBounded: this.props.isOutBounded,
+      classSelected: this.props.classSelected,
+      selectedDate: this.props.selectedDate,
+      passengerCount: this.props.passengerCount,
+      isOffPeakValue: this.props.isOffPeakValue,
+      economyPoints: this.props.economyPoints,
+      premiumPoints: this.props.premiumPoints,
+      businessPoints: this.props.businessPoints,
+      firstPoints: this.props.firstPoints,
+      // businessSeats:this.props.businessSeats,
+      // economySeats:this.props.economySeats,
+      // premiumSeats:this.props.premiumSeats,
+      noflightschedule: this.props.noflightschedule,
+      searchData: this.props.searchData,
+      multipleFlightScheduleData: this.props.multipleFlightScheduleData,
+      selectedIndex: this.props.selectedIndex,
+      cabinClassData: this.props.cabinClassData,
+      trip_type: this.props.trip_type,
+      source: this.props.source,
+      destination: this.props.destination,
+      flightCount: this.props.checkFlightCount,
       cabinCode: "M",
       skyScannerCabinCode: "economy",
-      classDataArray: this.props.route.params.classDataArray,
+      classDataArray: this.props.classDataArray,
       classSelectedArray: [true, true, true, true],
       selectedDestination: null,
       selectedSource: null,
@@ -114,7 +113,7 @@ class FlightDetailsCompoent extends Component {
 
     // this.renderDestinationList()
 
-    console.log("yes check here inside did mount #######     ", this.state.trip_type)
+    console.log("yes check here inside did mount #######     ", this.state.classDataArray)
 
     const { flightSchedule, isOutBounded, date, } = this.props;
     let flightData = [];
@@ -171,13 +170,16 @@ class FlightDetailsCompoent extends Component {
 
 
     return (
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(80),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+     
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.dispatch(NavigationActions.back())
+            // this.props.navigation.dispatch(NavigationActions.back())
+            this.props.navigation.goBack()
           }}
         >
-          <Icon name="ios-arrow-back" size={scale(30)} color={colours.black} />
+          <Icon name="ios-arrow-back" size={scale(30)} color={colours.white} />
         </TouchableOpacity>
         <View style={styles.locationView}>
           <View>
@@ -187,15 +189,17 @@ class FlightDetailsCompoent extends Component {
           </View>
         </View>
       </TouchableOpacity>
+      </View>
     );
   }
 
   getPointsText(points) {
-    if (points % 1000 == 0) {
-      return `${points / 1000}k`;
-    } else {
-      return points;
-    }
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+    // if (points % 1000 == 0) {
+    //   return `${points / 1000}k`;
+    // } else {
+    //   return points;
+    // }
   }
 
   flightDetailsModal() {
@@ -270,26 +274,26 @@ class FlightDetailsCompoent extends Component {
               onPress={() => { }}
             >
               <View style={{ flexDirection: "row", marginRight: scale(30) }}>
-                <FastImage
+                <Image
                   source={IMAGE_CONST.BIG_TAKE_OFF}
                   style={{ marginRight: scale(10) }}
                 />
                 <Text
                   style={[
                     styles.flightDetailText,
-                    { color: colours.white, fontSize: scale(14) },
+                    { color:"#41454b", fontSize: scale(14) },
                   ]}
                 >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
               </View>
               <View style={{ flexDirection: "row" }}>
-                <FastImage
+                <Image
                   source={IMAGE_CONST.BIG_LANDING}
                   style={{ marginRight: scale(10) }}
                 />
                 <Text
                   style={[
                     styles.flightDetailText,
-                    { color: colours.white, fontSize: scale(14) },
+                    { color: "#41454b", fontSize: scale(14) },
                   ]}
                 >{`${selectedFlight.arrival_time} ${selectedFlight.destination_code}`}</Text>
               </View>
@@ -363,7 +367,7 @@ class FlightDetailsCompoent extends Component {
                   style={[
                     styles.flightDetailText,
                     {
-                      color: colours.white,
+                      color:"#41454b" ,
                       fontSize: scale(14),
                       padding: scale(10),
                       flex: 4,
@@ -374,7 +378,7 @@ class FlightDetailsCompoent extends Component {
                   style={[
                     styles.flightDetailText,
                     {
-                      color: colours.white,
+                      color: "#41454b",
                       fontSize: scale(14),
                       padding: scale(10),
                       flex: 6,
@@ -452,13 +456,13 @@ class FlightDetailsCompoent extends Component {
                 )}${selectedFlight.arrival_time}`}</Text>
               </View> */}
               <View
-                style={{ flexDirection: "row", backgroundColor: "rgba(255,255,255,0.1)", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
+                style={{ flexDirection: "row", backgroundColor: "#e4f6fa", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
               >
                 <Text
                   style={[
                     styles.flightDetailText,
                     {
-                      color: colours.white,
+                      color: "#41454b",
                       fontSize: scale(14),
                       padding: scale(10),
                       flex: 4,
@@ -469,7 +473,7 @@ class FlightDetailsCompoent extends Component {
                   style={[
                     styles.flightDetailText,
                     {
-                      color: colours.white,
+                      color: "#41454b",
                       fontSize: scale(14),
                       padding: scale(10),
                       flex: 6,
@@ -492,15 +496,15 @@ class FlightDetailsCompoent extends Component {
   availabilityTable() {
     let data = this.props.seatsAvailabilityData;
 
-    let economyPoints = this.props.route.params.economyPoints
-    let premiumPoints = this.props.route.params.premiumPoints
-    let businessPoints = this.props.route.params.businessPoints
-    let firstPoints = this.props.route.params.firstPoints
+    let economyPoints = this.props.economyPoints
+    let premiumPoints = this.props.premiumPoints
+    let businessPoints = this.props.businessPoints
+    let firstPoints = this.props.firstPoints
 
-    let economySeats = this.props.route.params.economySeats
-    let premiumSeats = this.props.route.params.premiumSeats
-    let businessSeats = this.props.route.params.businessSeats
-    let firstSeats = this.props.route.params.firstSeats
+    let economySeats = this.props.economySeats
+    let premiumSeats = this.props.premiumSeats
+    let businessSeats = this.props.businessSeats
+    let firstSeats = this.props.firstSeats
 
     let economy = this.state.classSelected[0]
     let premium = this.state.classSelected[1]
@@ -571,7 +575,7 @@ class FlightDetailsCompoent extends Component {
                     {economySeats ? economySeats : "0"}
                   </Text>
                   <Text style={styles.seatNumberText}>
-                    {economyPoints ? this.formatPrice(economyPoints) : "-"}
+                    {economyPoints ? this.getPointsText(economyPoints) : "-"}
                   </Text>
                   {/* <Text style={styles.seatNumberText}>
                     {economyTax ? economyTax.toLocaleString() : "-"}
@@ -605,7 +609,7 @@ class FlightDetailsCompoent extends Component {
                     {premiumSeats ? premiumSeats : "0"}
                   </Text>
                   <Text style={styles.seatNumberText}>
-                    {premiumPoints ? this.formatPrice(premiumPoints) : "-"}
+                    {premiumPoints ? this.getPointsText(premiumPoints) : "-"}
                   </Text>
                   {/* <Text style={styles.seatNumberText}>
                     {premiumTax ? premiumTax.toLocaleString() : "-"}
@@ -641,7 +645,7 @@ class FlightDetailsCompoent extends Component {
                     {businessSeats ? businessSeats : "0"}
                   </Text>
                   <Text style={styles.seatNumberText}>
-                    {businessPoints ? this.formatPrice(businessPoints) : "-"}
+                    {businessPoints ? this.getPointsText(businessPoints) : "-"}
                   </Text>
                   {/* <Text style={styles.seatNumberText}>
                     {businessTax ? businessTax.toLocaleString() : "-"}
@@ -676,7 +680,7 @@ class FlightDetailsCompoent extends Component {
                     {firstSeats ? firstSeats : "0"}
                   </Text>
                   <Text style={styles.seatNumberText}>
-                    {firstPoints ? this.formatPrice(firstPoints) : "-"}
+                    {firstPoints ? this.getPointsText(firstPoints) : "-"}
                   </Text>
                   {/* <Text style={styles.seatNumberText}>
                     {firstTax ? firstTax.toLocaleString() : "-"}

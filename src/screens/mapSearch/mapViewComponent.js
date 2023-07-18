@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { StyleSheet, View, Image, Text, Modal,TouchableOpacity, BackHandler,Dimensions } from "react-native";
+import { StyleSheet, View, ImageBackground, Text, Modal,TouchableOpacity, BackHandler,Dimensions } from "react-native";
 import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -243,7 +243,7 @@ class MapComponent extends Component {
           onButtonPress();
         }}
       >
-        <Entypo name="location-pin" size={scale(17)} color="white" />
+        <Entypo name="location-pin" size={scale(20)} color="white" />
         <Text style={{
           marginLeft: scale(6),
           color: colours.white,
@@ -371,6 +371,7 @@ class MapComponent extends Component {
 
     return (
       <View style={{ flex: 1, borderWidth: 0, borderColor: "green",backgroundColor:"#75cff0" }}>
+
         {this.renderLoader()}
         {this.composeAvailabilityData()}
 
@@ -691,7 +692,7 @@ class MapComponent extends Component {
 
           {this.renderBottomButton(
             STRING_CONST.DESTINATIONS,
-            colours.lightBlueTheme,
+            "#0e1f32",
             () => {
               this.props.navigation.navigate("destinationscomponent", {
                 WhereFrom: this.state.WhereFrom,

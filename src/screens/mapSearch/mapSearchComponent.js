@@ -13,7 +13,6 @@ import {
   ImageBackground
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
 import Modal from "react-native-modal";
 import  Entypo from "react-native-vector-icons/Entypo";
 import styles from "./masSearchStyles";
@@ -37,12 +36,13 @@ import PopUpComponent from "../../shared/popUpComponent";
 import * as Config from "../../helpers/config";
 import moment from "moment";
 import { getStoreData, getUserId ,getAccessToken} from "../../constants/DataConst";
-import PostHog from 'posthog-react-native';
+// import PostHog from 'posthog-react-native';
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 import { Platform } from "react-native";
 var uuid = require("react-native-uuid");
 const { height, width } = Dimensions.get("window");
 import FastImage from 'react-native-fast-image'
+import MyStatusBar from '../../components/statusbar/index'
 
 let isAppReviewSuccess =false
 let buildVersion = 0
@@ -459,7 +459,7 @@ export default class FindFlightComponent extends Component {
           });
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.classViewInnerContainer}
           onPress={() => {
             this.setState({
@@ -469,6 +469,7 @@ export default class FindFlightComponent extends Component {
         >
           <FastImage
             source={IMAGE_CONST.SEAT_ICON}
+            resizeMode="contain"
             style={[styles.infoIcon, { marginRight: scale(7) }]}
           />
           <View style={{}}>
@@ -485,7 +486,7 @@ export default class FindFlightComponent extends Component {
               {classObject ? this.getClassText() : STRING_CONST.CABIN_CLASS}
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.classViewInnerContainer}
           onPress={() => {
@@ -496,7 +497,7 @@ export default class FindFlightComponent extends Component {
         >
           <FastImage
             source={IMAGE_CONST.TRAVELLER_ICON}
-            style={[styles.infoIcon, { marginRight: scale(7) }]}
+            style={[styles.infoIcon1, { marginRight: scale(9) }]}
           />
           <View>
             <Text
@@ -660,7 +661,7 @@ export default class FindFlightComponent extends Component {
           }
 
      
-          PostHog.capture('Search', trackData);
+          // PostHog.capture('Search', trackData);
         
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }
@@ -707,7 +708,8 @@ export default class FindFlightComponent extends Component {
         >
           <FastImage
             source={IMAGE_CONST.DEPARTURE}
-            style={[styles.infoIcon, { marginRight: scale(7) }]}
+            resizeMode="contain"
+            style={[styles.infoIcon1, { marginRight: scale(10) }]}
           />
           <View style={{}}>
             <Text
@@ -794,8 +796,8 @@ export default class FindFlightComponent extends Component {
             }}
           >
             <FastImage
-              source={IMAGE_CONST.LANDING}
-              style={[styles.infoIcon, { marginRight: scale(7) }]}
+              source={IMAGE_CONST.DEPARTURE}
+              style={[styles.infoIcon1, { marginRight: scale(7) }]}
             />
             <View style={{}}>
               <Text
@@ -955,12 +957,12 @@ export default class FindFlightComponent extends Component {
           </View>
         </TouchableOpacity> */}
         {
-          this.state.selectedIndex == 0 ?
+          // this.state.selectedIndex == 0 ?
             <View>
               {
                 this.state.travelData.map((singleMap, key) => {
                   return (
-                    <View>
+                    <View style={{marginLeft:scale(-3)}}>
                       {
                         this.state.checked == key ?
                           <TouchableOpacity onPress={async () => {
@@ -987,8 +989,8 @@ export default class FindFlightComponent extends Component {
                 })
               }
             </View>
-            :
-            null
+            // :
+            // null
         }
         {this.getLocation()}
         {this.getDate()}
@@ -1109,6 +1111,7 @@ export default class FindFlightComponent extends Component {
       >
         <FastImage
           source={IMAGE_CONST.LOCATION_PIN}
+          resizeMode="contain"
           style={[styles.infoIcon, { marginRight: scale(7) }]}
         />
         <View style={{}}>
@@ -1201,16 +1204,13 @@ export default class FindFlightComponent extends Component {
       classObject,
       showPopUp,    
     } = this.state;
-    const {userData} = this.state
-
+    const {userData} = this.state     
     const { navigation, } = this.props;    
-  
-    let bronzeMember = userData.bronze_member
-
+    let bronzeMember = userData.bronze_member     
     return (
-
       <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
-      <SafeAreaView style={styles.container}>
+        <MyStatusBar  />
+        <SafeAreaView style={styles.container}>
           {this.renderHeader()}
           <ScrollView>
             {this.informationView()}
@@ -1231,6 +1231,7 @@ export default class FindFlightComponent extends Component {
                     showClassModal: false,
                   });
                 }}
+                showClassModal={false}
                 onDonePressed={(data, array, travellersCount) => {
                   this.setState({
                     classObject: data,

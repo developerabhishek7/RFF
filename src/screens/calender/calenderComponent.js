@@ -38,7 +38,7 @@ import Entypo from "react-native-vector-icons/dist/Entypo";
 var uuid = require('react-native-uuid');
 import DeviceInfo from "react-native-device-info";
 // import Slider from '@react-native-community/slider';
-import PostHog from 'posthog-react-native';
+// import PostHog from 'posthog-react-native';
  classes1 = ["Economy","Premium Economy","Businness", "First"]
 let getEmptyObj = {}
 
@@ -189,11 +189,15 @@ export default class CalenderComponent extends Component {
   }
 
   getPointsText(points) {
-    if (points % 1000 == 0) {
-      return `${points / 1000}k`;
-    } else {
-      return points;
-    }
+
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+
+
+    // if (points % 1000 == 0) {
+    //   return `${points / 1000}k`;
+    // } else {
+    //   return points;
+    // }
   }
 
   componentDidUpdate(prevProps) {
@@ -806,15 +810,8 @@ export default class CalenderComponent extends Component {
     }
 
 
-    // console.log('ECONOMY POINTS - - ',economy1)
-    // console.log('Premoum POINTS - - ',premium1)
-    // console.log('business POINTS - - ',business1)
-    // console.log('first POINTS - - ',first1)
-
-
-
-
-
+     console.log('ECONOMY POINTS - - ',this.state.dateString)
+   
     return (
       <Animated.View
         style={[
@@ -828,7 +825,7 @@ export default class CalenderComponent extends Component {
           <View style={{ alignItems: "center", alignSelf: "stretch", }}>
             <View style={[styles.titleView]}>
               <TouchableOpacity onPress={() => { }}>
-                {IMAGE_CONST.DARK_CROSS}
+                {/* {IMAGE_CONST.DARK_CROSS} */}
               </TouchableOpacity>
               <Text style={styles.titleText}>{searchData.selectedSource.city_name} - {searchData.selectedDestination.city_name}</Text>
               {/* (${!data.peak ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
@@ -864,7 +861,7 @@ export default class CalenderComponent extends Component {
             <View style={{ backgroundColor: "#0072A0", borderRadius: scale(20), margin: scale(4),marginBottom:scale(10), opacity: 0.4 }}>
               <Text
                 style={{
-                  color: colours.white,
+                  color: colours.black,
                   // marginTop: verticalScale(5),
                   fontWeight:"700",
                   fontSize: scale(13),
@@ -887,7 +884,7 @@ export default class CalenderComponent extends Component {
                 >
                   <Text style={{ color: colours.lightGreyish }}></Text>
                 </View>
-                <View style={{ marginTop: verticalScale(28), }}>
+                <View style={{ marginTop: verticalScale(32), }}>
                   <Text style={styles.pointSeatsText}>
                     {STRING_CONST.SEATS_TEXT}
                   </Text>
@@ -925,11 +922,10 @@ export default class CalenderComponent extends Component {
                       <Text style={styles.seatNumberText}>
                         {
                           <Fragment>
-                            {  economy1 ? this.formatPrice(economy1) : 
+                            {  economy1 ? this.getPointsText(economy1) : 
                                   "-"
                               }
                           </Fragment>
-
                         }
                       </Text>
                     </View>
@@ -975,7 +971,7 @@ export default class CalenderComponent extends Component {
                         {
                           <Fragment>
                             {premium1
-                              ? this.formatPrice(premium1)
+                              ? this.getPointsText(premium1)
                               : "-"}
 
                           </Fragment>
@@ -1027,7 +1023,7 @@ export default class CalenderComponent extends Component {
                         {
                           <Fragment>
                             {business1
-                              ? this.formatPrice(business1)
+                              ? this.getPointsText(business1)
                               : "-"}
                           </Fragment>
                         }
@@ -1073,7 +1069,7 @@ export default class CalenderComponent extends Component {
                         {/* {firstSeats ? firstSeats : "0"} */}
                       </Text>
                       <Text style={styles.seatNumberText}>
-                            {first1 ? this.formatPrice(first1) : "-"}
+                            {first1 ? this.getPointsText(first1) : "-"}
                       </Text>
                       <Text style={styles.seatNumberText}>
                       </Text>
@@ -2369,7 +2365,7 @@ export default class CalenderComponent extends Component {
               inboundEndDate: 'N/A',
             }
           }
-          PostHog.capture('Alert', trackData);
+          // PostHog.capture('Alert', trackData);
           this.props.onSubmitAlertPress(body);
           this.setState({
             departStartDate: "",
@@ -2499,7 +2495,7 @@ export default class CalenderComponent extends Component {
             }
           }
     
-          PostHog.capture('Alert', trackData);
+          // PostHog.capture('Alert', trackData);
         
           this.props.onSubmitAlertPress(body);
           this.setState({
@@ -2914,12 +2910,12 @@ export default class CalenderComponent extends Component {
 
 
     return (
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
       <TouchableOpacity
         style={
           styles.headerContainer
         }
         onPress={() => { this.props.navigation.goBack() }}
-
       // onPress={() => {
       //   fromdestinationDetails == true ?
       //   this.props.navigation.navigate("MapComponentScreen",{
@@ -2935,7 +2931,6 @@ export default class CalenderComponent extends Component {
       >
         <TouchableOpacity
           onPress={() => { this.props.navigation.goBack() }}
-
         // onPress={() => {
         //   fromdestinationDetails == true ?
         //   this.props.navigation.navigate("MapComponentScreen",{
@@ -2949,7 +2944,7 @@ export default class CalenderComponent extends Component {
         //   this.props.navigation.navigate("FindFlightContainerScreen")
         //    }}
         >
-          <Icon name="ios-arrow-back" size={scale(30)} color={colours.black} />
+          <Icon name="ios-arrow-back" size={scale(30)} color={colours.white} />
         </TouchableOpacity>
 
         <View style={{}}>
@@ -2968,6 +2963,7 @@ export default class CalenderComponent extends Component {
           </View>
         </View>
       </TouchableOpacity>
+      </View>
     );
   }
 
@@ -4347,13 +4343,13 @@ export default class CalenderComponent extends Component {
       this.props.guestUserPostHogFunc(body)
     }
   }
-  getPointsText(points) {
-    if (points % 1000 == 0) {
-      return `${points / 1000}k`;
-    } else {
-      return points;
-    }
-  }
+  // getPointsText(points) {
+  //   if (points % 1000 == 0) {
+  //     return `${points / 1000}k`;
+  //   } else {
+  //     return points;
+  //   }
+  // }
 
 
 
@@ -4515,7 +4511,7 @@ export default class CalenderComponent extends Component {
         this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
       }}>
         <View  style={[styles.animatedView2]}>
-        <View style={{justifyContent:"center",alignItems:"center",backgroundColor: "#152d55", height: height / 2.7, width: width*0.9 ,  borderTopLeftRadius: scale(20),borderTopRightRadius:scale(20),marginStart:scale(15) }}>
+        <View style={{justifyContent:"center",alignItems:"center", height: height / 2.7, width: width*0.9 ,  borderTopLeftRadius: scale(20),borderTopRightRadius:scale(20),marginStart:scale(15) }}>
         <TouchableOpacity
                   style={{
                     alignSelf: "flex-end",
@@ -4527,7 +4523,7 @@ export default class CalenderComponent extends Component {
                   <Entypo
                     name="cross"
                     size={scale(35)}
-                    color={colours.white}
+                    color="#97adb6"
                   />
                 </TouchableOpacity>
         <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
@@ -4535,9 +4531,9 @@ export default class CalenderComponent extends Component {
                     ? STRING_CONST.OFF_PEAK_FARE
                     : STRING_CONST.PEAK_FARE
                   })`}</Text>
-        <Text style={{ fontSize: scale(14), color: colours.gray, padding: scale(7), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
-          <Image source={require('../../assets/sad.png')} style={{ height: scale(80), width: scale(80),margin:scale(6)  }} resizeMode="contain" />
-          <Text style={{ fontSize: scale(14), color: colours.white, padding:scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
+        <Text style={{ fontSize: scale(14), color:"#41454b", padding: scale(7), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
+          <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(80), width: scale(80),margin:scale(6)  }} resizeMode="contain" />
+          <Text style={{ fontSize: scale(14), color:"#41454b", padding:scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
           
           {
             checkFlightCount ?
@@ -4619,9 +4615,10 @@ export default class CalenderComponent extends Component {
       isSliderRunDone,
       isRenderAll,
       classSelectedSlider,
-      newClassSliderArray
+      newClassSliderArray,
     } = this.state;
     const today = moment().format("YYYY-MM-DD");
+
     let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
     let isLoader = this.state.isLoader
     let userInfo  =  this.props.userInfo
@@ -4645,12 +4642,22 @@ export default class CalenderComponent extends Component {
   
      return (
       <Fragment>
-        <SafeAreaView style={styles.container}>
-          <View style={{ backgroundColor: "#FFF", flex: 1}}>
+        <SafeAreaView style={[styles.container,{
+          // backgroundColor:showTicketDetailModal? 'transparent' : "#FFF"
+          // ,opacity:0.5,
+        }]}>
+           {this.renderHeader()}
+          <View style={{ backgroundColor: showTicketDetailModal ?
+            "rgba(52, 52, 52, 0.4)" : 
+            "#FFF", flex: 1,
+            // opacity:showTicketDetailModal ?
+            // 0.7:1
+            }}>
             {this.renderLoader()}
             {this.renderLoginPopup()}
-            {this.renderHeader()}
            
+
+
             {
               isLoggedIn   ?
               <Animated.View
@@ -4661,7 +4668,7 @@ export default class CalenderComponent extends Component {
               zIndex:10,
               elevation:0,
               backgroundColor:"#FFFFFF",
-              borderTopColor:"#FFFFFF",borderTopWidth:3,
+              borderTopColor:"#FFFFFF",borderTopWidth:1,
               borderWidth:1,borderColor:"#FFFFFF",  
             }}
             >
@@ -4757,7 +4764,6 @@ export default class CalenderComponent extends Component {
                   this.setState({
                     showUpgradePopUp: false,
                   });
-
                   // this.props.navigation.navigate("MembershipContainerScreen")
                 }}
                 onRightButtonPress={() => {

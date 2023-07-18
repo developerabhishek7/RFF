@@ -155,9 +155,7 @@
    render() {
 
     let userData = this.props.userInfo
-
     let bronzeMember = userData.bronze_member
-
 
      return (
        <View style={{flex:1}}>
@@ -207,6 +205,35 @@
            seatsAvailabilityData = {this.props.route.params.seatsAvailabilityData}
            dateString= {this.props.route.params.dateString}
            isOutBounded = {this.props.route.params.isOutBounded}
+
+
+           classSelected = {this.props.route.params.classSelected}
+           selectedDate  = {this.props.route.params.selectedDate}
+           passengerCount= {this.props.route.params.passengerCount}
+           isOffPeakValue= {this.props.route.params.isOffPeakValue}
+           economyPoints= {this.props.route.params.economyPoints}
+           premiumPoints= {this.props.route.params.premiumPoints}
+           businessPoints= {this.props.route.params.businessPoints}
+           firstPoints= {this.props.route.params.firstPoints}
+
+           noflightschedule ={this.props.route.params.noflightschedule}
+           searchData ={this.props.route.params.searchData}
+           multipleFlightScheduleData ={this.props.route.params.multipleFlightScheduleData}
+           selectedIndex ={this.props.route.params.selectedIndex}
+           cabinClassData ={this.props.route.params.cabinClassData}
+           trip_type ={this.props.route.params.trip_type}
+           source ={this.props.route.params.source}
+           destination ={this.props.route.params.destination}
+           flightCount ={this.props.route.params.checkFlightCount}
+           classDataArray={this.props.route.params.classDataArray}
+
+
+
+            economySeats = {this.props.route.params.economySeats}
+            premiumSeats = {this.props.route.params.premiumSeats}
+            businessSeats = {this.props.route.params.businessSeats}
+            firstSeats = {this.props.route.params.firstSeats}
+
          />
  
          {this.state.showNetworkPopUp && (

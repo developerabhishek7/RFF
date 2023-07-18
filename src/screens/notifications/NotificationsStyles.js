@@ -6,7 +6,8 @@ import { colours } from "../../constants/ColorConst";
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colours.white
+    backgroundColor: colours.white,
+
   },
 
   cellContainer: {

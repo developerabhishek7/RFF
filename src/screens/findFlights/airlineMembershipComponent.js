@@ -89,9 +89,10 @@ export default class AirlineMembershipComponent extends Component {
   // }
 
 
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(1),marginRight:scale(10) }}>
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -99,9 +100,12 @@ export default class AirlineMembershipComponent extends Component {
           notifCount={2}
           clickOnLeft={() => this.props.navigation.goBack()}
         />
+        </View>
       </View>
-    );
+    )
   }
+
+
   onSearch(searchText) {
     this.setState({ searchText });
     const { airLinesMembershipDetailsObject } = this.state
@@ -278,9 +282,10 @@ export default class AirlineMembershipComponent extends Component {
     return (
       <View style={{ flex: 1,borderWidth:0,borderColor:"green"}} >
         <SafeAreaView style={styles.container}>
+          {this.renderHeader()}
           <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps='always'>
             {/* {this.renderCrossIcon()} */}
-              {this.renderHeader()}
+            
             <View style={{ justifyContent: 'center', alignItems: 'center', margin: scale(9), marginStart: scale(16), marginTop: scale(21), marginBottom: -scale(9), }}>
               <Text style={{ color: "gray", fontFamily: appFonts.INTER_SEMI_BOLD, fontSize: scale(13), alignSelf: "flex-start", paddingStart: scale(4) }}>{"Select Your Airline Membership Tier"}</Text>
             </View>

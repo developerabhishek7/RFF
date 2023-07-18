@@ -146,9 +146,28 @@ class MembershipComponent extends Component{
     const { navigation } = this.props;
     navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN,{fromAlertScreen:false});
   }
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         setting
+  //         title={STRING_CONST.MEMBERSHIP_TITLE}
+  //         right
+  //         notifCount={2}
+  //         clickOnRight={() => this.goToNotifications()}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(120),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(0)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -158,9 +177,11 @@ class MembershipComponent extends Component{
           notifCount={2}
           clickOnRight={() => this.goToNotifications()}
         />
+        </View>
       </View>
-    );
+    )
   }
+  
 
   renderButton(text, onPress) {
     return (
@@ -349,16 +370,32 @@ class MembershipComponent extends Component{
     let silver_member = userData.silver_member
     let gold_member = userData.gold_member
 
+    console.log("yes check here membership text details  - - - - -",this.state.member)
+
+    const {member} = this.state;
+
     return(
       <View>
        <View style={styles.emailIdsInnerView}>
          {
           txt ?
           <View>
+
+            <View style={{flexDirection:"row"}}>
+          <Image     
+            source={
+              gold_member ?
+              IMAGE_CONST.GOLD_IMAGE : silver_member == "silver" ?
+              IMAGE_CONST.SILVER_IMAGE :  
+              IMAGE_CONST.BRONZE_IMAGE 
+            }
+            style={{height:scale(20),width:scale(20),margin:scale(5)}}
+          />
           <Text style={styles.memberText}>
             {
               !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
               <Fragment>
+                
                {this.state.member}
               {
                 yearly == "year" ? " Yearly" : " Monthly"
@@ -367,6 +404,7 @@ class MembershipComponent extends Component{
               : "Bronze"
             }
           </Text>
+          </View>
           <Text style={[styles.memberText1,{fontSize:scale(13),color:colours.darkBlueTheme}]}>  
             {txt ?  `(${txt})` :  ""}
           </Text>
@@ -528,7 +566,16 @@ class MembershipComponent extends Component{
         <FastImage
           source={IMAGE_CONST.UPGRADE_IMAGE}
           style={styles.upgradeImage}
+          resizeMode="contain"
         />
+         <Text
+          style={[
+            styles.blueStripText,
+            { textAlign: "center",fontWeight:"700",padding:scale(10), fontSize: scale(16),color:"#000"},
+          ]}
+        >
+          {STRING_CONST.UPGRADE_MEMBERSHIP_TEXT}                          
+        </Text>
         <Text
           style={[
             styles.blueStripText,
@@ -571,7 +618,8 @@ class MembershipComponent extends Component{
               {/* {this.membershipView()} */}
               {this.membershipViewList()}
               {this.featureList()}
-              {isAndroid() && !userData.gold_member && this.upgradeView()}
+              {!userData.gold_member && this.upgradeView()}
+              {/* {this.upgradeView()} */}
             </View>
           </ScrollView>
         </SafeAreaView>

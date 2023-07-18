@@ -9,21 +9,31 @@ export default StyleSheet.create({
     marginBottom: verticalScale(5),
     fontSize: scale(12),
     fontFamily: appFonts.INTER_REGULAR,
-    marginLeft: scale(40),
-    marginTop: verticalScale(5),
+    // marginLeft: scale(40),
+    margin:scale(5),
+  marginTop: verticalScale(5),
   },
   container: {
     flexGrow: 1,
   },
   logoContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 
+  
+  passContainer1: {
+    width:scale(300),
+    height:scale(45),
+    borderRadius:scale(10),
+    backgroundColor:colours.white,
+    marginTop: verticalScale(3),
+  },
   rffLogo: {
     marginTop: verticalScale(75),
-    width: scale(214),
-    height: scale(102),
+    width: scale(60),
+    height: scale(60),
+    marginStart:scale(5)
   },
 
   firstNameContainer: {
@@ -36,38 +46,47 @@ export default StyleSheet.create({
 
   emailText: {
     fontSize: scale(13),
-    marginLeft: scale(40),
+    marginLeft: scale(0),
+    margin:scale(0),
+    padding:scale(3),
     fontFamily: appFonts.INTER_REGULAR,
     lineHeight: scale(15),
     color: colours.lightGreyish,
   },
 
+  passContainer1: {
+    width:scale(300),
+    height:scale(45),
+    borderRadius:scale(10),
+    backgroundColor:colours.white,
+    marginTop: verticalScale(3),
+  },
   input: {
-    borderBottomWidth: scale(1),
+    // borderBottomWidth: scale(1),
     alignItems: "center",
-    borderBottomColor: colours.borderBottomLineColor,
+    // borderBottomColor: colours.borderBottomLineColor,
     fontSize: scale(16),
     color: colours.darkBlueTheme,
-    fontWeight: "bold",
+    fontWeight: "500",
     paddingLeft: scale(4),
     height: scale(41),
-    marginHorizontal: scale(36),
+    marginHorizontal: scale(6),
   },
 
   eyeContainer: {
     position: "absolute",
-    right: scale(55.12),
-    bottom: scale(14.75),
+    right: scale(18.12),
+    bottom: scale(7.75),
   },
 
   visibleEye: {
-    width: scale(30),
-    height: scale(30),
+    width: scale(35),
+    height: scale(35),
   },
 
   inVisibleEye: {
-    width: scale(30),
-    height: scale(30),
+    width: scale(35),
+    height: scale(35),
   },
 
   forgotPasswordText: {
@@ -148,5 +167,20 @@ export default StyleSheet.create({
     marginTop: verticalScale(22),
     marginBottom: verticalScale(40),
     alignSelf: "center",
+  },
+  googleFb: {
+    marginRight: scale(10),
+    flexDirection:"row",justifyContent:"center",alignItems:"center",
+    padding:scale(7)
+  },
+
+  fb: {
+    marginHorizontal: scale(10),
+  },
+
+  googleButton: {
+    width: scale(46),
+    height: scale(46),
+    margin:scale(1),marginStart:scale(-3),
   },
 });
