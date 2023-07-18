@@ -4,7 +4,7 @@ import scale, { verticalScale } from "../../helpers/scale";
 
 export default StyleSheet.create({
   container: {
-    marginLeft: scale(24),
+    marginLeft: scale(15),
     marginTop: scale(10),
     borderWidth:0,
   },

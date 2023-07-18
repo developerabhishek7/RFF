@@ -16,6 +16,7 @@ import FastImage from 'react-native-fast-image';
   }
 
   componentDidMount() {
+    StatusBar.setHidden(false);
 
     const {userInfo} = this.state;
     const onBoardProps = AsyncStorage.getItem("onBoardProps")
@@ -37,7 +38,7 @@ import FastImage from 'react-native-fast-image';
           flex: 1,
         //   backgroundColor: '#fff',          
         }}>
-          <StatusBar hidden={true} />
+          <StatusBar hidden={false} />
         <FastImage
           resizeMode="stretch"
           style={{

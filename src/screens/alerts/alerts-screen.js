@@ -13,7 +13,8 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
-
+import MyStatusBar from '../../components/statusbar/index';
+import FontAwesome from "react-native-vector-icons/Feather";
 import { Dimensions } from "react-native";
 import Modal from "react-native-modal";
 const { height, width } = Dimensions.get("window");
@@ -35,6 +36,7 @@ import { getAirlinesAvailability ,getPointsAvailability } from "../../actions/ca
 import moment from "moment";
 import { getStoreData, getUserId } from "../../constants/DataConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 
 // import { sendAuditData } from "../../actions/findFlightActions";
 import {
@@ -137,6 +139,7 @@ function makeUpperCaseAfterSpace(str) {
 }
 
 function travelClassView(travelClass) {
+
   return (
     <View style={styles.travelClassView}>
       {travelClass.map((cabinClass) => {
@@ -152,11 +155,24 @@ function travelClassView(travelClass) {
                 marginLeft: scale(5),
                 marginTop: verticalScale(3),
                 marginBottom:verticalScale(3),
-                width:scale(130),
+                width:scale(140),
+                // justifyContent:"center",
+                flexDirection:"row",
                 justifyContent:"center"
+                // justifyContent:"space-around"
               })
             }
           >
+            <Image source={
+              cabinClass == "economy" ?
+              IMG_CONST.ECONOMYC_SEAT : cabinClass == "premium_economy" ?
+              IMG_CONST.PREMIUM_SEAT : cabinClass == "business" ?
+              IMG_CONST.BUSINESS_SEAT : cabinClass == "first" ? 
+              IMG_CONST.FIRST_SEAT : null
+            } 
+            resizeMode="contain"
+            style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+            />
             <Text
               style={{
                 color: classToColor[cabinClass],
@@ -197,7 +213,7 @@ function buttonView(props) {
         },
       ]}
     >
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={[
           styles.buttonStyle,
           {
@@ -219,7 +235,7 @@ function buttonView(props) {
         >
           {STR_CONST.EDIT_TEXT}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={[
           styles.buttonStyle,
@@ -240,12 +256,34 @@ function buttonView(props) {
             },
           ]}
         >         
-          View Calendar
+          View Availability
         </Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+
+_menu = null;
+
+setMenuRef = (ref) => {
+  this._menu = ref;
+};
+
+hideMenu = () => {
+  this._menu.hide();
+};
+
+showMenu = () => {
+  this._menu.show();
+};
+
+showMenu = false
+renderMenu = () => {
+  showMenu = true
+}
+
+
 
 const AlertCard = (props) => {
   const {
@@ -263,8 +301,11 @@ const AlertCard = (props) => {
     getLocationName,
     unreadCount,
     id,
+    showMenu,
+    AlertId
   } = props;
   let travel_classes = props.travelClass.split(",");
+
   return (  
     //   <ImageBackground
     //   resizeMode={"contain"}
@@ -283,7 +324,7 @@ const AlertCard = (props) => {
     //       : IMG_CONST.FRAME_ONEWAY_SINGLE
     //   }
     // >    
-      <View style={{flex:1,backgroundColor:"#f5fcfd",
+      <View style={{flex:1,backgroundColor:"#FFF",
         borderWidth:scale(2),borderStyle:"dashed",borderColor: colours.lightBlueTheme,borderRadius:scale(20),
         width:width*0.9,alignSelf:"center",margin:scale(10),alignSelf:"center",
     }}>
@@ -301,7 +342,7 @@ const AlertCard = (props) => {
           >
             <FastImage
               source={IMG_CONST.DARK_BELL}
-              style={{ marginRight: scale(5) }}
+              style={{ marginRight: scale(1) }}
             />
             <View style={styles.unreadCountContainer}>
               {!isNull(unreadCount) && unreadCount !== 0 && (
@@ -309,7 +350,100 @@ const AlertCard = (props) => {
               )}
             </View>
           </TouchableOpacity>
+          
+          <View style={{alignSelf:"flex-end",height:scale(30),width:scale(30),marginRight:scale(10),padding:scale(10),backgroundColor:"#FFF"}}> 
+         
+              <TouchableOpacity
+                  onPress={() => {
+                  
+                    props.onMenuPress(props);
+
+                  }}
+                style={{height:scale(20),width:scale(20),margin:scale(1),marginBottom:scale(30)}}
+              >
+              <FontAwesome name="more-vertical" 
+                  color={colours.darkBlueTheme}
+                  size={scale(22)} />
+              </TouchableOpacity>
+        
+                {
+                  showMenu && AlertId == id ?
+                  <View style={{marginTop:scale(-40),marginLeft:scale(-80),flexDirection:"column",width:scale(100),height:scale(90),padding:scale(6),backgroundColor:colours.darkBlueTheme,borderWidth:0.7,borderColor:"gray",
+                  shadowOffset: {width: -2, height: 4},  
+                  shadowColor: '#171717',  
+                  shadowOpacity: 0.2,  
+                  shadowRadius: 3, 
+                  }}>
+                      <TouchableOpacity
+                        style={{}}
+                      onPress={() => {
+                        setTimeout(() => {
+                          props.onEditPress(props);
+                        }, 300);
+                        
+                      }}>
+                      <Text style={{fontSize:scale(13),fontWeight:"600",color:"#FFF",padding:scale(6),borderBottomColor:"gray",borderBottomWidth:scale(0.6)}}>Edit</Text>
+                      </TouchableOpacity>
+
+                      
+                      <TouchableOpacity>
+                      <Text style={{fontSize:scale(13),fontWeight:"600",color:"#FFF",padding:scale(6),borderBottomColor:"gray",borderBottomWidth:scale(0.2)}}>
+                     Delete</Text>
+                      </TouchableOpacity>
+                  </View>
+                  : null
+                }
+              
+             
+          </View>
+        
+
+          {/* <Menu 
+            visible={true}
+            ref={this.setMenuRef}
+            button={
+              <TouchableOpacity
+                onPress={() => {
+                  this.showMenu();
+                }}
+              >
+              <FontAwesome name="more-vertical" 
+                  color={colours.darkBlueTheme}
+                  size={scale(22)} />
+              </TouchableOpacity>
+            }
+          >
+            <MenuItem
+              onPress={() => {
+                this.hideMenu();
+               
+              }}
+              style={styles.menuStyle}
+              textStyle={styles.menuTextStyle}
+            >
+              
+
+              {"Edit"}
+            </MenuItem>
+
+            <MenuItem
+              onPress={() => {
+                this.hideMenu();
+               
+              }}
+              style={styles.menuStyle}
+              textStyle={styles.menuTextStyle}
+            >
+             
+                {"Delete"}
+
+            </MenuItem>
+
+          </Menu> */}
+
+
         </View>
+  
         <View style={styles.rowContainer}>
           <View style={styles.iconContainer}>
             <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
@@ -395,14 +529,12 @@ const AlertCard = (props) => {
         <View
           style={[
             styles.nextRowContainer,
-            {
-              alignItems: "flex-start",
-            },
+            
           ]}
         >
-          <View style={styles.iconContainer}>
+          {/* <View style={styles.iconContainer}>
             <FastImage style={styles.infoIcon} source={IMG_CONST.ECONOMY_ICON} />
-          </View>
+          </View> */}
           {travelClassView(travelClass.split(","))}
         </View>
         {buttonView(props)}
@@ -450,8 +582,17 @@ class AlertsScreen extends React.Component {
     showSortModal: false,
     alertCount:"",
     alertLength:"",
-    isLoader:false
+    isLoader:false,
+    showMenu:false,
+    AlertId:0,
   };
+
+
+
+
+
+
+
 
   async componentDidMount() {
 
@@ -578,7 +719,6 @@ class AlertsScreen extends React.Component {
     } else if(month === 11){
       monthKey = 22
     }
-    // console.log("yes on the the findflight container check month Key ######## ",monthKey)
   }
  
   handleBackButton = (nav) => {
@@ -671,12 +811,36 @@ class AlertsScreen extends React.Component {
       alerts: sortedArray.reverse()
     });
   }
-  renderHeader(alertLength) {
+// renderHeader(alertLength) {
 
+//     const {alertCount} = this.state;
+
+//     return (
+//       <View style={{ paddingHorizontal: scale(16) }}>
+//         <ScreenHeader
+//           {...this.props}
+//           left
+//           setting
+//           title={`${STR_CONST.ALERT_SCREEN_TITLE} ${ (alertLength)? `(${alertLength})` :""} `}
+//           right
+//           showSort={alertLength > 1 ? true : false}
+//           notifCount={this.props.badgeCount}
+//           clickOnRight={() => this.goToNotifications()}
+//           clickOnSort={() => {
+//             this.setState({
+//               showSortModal: true,
+//             });
+//           }}
+//         />
+//       </View>
+//     );
+//   }
+
+  renderHeader(alertLength){
     const {alertCount} = this.state;
-
-    return (
-      <View style={{ paddingHorizontal: scale(16) }}>
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(140),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
+        <View style={{marginTop:scale(60)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -692,8 +856,9 @@ class AlertsScreen extends React.Component {
             });
           }}
         />
+        </View>
       </View>
-    );
+    )
   }
 
   getSearchData(item) {   
@@ -1006,11 +1171,14 @@ class AlertsScreen extends React.Component {
 
   render() {
 
-    const { alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
+    const { showMenu,alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
     
     return (
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
+       <MyStatusBar  />
+     
         {this.renderHeader(alertLength)}
+
         {this.renderLoader()}
         {errorMessage ? (
           <View>
@@ -1035,6 +1203,8 @@ class AlertsScreen extends React.Component {
             style={{ marginTop: verticalScale(20) }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
+              // console.log("inside the rende method  - - - - -",item),
+
               <AlertCard
                 cancelAlert={this.confirmCancelAlert}
                 {...item}
@@ -1052,14 +1222,32 @@ class AlertsScreen extends React.Component {
                   this.props.getPointsAvailabilityAction(searchData)
                   this.props.getFlightScheduleAction(flightScheduleData)
                 }}
+                showMenu={this.state.showMenu}
+                AlertId={this.state.AlertId}
                 onEditPress={() => {
                   let data = this.getSearchData(item);
                   this.props.navigation.navigate(STR_CONST.EDIT_ALERT, {
                     alertData: item,
                     props: this.props,
                     data: data,
+                  },()=>{
+                    setTimeout(() => {
+                      this.setState({
+                        showMenu:false
+                      })
+                    }, 1000);
                   });
+                  this.setState({
+                    showMenu:false
+                  })
                 }}
+                onMenuPress={()=>{
+                    this.setState({
+                      showMenu:true,
+                      AlertId:item.id
+                    })
+                }}
+             
                 getLocationName={(source) => {
                   let locationsArray = this.props.locations;
                   return getLocationName(source, locationsArray).city_name;

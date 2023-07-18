@@ -123,7 +123,6 @@ export default StyleSheet.create({
   nextRowContainer: {
     flexDirection: "row",
     marginTop: scale(5),
-    alignItems: "center",
   },
 
   iconContainer: {
@@ -166,14 +165,17 @@ export default StyleSheet.create({
   travelClassView: {
     flexDirection: "row",
     flexWrap: "wrap",
-    width: width - 100,  
-    borderWidth:0,  
+    // width: width - 100,  
+    // borderWidth:1,  
+    alignSelf:"center",
+    justifyContent:"center",
     marginTop:Platform.OS === "android" ? -scale(2): -scale(0)
   },
   travelClassInnerView: {
     borderRadius: verticalScale(5),
     marginLeft: scale(5),
     marginTop: verticalScale(3),
+    borderWidth:1
   },
   travelClassText: {
     padding: 5,
@@ -189,15 +191,18 @@ export default StyleSheet.create({
     borderWidth:0,
   },
   buttonStyle: {
-    width: scale(140),
+    width: scale(290),
     paddingVertical: verticalScale(10),
     borderRadius: verticalScale(11),
     borderWidth: scale(1),
-    margin:scale(4),
-    justifyContent:'center'
+    margin:scale(1),
+    marginStart:scale(-3),
+    alignSelf:"center",
+    justifyContent:'center',
+
   },
   buttonTextStyle: {
-    fontSize: scale(12),
+    fontSize: scale(15),
     textAlign: "center",
     fontWeight: "bold",
     fontFamily:appFonts.INTER_BOLD,
@@ -217,6 +222,16 @@ export default StyleSheet.create({
     flexDirection:'row', 
     justifyContent:'space-between', 
     alignItems:'center'
+  },
+  menuStyle: {
+    height: verticalScale(35),
+    maxWidth: scale(200),
+  },
+  menuTextStyle: {
+    color: colours.black,
+    fontSize: scale(13),
+    flexWrap: "wrap",
+    width: scale(500),
   },
   notificationIconButton:{
     flexDirection:'row', 

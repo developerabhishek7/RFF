@@ -18,8 +18,8 @@ export default StyleSheet.create({
         width: scale(28)
     },
     infoIcon1: {
-        height: scale(24),
-        width: scale(24)
+        height: scale(20),
+        width: scale(20),marginStart:scale(10)
     },
     outerViewStyle: {
         paddingHorizontal: verticalScale(16),
@@ -44,13 +44,22 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
     headerView: {
-        flexDirection: "row", alignItems: 'center', margin: scale(9), marginTop: scale(10), alignContent: "center"
+        backgroundColor:"#3ab2d8",height:scale(120),width:scale(380),
+        marginTop:scale(-50),
+        borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)
     },
-    headerCity: { fontSize: scale(20), paddingStart: scale(15), fontFamily: appFonts.INTER_BOLD, textAlign: 'center', color: "#132C52",fontWeight:"800" },
-    headerCountry: { fontSize: scale(14), padding: scale(1), paddingTop: scale(6), fontFamily: appFonts.INTER_REGULAR, paddingStart: scale(10), textAlign: 'center', color: "gray",fontWeight:"700" },
-    airportName: { fontSize: scale(15), padding: scale(1),paddingStart:scale(3), marginTop:-scale(6), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(46), textAlign: 'left', color: "#132C52",fontWeight:"700"},
-    peakFairMainView: { flexDirection: "row", justifyContent: "space-around", alignItems: 'center', },
-    peakFairSubHeaderView: { flexDirection: "row", justifyContent: 'center', alignItems: 'center',borderWidth:1,borderColor:"gray",padding:scale(1),paddingStart:scale(9),paddingEnd:scale(9),borderRadius:scale(30) },
+    headerCity: { fontSize: scale(20), paddingStart: scale(15), fontFamily: appFonts.INTER_BOLD, textAlign: 'center', color: "#FFF",fontWeight:"600" },
+    headerCountry: { fontSize: scale(14), padding: scale(1), paddingTop: scale(6), fontFamily: appFonts.INTER_REGULAR, paddingStart: scale(10), textAlign: 'center', color: "#FFF",fontWeight:"700" },
+    airportName: { fontSize: scale(15), padding: scale(2),paddingStart:scale(1), marginTop:scale(4), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(46), textAlign: 'left', color: "#FFF",fontWeight:"700"},
+    peakFairMainView: { 
+      marginBottom:scale(0),width:scale(370),alignSelf:"center",
+      flexDirection: "row", justifyContent: "space-around", alignItems: 'center',
+    backgroundColor:"#FFF"
+  },
+    peakFairSubHeaderView: { flexDirection: "row", justifyContent: 'center', alignItems: 'center',padding:scale(1),paddingStart:scale(30),paddingEnd:scale(30),
+    borderWidth:0,
+    backgroundColor:"#FFF"
+  },
     peakFairImg: { height: scale(27), width: scale(27), margin: scale(7), justifyContent: 'center', alignItems: 'center' },
     peakFairTxt: { fontSize: scale(15), padding: scale(1), paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },
     showClassDataView: { flexDirection: "row", justifyContent: "space-around", width: "96%", marginStart: scale(10), marginEnd: scale(10), marginTop: scale(10), marginBottom: -scale(7) },

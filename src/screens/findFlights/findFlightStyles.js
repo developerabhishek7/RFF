@@ -8,16 +8,36 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#ecfdfd"
+    backgroundColor:"#FFF"
+    // backgroundColor:"#ecfdfd"
   },
 
   infoIcon: {
-    height: scale(28),
-    width: scale(28),
+    height: scale(21),
+    width: scale(21),
+    marginStart:scale(20)
+  },
+  inputTextStyle: {
+    fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
+    // fontSize: scale(14),
+    fontSize:scale(14),
+    fontWeight: "bold",
+    marginVertical: verticalScale(3),
+    color: colours.darkBlueTheme,
+    
+  },
+
+  infoIcon1: {
+    height: scale(17),
+    width: scale(17),
+    marginStart:scale(20)
   },
   returnIcon: {
-    height: scale(49),
-    width: scale(26),
+    height: scale(35),
+    width: scale(35),
+    alignSelf:"flex-end",
+    marginTop:scale(-19),
+    marginBottom:scale(-25)
   },
   outerViewStyle: {
     paddingHorizontal: verticalScale(16),
@@ -116,7 +136,7 @@ export default StyleSheet.create({
 
   airlineMembershipTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-    fontSize: scale(13),
+    fontSize: scale(14),
     fontWeight: "bold",
     marginVertical: verticalScale(10),
     color: colours.lightGreyish,
@@ -135,6 +155,14 @@ export default StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 0.5,
     borderBottomColor: colours.borderBottomLineColor,
+  },
+  airlineMembershipButton1: {
+    flexDirection: "row",
+    marginTop: verticalScale(20),
+    alignItems: "center",
+    width:scale(270),
+    borderBottomWidth: 0.5,
+    // borderBottomColor: colours.borderBottomLineColor,
   },
 
   getlocationStyle: {
@@ -216,6 +244,7 @@ export default StyleSheet.create({
     marginHorizontal: scale(20),
     marginVertical: verticalScale(20),
     alignItems:'center',
+    
   },
   yearsTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,

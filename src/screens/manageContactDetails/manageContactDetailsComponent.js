@@ -19,7 +19,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import  Octicons  from "react-native-vector-icons/Feather";
 import CustomButton from "../../components/customComponents/CustomButton";
 import Validators from "../../helpers/Validator";
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 
 import { getAccessToken } from "../../constants/DataConst";
 import { isEmptyString, getCountryCodes, getISOCode, storeCountryData, isAndroid } from "../../utils/commonMethods";
@@ -315,9 +315,11 @@ export default class ProfileScreenComponent extends Component {
     this.setState({ selectedCode: country.dialCode, countrySelectedIso: country.iso2 })
   }
 
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -325,9 +327,11 @@ export default class ProfileScreenComponent extends Component {
           notifCount={2}
           clickOnLeft={() => this.props.navigation.goBack()}
         />
+        </View>
       </View>
-    );
+    )
   }
+
 
   addMobileNumberView() {
     const { isAddNumberPressed, mobileNumber } = this.state;
@@ -1075,13 +1079,14 @@ export default class ProfileScreenComponent extends Component {
       showSendOTPButton,
     } = this.state;
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS == "android" ? "" : "padding"}
         >
+             {this.renderHeader()}
           <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-            {this.renderHeader()}
+         
             <View style={styles.innerContainer}>
               {this.addMobileNumberView()}
               {!isNumberVerified ? (

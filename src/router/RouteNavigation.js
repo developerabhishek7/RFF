@@ -3,7 +3,7 @@
 import { createNavigationContainerRef } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 export const navigationRef = createNavigationContainerRef()
-export function navigate(name, params) {
+export default function navigate(name, params) {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params);
   }

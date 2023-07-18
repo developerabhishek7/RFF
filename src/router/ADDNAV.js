@@ -1,6 +1,6 @@
 import * as React from 'react';
 import 'react-native-gesture-handler';
-import { Button, View, Text } from 'react-native';
+import { Button, View, StatusBar,Text } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -30,7 +30,7 @@ import sourceDestinationListComponent from "../screens/findFlights/sourceDestina
 import CreateAlertCalender from "../screens/calender/createAlertCalendar";
 import NotificationDetailComponent from "../screens/notifications/notificationDetails/NotificationDetailsComponent";
 import MapComponent from "../screens/mapSearch/mapViewComponent";
-import MoreComponent from "../screens/more/moreComponent";
+import MoreOptions from "../screens/more/moreComponent";
 import OnboardingContainer from "../screens/onBoardingScreens/onBoardingContainer";
 import ManageContactDetailsContainer from "../screens/manageContactDetails/manageContactDetailsContainer";
 import UpdateProfileContainer from "../screens/updateProfile/UpdateProfileContainer";
@@ -43,9 +43,13 @@ import PriceDetailsScreen from '../screens/calender/PriceDetailScreen'
 import DrawerView from '../screens/Drawer/drawerModal'
 import Test from '../../Test'
 import * as IMAGE_CONST from "../constants/ImageConst";
-import MoreOptions from '../screens/moreoptions'
+import FlightDetailsCompoent from '../screens/calender/flightDetailsContainer'
+// import MoreOptions from '../screens/moreoptions'
 import SplashComponent from '../screens/splash/SplashComponent'
 import { connect } from "react-redux";
+import scale, { verticalScale } from '../helpers/scale'
+import CheckParamScrenn from '../screens/calender/checkParamScrenn';
+import FindFlightComponent from '../screens/findFlights/findFlightComponent';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -55,23 +59,18 @@ const Drawer = createDrawerNavigator();
 
 {/* Add Drawer.Navigation to a function.*/ }
 
+componentDidMount = async() => {
+  StatusBar.setHidden(false);
+}
+
 const drawerViewModel = (navigation) => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
       {/* <DraweView navigation={navigation} /> */}
       <DrawerView navigation={navigation} />
     </View>
   );
 };
-
-
-
-
-
-
-
-
-
 
     const PublicStack = () => (
     <Stack.Navigator>
@@ -166,11 +165,10 @@ const drawerViewModel = (navigation) => {
           component={SplashComponent}
           options={{
             headerShown: false,
-            gestureEnabled: false          }}
+            gestureEnabled: false }}
           
         />
-
-<Stack.Screen
+      <Stack.Screen
           name="Loading"
           component={LoadingScreen}
           options={{
@@ -212,6 +210,15 @@ const drawerViewModel = (navigation) => {
         <Stack.Screen
           name="MapComponentScreen"
           component={MapComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+
+
+<Stack.Screen
+          name="FlightDetailsCompoent"
+          component={FlightDetailsCompoent}
           options={{
             headerShown: false
           }}
@@ -268,11 +275,16 @@ const drawerViewModel = (navigation) => {
             headerShown: false
           }}
         />
-
-
         <Stack.Screen
           name="Alerts"
           component={AlertsScreen}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="checkParamScrenn"
+          component={CheckParamScrenn}
           options={{
             headerShown: false
           }}
@@ -399,17 +411,15 @@ function MainStack() {
     const isLoggedIn = true;
   
     return (
-      <NavigationContainer >
-        
+      <NavigationContainer>
          <Drawer.Navigator drawerContent={drawerViewModel}
-      screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false }}
-
-    >
-          {/* {isLoggedIn ? ( */}
+                screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false,
+              }}
+          >
+          {/* {isLoggedIn ? ( */}           
             <Drawer.Screen
               name="ProtectedStack"
               component={ProtectedStack}
-              
               options={{ headerShown:false, }}
             />
              {/* ) : ( */}

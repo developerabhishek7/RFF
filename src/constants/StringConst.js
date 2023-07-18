@@ -390,7 +390,7 @@ export const IOS_ANDROID = "iOS & Android App";
 export const WHERE_CAN_I_GO = "“Where can I go” Search";
 export const SMS_ALERTS = "SMS Alerts";
 export const UPGRADE_PLAN =
-  "Do you want to change your plan? To upgrade or make changes to your subscription, please visit website.";
+  "To upgrade or make changes to your subscription, please visit website.";
 export const BRONZE_MEMBER = "Bronze Member";
 export const SILVER_MEMBER = "Silver Member";
 export const GOLD_MEMBER = "Gold Member";
@@ -475,7 +475,7 @@ export const CABIN_CLASS = "Cabin Class";
 export const TRAVELLERS = "Travellers";
 export const PASSENGERS = "Passengers";
 export const PASSENGER = "Passenger";
-export const DEPART_TEXT = "Depart";
+export const DEPART_TEXT = "Departure";
 export const DEPART_DATE = "Departure Date(s)";
 export const CHOOSE_ALL_FIELDS = "Please choose all fields";
 export const FLIGHT_TYPE = "Flight Type";

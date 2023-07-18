@@ -62,7 +62,9 @@ export default class AirlineMembershipComponent extends Component {
 
   renderCrossIcon() {
     return (
-      <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+     
+    <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
         <View>
           <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 10 }}> Airline Membership Tier </Text>
         </View>
@@ -81,6 +83,7 @@ export default class AirlineMembershipComponent extends Component {
             source={IMAGE_CONST.DARK_BLUE_CROSS_ICON}
           />
         </TouchableOpacity>
+      </View>
       </View>
     );
   }
@@ -211,7 +214,7 @@ export default class AirlineMembershipComponent extends Component {
 
   render() {
     return (
-      <View style={{flex:1}} >
+      <View style={{flex:1,borderWidth:1,borderColor:"red"}} >
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps='always'>
             {this.renderCrossIcon()}

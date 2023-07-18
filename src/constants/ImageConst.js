@@ -36,14 +36,22 @@ export const SUBSCRIPTION = require('../assets/common/subscription.png');
 export const PRICE = require('../assets/common/price.png');
 
 
+
+export const CHANGE_PASSWORD_BG = require('../assets/changePassword/BG.png');
+export const CHANGE_PASSWORD_LOGO = require('../assets/changePassword/logo.png');
+
+
+
 // Login screen.
 
 export const Login_bg = require('../assets/login/bg1.png');
 export const PROFILE_BG = require('../assets/profile/bg.png');
+export const SIGN_UP_BG = require('../assets/common/SIGN_UP_BG.png');
 
 
 
 export const FindFlight_BG = require('../assets/findFlight/bg.png');
+export const MAPVIEWBG = require('../assets/mapSearch/Map_bg.jpeg');
 
 
 // profile screen images.
@@ -53,12 +61,29 @@ export const AIRPORT = require('../assets/profile/airport.png');
 export const EQUALITY = require('../assets/profile/equality.png');
 export const TRAVEL = require('../assets/profile/travel.png');
 export const LIKELY = require('../assets/profile/likely.png');
-
-
 export const EDIT_BG = require('../assets/profile/editbg.png');
 
 
 
+// selected classes images.
+
+export const ECONOMYC = require('../assets/common/economy_C.png');
+export const PREMIUMC = require('../assets/common/premium_C.png');
+export const BUSINESSC = require('../assets/common/business_C.png');
+export const FIRSTC = require('../assets/common/first_C.png');
+
+
+export const ECONOMYC_SEAT = require('../assets/alerts/economy_seat.png');
+export const PREMIUM_SEAT = require('../assets/alerts/premium_seat.png');
+export const BUSINESS_SEAT = require('../assets/alerts/business_seat.png');
+export const FIRST_SEAT = require('../assets/alerts/first_seat.png');
+
+
+
+
+export const MSG = require('../assets/notificationSetting/msg.png');
+export const EMAIL = require('../assets/notificationSetting/email.png');
+export const LOGO = require('../assets/notificationSetting/logo.png');
 
 
 
@@ -67,7 +92,13 @@ export const MORE_ICON = require('../assets/common/More.png');
 export const LOGIN_ICON = require('../assets/common/loginIcon.png'); 
 export const PLANE_LOGO = require('../assets/common/planeLogo.png'); 
 export const PRICE_TAG = require('../assets/pricingPage/priceTag.png');
-export const UPGRADE_IMAGE = require('../assets/pricingPage/upgradeImage.png');
+export const UPGRADE_IMAGE = require('../assets/membership/membership.png');
+
+export const GOLD_IMAGE = require('../assets/membership/gold.png');
+export const SILVER_IMAGE = require('../assets/membership/silver.png');
+export const BRONZE_IMAGE = require('../assets/membership/bronze.png');
+
+
 export const TICK_MARK = require('../assets/pricingPage/tickMark.png');
 export const RED_CROSS = require('../assets/pricingPage/redClose.png');
 export const RED_LINE = require('../assets/pricingPage/redLine.png');
@@ -108,6 +139,8 @@ export const UPGRADE_MEMBERSHIP = require('../assets/common/upgradeMembership.pn
 export const NO_LOCATION_AVAILABLE = require('../assets/common/locationNotAvailable.png');
 export const NO_AIRLINE_AVAILABLE = require('../assets/common/noAirlineAvailable.png');
 export const LOCATION_PIN = require('../assets/mapSearch/locationPin.png');
+export const TAKEOFF = require('../assets/findFlight/take-off.png');
+export const DestinationCode = require('../assets/findFlight/DestinationCode.png');
 export const DEPARTURE = require('../assets/mapSearch/departure.png');
 export const LANDING = require('../assets/mapSearch/landing.png');
 export const DARK_BELL = require('../assets/common/dark_bell.png');
@@ -115,7 +148,7 @@ export const SEAT_ICON = require('../assets/findFlight/seat.png');
 export const TRAVELLER_ICON = require('../assets/findFlight/traveller.png');
 export const RETURN_ICON = require('../assets/findFlight/ReturnIcon.png');
 export const PLANE = require('../assets/findFlight/plane.png');
-export const RFF_LOGO = require('../assets/login/rffLogo.png');
+export const RFF_LOGO = require('../assets/logo.png');
 export const SPLASH = require('../assets/splash/Splash_V1.png');
 export const EYE_INVISIBLE = require('../assets/login/eyeInvisible.png');
 export const EMAIL_LOGO = require('../assets/login/email.png');
@@ -173,12 +206,12 @@ export const SORTING_UP = require('../assets/alerts/sortUp.png');
 export const SORTING_DOWN = require('../assets/alerts/sortDown.png');
 export const SORTING_ICON = require('../assets/alerts/sortIcon.png');
 
-//SVG constants
+//SVG constants<ion-icon name="chevron-back-outline"></ion-icon>
 
 export const CHEVRON_RIGHT =  <Entypo name="chevron-right" size={scale(30)} color={colours.darkBlueTheme} />
 export const PLUS_ICON = <FoundationIcon name={"plus"} size={verticalScale(15)} color={colours.white} />
 export const MINUS_ICON = <FoundationIcon name={"minus"} size={verticalScale(15)} color={colours.white} />
-export const IOS_BACK_ARROW = <Icon name="ios-arrow-back" size={scale(35)} color={colours.white} />
+export const IOS_BACK_ARROW = <Icon name="chevron-back-outline" size={scale(35)} color={colours.white} />
 export const ALERT_PLUS = <MaterialIcon name={"plus"} size={verticalScale(30)} color={colours.white} />
 export const CHEVRON_BACK = <Entypo name={"chevron-thin-left"} size={verticalScale(20)} color={colours.darkBlueTheme}/>
 export const SORT_DOWN = <FontAwesome name="sort-down" size={scale(20)}  style={{ color: colours.lightGreyish,}}/>

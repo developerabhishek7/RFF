@@ -7,8 +7,8 @@ import {
   SafeAreaView,
   TouchableHighlight,
   Keyboard,
-  TextInput, FlatList, ScrollView 
-} from "react-native";
+  TextInput, FlatList, ScrollView ,
+Platform} from "react-native";
 import SvgUri from 'react-native-svg-uri';
 import styles from "./findFlightStyles";
 import * as IMAGE_CONST from "../../constants/ImageConst";
@@ -155,7 +155,7 @@ export default class SourceDestinationListComponent extends Component {
       <View>
         {itemObject.airports &&
         <Fragment>
-          <View style={{flexDirection:"row",borderBottomWidth:0.4}} >
+          <View style={{flexDirection:"row",borderBottomWidth:0.9,borderBottomColor:"#DDDDDD"}} >
             {
               this.state.screenType ?
               <View style={{marginTop:scale(16),margin:scale(4)}}> 
@@ -173,8 +173,9 @@ export default class SourceDestinationListComponent extends Component {
             this.props.route.params.onSourceSelected(itemObject)
             this.props.navigation.goBack();
           }}
-            activeOpacity={1} underlayColor={colours.dimLightBlueBackgroundColor}
-            style={{ marginTop: verticalScale(10), borderRadius: scale(5), paddingHorizontal: scale(10), paddingVertical: verticalScale(10), backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#ecfdfd" }}>
+            activeOpacity={1}
+             underlayColor={colours.dimLightBlueBackgroundColor}
+            style={{ marginTop: verticalScale(10), borderRadius: scale(5), paddingHorizontal: scale(10), paddingVertical: verticalScale(10), backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
                <Text style={styles.membershipSubListTextStyle}>{this.getLocationText(itemObject, countryName)} </Text>
           </TouchableHighlight>
           </View>
@@ -302,10 +303,10 @@ export default class SourceDestinationListComponent extends Component {
 
 multipleCitiesTxt (){
   return (
-    <View>
+    <View style={{borderWidth:0,borderColor:"red"}}>
         <Text
             style={{
-              color: colours.darkBlueTheme,
+              color: colours.white,
               fontSize: scale(13),width:width*0.9,
               fontFamily: appFonts.INTER_REGULAR,
               marginStart:scale(24),
@@ -316,7 +317,7 @@ multipleCitiesTxt (){
           >We only let you choose hubs with flights to more than one place</Text>
           <Text
             style={{
-              color: colours.gray, fontSize: scale(11), marginStart: scale(15), fontFamily: appFonts.INTER_REGULAR,
+              color: colours.gray, fontSize: scale(11), marginStart: scale(30), fontFamily: appFonts.INTER_REGULAR,
               fontWeight: '500', alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
             }}
           >CITIES WITH MULTIPLE AIRPORTS</Text>
@@ -338,33 +339,39 @@ singleCityTxt () {
 }
 
 renderHeader() {
+  const {screenType} = this.state
   return (
-   <View style={{backgroundColor:"#03B2D8",height:scale(165),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:scale(-45)}}>
+   <View style={{backgroundColor:"#03B2D8",height:scale(190),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
+      marginTop:Platform.OS=="ios"?scale(-50):scale(-15)
+   }}>
       <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(40)}}>
       <TouchableOpacity onPress={() => {
-           
             this.props.navigation.goBack() }}>
-            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(20),width:scale(20),margin:scale(10)}} />
           </TouchableOpacity>
-
           <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
-
           <Text>       </Text>
          </View>
-
-
-         <View style={{marginTop:scale(20),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+         <View style={{marginTop:scale(5),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+         <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
+            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+            </TouchableOpacity>
             <TextInput 
                onChangeText={(searchText) => {
                 this.onSearch(searchText)
               }}
               placeholder="Where you are flying from?"
               placeholderTextColor="#FFFFFF"
-            style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
-            <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
-            </TouchableOpacity>
+              style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
          </View>
+
+         {
+          !screenType ?
+          <Fragment>
+          {this.multipleCitiesTxt()}
+          </Fragment>
+          : null
+         }
    </View>
   );
 }
@@ -389,10 +396,12 @@ renderHeader() {
             </Fragment>
             : 
             <Fragment>
-              {this.multipleCitiesTxt()}
+              <View style={{marginTop:scale(40)}}>
+              {/* {this.multipleCitiesTxt()} */}
               {this.renderList()}
               {this.singleCityTxt()}
               {this.renderList1()}
+              </View>
             </Fragment>
           }        
         </ScrollView>

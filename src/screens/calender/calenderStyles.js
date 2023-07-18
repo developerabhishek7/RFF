@@ -11,12 +11,11 @@ export default StyleSheet.create({
     flex: 1,
     // borderWidth:7,
     // borderColor:"green"
-    backgroundColor: colours.white,
-    // backgroundColor: 'rgba(52, 52, 52, 0.8)',  
+    // backgroundColor: colours.white,
   },
   headerContainer: {
     flexDirection: "row",
-    backgroundColor: colours.white,
+    // backgroundColor: "#03B2D8",
     alignItems: "center",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
@@ -38,7 +37,7 @@ export default StyleSheet.create({
     alignSelf:"center",
     marginVertical: verticalScale(10),
     borderWidth: scale(1),
-    borderColor:colours.white,
+    borderColor:"#3db5db",
     borderRadius:scale(4),
     paddingHorizontal:scale(15),
     paddingVertical:verticalScale(10),
@@ -48,7 +47,7 @@ export default StyleSheet.create({
     alignItems:'center',
   },
   flightDetailText: {
-    color: colours.white,
+    color: "#505050",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(12),
   },
@@ -166,17 +165,27 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: colours.lightBlueTheme,
     width: width / 3 + 10,
-    
   },
+
   animatedView: {
     position: "absolute",
     bottom: -scale(50),
-    // borderWidth:3,borderColor:"red",
     left: -2,
     right: -2,
-    backgroundColor: colours.darkBlueTheme,
+    backgroundColor: colours.white,
     borderTopLeftRadius: scale(30),
     borderTopRightRadius: scale(30),
+    // borderTopColor:"#304668",
+    // borderTopWidth:scale(1),
+
+    borderWidth:1,
+    elevation:1,borderColor:"#304668",
+    // width:scale(340),
+    shadowOffset: {width: -2, height: 4},  
+    shadowColor: '#171717',  
+    shadowOpacity: 0.2,  
+    shadowRadius: 3, 
+  
   },
   detailLocationText:{
     width: width - scale(30),
@@ -216,11 +225,20 @@ export default StyleSheet.create({
     left: -scale(20),
     right: -scale(20),
     backgroundColor: 'transparent',
-    backgroundColor: colours.darkBlueTheme,
+    backgroundColor: colours.white,
     borderTopLeftRadius: scale(30),
     borderTopRightRadius: scale(30),
     paddingTop:verticalScale(7),
     zIndex: 5,    
+
+    borderWidth:1,
+    elevation:1,borderColor:"#304668",
+    // width:scale(340),
+    shadowOffset: {width: -2, height: 4},  
+    shadowColor: '#171717',  
+    shadowOpacity: 0.2,  
+    shadowRadius: 3, 
+
  
   },
   titleTextStyle:{
@@ -270,9 +288,10 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   titleText: {
-    color: colours.white,
+    color: "#41454b",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(15),
+    fontWeight:"700",
   },
   classText: {
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
@@ -398,12 +417,12 @@ export default StyleSheet.create({
   ticketDetailText: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     fontSize: scale(13),
-    color: colours.darkBlueTheme,
+    color: colours.white,
   },
   locationText: {
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: colours.darkBlueTheme,
+    color: colours.white,
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(17),
     fontWeight: "bold",
@@ -472,13 +491,14 @@ export default StyleSheet.create({
     marginTop:scale(-10)
   },
   seatNumberText: {
-    color: colours.white,
+    color: "#5b5b5b",
     marginTop: verticalScale(18),
     fontSize: scale(12),
+    fontWeight:"700",
     fontFamily:STRING_CONST.appFonts.INTER_SEMI_BOLD
   },
   seatNumberText1: {
-    color: colours.lightGreyish,
+    color: "#3ab2d8",
     fontSize: scale(14),
     padding:scale(3),
     marginTop:-scale(20),
@@ -487,8 +507,9 @@ export default StyleSheet.create({
   },
 
   seatNumberText3:{
-    color: colours.lightGreyish,
+    color: "#41454b",
     fontSize: scale(14),
+    fontWeight:"600",
     fontFamily:STRING_CONST.appFonts.INTER_SEMI_BOLD
   },
   createCalendarHeader: {
@@ -604,13 +625,13 @@ export default StyleSheet.create({
     textDecorationLine:"underline"
   },
   aviosText1: {
-    color: colours.white,
+    color: "#41454b",
     textAlign: "center",
     marginTop: verticalScale(10),
     // textDecorationLine:"underline"
   },
   aviosText2: {
-    color: colours.white,
+    color: "#41454b",
     textAlign: "center",
     marginTop: verticalScale(3),
      textDecorationLine:"underline"

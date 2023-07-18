@@ -90,9 +90,27 @@ export default class ProfileScreenComponent extends Component {
     });
   }
 
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         setting
+  //         title={STRING_CONST.PROFILE_SCREEN_TITLE}
+  //         right
+  //         notifCount={2}
+  //         clickOnRight={() => this.goToNotifications()}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+    renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(220),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -102,10 +120,10 @@ export default class ProfileScreenComponent extends Component {
           notifCount={2}
           clickOnRight={() => this.goToNotifications()}
         />
+        </View>
       </View>
-    );
+    )
   }
-
 
 
   showAlert1() {  
@@ -122,7 +140,7 @@ export default class ProfileScreenComponent extends Component {
         ]  
     );  
 }  
-renderListItem(itemObject, index) { 
+renderListItem(itemObject, index) {
   return (
     <TouchableOpacity
       style={styles.profileOption}
@@ -158,7 +176,8 @@ renderListItem(itemObject, index) {
         }
       }}
     >
-      <FastImage source={itemObject.icon} />
+
+      <Image source={itemObject.icon} />
       <Text style={styles.profileOptionText}>{itemObject.text}</Text>
     </TouchableOpacity>
   );
@@ -188,9 +207,10 @@ renderListItem(itemObject, index) {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1,}}>
-        <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-          {this.renderHeader()}
+      <SafeAreaView style={{ flex: 1}}>
+        {this.renderHeader()}
+        <ScrollView style={{ flex: 1,marginTop:scale(-100) }} keyboardShouldPersistTaps="always">
+          
           {this.renderProfileOptions()}
           <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: scale(30) }}>
             <Text style={{ fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,fontWeight:Platform.OS === "android" ? "700" : "100" ,color: colours.darkBlueTheme }}>App version : 0.1.6</Text>

@@ -28,9 +28,27 @@ export default class MoreComponent extends Component {
     const { navigation } = this.props;
     navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN, { fromAlertScreen: false });
   }
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         setting
+  //         title={STRING_CONST.MORE_TITLE}
+  //         right
+  //         notifCount={2}
+  //         clickOnRight={() => Alert.alert("YES THIS IS CALLING!")}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(120),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -40,8 +58,9 @@ export default class MoreComponent extends Component {
           notifCount={2}
           clickOnRight={() => Alert.alert("YES THIS IS CALLING!")}
         />
+        </View>
       </View>
-    );
+    )
   }
 
   handleBackButton = (nav) => {

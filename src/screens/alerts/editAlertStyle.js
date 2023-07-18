@@ -88,7 +88,7 @@ export default StyleSheet.create({
   classCheckboxContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colours.offWhite,
+    // backgroundColor: colours.offWhite,
     padding: scale(10),
     width: scale(156),
     borderRadius: scale(5),
