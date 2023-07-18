@@ -2910,7 +2910,7 @@ export default class CalenderComponent extends Component {
 
 
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      // <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
       <TouchableOpacity
         style={
           styles.headerContainer
@@ -2944,7 +2944,7 @@ export default class CalenderComponent extends Component {
         //   this.props.navigation.navigate("FindFlightContainerScreen")
         //    }}
         >
-          <Icon name="ios-arrow-back" size={scale(30)} color={colours.white} />
+          <Icon name="ios-arrow-back" size={scale(30)} color="#22395d" />
         </TouchableOpacity>
 
         <View style={{}}>
@@ -2963,7 +2963,7 @@ export default class CalenderComponent extends Component {
           </View>
         </View>
       </TouchableOpacity>
-      </View>
+      // </View>
     );
   }
 

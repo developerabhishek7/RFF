@@ -123,6 +123,7 @@ export default StyleSheet.create({
   nextRowContainer: {
     flexDirection: "row",
     marginTop: scale(5),
+
   },
 
   iconContainer: {
@@ -165,17 +166,19 @@ export default StyleSheet.create({
   travelClassView: {
     flexDirection: "row",
     flexWrap: "wrap",
+    // borderWidth:1,
+    width:scale(325),
     // width: width - 100,  
     // borderWidth:1,  
     alignSelf:"center",
     justifyContent:"center",
+    alignItems:"center",
     marginTop:Platform.OS === "android" ? -scale(2): -scale(0)
   },
   travelClassInnerView: {
     borderRadius: verticalScale(5),
     marginLeft: scale(5),
     marginTop: verticalScale(3),
-    borderWidth:1
   },
   travelClassText: {
     padding: 5,
@@ -221,11 +224,19 @@ export default StyleSheet.create({
   alertHeaderContainer:{
     flexDirection:'row', 
     justifyContent:'space-between', 
-    alignItems:'center'
+    alignItems:'center',
   },
   menuStyle: {
     height: verticalScale(35),
     maxWidth: scale(200),
+  },
+  button:{
+
+    backgroundColor : 'orange',
+    marginTop : 10
+  },
+  menu:{
+    marginTop : 10
   },
   menuTextStyle: {
     color: colours.black,

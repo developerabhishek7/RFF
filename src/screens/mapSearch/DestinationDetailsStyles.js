@@ -45,7 +45,7 @@ export default StyleSheet.create({
     },
     headerView: {
         backgroundColor:"#3ab2d8",height:scale(120),width:scale(380),
-        marginTop:scale(-50),
+        marginTop:Platform.OS == "ios" ? scale(-50) :scale(-20),
         borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)
     },
     headerCity: { fontSize: scale(20), paddingStart: scale(15), fontFamily: appFonts.INTER_BOLD, textAlign: 'center', color: "#FFF",fontWeight:"600" },

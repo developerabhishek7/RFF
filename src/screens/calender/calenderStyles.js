@@ -11,11 +11,11 @@ export default StyleSheet.create({
     flex: 1,
     // borderWidth:7,
     // borderColor:"green"
-    // backgroundColor: colours.white,
+    backgroundColor: colours.white,
   },
   headerContainer: {
     flexDirection: "row",
-    // backgroundColor: "#03B2D8",
+    backgroundColor: "#FFF",
     alignItems: "center",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
@@ -417,12 +417,12 @@ export default StyleSheet.create({
   ticketDetailText: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     fontSize: scale(13),
-    color: colours.white,
+    color: "#22395d",
   },
   locationText: {
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: colours.white,
+    color: "#22395d",
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(17),
     fontWeight: "bold",

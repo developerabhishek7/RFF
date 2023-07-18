@@ -9,7 +9,8 @@ import {
   Text as ReactNativeText,
   ImageBackground,
   SafeAreaView,
-  BackHandler
+  BackHandler,
+  Platform
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
@@ -156,9 +157,12 @@ function travelClassView(travelClass) {
                 marginTop: verticalScale(3),
                 marginBottom:verticalScale(3),
                 width:scale(140),
+                
                 // justifyContent:"center",
                 flexDirection:"row",
-                justifyContent:"center"
+                justifyContent:"center",
+                
+               
                 // justifyContent:"space-around"
               })
             }
@@ -351,46 +355,50 @@ const AlertCard = (props) => {
             </View>
           </TouchableOpacity>
           
-          <View style={{alignSelf:"flex-end",height:scale(30),width:scale(30),marginRight:scale(10),padding:scale(10),backgroundColor:"#FFF"}}> 
-         
+          <View style={{alignSelf:"flex-end",marginRight:scale(10),padding:scale(10),}}> 
               <TouchableOpacity
                   onPress={() => {
-                  
                     props.onMenuPress(props);
-
                   }}
-                style={{height:scale(20),width:scale(20),margin:scale(1),marginBottom:scale(30)}}
+                style={{height:scale(20),width:scale(20),margin:scale(1),marginBottom:scale(10),marginTop:scale(15)}}
               >
               <FontAwesome name="more-vertical" 
                   color={colours.darkBlueTheme}
                   size={scale(22)} />
               </TouchableOpacity>
-        
                 {
                   showMenu && AlertId == id ?
-                  <View style={{marginTop:scale(-40),marginLeft:scale(-80),flexDirection:"column",width:scale(100),height:scale(90),padding:scale(6),backgroundColor:colours.darkBlueTheme,borderWidth:0.7,borderColor:"gray",
-                  shadowOffset: {width: -2, height: 4},  
-                  shadowColor: '#171717',  
-                  shadowOpacity: 0.2,  
-                  shadowRadius: 3, 
+                  <Fragment>
+                  <View style={{
+                    position:"absolute",
+                    right:scale(10),
+                    top:scale(10),
+                    backgroundColor:"#FFF",
+                    height:scale(70),
+                    width:scale(100),
+                    borderWidth:scale(0.6),
+                    borderColor:"gray",
+                    borderRadius:scale(2),
+                    alignSelf:"center",justifyContent:"center"
                   }}>
-                      <TouchableOpacity
-                        style={{}}
+                      <TouchableOpacity 
                       onPress={() => {
-                        setTimeout(() => {
                           props.onEditPress(props);
-                        }, 300);
-                        
-                      }}>
-                      <Text style={{fontSize:scale(13),fontWeight:"600",color:"#FFF",padding:scale(6),borderBottomColor:"gray",borderBottomWidth:scale(0.6)}}>Edit</Text>
+                      }}
+                      >
+                      <Text style={{fontSize:scale(14),textAlign:'center',fontWeight:"600",color:"#22395d",}}>Edit Alert</Text>
                       </TouchableOpacity>
-
                       
-                      <TouchableOpacity>
-                      <Text style={{fontSize:scale(13),fontWeight:"600",color:"#FFF",padding:scale(6),borderBottomColor:"gray",borderBottomWidth:scale(0.2)}}>
-                     Delete</Text>
+                      <View style={{height:scale(0.6),width:scale(100),marginTop:scale(6),backgroundColor:"gray"}}/>
+                      <TouchableOpacity 
+                      onPress={() => {
+                        props.onEditPress(props);
+                    }}
+                        >
+                      <Text style={{fontSize:scale(14),textAlign:'center',fontWeight:"600",color:"#22395d",padding:scale(6)}}>Delete Alert</Text>
                       </TouchableOpacity>
-                  </View>
+                   </View>
+                   </Fragment>
                   : null
                 }
               
@@ -529,7 +537,9 @@ const AlertCard = (props) => {
         <View
           style={[
             styles.nextRowContainer,
-            
+            {
+              width:scale(320),
+            }
           ]}
         >
           {/* <View style={styles.iconContainer}>
@@ -839,8 +849,10 @@ class AlertsScreen extends React.Component {
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(140),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
-        <View style={{marginTop:scale(60)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+      Platform.OS == "ios"? scale(-50) :
+      scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -1225,21 +1237,15 @@ class AlertsScreen extends React.Component {
                 showMenu={this.state.showMenu}
                 AlertId={this.state.AlertId}
                 onEditPress={() => {
-                  let data = this.getSearchData(item);
+                  this.setState({
+                    showMenu:false
+                  })
+                     let data = this.getSearchData(item);
                   this.props.navigation.navigate(STR_CONST.EDIT_ALERT, {
                     alertData: item,
                     props: this.props,
                     data: data,
-                  },()=>{
-                    setTimeout(() => {
-                      this.setState({
-                        showMenu:false
-                      })
-                    }, 1000);
                   });
-                  this.setState({
-                    showMenu:false
-                  })
                 }}
                 onMenuPress={()=>{
                     this.setState({

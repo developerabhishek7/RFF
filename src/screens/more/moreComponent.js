@@ -8,7 +8,8 @@ import {
   ScrollView,
   TouchableOpacity,
   BackHandler,
-  Alert
+  Alert,
+  Platform
 } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import styles from "./moreStyles";
@@ -47,8 +48,8 @@ export default class MoreComponent extends Component {
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(120),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(-20):scale(-50),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(30)}}>
         <ScreenHeader
           {...this.props}
           left
