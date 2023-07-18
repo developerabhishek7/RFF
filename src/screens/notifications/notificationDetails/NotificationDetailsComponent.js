@@ -853,9 +853,29 @@ class NotificationDetailComponent extends Component {
     );
   }
 
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         title={STRING_CONST.NOTIFICATONS_SCREEN_TITLE}
+  //         clickOnLeft={() => {
+  //           // NavigationService.navigate("NotificationsScreen")
+  //           this.props.navigation.goBack();
+  //         }}
+  //       />
+  //     </View>
+  //   );
+
+  // }
+
+  
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -865,15 +885,19 @@ class NotificationDetailComponent extends Component {
             this.props.navigation.goBack();
           }}
         />
+        </View>
       </View>
-    );
+    )
   }
+
+
 
   render() {
     return (     
       <SafeAreaView style={styles.container}>
+         {this.renderHeader()}
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          {this.renderHeader()}
+         
           {this.renderLoader()}
           {this.state.notificationDetails && this.renderDetails()}
         </ScrollView>

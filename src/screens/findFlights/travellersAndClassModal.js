@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { Component, Fragment } from "react";
+import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
 import styles from "./findFlightStyles";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import scale, { verticalScale } from "../../helpers/scale";
@@ -16,6 +16,7 @@ export default class TravellersAndClassModal extends Component {
     super(props);
     this.state = {
       searchText: "",
+      showClassModal:this.props.showClassModal,
       travellersCount:
         this.props.travellersCount !== 0 ? this.props.travellersCount : 1,
       classTypeArray: this.props.selectedClassObject ? this.props.selectedClassObject : [
@@ -150,62 +151,35 @@ export default class TravellersAndClassModal extends Component {
     let first = this.state.classTypeArray[3].class
     let isFirstSelected = this.state.classTypeArray[3].isSelected
 
-
-    const {userData}  = this.props;
-
-
+    const {userData,showClassModal}  = this.props;
 
     let goldMember = userData.gold_member
     let silverMember = userData.silver_member
     let bronzeMember = userData.bronze_member
 
-
-
     return (
       <View>
-        {/* <FlatList
-          data={this.state.classTypeArray}
-          renderItem={({ item, index }) => {
-            return this.renderListItem(item, index);
-          }}
-        /> */}
         {
-          this.state.classTypeArray.map((item, index) => {   
-              return (
-                <View>
-                  <TouchableOpacity
-                    style={{ flexDirection: "row", marginVertical: verticalScale(15),alignItems:"center",borderWidth:0,borderColor:"gray",width:scale(130) }}
-                    onPress={() => {
-                      if(item.class == "Economy") { 
-                        if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
-                          this.onClassTypeSelected(item, index);
-                        }
-                      }
-                      else if(item.class == "Premium Economy") { 
-                        if(!bronzeMember){
-                          if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
-                            this.onClassTypeSelected(item, index);
-                          }
-                        }
-                      }
-                      else if(item.class == "Business"){
-                        if(!bronzeMember){
-                          if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
-                            this.onClassTypeSelected(item, index);
-                          }
-                        }
-                      
-                      }
-                      else if(item.class == "First"){
-                        if(!bronzeMember){
-                          if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                            this.onClassTypeSelected(item, index);
-                          }
-                        }
-                      }
-                    }}
-                  >
+          showClassModal ?
+          <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
+
+          {
+            this.state.classTypeArray.map((item, index) => { 
+                return (
+                  <View>
                     <TouchableOpacity
+                      style={{ backgroundColor:  item.class  == "Economy" ?
+                      "#edf0ff" : item.class == "Premium Economy" ?
+                      "#fef8ed" : item.class == "Business" ?
+                      "#f8ebfe" : item.class == "First" ? 
+                      "#fde8f1" : null,
+                      borderColor:  item.class  == "Economy" ?
+                      "#bfc9ff" : item.class == "Premium Economy" ?
+                      "#fce1b3" : item.class == "Business" ?
+                      "#d7a1f0" : item.class == "First" ? 
+                      "#f9b9d4" : null,
+                      
+                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
@@ -218,8 +192,6 @@ export default class TravellersAndClassModal extends Component {
                               this.onClassTypeSelected(item, index);
                             }
                           }
-                        
-                        
                         }
                         else if(item.class == "Business"){
                           if(!bronzeMember){
@@ -227,7 +199,6 @@ export default class TravellersAndClassModal extends Component {
                               this.onClassTypeSelected(item, index);
                             }
                           }
-                        
                         }
                         else if(item.class == "First"){
                           if(!bronzeMember){
@@ -238,34 +209,142 @@ export default class TravellersAndClassModal extends Component {
                         }
                       }}
                     >
-                      <MaterialIcon
+                      <TouchableOpacity
+                        onPress={() => {
+                          if(item.class == "Economy") { 
+                            if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
+                              this.onClassTypeSelected(item, index);
+                            }
+                          }
+                          else if(item.class == "Premium Economy") { 
+                            if(!bronzeMember){
+                              if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                          else if(item.class == "Business"){
+                            if(!bronzeMember){
+                              if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                          else if(item.class == "First"){
+                            if(!bronzeMember){
+                              if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                        }}
+                      >
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",margin:scale(7),marginStart:scale(70)}}>
+                       {/* {
+                          item.class == "Economy" ?
+                          <MaterialIcon
+                          name={
+                            item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                          }
+                          size={verticalScale(22)}
+                          color={
+                            item.isSelected ? "#2044ff" : colours.lightGreyish
+                          }
+                        />
+                        : item.class == "Premium Economy" ? 
+                        <MaterialIcon
                         name={
                           item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
                         }
                         size={verticalScale(22)}
                         color={
-                          item.isSelected ? colours.lightBlueTheme : colours.lightGreyish
+                          item.isSelected ? "#f8a41e": colours.lightGreyish
                         }
                       />
+                      : item.class == "Business" ?
+                      <MaterialIcon
+                      name={
+                        item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                      }
+                      size={verticalScale(22)}
+                      color={
+                        item.isSelected ? "#af49de" : colours.lightGreyish
+                      }
+                    />
+                    : item.class = "First" ? 
+                    <MaterialIcon
+                    name={
+                      item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                    }
+                    size={verticalScale(22)}
+                    color={
+                      item.isSelected ? "#eb186f" : colours.lightGreyish
+                    }
+                  />
+                  : null
+                } */}
+                        <MaterialIcon
+                          name={
+                            item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                          }
+                          size={verticalScale(22)}
+                        
+                          color={
+                            item.class == "Economy" ?
+                            item.isSelected ? "#2044ff" : colours.lightGreyish :
+                            item.class == "Premium Economy" ?
+                            item.isSelected ? "#f8a41e" : colours.lightGreyish :
+                            item.class == "Business" ? 
+                            item.isSelected ? "#af49de" : colours.lightGreyish :
+                            item.class == "First" ? 
+                            item.isSelected ? "#eb186f" : colours.lightGreyish :
+                             null
+
+                          
+                          }
+                        />
+                        </View>
+                      </TouchableOpacity>
+
+                      <View style={{flexDirection:"column",margin:scale(4)}}>
+                      <ImageBackground
+                        source={
+                          item.class  == "Economy" ?
+                          IMAGE_CONST.ECONOMYC : item.class == "Premium Economy" ?
+                          IMAGE_CONST.PREMIUMC : item.class == "Business" ?
+                          IMAGE_CONST.BUSINESSC : item.class == "First" ? 
+                          IMAGE_CONST.FIRSTC : null
+                        }
+                        resizeMode="contain"
+                        style={{height:scale(40),width:scale(40),alignSelf:"center",justifyContent:"center",alignItems:"center"}}
+                      >
+
+
+                      </ImageBackground>
+
+
+                      <Text
+                        style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
+                      >
+                        {item.class == "First" ? "First Class " : item.class}
+                        {/* {item.class} */}
+                      </Text>
+                      </View>
                     </TouchableOpacity>
-                    <Text
-                      style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(1) }]}
-                    >
-                      {item.class}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )                       
-          })
+                  </View>
+                )                       
+            })
+          }
+          </View>
+          : 
+          null
         }
       </View>
     );
   }
 
   render() {
-
     const {travellersCount} = this.state;
-
     return (
       <View>
         <Modal
@@ -284,7 +363,14 @@ export default class TravellersAndClassModal extends Component {
                     color: colours.darkBlueTheme,
                     fontWeight: 'bold'
                   }}
-                >{travellersCount > 1 ? "Passengers" : "Passenger"} | {STRING_CONST.CABIN_CLASS}
+                >{travellersCount > 1 ? "Passengers" : "Passenger " } 
+                {
+                      this.state.showClassModal  ?
+                      <Fragment>
+                       | {STRING_CONST.CABIN_CLASS}
+                      </Fragment>
+                      : null
+                }
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
@@ -301,18 +387,51 @@ export default class TravellersAndClassModal extends Component {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={styles.travellersCountViewStyle}>
+              <View style={[styles.travellersCountViewStyle,{
+                padding:scale(10),
+                borderRadius:scale(4),
+                backgroundColor:"#dff9fe"
+              }]}>
+               <View style={{flexDirection:"row",justifyContent:"center"}}>
                 <FastImage
                   source={IMAGE_CONST.LIGHT_BLUE_USER}
                   resizeMode="cover"
                   style={styles.passengerIcon}
                 />
+                {
+                  !this.state.showClassModal  ?
+                  <Text
+                  style={{
+                    fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
+                    fontSize: scale(14),
+                    color: colours.darkBlueTheme,
+                    fontWeight: 'bold',
+                    paddingStart:scale(9)
+                    
+                  }}
+                >{travellersCount > 1 ? "Passengers" : "Passenger"} 
+                </Text>
+                  :   <Text
+                  style={{
+                    fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
+                    fontSize: scale(14),
+                    color: colours.darkBlueTheme,
+                    fontWeight: 'bold',
+                    paddingStart:scale(9)
+                    
+                  }}
+                >{travellersCount > 1 ? "Passengers" : "Passenger"} 
+                </Text>
+                }
+                 </View>
                 {this.getTravellersCountView()}
+               
               </View>
               <View
                 style={{
                   borderBottomWidth: 0.6,              
                   borderBottomColor: colours.borderBottomLineColor,
+                  flexDirection:"row",
                 }}
               />
               {this.getClassType()}

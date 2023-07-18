@@ -15,6 +15,8 @@ import {
   ImageBackground
 } from "react-native";
 import FastImage from 'react-native-fast-image'
+// import crashlytics from "@react-native-firebase/crashlytics";
+import MyStatusBar from '../../components/statusbar/index'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from "./findFlightStyles";
@@ -31,10 +33,11 @@ import Modal from "react-native-modal";
 var uuid = require('react-native-uuid');
 import { getUserInfo } from "../../actions/userActions";
 
-import { usePostHog, PostHogProvider } from 'posthog-react-native'
+// import PostHog from 'posthog-react-native';
 
 import DeviceInfo from "react-native-device-info";
-import RouteNavigation from '../../router/RouteNavigation'
+import * as RootNavigation from '../../router/RouteNavigation';
+
 export default class FindFlightComponent extends Component {
   constructor(props) {
     super(props);
@@ -165,6 +168,7 @@ export default class FindFlightComponent extends Component {
   // };
 
   //  logCrash = async (user) => {
+  //   console.log("yes chekcking its calling  - -  - - - -")
   //   crashlytics().crash();
   // };
 
@@ -186,7 +190,6 @@ export default class FindFlightComponent extends Component {
 
     const userData  = this.props.userData
 
-    const posthog = usePostHog()
 
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
@@ -214,24 +217,24 @@ export default class FindFlightComponent extends Component {
     }
 
 
-    setTimeout(() => {
-        if(this.props.isLoggedIn){
-          posthog.identify(this.props.userData.email, {
-            email: this.props.userData.email,
-            deviceName: deviceName,
-            deviecBrand:deviecBrand,
-            isTablet:isTablet,
-            isEmulator:isEmulator,
-            Plateform:"Mobile",
-            userType:"Logged-in user"
-          });
-        }
-    }, 2000);
+    // setTimeout(() => {
+    //     if(this.props.isLoggedIn){
+    //       PostHog.identify(this.props.userData.email, {
+    //         email: this.props.userData.email,
+    //         deviceName: deviceName,
+    //         deviecBrand:deviecBrand,
+    //         isTablet:isTablet,
+    //         isEmulator:isEmulator,
+    //         Plateform:"Mobile",
+    //         userType:"Logged-in user"
+    //       });
+    //     }
+    // }, 2000);
 
  
     setTimeout(() => {
       if(isNewSignUp){
-        posthog.capture('New Sign Up', trackData);
+        // posthog.capture('New Sign Up', trackData);
       }
     }, 1000);
 
@@ -702,7 +705,7 @@ export default class FindFlightComponent extends Component {
         >
           <FastImage
             source={IMAGE_CONST.TRAVELLER_ICON}
-            style={[styles.infoIcon, { marginRight: scale(7) }]}
+            style={[styles.infoIcon1, { marginRight: scale(7) }]}
           />
           <View>
             <Text
@@ -1080,6 +1083,287 @@ export default class FindFlightComponent extends Component {
       </View>
     );
   }
+
+  getFullDestinationName(destinationObject) {
+    let code = "";
+    destinationObject.airports.map((item, index, arrayRef) => {
+      if (arrayRef.length == 1) {
+        code = code.concat(`${item.code}`)
+      }
+      else {
+        code = code.concat(`${item.code},`)
+      }
+      // code  = item.code      
+    });
+    let fullName = `${destinationObject.city_name} (${code})`;
+    return fullName;
+  }
+
+
+  getLocation() {
+
+    const { isSearchClicked, selectedSource, selectedDestination, airlinesPossileRoutesList,locationsObject } = this.state
+  
+
+  
+    if (selectedSource) {
+      if (
+        selectedSource &&
+        selectedSource.airports &&
+        selectedSource.airports.length > 1
+      ) {
+        countryName = selectedSource.airports
+          .map((item, index) => {
+            return item.code;
+          })
+          .join(",");
+        hasMultiple = true;
+      } else {
+        countryName = selectedSource.country_name;
+      }
+    }
+    return (
+      <Fragment>
+      <TouchableOpacity
+        style={[
+          styles.airlineMembershipButton1,
+          {
+            paddingBottom: verticalScale(6),
+
+            borderBottomColor:
+              isSearchClicked && !selectedSource
+                ? colours.errorColor
+                : colours.borderBottomLineColor,
+          },
+        ]}
+        onPress={() => {
+          if (locationsObject && this.state.airlinesPossileRoutesList) {
+            this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
+              screenType: "Findflight",
+              type: !selectedDestination ? "source" : "destination",
+              locationsObject: !selectedDestination
+                ? locationsObject
+                : airlinesPossileRoutesList,
+              placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
+              allLocations: locationsObject,
+              sourceSelected: selectedDestination,
+              onSourceSelected: (selectedSource) => {
+                this.onSourceSelected(selectedSource);
+                // this.props.getNearestAirport(selectedSource.latitude, selectedSource.longitude )
+              },
+              selectedLocation: selectedSource
+            })
+          }
+        }}
+      >
+        <FastImage
+          source={IMAGE_CONST.TAKEOFF}
+          resizeMode="contain"
+          style={[styles.infoIcon1, { marginRight: scale(10) }]}
+        />
+        <View style={{}}>
+          {
+            this.state.selectedIndex == 0 ?
+              <Fragment>
+                {
+                  this.state.travelTo ?
+                    <Text
+                      style={[
+                        styles.airlineMembershipTextStyle,
+                        {
+                          color:
+                            isSearchClicked && !selectedSource
+                              ? colours.errorColor
+                              : colours.lightGreyish,
+                          fontSize: selectedSource ? scale(10) : scale(14),
+                        },
+                      ]}
+                    >
+                      {"Origin City"}
+                      {/* /{STRING_CONST.AIRPORT_TEXT} */}
+                    </Text>
+                    :
+                    <Text
+                      style={[
+                        styles.airlineMembershipTextStyle,
+                        {
+                          color:
+                            isSearchClicked && !selectedSource
+                              ? colours.errorColor
+                              : colours.lightGreyish,
+                          fontSize: selectedSource ? scale(10) : scale(14),
+                        },
+                      ]}
+                    >
+                      {"Origin City"}
+                      {/* /{STRING_CONST.AIRPORT_TEXT} */}
+                    </Text>
+                }
+              </Fragment>
+              :
+              <Fragment>
+                {
+                  <Text
+                    style={[
+                      styles.airlineMembershipTextStyle,
+                      {
+                        color:
+                          isSearchClicked && !selectedSource
+                            ? colours.errorColor
+                            : colours.lightGreyish,
+                        fontSize: selectedSource ? scale(10) : scale(14),
+                      },
+                    ]}
+                  >
+  {"Origin City"}                  
+  </Text>
+                }
+              </Fragment>
+          }
+
+          {selectedSource && (
+            <Text
+              numberOfLines={1}
+              style={
+                (styles.inputTextStyle,
+                  [
+                    {
+                      fontWeight: "bold",
+                      color: !selectedSource
+                        ? colours.lightGreyish
+                        : colours.darkBlueTheme,
+                      fontSize: selectedSource ? scale(14) : scale(11),
+                      width: scale(220)
+                    },
+                  ])
+              }
+            >
+              {this.getFullDestinationName(selectedSource)}
+            </Text>
+          )}
+        </View>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity
+          onPress={() => {
+            console.log("check what is happending here ####### ",)
+
+            if (selectedSource && selectedDestination) {
+              let selectedSourceObject = selectedSource;
+              let selectedDestinationObject = selectedDestination;
+              let temp;
+              temp = selectedSourceObject;
+              (selectedSourceObject = selectedDestinationObject),
+                (selectedDestinationObject = temp);
+               this.setState({
+                selectedSource: selectedSourceObject,
+                selectedDestination: selectedDestinationObject,
+              });
+            }
+          }}
+
+          style={{borderWidth:0,width:scale(40),alignSelf:'flex-end'}}
+        >
+          <FastImage resizeMode="contain" source={IMAGE_CONST.RETURN_ICON}
+            style={[styles.returnIcon]} />
+        </TouchableOpacity>
+
+
+
+
+      <TouchableOpacity
+        style={[
+          styles.airlineMembershipButton,
+          {
+            paddingBottom: verticalScale(6),
+            borderBottomColor:
+              isSearchClicked && !selectedSource
+                ? colours.errorColor
+                : colours.borderBottomLineColor,
+          },
+        ]}
+        onPress={() => {
+          this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
+            screenType: "Findflight",
+            type: !selectedSource ? "source" : "destination",
+            sourceSelected: selectedSource,
+            allLocations: locationsObject,
+            locationsObject: !selectedSource
+              ? locationsObject
+              : airlinesPossileRoutesList,
+            placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_TO,
+            onSourceSelected: (selectedSource) => {
+            this.onDestinationSelected(selectedSource);
+            },
+            selectedLocation: selectedDestination
+          });
+        }}
+      >
+        <FastImage
+          source={IMAGE_CONST.DestinationCode}
+          resizeMode="contain"
+          style={[styles.infoIcon, { marginRight: scale(7) }]}
+        />
+        <View style={{}}>
+         
+
+{/* <Text
+            style={[
+              styles.getLocationTextStyle,
+              {
+                color: selectedDestination
+                  ? colours.darkBlueTheme : !selectedDestination && !isSearchClicked ?
+                    colours.lightGreyish : colours.errorColor,
+              },
+            ]}
+          >
+            {selectedDestination
+              ? selectedDestination.code
+              : STRING_CONST.TO}
+          </Text> */}
+          <Text
+                      style={[
+                        styles.airlineMembershipTextStyle,
+                        {
+                          color:
+                            isSearchClicked && !selectedSource
+                              ? colours.errorColor
+                              : colours.lightGreyish,
+                          fontSize: selectedSource ? scale(10) : scale(14),
+                        },
+                      ]}
+                    >
+                      {"Departure City"}
+                      {/* /{STRING_CONST.AIRPORT_TEXT} */}
+                    </Text>
+         
+          {selectedDestination && (
+            <Text
+              numberOfLines={1}
+              style={
+                (styles.inputTextStyle,
+                  [
+                    {
+                      fontWeight: "bold",
+                      color: !selectedDestination
+                        ? colours.lightGreyish
+                        : colours.darkBlueTheme,
+                      fontSize: selectedDestination ? scale(13) : scale(11),
+                      width: scale(250)
+                    },
+                  ])
+              }
+            >
+              {this.getFullDestinationName(selectedDestination)}
+            </Text> )}
+          
+        </View>
+      </TouchableOpacity>
+
+</Fragment>
+    );
+  }
   renderSubListItem(item, index, itemObject) {
     const { userSelectedAirlineMembershipIndex } = this.state;
     return (
@@ -1154,6 +1438,38 @@ export default class FindFlightComponent extends Component {
       </View>
     );
   }
+  showTravelClassModel(){
+    const {userData}  = this.props;
+    let isLoggedIn = this.props.isLoggedIn
+
+    let goldMember = userData.gold_member
+    let silverMember = userData.silver_member
+    let bronzeMember = userData.bronze_member
+    return(
+      <TravellersAndClassModal
+                  showClassModal={true}
+                  onCrossPressed={() => {
+                    this.setState({
+                      showClassModal: false,
+                    });
+                  }}
+                  onDonePressed={(data, array, travellersCount) => {
+                    this.setState({
+                      classObject: data,
+                      classSelected: array,
+                      travellersCount: travellersCount,
+                      showClassModal: false,
+                    });
+                  }}
+                  travellersCount={this.state.travellersCount}
+                  selectedClassObject={bronzeMember ? this.state.classObject1 : this.state.classObject}
+                  userData={this.props.userData}
+                />
+    )
+  }
+
+
+
   render() {
     const {userData}  = this.props;
     let isLoggedIn = this.props.isLoggedIn
@@ -1164,7 +1480,9 @@ export default class FindFlightComponent extends Component {
 
        return (
           <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
+           
           <SafeAreaView >
+          <MyStatusBar  />
           <View style={styles.outerViewStyle}>
             {this.renderHeader()}
             <ScrollView keyboardShouldPersistTaps="always">
@@ -1177,7 +1495,8 @@ export default class FindFlightComponent extends Component {
                   </Text>
              
                 {this.renderBottomButton(STRING_CONST.MAP_SEARCH_TITLE, colours.darkBlueTheme, () => {
-                  this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
+            
+            this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
                     airLinesMembershipDetailsObject: this.props
                       .airlinesMembershipDetails,
                     airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
@@ -1204,26 +1523,11 @@ export default class FindFlightComponent extends Component {
              
 
 
-              {this.state.showClassModal && (
-                <TravellersAndClassModal
-                  onCrossPressed={() => {
-                    this.setState({
-                      showClassModal: false,
-                    });
-                  }}
-                  onDonePressed={(data, array, travellersCount) => {
-                    this.setState({
-                      classObject: data,
-                      classSelected: array,
-                      travellersCount: travellersCount,
-                      showClassModal: false,
-                    });
-                  }}
-                  travellersCount={this.state.travellersCount}
-                  selectedClassObject={bronzeMember ? this.state.classObject1 : this.state.classObject}
-                  userData={this.props.userData}
-                />
-              )}
+              {this.state.showClassModal &&
+                <Fragment>
+                  {this.showTravelClassModel()}
+                  </Fragment>
+              }
               {this.state.showAirlineModal && (
                 <Modal isVisible={true}>
                   <View style={styles.airlineContainerView}>
@@ -1244,7 +1548,6 @@ export default class FindFlightComponent extends Component {
                         return this.renderListItem(item, index);
                       }}
                     />
-
                     <TouchableOpacity
                       style={[styles.okButton, { backgroundColor: this.state.userSelectedAirline && this.state.userSelectedAirlineMembership ? colours.lightBlueTheme : colours.imageShadowColor }]}
                       disabled={!this.state.userSelectedAirline || !this.state.userSelectedAirlineMembership}

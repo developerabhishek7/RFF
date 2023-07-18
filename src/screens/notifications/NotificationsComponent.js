@@ -169,9 +169,28 @@ export default class NotificationsComponent extends Component {
   /**
    * Custom Header for Notifications screen
    */
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         title={STRING_CONST.NOTIFICATONS_SCREEN_TITLE}
+  //         clickOnRight={() => this.goToNotifications()}
+  //         clickOnLeft={() => {
+  //           this.props.navigation.goBack();
+  //           this.props.resetNotificationDataAction();
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -182,8 +201,9 @@ export default class NotificationsComponent extends Component {
             this.props.resetNotificationDataAction();
           }}
         />
+        </View>
       </View>
-    );
+    )
   }
 
   /**

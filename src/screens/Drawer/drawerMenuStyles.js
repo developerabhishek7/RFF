@@ -7,10 +7,9 @@ import {isPad} from '../../utils/commonMethods'
 
 export default StyleSheet.create({
   mainView: {
-    backgroundColor: "#e8fbfb",
+    backgroundColor: "#FFF",
     bottom: 0,
-    flex: 1,
-    // borderWidth:3,
+  flex:1
   },
   innerView: {
     margin: scale(20),
@@ -27,10 +26,11 @@ export default StyleSheet.create({
   screenTitle: {
     fontFamily: CONST.appFonts.INTER_REGULAR,
     // fontWeight: "bold",
-    fontWeight:"500",
-    color: colours.darkBlueTheme,
+    fontWeight:"600",
+    color:"gray",
     fontSize: scale(14),
-    paddingBottom:scale(10)
+    paddingBottom:scale(15),
+    paddingTop:scale(5)
   },
 
   titleTextStyle: {
@@ -73,25 +73,24 @@ export default StyleSheet.create({
   },
 
   logOutButton: {
-    // backgroundColor: colours.white,
     marginTop: verticalScale(25),
-    width: isPad() ? width - scale(140) :width - scale(110),
+    // width: isPad() ? width - scale(110) :width - scale(90),
     padding: scale(15),
-    borderRadius: verticalScale(11),
+    borderRadius: verticalScale(50),
     alignSelf: "stretch",
     // borderWidth: scale(1),
     marginLeft:scale(20),
-    // borderColor: colours.darkBlueTheme,
+    width:scale(240)
   },
   screenButtonStyle: {
     flexDirection: "row",
     marginBottom: verticalScale(10),
     alignItems:'center',
     padding:scale(9),
-    borderBottomWidth:0.5,
-    width:scale(350),
-    borderBottomColor:"gray",
-
+    borderBottomWidth:0.3,
+    width:scale(300),
+    borderBottomColor:colours.darkGreyColor,
+    
     // borderWidth:1
   },
 

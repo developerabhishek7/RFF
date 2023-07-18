@@ -33,8 +33,13 @@ import {NETWORK_ERROR} from '../constants/StringConst'
 import {getAccessToken} from '../constants/DataConst'
 import { getUserInfo } from "./userActions";
 import { Alert } from "react-native";
-import NavigationService from "../utils/NavigationService";
+
                 
+
+import {navigationRef} from '../router/RouteNavigation'
+
+import navigationService from "../utils/NavigationService";
+
 export function resetAlertUpdate() {
   return async (dispatch, getState) => {
     {
@@ -147,12 +152,15 @@ export function cancelAlerts(id,screenType) {
         // await dispatch({
         //   type: ALERT_CANCEL_SUCCESS,
         // });
-        NavigationService.navigate("Alerts")
-        Alert.alert("Your alert has been deleted successfully!")
+   
+        navigationRef.navigate("Alerts")
+        
+                Alert.alert("Your alert has been deleted successfully!")
        
       } else {
         dispatch(getUserInfo())
-        NavigationService.navigate("Alerts")
+        // NavigationService.navigate("Alerts")
+        navigationRef.navigate("Alerts")
         Alert.alert("Your alert has been deleted successfully!")
         // NavigationService.navigate("Alerts")
         // await dispatch({

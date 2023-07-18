@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment,useContext } from "react";
 import { View, Text, Image, Alert,BackHandler } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import { connect } from "react-redux";
@@ -13,6 +13,9 @@ import { getformattedDate, isEmptyString, getLocationNameWithCode } from "../../
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import moment from "moment";
 import FastImage from 'react-native-fast-image'
+import PosthogComponent from '../posthog/index'
+// import PostHog from 'posthog-react-native';
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 
 import styles from "./editAlertStyle";
 import PopUpComponent from "../../shared/popUpComponent";
@@ -23,7 +26,7 @@ import {
   resetAlertUpdate,
   getAlerts
 } from "../../actions/alertActions";
-import {usePostHog} from 'posthog-react-native';
+
 const classes = ["economy", "premium_economy", "business", "first"];
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 class EditAlertComponent extends Component {
@@ -100,6 +103,8 @@ class EditAlertComponent extends Component {
     data = this.props.route.params.alertData;
     let searchData = this.props.route.params.data;
 
+
+
     this.setState({
       passengerCount: searchData.passengerCount,
       selectedIndex: searchData.isReturn ? 1 : 0,
@@ -122,8 +127,11 @@ class EditAlertComponent extends Component {
       isEconomy:searchData.classSelected[0],
       isPremium:searchData.classSelected[1],
       isBusiness:searchData.classSelected[2],
-      isFirst:searchData.classSelected[3]
+      isFirst:searchData.classSelected[3],
     });
+
+
+
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
   );
@@ -190,9 +198,31 @@ class EditAlertComponent extends Component {
     );
   }
 
-  renderHeader() {
-    return (
-      <View style={{marginHorizontal:scale(15)}}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{marginHorizontal:scale(15)}}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         title={STRING_CONST.EDIT_ALERTS_TITLE}
+  //         notifCount={2}
+  //         clickOnRight={() => this.goToNotifications()}
+  //         clickOnLeft={() => {
+  //           this.props.navigation.goBack();
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+
+
+  renderHeader(alertLength){
+    const {alertCount} = this.state;
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -203,10 +233,10 @@ class EditAlertComponent extends Component {
             this.props.navigation.goBack();
           }}
         />
+        </View>
       </View>
-    );
+    )
   }
-
   departureDateView() {
     const { departStartDate,departEndDate } = this.state
     return (
@@ -340,9 +370,10 @@ class EditAlertComponent extends Component {
       case "economy": {
         return (
           <TouchableOpacity
-            style={[styles.classCheckboxContainer, marginStyle]}
+            style={[styles.classCheckboxContainer, marginStyle,{
+              backgroundColor:"#e6effd"
+            }]}
             onPress={() => {
-
               if(isPremiumSelected || isBusinessSelected || isFirstSelected) {  
 
                 let newClassArray = this.state.classSelectedArray;
@@ -375,7 +406,9 @@ class EditAlertComponent extends Component {
       case "premium_economy": {
         return (
           <TouchableOpacity
-            style={[styles.classCheckboxContainer, marginStyle]}
+            style={[styles.classCheckboxContainer, marginStyle,{
+              backgroundColor:"#f6f4e9"
+            }]}
             
             
             onPress={() => {
@@ -405,7 +438,9 @@ class EditAlertComponent extends Component {
       case "business": {
         return (
           <TouchableOpacity
-            style={[styles.classCheckboxContainer, marginStyle]}
+            style={[styles.classCheckboxContainer, marginStyle,{
+              backgroundColor:"#efeafc"
+            }]}
             onPress={() => {
 
 
@@ -434,7 +469,9 @@ class EditAlertComponent extends Component {
       case "first": {
         return (
           <TouchableOpacity
-            style={[styles.classCheckboxContainer, marginStyle]}
+            style={[styles.classCheckboxContainer, marginStyle,{
+              backgroundColor:"#f5ecf3"
+            }]}
             onPress={() => {
 
               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
@@ -753,8 +790,6 @@ class EditAlertComponent extends Component {
       return false
     }
 
-
-
     if (goldMember) {
       expireDate = new Date(goldExpireDate).getTime()
       departureEndDate = new Date(alertDate).getTime()
@@ -954,10 +989,8 @@ class EditAlertComponent extends Component {
               : 'N/A',
             }
           }
-          const posthog = usePostHog()
-          posthog.capture('Alert',trackData);
-          // PostHog.capture('Alert', trackData1);
-
+        
+          // PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1035,9 +1068,9 @@ class EditAlertComponent extends Component {
             }
           }
 
-          const posthog = usePostHog()
-          posthog.capture('Alert',trackData);
-          this.props.editAlertAction(editAlertData, this.state.id);
+          // PostHog.capture('Alert',trackData);
+         
+          // this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
           //   departEndDate: "",
@@ -1158,15 +1191,11 @@ class EditAlertComponent extends Component {
 
   render() {
 
-
-
     let screenType =  this.props.route.params.screen;
     let searchData = this.props.route.params.data;
 
-
-
     return (
-      <SafeAreaView style={{ flex: 1}}>
+      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
         <View style={{ flex: 1,  }}>
           {this.renderHeader()}
           {this.renderBody()}
@@ -1231,13 +1260,9 @@ class EditAlertComponent extends Component {
                     inboundEndDate: 'N/A',
                   }
                 }
-                 
                 
-                const posthog = usePostHog()
-                posthog.capture('Alert',trackData);
-
-
-
+                // PostHog.capture('Alert',trackData);
+         
                 this.props.cancelAlertAction(this.state.id,screenType)
                 // this.props.route.params.props.cancelAlertAction(
                 //   this.state.id

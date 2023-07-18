@@ -6,6 +6,7 @@ import { appFonts } from "../../constants/StringConst";
 export default StyleSheet.create({
   container: {
     flex: 1,
+    // borderWidth:3,borderColor:"red"
   },
 
   descritionItemView: {

@@ -3,43 +3,51 @@ import Appcontainer from './src/router/ADDNAV';
 import 'react-native-gesture-handler'
 import { Provider } from "react-redux";
 import configureStore from "./src/store/index";
-import { AppState, View, SafeAreaView,Platform,Dimensions ,StatusBar } from "react-native";
+import { AppState, LogBox,View, SafeAreaView,Platform,Dimensions ,StatusBar } from "react-native";
 import { fcm } from "./src/utils/firebaseHelper";
 import 'react-native-get-random-values'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Orientation from "react-native-orientation-locker";
 import TransLoader from "./src/components/loader/index";
 console.disableYellowBox = true;
-import PostHog from 'posthog-react-native'
-import { NativeBaseProvider } from 'native-base';
+import Dropdown from "./src/utils/dropdown";
+import { NativeBaseProvider } from 'native-base';                                      
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs()
+// import crashlytics from "@react-native-firebase/crashlytics";
+// import PostHog from 'posthog-react-native'
+import { colours } from "./src/constants/ColorConst";
 
+import DropdownAlert from "react-native-dropdownalert";
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       appState: AppState.currentState,
       store: configureStore(() => {
-        console.log("Store persisted !");
+        console.log("Store persisted !");           
       }),
     };
   }
 
-
    componentDidMount = async() => {
+    StatusBar.setHidden(false);
     console.disableYellowBox = true;
-    // crashlytics().log("App mounted.-------------");
+    // setTimeout(() => {
+    //   crashlytics().log("App mounted.------------------------------");
+    // }, 1000)
     // this.logCrashlytics()
     Orientation.lockToPortrait();
     fcm.setStore(this.state.store);
-    PostHog.initAsync('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv',{
-      host:'https://d29t15mip7grca.cloudfront.net',      
-    })
-    //  PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
+  
+  
+    // await PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
     //   // app.posthog.com
     //   captureApplicationLifecycleEvents: true,
     //   ios:{
     //     captureInAppPurchases:true,
     //     capturePushNotifications:true
+
     //   },
     //   host:'https://d29t15mip7grca.cloudfront.net',
     //   captureDeepLinks: true,
@@ -91,25 +99,37 @@ class App extends React.Component {
     this.setState({ appState: nextAppState });
   };
 
-  // componentWillUnmount() {
-  //   AppState.removeEventListener("change", this._handleAppStateChange);
-  // }
 
+  componentWillUnmount() {
+    StatusBar.setHidden(false);
+    //  AppState.removeEventListener("change", this._handleAppStateChange);
+  }
 
 
   render() {
     return (
       <NativeBaseProvider>
-      <View style={{ flex:1}}>
-        <Provider store={this.state.store}>
+      <View style={{ flex:1}}>    
+      <StatusBar />  
+      <Provider store={this.state.store}>
             <Appcontainer />
                <TransLoader />
+               <DropdownAlert
+          inactiveStatusBarStyle="dark-content"
+          inactiveStatusBarBackgroundColor={colours.white}
+          translucent={false}
+          ref={(ref) => Dropdown.setDropDown(ref)}
+          containerStyle={{ backgroundColor: colours.darkBlueTheme }}
+          onTap={() => {
+            fcm.handleForegroundNotification();
+          }}
+        />
         </Provider>
-    </View>
-    </NativeBaseProvider>
+      </View>
+      </NativeBaseProvider>
+
     );
   }
 }
 export default App;
-
 

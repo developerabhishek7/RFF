@@ -1,12 +1,13 @@
-package com.rewardflightfinder;
+package com.rewardflightfinder.app.android;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
+import io.branch.rnbranch.*;
+import android.content.Intent;
 
 public class MainActivity extends ReactActivity {
-
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
@@ -29,4 +30,17 @@ public class MainActivity extends ReactActivity {
         // If you opted-in for the New Architecture, we enable the Fabric Renderer.
         DefaultNewArchitectureEntryPoint.getFabricEnabled());
   }
+  @Override
+      protected void onStart() {
+          super.onStart();
+          RNBranchModule.initSession(getIntent().getData(), this);
+      }
+
+
+         @Override
+      public void onNewIntent(Intent intent) {
+          super.onNewIntent(intent);
+         RNBranchModule.onNewIntent(intent);
+      }
+
 }

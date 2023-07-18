@@ -94,6 +94,7 @@ export default class PopUpComponent extends Component {
               </View>
               <FastImage
                 source={this.state.image}
+                resizeMode="contain"
                 style={{ marginTop: verticalScale(35), width:scale(106), height:scale(94) }}
               />
               <Text style={[styles.messageStyle,{fontWeight: "500",}]}>{this.state.message}</Text>

@@ -297,14 +297,14 @@ export default StyleSheet.create({
   locationText: {
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: colours.darkBlueTheme,
+    color: colours.white,
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(18),
     fontWeight: "bold",
   },
   headerContainer: {
     flexDirection: "row",
-    backgroundColor: colours.white,
+    // backgroundColor: colours.white,
     alignItems: "center",
     paddingHorizontal: verticalScale(20),
     marginTop: verticalScale(15),
@@ -369,6 +369,7 @@ export default StyleSheet.create({
   cellContainer: {
     marginVertical: verticalScale(10),
     width:scale(270),
+    backgroundColor:"#FFFFFF",
     alignSelf:'center',
     borderWidth: scale(1),
     borderColor:colours.lightBlueTheme,
@@ -427,11 +428,21 @@ export default StyleSheet.create({
     bottom: Platform.OS === "ios" ?-scale(36):-scale(3),
     left: 0,
     right: 0,
-    backgroundColor: colours.darkBlueTheme,
+    backgroundColor: colours.white,
     borderTopLeftRadius: scale(30),
     borderTopRightRadius: scale(30),
     paddingTop:verticalScale(15),
-    zIndex: 5,
+    zIndex: 1,
+
+
+
+    borderWidth:0.6,
+    elevation:0.8,borderColor:"#304668",
+    // width:scale(340),
+    shadowOffset: {width: -2, height: 2},  
+    shadowColor: '#171717',  
+    shadowOpacity: 0.2,  
+    shadowRadius: 2, 
   },
   animatedInnerView: {
     // marginTop: verticalScale(10),
@@ -448,7 +459,8 @@ export default StyleSheet.create({
   detailLocationText:{
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: colours.white,
+    color: "#7d8ba0",
+
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(18),
     fontWeight: "bold",
@@ -477,11 +489,9 @@ export default StyleSheet.create({
   },
   ticketClassView: {
     flexDirection: "row",
-    
     marginTop: verticalScale(17),
     paddingHorizontal: scale(16),
     // borderWidth:1,
-    
   },
   classButton: {
     backgroundColor: colours.offWhite,
@@ -497,7 +507,7 @@ export default StyleSheet.create({
   bookOnBAButton:{
     // marginTop: verticalScale(30),
     // marginHorizontal:scale(20),
-    backgroundColor:"#D9F3F9",width:"100%",marginBottom:scale(30)
+    backgroundColor:"#f4fafb",width:"100%",marginBottom:scale(30)
   },
   dateText:{
     color: colours.lightGreyish,

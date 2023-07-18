@@ -201,8 +201,6 @@ class DrawerComponentComponent extends Component {
             </View>
             : null
           }
-
-         
            {
             buildVersion  == 0  || isAppReviewSuccess == false ?
               <Fragment>
@@ -281,8 +279,14 @@ class DrawerComponentComponent extends Component {
           resizeMode="stretch"
         /> */}
         {this.profileImage()}
-
-        <ScrollView style={{ marginTop: verticalScale(230), marginLeft: scale(0),borderWidth:0, }}>
+        <ScrollView style={{ marginTop: verticalScale(200), marginLeft: scale(0),borderWidth:0, }}>
+         
+          <View  style={{
+              borderWidth: 0.3,
+              height:scale(1),
+              borderColor: "gray",
+              margin:scale(4)
+            }} />
           <TouchableOpacity
             style={styles.screenButtonStyle}
             onPress={() => {
@@ -291,7 +295,6 @@ class DrawerComponentComponent extends Component {
             }}
           >
             {this.getMenuOptionImage(IMAGE_CONST.SEARCH_FF)}
-
             <Text style={styles.screenTitle}>{STR_CONST.SEARCH_REWARD}</Text>
           </TouchableOpacity>
           {isLoggedIn && (
@@ -303,7 +306,6 @@ class DrawerComponentComponent extends Component {
               }}
             >
               {this.getMenuOptionImage(IMAGE_CONST.MY_ALERT)}
-
               <Text style={styles.screenTitle}>
                 {STR_CONST.ALERT_SCREEN_TITLE}
               </Text>
@@ -318,7 +320,6 @@ class DrawerComponentComponent extends Component {
               }}
             >
             {this.getMenuOptionImage(IMAGE_CONST.PROFILE_IMG)}
-
               <Text style={styles.screenTitle}>
                 {STR_CONST.PROFILE_SCREEN_TITLE}
               </Text>
@@ -364,7 +365,7 @@ class DrawerComponentComponent extends Component {
               {STR_CONST.MORE_TITLE}
             </Text>
           </TouchableOpacity>
-          <View style={{backgroundColor:"#e8fbfb", alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
+          <View style={{alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
             styles.logOutButton,

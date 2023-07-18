@@ -9,7 +9,7 @@ export default class PasswordPatternCheckComponent extends Component {
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     return (
       <View style={styles.container}>

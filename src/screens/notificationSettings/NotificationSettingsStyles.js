@@ -15,13 +15,16 @@ export default StyleSheet.create({
   notificationTitle: {
     fontSize: scale(14),
     color: colours.darkBlueTheme,
+    padding:scale(4),
+    marginStart:scale(-25),
     fontFamily: appFonts.INTER_REGULAR,
   },
   notificationDetail: {
-    fontSize: scale(11),
+    fontSize: scale(12),
     color: colours.greyText,
     fontFamily: appFonts.INTER_REGULAR,
-    marginTop:verticalScale(5)
+    marginTop:verticalScale(5),
+    margin:scale(7),marginBottom:scale(20)
   },
   textInputHeading: {
     fontSize: scale(13),
@@ -88,7 +91,20 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: scale(5),
+    marginBottom: scale(5), 
+    // margin:scale(9)
+
+
+    // borderWidth:1,borderColor:"#abe9f6"
+  },
+  containerView:{
+    borderWidth:1,borderColor:"#abe9f6",
+    backgroundColor:"#f6fdfe",
+    borderRadius:scale(10),
+    marginTop:scale(20),
+    width:scale(320)
+    // ,margin:scale(7),
+    // padding:scale(3),
   },
   onOffText: {
     fontSize: scale(14),
@@ -239,6 +255,7 @@ export default StyleSheet.create({
   },
   flexRowContainer: { 
     flexDirection: "row",
+    marginRight:scale(15),
     alignItems: "center",padding:scale(4)
   },
   editIcon: {

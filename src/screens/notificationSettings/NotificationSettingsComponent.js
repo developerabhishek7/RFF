@@ -694,9 +694,24 @@ export default class NotificationSettingsComponent extends Component {
     }
   }
 
-  renderHeader() {
-    return (
-      <View style={{ marginHorizontal: scale(15) }}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{ marginHorizontal: scale(15) }}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         title={STR_CONST.NOTIFICATION_SETTINGS}
+  //         notifCount={2}
+  //         clickOnLeft={() => this.props.navigation.goBack()}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+  renderHeader(){
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -704,8 +719,9 @@ export default class NotificationSettingsComponent extends Component {
           notifCount={2}
           clickOnLeft={() => this.props.navigation.goBack()}
         />
+        </View>
       </View>
-    );
+    )
   }
 
 
@@ -821,16 +837,22 @@ export default class NotificationSettingsComponent extends Component {
             { fontWeight: Platform.OS == "ios" ? "600" : "bold" },
           ]}
         >
-          {STR_CONST.AVAILABILITY_ALERTS}
+          {/* {STR_CONST.AVAILABILITY_ALERTS} */}
         </Text>
 
 
+        <View style={styles.containerView}>
         <View style={styles.availabilityAlertInnerView}>
+        <Image source={IMG_CONST.EMAIL}
+              resizeMode="contain"
+              style={{height:scale(30),width:scale(30),marginRight:scale(-10)}}
+            />
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
             {STR_CONST.EMAIL_ALERT_NOTIFICATION}
           </Text>
           <View style={styles.flexRowContainer}>
-            <Text
+            
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -840,7 +862,7 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.OFF}
-            </Text>
+            </Text> */}
             <Switch
               value={sendEmail}
               onValueChange={(val) => this.toggleSwitch(false)}
@@ -861,7 +883,7 @@ export default class NotificationSettingsComponent extends Component {
               switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
               switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
             />
-            <Text
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -871,22 +893,28 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.ON}
-            </Text>
+            </Text> */}
           </View>
         </View>
         <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
             {STR_CONST.EMAIL_NOTIFICATION_DETAILS}
           </Text>
-        <View style={styles.line} />
+
+          </View>
+        {/* <View style={styles.line} /> */}
 
 
-
+        <View style={styles.containerView}>
         <View style={styles.availabilityAlertInnerView}>
+        <Image source={IMG_CONST.MSG}
+              resizeMode="contain"
+              style={{height:scale(30),width:scale(30),marginRight:scale(-15)}}
+            />
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
             {STR_CONST.SMS_ALERT_NOTIFICATION}
           </Text>
           <View style={styles.flexRowContainer}>
-            <Text
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -896,7 +924,7 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.OFF}
-            </Text>
+            </Text> */}
             <Switch
               value={sendSMS}
               onValueChange={(val) => {
@@ -940,7 +968,7 @@ export default class NotificationSettingsComponent extends Component {
               switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
               switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
             />
-            <Text
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -950,25 +978,33 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.ON}
-            </Text>
+            </Text> */}
           </View>
         </View>
         <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
             {STR_CONST.SMS_NOTIFICATION_DETAILS}
           </Text>
 
+          </View>
+
 
           
-        <View style={styles.line} />
+        {/* <View style={styles.line} /> */}
 
 
-
+        <View style={styles.containerView}>
         <View style={styles.availabilityAlertInnerView}>
+         
+        <Image source={IMG_CONST.LOGO}
+              resizeMode="contain"
+              style={{height:scale(27),width:scale(27),marginStart:scale(6),marginRight:scale(-20)}}
+            />
+         
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
             {STR_CONST.PUSH_NOTIFICATION}
           </Text>
           <View style={styles.flexRowContainer}>
-            <Text
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -978,7 +1014,7 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.OFF}
-            </Text>
+            </Text> */}
             <Switch
               value={
                 notificationSettings && notificationSettings.push_notification
@@ -1003,7 +1039,7 @@ export default class NotificationSettingsComponent extends Component {
               switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
               switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
             />
-            <Text
+            {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -1013,13 +1049,14 @@ export default class NotificationSettingsComponent extends Component {
               ]}
             >
               {STR_CONST.ON}
-            </Text>
+            </Text> */}
           </View>
         </View>
         <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
             {STR_CONST.PUSH_NOTIFICATION_DETAILS}
           </Text>
-        <View style={styles.line} />
+          </View>
+        {/* <View style={styles.line} /> */}
        
       </View>
     );
@@ -1124,10 +1161,11 @@ export default class NotificationSettingsComponent extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1,}}>
-        <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
+      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
           {this.renderHeader()}
 
+        <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
+        
           <View style={{ flex: 1,justifyContent:'center',alignItems:'center',alignSelf:'center' }}>
             {this.availabilityAlert()}
             {/* {this.keepInTouchAlert()} */}
