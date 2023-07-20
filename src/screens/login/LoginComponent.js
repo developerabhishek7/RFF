@@ -765,7 +765,8 @@ class LoginComponent extends Component {
           imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
         >
         <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(200)}}>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always"  >
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always"            showsVerticalScrollIndicator={false}        
+         >
           {/* {this.renderLogoContainer()} */}
           {this.renderInputFields()}
           {this.renderButtonContainer()}

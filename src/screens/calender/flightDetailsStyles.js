@@ -306,8 +306,9 @@ export default StyleSheet.create({
     flexDirection: "row",
     // backgroundColor: colours.white,
     alignItems: "center",
+    marginStart:scale(30),
     paddingHorizontal: verticalScale(20),
-    marginTop: verticalScale(15),
+    marginTop: verticalScale(40),
   },
   titleText: {
     color: colours.darkBlueTheme,

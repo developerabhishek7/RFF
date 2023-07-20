@@ -77,14 +77,16 @@ module.exports = StyleSheet.create({
     alignSelf: STRING_CONST.CENTER
   },
   bannerView: {
-    backgroundColor: COLOR_CONST.colours.dimLightBlueBackgroundColor,
+    // backgroundColor: COLOR_CONST.colours.dimLightBlueBackgroundColor,
     paddingVertical: verticalScale(15),
     alignSelf: STRING_CONST.STRETCH,
     borderRadius: scale(10),
+    borderBottomColor:"white",
+    borderBottomWidth:scale(1)
   },
   bannerText: {
     textAlign: STRING_CONST.CENTER,
-    color: COLOR_CONST.colours.lightBlueTheme,
+    color: COLOR_CONST.colours.white,
     fontSize: verticalScale(18),
   },
 });

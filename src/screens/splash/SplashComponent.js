@@ -4,29 +4,19 @@ import {View, Text, Animated, Easing, Image, StatusBar,Dimensions,Alert, ImageBa
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FastImage from 'react-native-fast-image';
  class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: this.props.userInfo,
     };
   }
 
   componentDidMount() {
     StatusBar.setHidden(false);
 
-    const {userInfo} = this.state;
-    const onBoardProps = AsyncStorage.getItem("onBoardProps")
   setTimeout(async() => {
-      // if(this.props.isLoggedIn == true){
-      //   this.props.navigation.navigate('FindFlightContainerScreen');
-      // }else {
-      //   this.props.navigation.navigate("SignIn")
-      // }
-
       this.props.navigation.navigate("Loading")
     }, 2000);
   }
@@ -55,16 +45,4 @@ import FastImage from 'react-native-fast-image';
   }
 }
 
-const mapStateToProps = (state) => {
-  const { userInfo,logIn } = state;
-  // console.log("yes check here userInfo - - - -  - - -",userInfo.userData,   logIn)
-  return {
-    userData: userInfo.userData,
-    isLoggedIn: logIn.isLoggedIn,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  null
-)(Splash);
+export default Splash

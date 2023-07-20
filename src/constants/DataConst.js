@@ -5,13 +5,19 @@ var userId = "";
 export async function getAccessToken() {
   if (!access_token || isEmptyString(access_token)) {
     access_token = await AsyncStorage.getItem("authorizationHeader");
+
+    console.log("yes check her detail  - - - - -",access_token)
+
   }
   return access_token;
 }
 
 export async function getUserId() {
   if (!userId || isEmptyString(userId)) {
+   
     userId = await AsyncStorage.getItem("userId");
+    console.log("yes check here user id  - - - - -",userId)
+
   }
   return userId;
 }

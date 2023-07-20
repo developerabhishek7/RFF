@@ -849,7 +849,7 @@ class AlertsScreen extends React.Component {
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:
       Platform.OS == "ios"? scale(-50) :
       scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
         <View style={{marginTop:scale(40)}}>
@@ -1187,7 +1187,7 @@ class AlertsScreen extends React.Component {
     
     return (
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
-       <MyStatusBar  />
+       {/* <MyStatusBar  /> */}
      
         {this.renderHeader(alertLength)}
 

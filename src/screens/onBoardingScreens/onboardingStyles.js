@@ -39,7 +39,7 @@ export default StyleSheet.create({
     backgroundColor: colours.skyBlueColor,
     width: scale(60),
     height: verticalScale(60),
-    borderRadius: scale(50),
+    borderRadius: scale(70),
     marginRight:scale(20),
     marginBottom: verticalScale(30),
   },

@@ -636,7 +636,7 @@ class SignUpComponent extends Component {
               this.secondTextInput.focus();
             }}
             blurOnSubmit={false}
-            maxLength={15}
+            maxLength={20}
             returnKeyType="next"
           />
         </View>
@@ -726,7 +726,7 @@ class SignUpComponent extends Component {
                 this.thirdTextInput.focus();
               }}
               blurOnSubmit={false}
-              maxLength={15}
+              maxLength={20}
               returnKeyType="next"
             />
           </View>
@@ -787,9 +787,9 @@ class SignUpComponent extends Component {
               underlineColorAndroid={'#FFFFFF'}
             />
             <TouchableOpacity
-              onPress={() =>
-                this.setState({ isHidePassword: !this.state.isHidePassword })
-              }
+              // onPress={() =>
+              //   this.setState({ isHidePassword: !this.state.isHidePassword })
+              // }
               style={styles.eyeContainer}
             >
               <FastImage
@@ -1215,6 +1215,7 @@ class SignUpComponent extends Component {
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps={"always"}
           contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
         >
           {this.renderLogoContainer()}
           {this.renderInputFields()}

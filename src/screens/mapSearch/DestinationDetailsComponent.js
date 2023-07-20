@@ -449,14 +449,14 @@ checkIfPeakOffPeakDataMonth = () => {
       this.setState({ actualDate })
     }
 
-    console.log("yes chec here peak value  ",dateForPoints)
+    // console.log("yes chec here peak value  ",dateForPoints)
 
 
    
     return (
       <View style={{ 
       backgroundColor:this.state.actualDate ? colours.skyBlueColor:"#FFF",
-      borderWidth:this.state.actualDate ? "gray": "#FFF",
+      borderBottomColor:this.state.actualDate ? "gray": "#FFF",
       borderBottomWidth:this.state.actualDate ? 0.3 : 0,
       borderLeftColor:this.state.actualDate ? "gray" : "#FFF",
       borderLeftWidth:this.state.actualDate ? 0.3 : 0,
@@ -2367,7 +2367,6 @@ checkIfPeakOffPeakDataMonth = () => {
         marginEnd:-scale(27),
         marginTop:-scale(20),
         marginBottom:-scale(20),
-        // borderWidth:3,borderColor:"green"
       }}>
         <View style={{             
           position: 'absolute',

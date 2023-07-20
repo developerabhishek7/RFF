@@ -384,6 +384,9 @@ class DrawerComponentComponent extends Component {
             let allKeys = ['guestId','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
             
             if (isLoggedIn) {
+              this.setState({
+                userData:{}
+              })
               AsyncStorage.multiRemove(allKeys) 
               this.confirmSignOut();
             } else {

@@ -160,7 +160,7 @@ class ScreenHeader extends Component {
   }
 
   render() {
-    // const routeName = this.props.navigation.state.routeName;
+    // const routeName = this.props.route.params.routeName;
     const userData = this.props.userData;
     const isLoggedIn = this.props.isLoggedIn
   return (
@@ -192,7 +192,7 @@ class ScreenHeader extends Component {
         {/* {
           userData && Object.keys(userData).length != 0 && isLoggedIn ?
           <Fragment>
-          {routeName !== STR_CONST.MANAGE_CONTACT_SCREEN && routeName !== STR_CONST.UPDATE_PROFILE_SCREEN &&
+          {STR_CONST.MANAGE_CONTACT_SCREEN && STR_CONST.UPDATE_PROFILE_SCREEN &&
             userData &&
             !userData.email_verified && (
               <TouchableOpacity

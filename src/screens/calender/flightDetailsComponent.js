@@ -10,7 +10,7 @@ import {
   Animated,
   Linking,
   TextInput,
-  BackHandler, Modal, Dimensions, ImageBackground
+  BackHandler, Modal, Dimensions, ImageBackground, Platform
 } from "react-native";
 import FastImage from 'react-native-fast-image'
 
@@ -170,7 +170,7 @@ class FlightDetailsCompoent extends Component {
 
 
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(80),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(90),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
      
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
