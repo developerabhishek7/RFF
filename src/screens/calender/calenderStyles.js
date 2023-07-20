@@ -20,14 +20,14 @@ export default StyleSheet.create({
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
     // overflow:"hidden",
-    height:scale(80),
+    height:scale(90),
     borderBottomColor:"#FFFFFF",
     borderBottomWidth:3,
     // borderWidth:1,
     zIndex:30,
     elevation:0.1,
     
-    paddingTop:scale(-15),
+    paddingTop:scale(10),
     paddingBottom:scale(-25)
   },
   cellContainer: {

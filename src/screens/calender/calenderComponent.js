@@ -3248,7 +3248,7 @@ export default class CalenderComponent extends Component {
   }
   tabView() {
     return (
-      <View style={{ flexDirection: "row", paddingHorizontal: scale(30) }}>
+      <View style={{ flexDirection: "row",backgroundColor:"#FFF", paddingHorizontal: scale(30) }}>
         <TouchableOpacity
           onPress={() => {
             this.setState({
@@ -4647,9 +4647,7 @@ export default class CalenderComponent extends Component {
           // ,opacity:0.5,
         }]}>
            {this.renderHeader()}
-          <View style={{ backgroundColor: showTicketDetailModal ?
-            "rgba(52, 52, 52, 0.4)" : 
-            "#FFF", flex: 1,
+          <View style={{ backgroundColor: "#FFF", flex: 1,
             // opacity:showTicketDetailModal ?
             // 0.7:1
             }}>

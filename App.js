@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      appState: AppState.currentState,
+      // appState: AppState.currentState,
       store: configureStore(() => {
         console.log("Store persisted !");           
       }),
@@ -89,15 +89,15 @@ class App extends React.Component {
   //   }
   // };
 
-  _handleAppStateChange = async (nextAppState) => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      await fcm.initAlways();
-    }
-    this.setState({ appState: nextAppState });
-  };
+  // _handleAppStateChange = async (nextAppState) => {
+  //   if (
+  //     this.state.appState.match(/inactive|background/) &&
+  //     nextAppState === "active"
+  //   ) {
+  //     await fcm.initAlways();
+  //   }
+  //   this.setState({ appState: nextAppState });
+  // };
 
 
   componentWillUnmount() {
