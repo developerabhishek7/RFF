@@ -106,6 +106,7 @@ export default StyleSheet.create({
     marginLeft: scale(25),
     marginTop: verticalScale(10),
     fontWeight: "bold",
+    width:scale(260)
   },
 
   crossIcon: {

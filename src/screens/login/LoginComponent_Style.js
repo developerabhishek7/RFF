@@ -119,6 +119,7 @@ export default StyleSheet.create({
     borderRadius: scale(30),
     justifyContent: "center",
     alignItems: "center",
+    marginStart:scale(20),
     backgroundColor: "#d9f3f8",
    
   },

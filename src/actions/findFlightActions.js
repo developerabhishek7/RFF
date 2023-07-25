@@ -274,8 +274,13 @@ export function getCabinClass(data) {
   // console.log("yes ceck here on cabinclass function #######   ",data)
   // let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
  
-  let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
+  
+
+  // let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
  
+  let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production//cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
+ 
+
   return async (dispatch, getState) => {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader

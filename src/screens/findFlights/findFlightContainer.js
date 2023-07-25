@@ -240,7 +240,7 @@ class FindFlightContainer extends Component {
       if(this.props.airlinesDetail && this.props.airlinesDetail !== prevProps.airlinesDetail && this.props.screenType == "FIND_FLIGHT"){
         const keys = await AsyncStorage.getAllKeys()
         let searchData = this.state.searchData
-        console.log("yes check here searchData value  - - - - ",searchData)
+        // console.log("yes check here searchData value  - - - - ",searchData)
 
 
 
@@ -264,7 +264,7 @@ class FindFlightContainer extends Component {
           })
           }else{  
             console.log("yes check here search details key on else  - - - -",searchDetails)
-            if(this.props.userInfo.bronze_member && searchDetails.searchCount >= 4){
+            if(this.props.userInfo.bronze_member && searchDetails.searchCount >= 3){
               this.isAlert()
             }
             else{

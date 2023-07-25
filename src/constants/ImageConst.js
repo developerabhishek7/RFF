@@ -33,7 +33,7 @@ export const SEARCH_FF = require('../assets/common/searchff.png');
 export const MY_ALERT = require('../assets/common/myalert.png');
 export const PROFILE_IMG = require('../assets/common/profile.png');
 export const SUBSCRIPTION = require('../assets/common/subscription.png');
-export const PRICE = require('../assets/common/price.png');
+// export const PRICE = require('../assets/common/price.png');
 
 
 
@@ -59,8 +59,8 @@ export const MAPVIEWBG = require('../assets/mapSearch/Map_bg.jpeg');
 export const AGE_GRP = require('../assets/profile/age-group.png');
 export const AIRPORT = require('../assets/profile/airport.png');
 export const EQUALITY = require('../assets/profile/equality.png');
-export const TRAVEL = require('../assets/profile/travel.png');
-export const LIKELY = require('../assets/profile/likely.png');
+export const TRAVEL = require('../assets/profile/likely.png');
+export const LIKELY = require('../assets/profile/travel.png');
 export const EDIT_BG = require('../assets/profile/editbg.png');
 
 
@@ -134,6 +134,10 @@ export const ALERT_ICON = require('../assets/common/alertIcon.png');
 export const MEMBERSHIP = require('../assets/common/membership.png');
 export const MENU_HEADER = require('../assets/common/menuHeader.png');
 export const NO_ALERTS = require('../assets/common/noAlerts.png');
+
+export const NO_ALERTS1 = require('../assets/alerts/NoAlert.png');
+
+
 export const NO_AVAILIBILTY = require('../assets/common/noAvailibility.png');
 export const UPGRADE_MEMBERSHIP = require('../assets/common/upgradeMembership.png');
 export const NO_LOCATION_AVAILABLE = require('../assets/common/locationNotAvailable.png');
@@ -153,7 +157,7 @@ export const SPLASH = require('../assets/splash/Splash_V1.png');
 export const EYE_INVISIBLE = require('../assets/login/eyeInvisible.png');
 export const EMAIL_LOGO = require('../assets/login/email.png');
 export const CAMERA_ICON = require('../assets/common/camera.png');
-export const EDIT_ICON = require('../assets/common/editIcon.png');
+export const EDIT_ICON = require('../assets/profile/pen.png');
 export const EYE_VISIBLE = require('../assets/login/eyeVisible.png');
 export const FB_ICON = require('../assets/login/fb1.png');
 export const GOOGLE_ICON = require('../assets/login/google1.png');
@@ -171,7 +175,9 @@ export const BACK_ICON = require('../assets/common/backIcon.png');
 export const MENU_ICON = require('../assets/common/menu.png');
 export const NOTI_BELL = require('../assets/common/noti_Bell.png');
 export const NO_NOTIFICATION_IMAGE = require('../assets/notification/noNotifImg.png');
+export const LOGO_ICON = require('../assets/notification/logo_icon.png');
 export const PROFILE_IMAGE_RING = require('../assets/common/profile-rings.png');
+export const ADD_PROFILE_IMG = require('../assets/common/Add_IMG.png');
 export const BELL_IMAGE = require('../assets/common/notification-icon.png');
 export const TAKE_OFF_DISABLED = require('../assets/calendar/take-off_dis.png');
 export const TAKE_OFF = require('../assets/calendar/take-off.png');
@@ -199,6 +205,7 @@ export const USER_PROFILE_ICON = require('../assets/common/userProfileIcon.png')
 export const NOTIFICATION_SETTINGS_ICON = require('../assets/common/notificationSettingsIcon.png');
 export const MANAGE_CONTACT_DETAILS_ICON = require('../assets/common/manageContactDetailsIcon.png');
 export const CHANGE_PASSWORD_ICON = require('../assets/common/changePasswordIcon.png');
+export const DRAWER_MENU = require('../assets/common/drawer_menu.png');
 export const AIRLINE_TIER_ICON = require('../assets/common/airlineTierIcon.png');
 export const DELETE_ACCOUNT_ICON = require('../assets/common/deleteAccountIcon.png');
 

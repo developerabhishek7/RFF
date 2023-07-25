@@ -86,7 +86,10 @@ export function getMapKey(uuid_Key,userId) {
     try {
       // const userId = await getUserId();
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
-      let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/map-box?platform=mobile&user_id=${userId}&device_token=${uuid_Key}`
+      // let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/map-box?platform=mobile&user_id=${userId}&device_token=${uuid_Key}`
+    
+      let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production/map-box?platform=mobile&user_id=${userId}&device_token=${uuid_Key}`
+    
       const res = await nodeSecureGet(
         URL
       );

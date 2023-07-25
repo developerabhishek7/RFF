@@ -138,9 +138,16 @@ export default class NotificationsComponent extends Component {
         activeOpacity={0.6}
         onPress={() => this.goToNotifDetail(item, index)}
       >
-        <Text style={[styles.notifTitle, { opacity: !item.unread ? 1 : 0.6 }]}>
+
+        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+            <FastImage source={IMAGE_CONST.LOGO_ICON} style={{width:scale(40),height:scale(40)}} resizeMode={FastImage.resizeMode.contain} />
+
+            <Text style={[styles.notifTitle, { opacity: !item.unread ? 1 : 0.6 }]}>
           {item.title}
         </Text>
+
+        </View>
+       
         <Text style={[styles.notifDate, { opacity: !item.unread ? 1 : 0.6 }]}>
           {/* {Utils.getDateFormate(item.created_at)} */}
           {actualDate}

@@ -2,9 +2,11 @@
 import messaging, { firebase } from "@react-native-firebase/messaging";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NavigationService from "./NavigationService";
+
 import Dropdown from "./dropdown";
 import { SET_BADGE_COUNT } from "../constants/ActionConst";
 import { Platform } from "react-native";
+import * as RootNavigation from '../router/RouteNavigation';
 
 class FcmService {
   constructor() {
@@ -205,10 +207,14 @@ class FcmService {
       created_at: Platform.OS === 'android' ?  remoteMessage.sentTime : new Date().getTime(),
     };
 
-    NavigationService.navigate("NotificationDetailScreen", {
+    // NavigationService.navigate("NotificationDetailScreen", {
+    //   notifData,
+    //   notification_id: remoteMessage.data.notification_id,
+    // });
+    RootNavigation.navigationRef.navigate("NotificationDetailScreen", {
       notifData,
       notification_id: remoteMessage.data.notification_id,
-    });
+    })
   }
 
   /**

@@ -112,10 +112,10 @@ export const DISABLE_NOTIFICATION_ERROR = `We couldn't disable notifications. Pl
 
 //Find Flight Screen Constants
 
-export const DONT_KNOW_WHERE_TO_GO = `DON’T KNOW WHERE YOU WANT TO GO?`;
-export const I_KNOW_WHERE_TO_GO = `I KNOW WHERE I WANT TO GO`;
-export const WHERE_ARE_YOU_FLYING_FROM = `Where Are You Flying From?`;
-export const WHERE_ARE_YOU_FLYING_TO = `Where Are You Flying To?`;
+export const DONT_KNOW_WHERE_TO_GO = `Don't know where you want to go?`;
+export const I_KNOW_WHERE_TO_GO = `I know where i want to go`;
+export const WHERE_ARE_YOU_FLYING_FROM = `Where are you flying from?`;
+export const WHERE_ARE_YOU_FLYING_TO = `Where are you flying to?`;
 export const LOCATION_NOT_AVAILABLE = `This location is not available.`;
 export const AIRLINE_NOT_AVAILABLE = `This airline is not available.`;
 export const MAP_SEARCH_UPGRADE_MESSAGE = `You need Silver or Gold membership to use the map page`;
@@ -208,7 +208,7 @@ export const MEMBERSHIP_TITLE = "Membership";
 export const PROFILE_SCREEN_TITLE = "My Profile";
 export const EDIT_ALERTS_TITLE = "Edit Alerts";
 export const FIND_FLIGHT_TITLE = "Find Flights";
-export const MAP_SEARCH_TITLE = "Map Search";
+export const MAP_SEARCH_TITLE = "World Map Search";
 export const MANAGE_CONTACT_DETAILS = "Manage Contact Details";
 export const NOTIFICATION_SETTINGS = "Notification Settings";
 export const PERSONAL_INFO = "Personal Info";
@@ -468,7 +468,7 @@ export const RETURN_DATE = "Return Date(s)";
 export const RETURN_DATE1 = "Return Date";
 export const AIRLINE = "Airline";
 export const MEMBERSHIP_TIER = "Membership Tier";
-export const SEARCH_MAP = "Search Map";
+export const SEARCH_MAP = "Search";
 export const DEPARTURE_CITY = "Departure City";
 export const AIRPORT_TEXT = "Airport";
 export const CABIN_CLASS = "Cabin Class";

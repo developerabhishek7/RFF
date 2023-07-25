@@ -11,6 +11,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor:"#75cff0"
+    // backgroundColor: "#fff",
   },
   infoIcon: {
     height:scale(24), 
@@ -180,12 +181,12 @@ export default StyleSheet.create({
   wheretoGoTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     // fontSize: scale(14),
-    fontSize:scale(14),
+    fontSize:scale(20),
     color: colours.darkBlueTheme,
     marginTop: verticalScale(60),
     alignSelf: "center",
     marginBottom: verticalScale(20),
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   membershipScreenCrossIconStyle: {
     alignSelf: "flex-end",

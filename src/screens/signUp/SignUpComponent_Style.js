@@ -118,9 +118,10 @@ export default StyleSheet.create({
   },
 
   orSignInText: {
-    fontSize: scale(15),
+    fontSize: scale(14),
     fontFamily: appFonts.INTER_REGULAR,
     lineHeight: scale(22),
+
     color: colours.lightGreyish,
   },
 

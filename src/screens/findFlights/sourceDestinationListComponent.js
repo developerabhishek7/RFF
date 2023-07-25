@@ -162,7 +162,7 @@ export default class SourceDestinationListComponent extends Component {
               <SvgUri
                width={scale(20)}
                height={scale(20)}
-               source={{uri:`http://purecatamphetamine.github.io/country-flag-icons/3x2/${itemObject.country_code}.svg`}}
+               source={{uri:`https://purecatamphetamine.github.io/country-flag-icons/3x2/${itemObject.country_code}.svg`}}
              /> 
           </View> 
               : null
@@ -317,10 +317,10 @@ multipleCitiesTxt (){
           >We only let you choose hubs with flights to more than one place</Text>
           <Text
             style={{
-              color: colours.gray, fontSize: scale(11), marginStart: scale(30), fontFamily: appFonts.INTER_REGULAR,
-              fontWeight: '500', alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
+              color: colours.gray, fontSize: scale(13), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
+              alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
             }}
-          >CITIES WITH MULTIPLE AIRPORTS</Text>
+          >CIties with multiple airports</Text>
 
     </View>
   )
@@ -330,10 +330,10 @@ singleCityTxt () {
     <View>
        <Text
             style={{
-              color: colours.gray, fontSize: scale(11), marginStart: scale(15), fontFamily: appFonts.INTER_REGULAR, fontWeight: '500', alignSelf: 'flex-start',
+              color: colours.gray, fontSize: scale(13), marginStart: scale(15), fontFamily: appFonts.INTER_SEMI_BOLD, fontWeight: '500', alignSelf: 'flex-start',
               marginTop: verticalScale(30), marginBottom: verticalScale(1),
             }}
-          >CITIES WITH ONE AIRPORTS</Text>
+          >Cities with one airport</Text>
     </View>
   )
 }
@@ -347,7 +347,7 @@ renderHeader() {
       <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(40)}}>
       <TouchableOpacity onPress={() => {
             this.props.navigation.goBack() }}>
-            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(20),width:scale(20),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(18),width:scale(18),margin:scale(10)}} />
           </TouchableOpacity>
           <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
           <Text>       </Text>
@@ -360,8 +360,7 @@ renderHeader() {
                onChangeText={(searchText) => {
                 this.onSearch(searchText)
               }}
-              placeholder="Where you are flying from?"
-              placeholderTextColor="#FFFFFF"
+              placeholder={this.props.route.params.placeholderTitle}              placeholderTextColor="#FFFFFF"
               style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
          </View>
 

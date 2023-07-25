@@ -7,9 +7,10 @@ import {isPad} from '../../utils/commonMethods'
 
 export default StyleSheet.create({
   mainView: {
+      flex:1,
     backgroundColor: "#FFF",
-    bottom: 0,
-  flex:1
+    justifyContent:"center",alignItems:"center",
+
   },
   innerView: {
     margin: scale(20),
@@ -17,8 +18,8 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   infoIcon: {
-    height:scale(15), 
-    width:scale(15),
+    height:scale(18), 
+    width:scale(18),
     marginRight: scale(18),
     marginLeft:scale(20),
     marginBottom:scale(10)
@@ -43,11 +44,9 @@ export default StyleSheet.create({
   profileView: {
     position: "absolute",
     top: verticalScale(80),
-    // borderWidth:1,
     width:scale(240),
     alignSelf: "center",
-    flexDirection:"row"
-    // marginTop:scale(100)
+    // flexDirection:"row",
   },
   profileImage: {
     width: scale(80),
@@ -60,38 +59,47 @@ export default StyleSheet.create({
   innerProfileImage: {
     width: scale(80),
     height: scale(80),
-    backgroundColor: colours.imageShadowColor,
+    backgroundColor: "#d3f1f8",
     borderRadius: scale(57),
     alignSelf: "center",
+    borderWidth:1,
+    elevation:1,borderColor:"#d3f1f8",
+    shadowOffset: {width: -2, height: 4},  
+    shadowColor:"#d3f1f8",  
+    shadowOpacity: 0.2,  
+    shadowRadius: 3, 
   },
   RFFImage: {
     width: scale(70),
     height: scale(70),
-    backgroundColor: colours.imageShadowColor,
+    backgroundColor: "#d3f1f8",
     borderRadius: scale(57),
     alignSelf: "center",
+    borderWidth:3,
+    elevation:1,borderColor:"#d3f1f8",
+    shadowOffset: {width: -2, height: 4},  
+    shadowColor:"#d3f1f8",  
+    shadowOpacity: 0.2,  
+    shadowRadius: 3, 
   },
 
   logOutButton: {
-    marginTop: verticalScale(25),
     // width: isPad() ? width - scale(110) :width - scale(90),
-    padding: scale(15),
+    padding: scale(12),
     borderRadius: verticalScale(50),
     alignSelf: "stretch",
     // borderWidth: scale(1),
     marginLeft:scale(20),
-    width:scale(240)
+    width:scale(230),marginTop:scale(50)
   },
   screenButtonStyle: {
     flexDirection: "row",
-    marginBottom: verticalScale(10),
+    marginBottom: verticalScale(1),
     alignItems:'center',
-    padding:scale(9),
-    borderBottomWidth:0.3,
     width:scale(300),
-    borderBottomColor:colours.darkGreyColor,
-    
-    // borderWidth:1
+    height:scale(60),
+    padding:scale(3),
+    paddingTop:scale(6)
   },
 
   rightButtonTextStyle: {
@@ -123,17 +131,19 @@ export default StyleSheet.create({
     fontFamily: CONST.appFonts.INTER_REGULAR,
     color: colours.lightBlueTheme,
     fontWeight: "bold",
+    marginTop:scale(3)
   },
   nameStyle: {
     fontFamily: CONST.appFonts.INTER_REGULAR,
     fontSize: scale(16),
-    color: colours.darkBlueTheme,
+    color: "#b5b6b8",
     fontWeight: "500",
+    marginTop:scale(-3)
   },
   greetingsView: {
     alignItems: "flex-start",
     marginStart:scale(10),
-    marginTop: verticalScale(7),
+    marginTop: verticalScale(10),
   },
   membershipText: {
     fontFamily: CONST.appFonts.INTER_REGULAR,
@@ -159,5 +169,13 @@ export default StyleSheet.create({
     textDecorationLine: "underline",
     textDecorationStyle: "solid",
     textDecorationColor: colours.lightBlueTheme, 
+  },
+  lineStyle:{
+      borderWidth: scale(1),
+      height:scale(1),
+      width:"100%",
+      borderColor: "#ecf3f1",
+      margin:scale(3)
+   
   }
 });

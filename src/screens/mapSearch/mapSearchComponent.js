@@ -1268,7 +1268,7 @@ export default class FindFlightComponent extends Component {
                   this.setState({
                     showPopUp: false,
                   });            
-                navigation.dispatch(DrawerActions.openDrawer());
+                  this.props.navigation.navigate("MembershipContainerScreen")
                   // yes changed here for app review.......
                   // Linking.canOpenURL(Config.UPGRADE_MEMBERSHIP_URL).then(
                   //   (supported) => {

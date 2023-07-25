@@ -54,6 +54,10 @@ import FindFlightComponent from '../screens/findFlights/findFlightComponent';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
+import NavigationService from "../utils/NavigationService";
+import { navigationRef } from './RouteNavigation';
+
+
 // const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();
 
@@ -411,7 +415,9 @@ function MainStack() {
     const isLoggedIn = true;
   
     return (
-      <NavigationContainer>
+      <NavigationContainer
+          ref={navigationRef}
+      >
          <Drawer.Navigator drawerContent={drawerViewModel}
                 screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false,
               }}
@@ -421,6 +427,7 @@ function MainStack() {
               name="ProtectedStack"
               component={ProtectedStack}
               options={{ headerShown:false, }}
+
             />
              {/* ) : ( */}
             <Drawer.Screen

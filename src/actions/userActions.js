@@ -50,6 +50,9 @@ import * as CommonActions from "./commonActions";
 import {getAccessToken, getUserId} from '../constants/DataConst'
 import { Alert,  } from "react-native";
 import navigationService from "../utils/NavigationService";
+
+import * as RootNavigation from '../router/RouteNavigation';
+
 export function setPassword(password) {
   return async (dispatch, getState) => {
     try {
@@ -631,8 +634,7 @@ export function deleteAccount(emailId) {
           type: USER_SIGN_OUT_SUCCESS,
         });
          Alert.alert("Your Account has been deleted successfully!")
-        //  navigationService.navigate("login")
-        // NavigationService.navigate("Alerts")
+          RootNavigation.navigationRef.navigate("login")
       
       } else {
         //  await dispatch({

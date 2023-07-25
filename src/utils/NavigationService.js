@@ -1,8 +1,8 @@
-// import { NavigationActions, SwitchActions, StackActions } from 'react-navigation'
+// import { CommonActions, SwitchActions, StackActions } from 'react-navigation'
 
-import {NavigationAction,} from '@react-navigation/native'
-// import {StackActions} from '@react-navigation/stack'
-// import {} from '@react-navigation/native-stack'
+
+import {SwitchActions} from "@react-navigation/compat"
+import { CommonActions,StackActions } from '@react-navigation/native';
 
 class NavigationService {
   constructor () {
@@ -21,7 +21,7 @@ class NavigationService {
   navigate (routeName, params, key) {
     if (this._navigator) {
       this._navigator.dispatch(
-        NavigationActions.navigate({
+        CommonActions.navigate({
           routeName,
           key,
           params,
@@ -34,10 +34,10 @@ class NavigationService {
 
   reset (routeName) {
     this._navigator.dispatch(
-      NavigationActions.reset({
+      CommonActions.reset({
         index: 0,
         actions: [
-          NavigationActions.navigate({
+          CommonActions.navigate({
             routeName
           })
         ],
@@ -45,22 +45,22 @@ class NavigationService {
     )
   }
 
-  // resetStack (routeName) {
-  //   this._navigator.dispatch(
-  //     StackActions.reset({
-  //       index: 0,
-  //       actions: [
-  //         NavigationActions.navigate({
-  //           routeName
-  //         })
-  //       ]
-  //     })
-  //   )
-  // }
+  resetStack (routeName) {
+    this._navigator.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [
+          CommonActions.navigate({
+            routeName
+          })
+        ]
+      })
+    )
+  }
 
-  // jumpTo (routeName) {
-  //   this._navigator.dispatch(SwitchActions.jumpTo({ routeName }))
-  // }
+  jumpTo (routeName) {
+    this._navigator.dispatch(SwitchActions.jumpTo({ routeName }))
+  }
 }
 
 const navigationService = new NavigationService()

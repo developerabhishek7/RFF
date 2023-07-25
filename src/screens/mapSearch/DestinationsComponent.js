@@ -99,10 +99,10 @@ export default class DestinationsComponent extends Component {
         <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(45),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
-              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(20),width:scale(20),margin:scale(10)}} />
             </TouchableOpacity>
   
-            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
+            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Available Routes</Text>
   
             <Text>          </Text>
            </View>
@@ -128,26 +128,26 @@ export default class DestinationsComponent extends Component {
   renderClasses() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ padding: scale(4), borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ padding: scale(5), borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#2044FF" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
-          <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+          <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#FEA41D" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
-          <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+          <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#A905F6" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#ebf1f3",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
-          <View style={{ padding: scale(4),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+          <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#EB186F" />
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}</Text>
           </View>
@@ -183,7 +183,9 @@ export default class DestinationsComponent extends Component {
     })
     // console.log("check here what we are getting in sorted array data ######## ",JSON.stringify(sortedArray))                                                                             
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container,{
+        backgroundColor:"#FFF"
+      }]}>
         {this.renderHeader()}
         <ScrollView style={styles.container}>
           {/* <SearchInput
@@ -279,13 +281,13 @@ export default class DestinationsComponent extends Component {
                     destination:this.state.destination
 
                   })
-                }} style={{ borderWidth:scale(1.5),borderStyle:"dashed",borderColor:colours.lightBlueTheme,borderRadius: scale(10), margin: scale(7), alignSelf: 'center', justifyContent: 'center', width: '94%', backgroundColor: "#ebf9fc" }}>
+                }} style={{ borderWidth:scale(1.5),borderStyle:"dashed",borderColor:colours.lightBlueTheme,borderRadius: scale(10), margin: scale(7), alignSelf: 'center', justifyContent: 'center', width: '94%', backgroundColor: "#f1fbfd" }}>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
                
                     <View style={{ margin: scale(16) }}>
-                      <Text style={{ fontSize: scale(15), width: width * 0.5, borderWidth: 0, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}
+                      <Text style={{ fontSize: scale(15), width: width * 0.5, borderWidth: 0, color: "#3c5272", fontFamily: appFonts.INTER_SEMI_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700' }}
                       >{singleMap.city_name}</Text>
-                      <Text style={{ fontSize: scale(12), width: width * 0.5, color: "#132C52", fontFamily: appFonts.INTER_REGULAR, }}>{singleMap.country_name}</Text>
+                      <Text style={{ fontSize: scale(12), width: width * 0.5, color: "gray", fontFamily: appFonts.INTER_REGULAR, fontWeight:"600"}}>{singleMap.country_name}</Text>
                     </View>
                 
                     <View style={{ flexDirection: "row", borderWidth: 0, alignItems: "center", marginEnd: scale(10), marginStart: -scale(18) }}>

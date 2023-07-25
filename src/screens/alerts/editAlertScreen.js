@@ -740,7 +740,7 @@ class EditAlertComponent extends Component {
 
     const {userInfo} = this.state
 
-
+    console.log("yes check validate data calling  - - - - ",)
 
     let goldMember = userInfo.gold_member
     let silverMember = userInfo.silver_member
@@ -1071,7 +1071,7 @@ class EditAlertComponent extends Component {
 
           // PostHog.capture('Alert',trackData);
          
-          // this.props.editAlertAction(editAlertData, this.state.id);
+          this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
           //   departEndDate: "",

@@ -423,9 +423,9 @@ uploadImage = async (imageData) => {
         type: imageData.type
       }
       );
-      let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+      // let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
-      // let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+      let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
     
       var config = {
         method: 'put',

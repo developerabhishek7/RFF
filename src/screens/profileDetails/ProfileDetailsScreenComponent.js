@@ -22,7 +22,9 @@ import { colours } from "../../constants/ColorConst";
 import styles from "./ProfileDetailsScreenStyles";
 import * as IMG_CONST from "../../constants/ImageConst";
 import * as STR_CONST from "../../constants/StringConst";
-// import ImagePicker from "react-native-image-picker";
+// import ImP from "react-native-image-picker";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 import CustomButton from "../../components/customComponents/CustomButton";
 import { isEmptyString, getCountryCodes } from "../../utils/commonMethods";
 import ModalDropdown from "react-native-modal-dropdown";
@@ -41,7 +43,6 @@ export default class ProfileScreenComponent extends Component {
   constructor(props) {
     super(props);
     const { userData } = this.props;
-    // console.log("check here userData    #######  ",userData)
     this.state = {
       firstName: userData.first_name ? userData.first_name : "",
       lastName: userData.last_name ? userData.last_name : "",
@@ -411,6 +412,7 @@ renderLoader() {
 
 
 uploadImage = async (imageData) => {
+
    this.setState({isLoader:true})
       const accesstoken = await getAccessToken();
       const userId = await getUserId();
@@ -422,10 +424,13 @@ uploadImage = async (imageData) => {
         type: imageData.type
       }
       );
-      let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+
+      // let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
-      // let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-    
+      let url =  `https://prod-apin.rewardflightfinder.com//v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+     
+     
+
       var config = {
         method: 'put',
         url: url,
@@ -436,6 +441,8 @@ uploadImage = async (imageData) => {
         },  
         data:data,
     };
+
+
       let res = await axios(config).then((res)=>{
         this.setState({isLoader:false})
         this.props.getUserInfoAction()
@@ -469,32 +476,31 @@ isAlert = () => {
         path: "images",
       },
     };
-    
-    // ImagePicker.showImagePicker(options, (response) => { 
-    //   if (response.didCancel) {
-    //     console.log("User cancelled image picker");
-    //   } else if (response.error) {
-    //     console.log("ImagePicker Error: ", response.error);
-    //   } else if (response.customButton) {
-    //     if(response.customButton == "View"){
-    //       this.Show_Custom_Alert2()
-    //       }
-    //     else{
-    //       this.props.deleteProfileImageAction();
-    //     }
-     
-    //   } else {
-    //     let url = response.uri
-    //     // let uri = url.split('.jpg').join('.png');
-    //       let imageData = {
-    //     uri:url,
-    //     fileName:response.fileName,
-    //     type:response.type,
-    //   }
-    //     this.uploadImage(imageData)
-        
-    //   }
-    // });
+    launchImageLibrary(options, (response) => { 
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        if(response.customButton == "View"){
+          this.Show_Custom_Alert2()
+          }
+        else{
+          this.props.deleteProfileImageAction();
+        }
+      } else {
+                let url = response.assets[0].uri
+        let fileName = response.assets[0].fileName
+        let type = response.assets[0].type
+        // let uri = url.split('.jpg').join('.png');
+        let imageData = {
+        uri:url,
+        fileName:fileName,
+        type:type,
+      }
+        this.uploadImage(imageData)
+      }
+    });
   };
 
   profileImage() {
@@ -531,6 +537,14 @@ isAlert = () => {
               </Text>
             )}
           </ImageBackground>
+            <TouchableOpacity onPress={this.chooseFile.bind(this)}>
+              <FastImage
+                style={styles.innerProfileImage2}
+                source={IMAGE_CONST.ADD_PROFILE_IMG}
+                resizeMode="contain"
+              />
+          </TouchableOpacity>
+
         </TouchableOpacity>
       </ImageBackground>
     );
@@ -1335,14 +1349,13 @@ isAlert = () => {
     return (
       // <SafeAreaView style={{ flex: 1, }}>
 
-<ImageBackground source={IMG_CONST.EDIT_BG} style={{justifyContent:'center',alignItems:"center",marginTop:scale(20),
-width:"100%",height:"100%",
-marginTop:scale(-20),
-}}
-        //   imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
+ <ImageBackground source={IMG_CONST.EDIT_BG} style={{justifyContent:'center',alignItems:"center",marginTop:scale(20),
+ width:"100%",height:"100%",
+ marginTop:scale(-20),
+ }} 
+        imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
           resizeMode="cover"
-        >
-
+        > 
 {this.renderHeader()}
 
 
@@ -1356,7 +1369,7 @@ marginTop:scale(-20),
             horizontal={false}
           >
      
-          <View style={{ flex: 1 ,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center"}}>
+          <View style={{ flex: 1 ,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center",}}>
             <View
               style={{ marginTop: verticalScale(32) }}
             >
@@ -1372,9 +1385,11 @@ marginTop:scale(-20),
                       submitPressed && !this.validateName(firstName.trim())
                         ? colours.redColor
                         : colours.borderBottomLineColor,
+                    borderWidth:0,width:scale(310)
                   },
                 ]}
               >
+
                 <TextInput
                   style={styles.textInput}
                   underlineColorAndroid="transparent"
@@ -1393,7 +1408,7 @@ marginTop:scale(-20),
                   blurOnSubmit={false}
                   maxLength={10}
                 />
-                <TouchableOpacity style={{height:scale(20),marginStart:scale(-10),width:scale(80),justifyContent:"center",alignItems:"center"}} onPress={() => { this.firstName.focus()}}>
+                <TouchableOpacity style={{height:scale(20),marginStart:scale(0),width:scale(65),justifyContent:"center",alignItems:"center"}} onPress={() => { this.firstName.focus()}}>
                   <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>
@@ -1413,6 +1428,7 @@ marginTop:scale(-20),
                       submitPressed && !this.validateName(lastName.trim())
                         ? colours.redColor
                         : colours.borderBottomLineColor,
+                        borderWidth:0,width:scale(310)
                   },
                 ]}
               >
@@ -1434,7 +1450,7 @@ marginTop:scale(-20),
                   blurOnSubmit={false}
                   maxLength={10}
                 />
-                 <TouchableOpacity style={{height:scale(20),width:scale(80),marginStart:scale(-10),justifyContent:"center",alignItems:"center"}} onPress={() => { this.lastName.focus()}}>
+                 <TouchableOpacity style={{height:scale(20),width:scale(65),marginStart:scale(0),justifyContent:"center",alignItems:"center"}} onPress={() => { this.lastName.focus()}}>
                   <FastImage source={IMG_CONST.EDIT_ICON} style={styles.editIcon} />
                 </TouchableOpacity>
               </View>

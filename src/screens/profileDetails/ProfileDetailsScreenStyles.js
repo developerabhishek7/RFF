@@ -42,6 +42,13 @@ export default StyleSheet.create({
     borderRadius: scale(57),
     alignSelf: "center",
   },
+  innerProfileImage2: {
+    width: scale(50),
+    height: scale(50),
+    alignSelf:"center",
+    marginStart:scale(70),
+    marginTop:scale(-40),borderColor:"#FFF",borderRadius:scale(50),borderWidth:scale(3)
+  },
 
   innerProfileImage1: {
     width: width*1.2,

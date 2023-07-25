@@ -447,14 +447,16 @@ class MembershipComponent extends Component{
             }
           >
             <MenuItem
-              onPress={() => {
+              onPress={async() => {
                 this.hideMenu();
                 this.reloaderApp()
-                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+                const accesstoken = await getAccessToken();
+                const userId = await getUserId()
+                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
                 Linking.openURL(
                   url
                 );
-              }}
+            }}
               style={styles.menuStyle}
               textStyle={styles.menuTextStyle}
             >
@@ -588,9 +590,11 @@ class MembershipComponent extends Component{
         <CustomButton
           textSize={scale(14)}
           textOnButton={STRING_CONST.UPGRADE_PLAN_TEXT}
-          onButtonPress={() => {
+          onButtonPress={async() => {
+            const accesstoken = await getAccessToken();
+            const userId = await getUserId()
             this.reloaderApp()
-            let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+            let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
             Linking.openURL(
               url
             );

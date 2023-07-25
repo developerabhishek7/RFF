@@ -12,6 +12,8 @@ import {
   BackHandler,
   Platform
 } from "react-native";
+import { CommonActions } from '@react-navigation/native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
 import MyStatusBar from '../../components/statusbar/index';
@@ -107,8 +109,8 @@ const ListFooterWithNoAlerts = () => (
       style={{ alignItems: "center", justifyContent: "center" }}
     >
       <FastImage
-        source={IMG_CONST.NO_ALERTS}
-        style={{ height: scale(94), width: scale(106) }}
+        source={IMG_CONST.NO_ALERTS1}
+        style={{ height: scale(130), width: scale(110) }}
       />
       <ReactNativeText
         style={[
@@ -140,9 +142,11 @@ function makeUpperCaseAfterSpace(str) {
 }
 
 function travelClassView(travelClass) {
-
   return (
-    <View style={styles.travelClassView}>
+    <View style={[styles.travelClassView,
+      {
+        width:travelClass.length > 1 ? scale(340) : scale(190),
+    }]}>
       {travelClass.map((cabinClass) => {
         return (
           <View
@@ -157,12 +161,9 @@ function travelClassView(travelClass) {
                 marginTop: verticalScale(3),
                 marginBottom:verticalScale(3),
                 width:scale(140),
-                
                 // justifyContent:"center",
                 flexDirection:"row",
                 justifyContent:"center",
-                
-               
                 // justifyContent:"space-around"
               })
             }
@@ -310,6 +311,9 @@ const AlertCard = (props) => {
   } = props;
   let travel_classes = props.travelClass.split(",");
 
+
+  console.log("ye sbefoer e  - - - -",travelClass)
+
   return (  
     //   <ImageBackground
     //   resizeMode={"contain"}
@@ -358,21 +362,28 @@ const AlertCard = (props) => {
           <View style={{alignSelf:"flex-end",marginRight:scale(10),padding:scale(10),}}> 
               <TouchableOpacity
                   onPress={() => {
-                    props.onMenuPress(props);
+                    props.onEditPress(props);
                   }}
-                style={{height:scale(20),width:scale(20),margin:scale(1),marginBottom:scale(10),marginTop:scale(15)}}
+                style={{height:scale(40),width:scale(40),margin:scale(4)}}
               >
-              <FontAwesome name="more-vertical" 
+              {/* <FontAwesome name="more-vertical" 
                   color={colours.darkBlueTheme}
-                  size={scale(22)} />
+                  size={scale(22)} /> */}
+              
+              <FastImage source={require("../../assets/profile/pencil.png")} resizeMode="contain" style={{
+                position:"absolute",
+                height:scale(40),width:scale(30),
+                right:scale(30),top:scale(6)
+                
+                }} />
               </TouchableOpacity>
-                {
+                {/* {
                   showMenu && AlertId == id ?
                   <Fragment>
                   <View style={{
                     position:"absolute",
-                    right:scale(10),
-                    top:scale(10),
+                    right:scale(25),
+                    top:scale(30),
                     backgroundColor:"#FFF",
                     height:scale(70),
                     width:scale(100),
@@ -400,7 +411,7 @@ const AlertCard = (props) => {
                    </View>
                    </Fragment>
                   : null
-                }
+                } */}
               
              
           </View>
@@ -537,9 +548,7 @@ const AlertCard = (props) => {
         <View
           style={[
             styles.nextRowContainer,
-            {
-              width:scale(320),
-            }
+           
           ]}
         >
           {/* <View style={styles.iconContainer}>
@@ -634,9 +643,9 @@ class AlertsScreen extends React.Component {
   }
   reset() {
     return this.props.navigation.dispatch(
-      NavigationActions.reset({
+      CommonActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({ routeName: "AnonymousStack" })],
+        actions: [CommonActions.navigate({ routeName: "AnonymousStack" })],
       })
     );
   }
@@ -857,7 +866,7 @@ class AlertsScreen extends React.Component {
           {...this.props}
           left
           setting
-          title={`${STR_CONST.ALERT_SCREEN_TITLE} ${ (alertLength)? `(${alertLength})` :""} `}
+          title={`${STR_CONST.ALERT_SCREEN_TITLE} `}
           right
           showSort={alertLength > 1 ? true : false}
           notifCount={this.props.badgeCount}
@@ -1182,9 +1191,7 @@ class AlertsScreen extends React.Component {
   }
 
   render() {
-
     const { showMenu,alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
-    
     return (
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
        {/* <MyStatusBar  /> */}

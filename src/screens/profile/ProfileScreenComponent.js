@@ -177,7 +177,7 @@ renderListItem(itemObject, index) {
       }}
     >
 
-      <Image source={itemObject.icon} />
+      <Image source={itemObject.icon} style={{height:scale(50),width:scale(50)}}  resizeMode="contain" />
       <Text style={styles.profileOptionText}>{itemObject.text}</Text>
     </TouchableOpacity>
   );

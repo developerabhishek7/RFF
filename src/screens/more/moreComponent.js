@@ -57,7 +57,9 @@ export default class MoreComponent extends Component {
           title={STRING_CONST.MORE_TITLE}
           right
           notifCount={2}
-          clickOnRight={() => Alert.alert("YES THIS IS CALLING!")}
+          clickOnRight={() =>  this.props.navigation.navigate("NotificationsScreen",{
+            fromAlertScreen: false,
+          })}
         />
         </View>
       </View>
