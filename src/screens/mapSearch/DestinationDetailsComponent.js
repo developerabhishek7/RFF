@@ -171,7 +171,9 @@ checkIfPeakOffPeakDataMonth = () => {
               peak:""
             })
             this.props.navigation.goBack() }}>
-            <Image source={require("../../assets/findFlight/back.png")} style={[styles.infoIcon1]} />
+            <Image source={require("../../assets/findFlight/back.png")}
+              resizeMode="contain"
+            style={[styles.infoIcon1]} />
           </TouchableOpacity>
 
          <View style={{flexDirection:"row"}}>
@@ -195,37 +197,11 @@ checkIfPeakOffPeakDataMonth = () => {
     return (
       <View style={{ marginTop: scale(10),backgroundColor:"#FFF" }}>
         <View style={styles.peakFairMainView}>
-          <View style={[styles.peakFairSubHeaderView,{
-            backgroundColor: peak && actualDate ? "#FFFFFF" : !peak && actualDate ? colours.skyBlueColor : "#FFF",
-            // borderWidth:1
-            // ,borderColor:peak && actualDate ?   "gray" : !peak && actualDate ? "gray" : "#FFF"
           
-          
-            // borderBottomWidth:1,
-            // borderBottomColor:peak  && actualDate ? "gray"  : "#FFF",
-            borderLeftColor:!peak  && actualDate ? "gray"  : "#FFF",
-            borderLeftWidth:0.3,
-            borderRightWidth:0.3,
-            borderRightColor:!peak  && actualDate ? "gray"  : "#FFF",
-            borderTopWidth:0.3,
-            borderTopColor:!peak  && actualDate ? "gray"  : "#FFF",
-
-      }]}>
-            <ImageBackground
-              source={require("../../assets/classes/PEAK.png")}
-              style={styles.peakFairImg}
-            >
-              {/* <Text style={{ fontSize: scale(16) }}> P </Text> */}               
-            </ImageBackground>
-            <Text style={styles.peakFairTxt}>Peak Fare</Text>
-          </View>
           <View style={[styles.peakFairSubHeaderView,{
             backgroundColor:  !peak  && actualDate ? "#FFFFFF" : peak && actualDate ? colours.skyBlueColor : "#FFF",
-            // borderWidth:1,
-            // borderColor:!peak  && actualDate ? "gray" : peak && actualDate ? "gray" : "#FFF"
-         
-            // borderBottomWidth:1,
-            // borderBottomColor:!peak  && actualDate ? "gray"  : "#FFF",
+            // borderBottomColor: !peak  && actualDate ? "gray"  : "#FFF",
+            // borderBottomWidth:0.3,
             borderLeftColor:peak  && actualDate ? "gray"  : "#FFF",
             borderLeftWidth:0.3,
             borderRightWidth:0.3,
@@ -235,12 +211,38 @@ checkIfPeakOffPeakDataMonth = () => {
          
          }]}>
             <ImageBackground
+              source={require("../../assets/classes/PEAK.png")}
+              style={styles.peakFairImg}
+            >
+            </ImageBackground>
+            <Text style={styles.peakFairTxt}>Peak Fare</Text>
+          </View>
+
+
+          <View style={[styles.peakFairSubHeaderView,{
+            backgroundColor: peak && actualDate ? "#FFFFFF" : !peak && actualDate ? colours.skyBlueColor : "#FFF",
+         
+            // borderBottomColor: peak  && actualDate ? "gray"  : "#FFF",
+            // borderBottomWidth:0.3,
+            
+         
+            borderLeftColor:!peak  && actualDate ? "gray"  : "#FFF",
+            borderLeftWidth:0.3,
+            borderRightWidth:0.3,
+            borderRightColor:!peak  && actualDate ? "gray"  : "#FFF",
+            borderTopWidth:0.3,
+            borderTopColor:!peak  && actualDate ? "gray"  : "#FFF",
+
+      }]}>
+           
+           <ImageBackground
               source={require("../../assets/classes/OFFPEAK.png")}
               style={styles.peakFairImg}
             >
             </ImageBackground>
             <Text style={styles.peakFairTxt} >Off-Peak Fare</Text>
           </View>
+
         </View>
       </View>
     )
@@ -259,11 +261,15 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
   getPointsText(points) {
-    if (points % 1000 == 0) {
-      return `${points / 1000}k`;
-    } else {
-      return points;
-    }
+    // if (points % 1000 == 0) {
+    //   return `${points / 1000}k`;
+    // } else {
+    //   return points;
+    // }
+
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+
+
   }
 
 
@@ -462,7 +468,7 @@ checkIfPeakOffPeakDataMonth = () => {
       borderLeftWidth:this.state.actualDate ? 0.3 : 0,
       borderRightWidth:this.state.actualDate ? 0.3 : 0,
       borderRightColor:this.state.actualDate ? "gray" : "#FFF",
-      width: scale(370),             
+      width: scale(357),             
       alignSelf:"center"   
        }}>
       {

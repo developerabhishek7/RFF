@@ -9,7 +9,7 @@ import * as STRING_CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
 import scale, { verticalScale } from "../../helpers/scale";
 import { getAirlinesAvailability, getPointsAvailability } from "../../actions/calendarActions";
-import {getMapKey} from '../../actions/mapSearchActions'
+// import {getMapKey} from '../../actions/mapSearchActions'
 import PopUpComponent from '../../shared/popUpComponent'
 import * as CONFIG from "../../helpers/config";
 import  Entypo from 'react-native-vector-icons/Entypo';
@@ -93,9 +93,9 @@ class MapComponent extends Component {
     
     let uuid_Key = uuid.v4()
     let userId = this.props.userInfo.id
-    if(!MAP_TOKEN){
-      this.props.getMapKeyAction(uuid_Key,userId)
-    }
+    // if(!MAP_TOKEN){
+    //   this.props.getMapKeyAction(uuid_Key,userId)
+    // }
     
     let sourceCode  = this.props.route.params.searchData.sourceCode.code
     let auditData = this.props.route.params.auditData
@@ -737,7 +737,7 @@ const mapDispatchToProps = (dispatch) => {
     updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
-    getMapKeyAction: (uuid_Key,userId) => dispatch(getMapKey(uuid_Key,userId)),
+    // getMapKeyAction: (uuid_Key,userId) => dispatch(getMapKey(uuid_Key,userId)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
   };
 };

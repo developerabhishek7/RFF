@@ -196,7 +196,7 @@ export async function secureDelete(path, token) {
 	});
 }
 export async function secureDeleteForAlert(path, token, screenType) {
-	return await fetch(`https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com${path}`, secureFetch('DELETE', token)).then((res) => {
+	return await fetch(`https://prod-apin.rewardflightfinder.com/${path}`, secureFetch('DELETE', token)).then((res) => {
 		// console.log("res #######      ", res)
 		if (res.status === 200) {
 			NavigationService.navigate("Alerts")

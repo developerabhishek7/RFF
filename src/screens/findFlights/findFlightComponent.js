@@ -442,6 +442,19 @@ export default class FindFlightComponent extends Component {
 
   renderBottomButton(buttonText, backgroundColor, onButtonPress) {
     return (
+
+      <TouchableOpacity
+        style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
+        onPress={() => { onButtonPress() }}>
+        <Image source={require("../../assets/mapSearch/WorldMap.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),marginRight:scale(-5)}}  />
+        <Text style={styles.buttonTextStyle}>{buttonText}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderBottomButton1(buttonText, backgroundColor, onButtonPress) {
+    return (
+
       <TouchableOpacity
         style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
         onPress={() => { onButtonPress() }}>
@@ -927,7 +940,7 @@ export default class FindFlightComponent extends Component {
         <Text style = {styles.airportNameStyle}>{STRING_CONST.NEAREST_AIRPORT}: {this.getNearestAirport(nearestAirports)} </Text>} */}
         {this.getClassView()}
         {/* {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{color:colours.redColor, alignSelf:'center',marginBottom:verticalScale(5), fontSize:scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>} */}
-        {this.renderBottomButton("Search", colours.lightBlueTheme, () => {
+        {this.renderBottomButton1("Search", colours.lightBlueTheme, () => {
           this.validateFindFlightData();
         })}
       </View>
@@ -944,7 +957,7 @@ export default class FindFlightComponent extends Component {
     });
   }
 
-  getLocation() {
+  getLocation111() {
     const { isSearchClicked, selectedSource, selectedDestination, airlinesPossileRoutesList,locationsObject } = this.state
   
 
@@ -1031,7 +1044,7 @@ export default class FindFlightComponent extends Component {
           <FastImage resizeMode="contain" source={IMAGE_CONST.RETURN_ICON}
             style={[styles.returnIcon]} />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[styles.getlocationStyle, { borderBottomColor: isSearchClicked && !selectedDestination ? colours.errorColor : colours.borderBottomLineColor, }]}
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
@@ -1079,7 +1092,7 @@ export default class FindFlightComponent extends Component {
               ? selectedDestination.name
               : STRING_CONST.DESTINATION_CITY}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
@@ -1175,11 +1188,11 @@ export default class FindFlightComponent extends Component {
                             isSearchClicked && !selectedSource
                               ? colours.errorColor
                               : colours.lightGreyish,
-                          fontSize: selectedSource ? scale(10) : scale(14),
+                          fontSize: selectedSource ? scale(11) : scale(14),
                         },
                       ]}
                     >
-                      {"Origin City"}
+                      {"Departure City"}
                       {/* /{STRING_CONST.AIRPORT_TEXT} */}
                     </Text>
                     :
@@ -1191,11 +1204,11 @@ export default class FindFlightComponent extends Component {
                             isSearchClicked && !selectedSource
                               ? colours.errorColor
                               : colours.lightGreyish,
-                          fontSize: selectedSource ? scale(10) : scale(14),
+                          fontSize: selectedSource ? scale(11) : scale(14),
                         },
                       ]}
                     >
-                      {"Origin City"}
+                      {"Departure City"}
                       {/* /{STRING_CONST.AIRPORT_TEXT} */}
                     </Text>
                 }
@@ -1211,11 +1224,11 @@ export default class FindFlightComponent extends Component {
                           isSearchClicked && !selectedSource
                             ? colours.errorColor
                             : colours.lightGreyish,
-                        fontSize: selectedSource ? scale(10) : scale(14),
+                        fontSize: selectedSource ? scale(11) : scale(14),
                       },
                     ]}
                   >
-  {"Origin City"}                  
+  {"Departure City"}                  
   </Text>
                 }
               </Fragment>
@@ -1232,7 +1245,7 @@ export default class FindFlightComponent extends Component {
                       color: !selectedSource
                         ? colours.lightGreyish
                         : colours.darkBlueTheme,
-                      fontSize: selectedSource ? scale(14) : scale(11),
+                      fontSize: selectedSource ? scale(14) : scale(10),
                       width: scale(220)
                     },
                   ])
@@ -1330,11 +1343,11 @@ export default class FindFlightComponent extends Component {
                             isSearchClicked && !selectedSource
                               ? colours.errorColor
                               : colours.lightGreyish,
-                          fontSize: selectedSource ? scale(10) : scale(14),
+                          fontSize: selectedSource ? scale(11) : scale(14),
                         },
                       ]}
                     >
-                      {"Departure City"}
+                      {"Destination City"}
                       {/* /{STRING_CONST.AIRPORT_TEXT} */}
                     </Text>
          
@@ -1349,18 +1362,16 @@ export default class FindFlightComponent extends Component {
                       color: !selectedDestination
                         ? colours.lightGreyish
                         : colours.darkBlueTheme,
-                      fontSize: selectedDestination ? scale(13) : scale(11),
-                      width: scale(250)
+                      fontSize: selectedDestination ? scale(14) : scale(10),
+                      width: scale(220)
                     },
                   ])
               }
             >
               {this.getFullDestinationName(selectedDestination)}
             </Text> )}
-          
         </View>
       </TouchableOpacity>
-
 </Fragment>
     );
   }
@@ -1469,6 +1480,36 @@ export default class FindFlightComponent extends Component {
   }
 
 
+  showEmailVerify(){
+    const {userData,isLoggedIn}  = this.props;
+    // let isLoggedIn = this.props.isLoggedIn
+
+    return(
+      <View>
+      {
+        userData && Object.keys(userData).length != 0 && isLoggedIn ?
+        <Fragment>
+        {STRING_CONST.MANAGE_CONTACT_SCREEN && STRING_CONST.UPDATE_PROFILE_SCREEN &&
+          userData &&
+          !userData.email_verified && (
+            <TouchableOpacity
+              style={styles.bannerView}
+              onPress={() => {
+                this.props.navigation.navigate(STRING_CONST.MANAGE_CONTACT_SCREEN);
+              }}
+            >                
+              <Text style={styles.bannerText}>
+                {STRING_CONST.VERIFY_EMAIL_MESSAGE}
+              </Text>
+            </TouchableOpacity>
+          )}
+           </Fragment>
+           : null
+      } 
+      </View>
+    )
+  }
+
 
   render() {
     const {userData}  = this.props;
@@ -1485,6 +1526,9 @@ export default class FindFlightComponent extends Component {
           <MyStatusBar  />
           <View style={styles.outerViewStyle}>
             {this.renderHeader()}
+
+            {this.showEmailVerify()}
+
             <ScrollView keyboardShouldPersistTaps="always">
               {this.informationView()}
               {

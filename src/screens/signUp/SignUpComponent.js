@@ -1144,7 +1144,7 @@ class SignUpComponent extends Component {
   renderGoogleFBButtonContainer() {
     return (
       <View style={styles.googleFBContainer}>
-        <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_IN}</Text>
+        <Text style={styles.orSignInText}>{"Or sign-up with"}</Text>
         <View style={styles.buttonContainer}>
         
           <TouchableOpacity
@@ -1158,20 +1158,17 @@ class SignUpComponent extends Component {
        
           </TouchableOpacity>
 
-        
-   
-
-          <TouchableOpacity
-            // onPress={() => this.onPressFBSocialLogin()}
+          {/* <TouchableOpacity
+            onPress={() => this.onPressFBSocialLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.googleButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-            {/* <Text
+            <Text
             style={styles.iconTxt}
-          > Facebook</Text> */}
+          > Facebook</Text>
           
          
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         
           {!Utils.isAndroid() && (
             <TouchableOpacity

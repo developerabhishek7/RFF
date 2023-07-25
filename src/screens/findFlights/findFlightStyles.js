@@ -4,6 +4,7 @@ import { colours } from "../../constants/ColorConst";
 import * as STRING_CONST from "../../constants/StringConst";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
+import * as COLOR_CONST from "../../constants/ColorConst";
 
 export default StyleSheet.create({
   container: {
@@ -180,24 +181,39 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: colours.lightGreyish,
   },
+  bannerView: {
+    // backgroundColor: COLOR_CONST.colours.dimLightBlueBackgroundColor,
+    paddingVertical: verticalScale(15),
+    alignSelf: STRING_CONST.STRETCH,
+    borderRadius: scale(10),
+    borderBottomColor:"white",
+    borderBottomWidth:scale(1)
+    ,marginBottom:scale(10)
+  },
+  bannerText: {
+    textAlign: STRING_CONST.CENTER,
+    color: colours.white,
+    fontSize: verticalScale(18),
+  },
   getLocationSubTextStyle: {
       fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-      fontSize: scale(10),
+      fontSize: scale(12),
       marginVertical: verticalScale(4),
       color: colours.lightGreyish,
       width:width*0.3,
       borderWidth:0,textAlign:'center'
+      
   },
   wheretoGoTextStyle: {
-    fontFamily: STRING_CONST.appFonts.INTER_BOLD,
-    fontSize: scale(12),
+    fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
+    fontSize: scale(20),
     color: colours.darkBlueTheme,
     marginTop: verticalScale(60),
     alignSelf: "center",
-    width:width*0.9,
+    width:width*0.6,
     textAlign:'center',
     marginBottom:verticalScale(20),
-    fontWeight:'bold'
+    fontWeight:'600'
   },
   membershipScreenCrossIconStyle: {
     alignSelf: "flex-start",

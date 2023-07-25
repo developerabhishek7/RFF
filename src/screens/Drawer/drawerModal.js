@@ -145,8 +145,9 @@ class DrawerComponentComponent extends Component {
     // let isAppReviewSuccess = ""
 
     return (
-      <View>
+      <View >
       <View style={styles.profileView}>
+          <View style={{flexDirection:"row",justifyContent:"flex-start",marginStart:scale(20)}}>
         {/* <ImageBackground
           source={IMAGE_CONST.PROFILE_IMAGE_RING}
           style={styles.outerImageBackgroundStyle}
@@ -170,12 +171,16 @@ class DrawerComponentComponent extends Component {
               />
             ) : isLoggedIn ? (
               userData.first_name ? 
-              <Text style={styles.nameInitialsStyle}>
+              <View style={{backgroundColor:"#cdf0f7",borderRadius:scale(80),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",}}>
+              <Text style={styles.nameInitialsStyle}
+              >
                 {this.state.userData.first_name &&
                   this.state.userData.first_name[0].toUpperCase()}
                 {this.state.userData.last_name &&
                   this.state.userData.last_name[0].toUpperCase()}
-              </Text> :
+              </Text> 
+              </View>
+              :
               <FastImage style={[styles.RFFImage,{ backgroundColor: colours.white}]} source={IMAGE_CONST.PLANE_LOGO} />
             ) : (
               <FastImage
@@ -201,15 +206,23 @@ class DrawerComponentComponent extends Component {
             </View>
             : null
           }
-           {
+        </View>
+        </View>
+        {
             buildVersion  == 0  || isAppReviewSuccess == false ?
               <Fragment>
               {
               isLoggedIn ?
               <TouchableOpacity
-                style={{marginBottom:scale(10),marginTop:scale(10),margin:scale(0)}}
-                onPress={()=>{
-                  let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+                style={{marginBottom:scale(0),marginTop:scale(30),marginLeft:scale(20),alignSelf:"center"}}
+                onPress={async()=>{
+                  const accesstoken = await getAccessToken();
+                  const userId = await getUserId()
+                
+                  let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+               
+                  console.log("yes check here URL _ _  _ _ _ _ _",url)
+               
                   this.reloaderApp()
                   Linking.openURL(url)
                 }}
@@ -223,15 +236,18 @@ class DrawerComponentComponent extends Component {
             </Fragment>
             : null
            }
-        </View>
       </View>
       </View>
     );
   }
 
   bindLogoutAndSocialLogin = () => {
-    let key = ['socialLogin']
-    AsyncStorage.multiRemove(key)
+    // let key = ['socialLogin']
+
+    let allKeys = ['guestId','socialLogin','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
+          
+    AsyncStorage.multiRemove(allKeys) 
+    // AsyncStorage.multiRemove(key)
     this.props.logoutUserAction()
   }
 
@@ -244,6 +260,9 @@ class DrawerComponentComponent extends Component {
         {
           text: "Log out",
           onPress: () => {
+            this.setState({
+              userData:{}
+            })
             this.bindLogoutAndSocialLogin()
           },
         },
@@ -262,7 +281,7 @@ class DrawerComponentComponent extends Component {
     return (
       <FastImage
         source={image}
-        resizeMode="cover"
+        resizeMode="contain"
         style={styles.infoIcon}
       />
     )
@@ -279,14 +298,9 @@ class DrawerComponentComponent extends Component {
           resizeMode="stretch"
         /> */}
         {this.profileImage()}
-        <ScrollView style={{ marginTop: verticalScale(200), marginLeft: scale(0),borderWidth:0, }}>
+        <ScrollView style={{ marginTop: verticalScale(230), marginLeft: scale(0),}}>
          
-          <View  style={{
-              borderWidth: 0.3,
-              height:scale(1),
-              borderColor: "gray",
-              margin:scale(4)
-            }} />
+          <View  style={styles.lineStyle} />
           <TouchableOpacity
             style={styles.screenButtonStyle}
             onPress={() => {
@@ -296,7 +310,12 @@ class DrawerComponentComponent extends Component {
           >
             {this.getMenuOptionImage(IMAGE_CONST.SEARCH_FF)}
             <Text style={styles.screenTitle}>{STR_CONST.SEARCH_REWARD}</Text>
+           
           </TouchableOpacity>
+
+          <View  style={styles.lineStyle} />
+
+         
           {isLoggedIn && (
             <TouchableOpacity
               style={styles.screenButtonStyle}
@@ -311,6 +330,10 @@ class DrawerComponentComponent extends Component {
               </Text>
             </TouchableOpacity>
           )}
+
+    {isLoggedIn && <View  style={styles.lineStyle} /> }
+
+
           {isLoggedIn && (
             <TouchableOpacity
               style={styles.screenButtonStyle}
@@ -325,6 +348,10 @@ class DrawerComponentComponent extends Component {
               </Text>
             </TouchableOpacity>
           )}
+
+{isLoggedIn && <View  style={styles.lineStyle} /> }
+
+
           {isLoggedIn && (
             <TouchableOpacity
               style={styles.screenButtonStyle}
@@ -340,6 +367,7 @@ class DrawerComponentComponent extends Component {
               </Text>
             </TouchableOpacity>
           )}
+          {isLoggedIn && <View  style={styles.lineStyle} /> }
           {/* <TouchableOpacity
             style={styles.screenButtonStyle}
             onPress={() => {
@@ -365,6 +393,7 @@ class DrawerComponentComponent extends Component {
               {STR_CONST.MORE_TITLE}
             </Text>
           </TouchableOpacity>
+          <View  style={styles.lineStyle} />
           <View style={{alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
@@ -381,13 +410,9 @@ class DrawerComponentComponent extends Component {
           onPress={async() => {
             const keys = await AsyncStorage.getAllKeys();
             const result = await AsyncStorage.multiGet(keys);
-            let allKeys = ['guestId','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
             
             if (isLoggedIn) {
-              this.setState({
-                userData:{}
-              })
-              AsyncStorage.multiRemove(allKeys) 
+              
               this.confirmSignOut();
             } else {
               this.props.navigation.navigation.navigate("SignIn");

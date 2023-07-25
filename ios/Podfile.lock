@@ -401,6 +401,8 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.9.0):
     - React-Core
+  - react-native-image-picker (4.10.0):
+    - React-Core
   - react-native-mapbox-gl (8.1.0-rc.5):
     - "@react-native-mapbox-gl-mapbox-static (~> 5.8.0)"
     - Mapbox-iOS-SDK (~> 5.8.0)
@@ -639,6 +641,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-network-info (from `../node_modules/react-native-network-info`)
@@ -754,6 +757,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-branch"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
   react-native-netinfo:
@@ -878,6 +883,7 @@ SPEC CHECKSUMS:
   React-logger: 454ffb01980778a43b0153ee98721d0275b56616
   react-native-branch: 43f1c46d9a971cae0eeb337313991ce72b467351
   react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-mapbox-gl: 9dd5f55142eb0aa43d115c9ff9faa09e817841f7
   react-native-netinfo: fefd4e98d75cbdd6e85fc530f7111a8afdf2b0c5
   react-native-network-info: d1290ffc0bd0709e11436f5b8d7f605dcc5c4530

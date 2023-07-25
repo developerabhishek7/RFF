@@ -30,13 +30,14 @@ import FastImage from 'react-native-fast-image';
         }}>
           <StatusBar hidden={false} />
         <FastImage
-          resizeMode="stretch"
+          resizeMode="cover"
           style={{
             width: '100%',
             height: '100%',
             justifyContent:'center'
           }}
           source={require('../../assets/splash.png')}
+          
           // source={require('../../assets/splash.png')}
         > 
         </FastImage>

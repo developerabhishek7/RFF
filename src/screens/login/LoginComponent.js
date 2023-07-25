@@ -701,20 +701,18 @@ class LoginComponent extends Component {
        
           </TouchableOpacity>
 
-        
-   
 
-          <TouchableOpacity
-            // onPress={() => this.onPressFBSocialLogin()}
+          {/* <TouchableOpacity
+            onPress={() => this.onPressFBSocialLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.fbButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-            {/* <Text
+            <Text
             style={styles.iconTxt}
-          > Facebook</Text> */}
+          > Facebook</Text>
           
          
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         
           {!Utils.isAndroid() && (
             <TouchableOpacity
@@ -765,21 +763,17 @@ class LoginComponent extends Component {
           imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
         >
         <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(200)}}>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always"            showsVerticalScrollIndicator={false}        
-         >
+        {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
+         > */}
           {/* {this.renderLogoContainer()} */}
           {this.renderInputFields()}
           {this.renderButtonContainer()}
           {this.renderGoogleFBButtonContainer()}
-
           <View style={{flexDirection:"row",borderWidth:0,justifyContent:"space-around",alignItems:"center",marginTop:scale(1),marginBottom:scale(20)}}>
-         
           {this.renderBottomTextContainer()}
-
           {this.skipButton()}
           </View>
-        
-        </KeyboardAwareScrollView>
+        {/* </KeyboardAwareScrollView> */}
         {/* <TransLoader isLoading={this.state.isLoading} /> */}
         {this.state.showNetworkPopUp && (
           <PopUpComponent

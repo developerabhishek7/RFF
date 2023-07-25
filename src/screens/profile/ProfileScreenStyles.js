@@ -258,6 +258,6 @@ export default StyleSheet.create({
     fontSize: scale(14),
     color: colours.gray,
     fontFamily:appFonts.INTER_SEMI_BOLD,
-    fontWeight:Platform.OS === "android" ? "700" : "600"
+    fontWeight:Platform.OS === "android" ? "600" : "500"
   },
 });

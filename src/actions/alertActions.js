@@ -35,10 +35,8 @@ import { getUserInfo } from "./userActions";
 import { Alert } from "react-native";
 
                 
+import * as RootNavigation from '../router/RouteNavigation';
 
-import {navigationRef} from '../router/RouteNavigation'
-
-import navigationService from "../utils/NavigationService";
 
 export function resetAlertUpdate() {
   return async (dispatch, getState) => {
@@ -70,6 +68,8 @@ export function editAlert(editAlert, alertId) {
         });
         dispatch(CommonActions.stopLoader()); // To stop Loader
         dispatch(getUserInfo())
+        dispatch(getAlerts())
+
       } else {
         dispatch(CommonActions.stopLoader()); // To stop Loader
         let response = await res.json()
@@ -152,15 +152,12 @@ export function cancelAlerts(id,screenType) {
         // await dispatch({
         //   type: ALERT_CANCEL_SUCCESS,
         // });
-   
-        navigationRef.navigate("Alerts")
-        
-                Alert.alert("Your alert has been deleted successfully!")
+        RootNavigation.navigationRef.navigate("Alerts")
+        Alert.alert("Your alert has been deleted successfully!")
        
       } else {
         dispatch(getUserInfo())
-        // NavigationService.navigate("Alerts")
-        navigationRef.navigate("Alerts")
+        RootNavigation.navigationRef.navigate("Alerts")
         Alert.alert("Your alert has been deleted successfully!")
         // NavigationService.navigate("Alerts")
         // await dispatch({

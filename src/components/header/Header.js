@@ -48,7 +48,7 @@ class ScreenHeader extends Component {
 
                 
         >
-          {IMAGE_CONST.MENU}
+          <Image source={IMAGE_CONST.DRAWER_MENU} style={{height:scale(20),width:scale(20),padding:scale(3),marginStart:scale(3)}} />
         </TouchableOpacity>
       );
     }

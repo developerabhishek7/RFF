@@ -106,7 +106,7 @@ export default class FlightDetailsCompoent extends Component {
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => {    
-            this.props.navigation.dispatch(NavigationActions.back())                
+            this.props.navigation.back()             
           }}
         >
           <Icon name="ios-arrow-back" size={scale(30)} color={colours.black} />

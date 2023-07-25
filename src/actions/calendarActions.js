@@ -169,8 +169,9 @@ export function getPointsAvailability(searchData) {
 
 
 export function getPeakOffPeakData() {  
-  let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/getPeakDates/british-airways`
+  // let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/getPeakDates/british-airways`
  
+  let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production/getPeakDates/british-airways`
  
   return async (dispatch, getState) => {
     try {
