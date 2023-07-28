@@ -56,68 +56,27 @@ export default class OnboardingComponent extends Component {
  
   }
   onBoardingCard(item,index) {
-
     return (
       <View style={{ flex: 1 }}>
-
-          <View style={{ flex: 1 }}>
           <FastImage
             source={item.image}
-            // style={{
-            //   marginTop: isNotched()
-            //     ? verticalScale(80)
-            //     : verticalScale(18),
-            //     flex:1,
-            //     height:"100%",
-            //     width:"100%"
-            // }}
-          
-            // resizeMode = 'contain'  
             resizeMode="contain"
-            style={{width: '100%', height: '100%',}}          
+            style={{width: width, height: height,}}          
           >
-          
-           <View style={{marginBottom:scale(100),flex:1,justifyContent:"flex-end",marginStart:scale(20)}}>
-
+           <View style={{marginBottom:scale(50),flex:1,justifyContent:"flex-end",marginStart:scale(20)}}>
            <Text style={styles.headingStyle}>{item.heading}</Text>
             {item.subHeading && (
               <Text style={styles.subHeadingStyle}>{item.subHeading}</Text>
             )}
             <Text style={styles.subtextStyle}>{item.description}</Text>
-          
-
            </View>
-
            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
            {this.pagination}
-
            {
            index == 3 &&
            this.renderButtonContainer()}
            </View>
-         
-            
-          
-          {/* <View style={styles.textView}>
-            <Text style={styles.headingStyle}>{item.heading}</Text>
-            {item.subHeading && (
-              <Text style={styles.subHeadingStyle}>{item.subHeading}</Text>
-            )}
-            <Text style={styles.subtextStyle}>{item.description}</Text>
-            {index == 5 && this.renderButtonContainer()}
-          </View> */}
-          </FastImage>  
-          </View>     
-          
-          {/* <View style={styles.textView}>
-            <Text style={styles.headingStyle}>{item.heading}</Text>
-            {item.subHeading && (
-              <Text style={styles.subHeadingStyle}>{item.subHeading}</Text>
-            )}
-            <Text style={styles.subtextStyle}>{item.description}</Text>
-            {index == 5 && this.renderButtonContainer()}
-          </View> */}
-
+          </FastImage>   
       </View>
     );
   }
@@ -142,27 +101,37 @@ export default class OnboardingComponent extends Component {
     return (
       <Carousel
         firstItem={this.state.activeSlideIndex}
+        removeClippedSubviews={false}
         containerCustomStyle={{
           height: height,
         }}
         ref={(c) => {
           this._carousel = c;
         }}
+        layout={'tinder'}
         onSnapToItem={() => {
           this.onSnap(this._carousel.currentIndex);
         }}
-        animate={true}
+        animate={false}
         data={getOnboardingData()}
         sliderWidth={width}
         itemWidth={width}
         renderItem={({ item, index }) => this.onBoardingCard(item, index)}
-        removeClippedSubviews={false}
-        inactiveSlideScale = {1}
+        apparitionDelay={0}
+        enableMomentum={true}
+        enableSnap={true}
+        lockScrollWhileSnapping={true}
+        scrollEnabled={true}
+        useScrollView={false}
       />
     );
   }
 
   render() {
-    return <ScrollView style={{ flex: 1 }}>{this.swiperComponent()}</ScrollView>;
+    return (
+    <View style={{flex:1}}>
+    <ScrollView  style={{ flex: 1 }}>{this.swiperComponent()}</ScrollView>
+    </View>
+    )
   }
 }

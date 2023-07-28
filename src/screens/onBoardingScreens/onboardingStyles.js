@@ -37,9 +37,9 @@ export default StyleSheet.create({
 
   addButtonStyle: {
     backgroundColor: colours.skyBlueColor,
-    width: scale(60),
-    height: verticalScale(60),
-    borderRadius: scale(70),
+    width: scale(55),
+    height: verticalScale(55),
+    borderRadius: scale(100),
     marginRight:scale(20),
     marginBottom: verticalScale(30),
   },

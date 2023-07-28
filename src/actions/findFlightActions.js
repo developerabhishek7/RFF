@@ -195,10 +195,11 @@ export function getMultipleFlightSchedule(flightScheduleData) {
         dispatch(CommonActions.startLoader());
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
     const res = await nodeSecureGet(
-      `${API_CONST.BASE_NODE_URL}/schedule/${flightScheduleData.airline}?source_code=${flightScheduleData.source}&destination_code=${flightScheduleData.destination}&date=${flightScheduleData.date}`,     
+      `${API_CONST.BASE_NODE_URL}/schedule/${flightScheduleData.airline}?source_code=${flightScheduleData.source}&destination_code=${flightScheduleData.destination}&date=${flightScheduleData.date}&from=fc`,     
         authToken
       );
       if (res) {
+        // console.log("yes check on multiple schedule  - - -  - - -",res)
         await dispatch({
           type: GET_MULTIPLE_SCHEDULE_DATA_SUCCESS,
           payload: { multipleFlightScheduleData: res },
@@ -232,7 +233,7 @@ export function getFlightSchedule(flightScheduleData) {
     url = null
   }
   else{
-    url = `params=schedule`
+    url = `params=schedule&from=fc`
   }
 
 

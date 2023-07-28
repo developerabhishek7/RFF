@@ -112,7 +112,7 @@ class ScreenHeader extends Component {
             source={
               isLoggedIn
                 ? IMAGE_CONST.DARK_NOTIFICATION_BELL_ICON
-                : IMAGE_CONST.BELL_IMAGE
+                : ""
             }
           />
         </View>

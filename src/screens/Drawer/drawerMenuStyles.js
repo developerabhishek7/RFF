@@ -29,7 +29,7 @@ export default StyleSheet.create({
     // fontWeight: "bold",
     fontWeight:"600",
     color:"gray",
-    fontSize: scale(14),
+    fontSize: scale(13),
     paddingBottom:scale(15),
     paddingTop:scale(5)
   },

@@ -756,16 +756,26 @@ class LoginComponent extends Component {
     );
   }
 
+  renderLogoContainer() {
+    return (
+      <View style={styles.logoContainer}>
+        <FastImage resizeMode="contain" style={styles.rffLogo} source={IMG_CONST.RFF_LOGO} />
+      </View>
+    );
+  }
+
   render() {
     return (
 
-        <FastImage source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",justifyContent:'center',alignItems:"center"}}
-          imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
+        <FastImage source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",}}
+          imageStyle={{marginTop:scale(30)}}
         >
-        <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(200)}}>
+        {this.renderLogoContainer()}
+        <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(50)}}>
         {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
          > */}
           {/* {this.renderLogoContainer()} */}
+        
           {this.renderInputFields()}
           {this.renderButtonContainer()}
           {this.renderGoogleFBButtonContainer()}

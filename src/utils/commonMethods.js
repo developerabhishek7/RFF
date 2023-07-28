@@ -412,7 +412,7 @@ getTimeFromMins(mins){
   //   return onBoardingData;
   // },
 
-  getOnboardingData() {
+  getOnboardingData(){
     let onBoardingData = [
       {
         image: IMG_CONST.SCREEN1,

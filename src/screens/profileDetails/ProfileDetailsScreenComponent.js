@@ -425,10 +425,9 @@ uploadImage = async (imageData) => {
       }
       );
 
-      // let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+      let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
-      let url =  `https://prod-apin.rewardflightfinder.com//v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-     
+      // let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
 
       var config = {
@@ -1365,8 +1364,10 @@ isAlert = () => {
           {this.profileImage()}
 
           <KeyboardAwareScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always" extraHeight={120} extraScrollHeight={120}
-            showsHorizontalScrollIndicator={false}
-            horizontal={false}
+            // showsHorizontalScrollIndicator={false}
+            // horizontal={false}
+            showsVerticalScrollIndicator={false}
+
           >
      
           <View style={{ flex: 1 ,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center",}}>

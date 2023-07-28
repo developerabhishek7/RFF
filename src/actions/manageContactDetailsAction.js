@@ -85,8 +85,6 @@ export function sendOTP() {
 
 export function addContact(userInfo,metaData) {
 
-  console.log("yes check here meta data details #######   ",metaData)
-  
     return async (dispatch) => {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader
@@ -107,19 +105,21 @@ export function addContact(userInfo,metaData) {
       // };
       const url = `/v1/users/${userId}/update_phone_number?user[access_token]=${accesstoken}`;
       const res = await securePutForUser(url, authToken, { user: userInfo });
+      
+     
       if (res && res.status == 200) {
         await dispatch({
           type: ADD_MANAGE_CONTACT_DETAILS_SUCCESS,
         });
         dispatch(getUserInfo());
-        dispatch(updateLoggedInUserPostHog(loggedInUserPostHog))
+        // dispatch(updateLoggedInUserPostHog(loggedInUserPostHog))
         dispatch(CommonActions.stopLoader()); // To stop Loader
       } else {
         dispatch(CommonActions.stopLoader()); // To stop Loader
-        let response = await res.json();
+        // let response = await res.text();
         await dispatch({
           type: ADD_MANAGE_CONTACT_DETAILS_ERROR,
-          payload: response.error,
+          payload: "Error Try Again!",
         });
       }
     } catch (e) {
@@ -168,7 +168,7 @@ export function verifyOTP(code,metaData) {
       );
       if (res && res.status == 200) {
         dispatch(getUserInfo());
-        dispatch(updateLoggedInUserPostHog(loggedInUserPostHog))
+        // dispatch(updateLoggedInUserPostHog(loggedInUserPostHog))
         await dispatch({
           type: VERIFY_NUMBER_SUCCESS,
         });

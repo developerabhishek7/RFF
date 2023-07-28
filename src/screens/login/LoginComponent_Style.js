@@ -123,6 +123,14 @@ export default StyleSheet.create({
     backgroundColor: "#d9f3f8",
    
   },
+  rffLogo: {
+    marginTop: verticalScale(60),
+    width: scale(60),
+    height: scale(60),
+    alignSelf:"flex-start",
+    marginStart:scale(30),
+    marginBottom:scale(0)
+  },
 
   signInText: {
     fontSize: scale(18),

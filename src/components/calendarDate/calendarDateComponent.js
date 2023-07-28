@@ -64,6 +64,8 @@ class Day extends Component {
   }
 
   getEconomyColor(data, details, passengerCount) {
+
+    console.log("yes checkhere - - - - - - - -",data)
     if (data.economy && data.economy.seats >= passengerCount) {
       return colours.blue;
     } else {
