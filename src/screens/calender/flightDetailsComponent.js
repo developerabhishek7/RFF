@@ -167,10 +167,8 @@ class FlightDetailsCompoent extends Component {
 
   renderHeader() {
     let data = this.state.searchData
-
-
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(90),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-50),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
      
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
@@ -202,8 +200,15 @@ class FlightDetailsCompoent extends Component {
     // }
   }
 
+  getsortFlightData = () => {
+  
+  }
+ 
+
   flightDetailsModal() {
     let selectedFlight = this.state.selectedFlight;
+
+  
     let data = this.state.searchData
     return (
       <Animated.View
@@ -753,6 +758,13 @@ class FlightDetailsCompoent extends Component {
       }
     }
 
+    console.log("yes check here flight data  - - - - -  - - -",flightData)
+
+
+    flightData.sort(function(a,b){
+      return a.departure_time.localeCompare(b.departure_time);
+    });
+
     return flightData.length !== 0 ? (
       <FlatList
         keyExtractor={(item, index) => index.toString()}
@@ -923,10 +935,10 @@ class FlightDetailsCompoent extends Component {
       <FastImage
         source={require('../../assets/calendar/flightdetail.png')}
         resizeMode="contain"
-        style={{ flex: 1, justifyContent: "center", alignItems: "center", height: scale(200), width: scale(270), alignSelf: 'center' }}
+        style={{ flex: 1, justifyContent: "center", alignItems: "center", height: scale(240), width: scale(290), alignSelf: 'center' }}
       >
         <FastImage source={IMAGE_CONST.UPGRADE_MEMBERSHIP} style={{ alignSelf: 'center', marginTop: scale(10), marginBottom: scale(30), height: scale(60), width: scale(60) }} />
-        <Text style={styles.noflight}>{`There are ${flightCount} flights scheduled on this date`}</Text>
+        <Text style={styles.noflight}>{`There are ${flightCount ? flightCount : "no"} flights scheduled on this date`}</Text>
         <Text style={styles.noflight}>{`${"Upgrade to Silver/Gold to see flight details"}`}</Text>
         <TouchableOpacity
           onPress={() => {

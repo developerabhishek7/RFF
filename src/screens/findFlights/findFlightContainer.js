@@ -165,7 +165,7 @@ class FindFlightContainer extends Component {
           width: width + 36, height: height,
           marginStart: -scale(20),
           marginEnd: -scale(27),
-          marginTop: -scale(20),
+          marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
           marginBottom: -scale(20),
           // borderWidth:3,borderColor:"green"
         }}>
@@ -254,7 +254,7 @@ class FindFlightContainer extends Component {
           await AsyncStorage.setItem("searchDetails", JSON.stringify({searchCount:1,sourceCode:searchData.sourceCode, destinationCode:searchData.destinationCode}));
         }
         if(searchDetails && Object.keys(searchDetails).length !== 0){
-          if(searchDetails && searchDetails.searchCount < 4 || !this.props.userInfo.bronze_member){
+          if(searchDetails && searchDetails.searchCount < 3 || !this.props.userInfo.bronze_member){
             this.setState({ isLoader: false }, () => {
             this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
               searchData: this.state.searchData, focusedDate: null,

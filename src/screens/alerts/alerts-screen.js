@@ -110,11 +110,12 @@ const ListFooterWithNoAlerts = () => (
     >
       <FastImage
         source={IMG_CONST.NO_ALERTS1}
-        style={{ height: scale(130), width: scale(110) }}
+        style={{ height: scale(160), width: scale(150) }}
       />
       <ReactNativeText
         style={[
           sharedStyles.listFooter,
+          
           {
             fontFamily: STR_CONST.appFonts.INTER_REGULAR,
             fontSize: scale(14),
@@ -142,12 +143,17 @@ function makeUpperCaseAfterSpace(str) {
 }
 
 function travelClassView(travelClass) {
+
+  console.log("yes check here trackeClass - - - -  - - ",travelClass)
+
   return (
     <View style={[styles.travelClassView,
       {
         width:travelClass.length > 1 ? scale(340) : scale(190),
     }]}>
       {travelClass.map((cabinClass) => {
+        console.log("yes check here cabin calss - - - - - -",cabinClass)
+
         return (
           <View
             style={
@@ -168,16 +174,51 @@ function travelClassView(travelClass) {
               })
             }
           >
-            <Image source={
+            {/* {
               cabinClass == "economy" ?
-              IMG_CONST.ECONOMYC_SEAT : cabinClass == "premium_economy" ?
-              IMG_CONST.PREMIUM_SEAT : cabinClass == "business" ?
-              IMG_CONST.BUSINESS_SEAT : cabinClass == "first" ? 
-              IMG_CONST.FIRST_SEAT : null
-            } 
-            resizeMode="contain"
-            style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
-            />
+              <Image source={IMG_CONST.ECONOMYC_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            } */}
+
+            {/* {
+             cabinClass == "premium_economy" || "premium" ?
+              <Image source={IMG_CONST.PREMIUM_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            } */}
+
+            {
+             cabinClass == "economy" ?
+              <Image source={IMG_CONST.ECONOMYC_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            }
+
+{
+             cabinClass == "premium" || cabinClass == "premium_economy" ?
+              <Image source={IMG_CONST.PREMIUM_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            }
+            {
+             cabinClass == "business" ?
+              <Image source={IMG_CONST.BUSINESS_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            }
+             {
+             cabinClass == "first" ?
+              <Image source={IMG_CONST.FIRST_SEAT} 
+              resizeMode="contain"
+              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              /> : null
+            }
             <Text
               style={{
                 color: classToColor[cabinClass],
@@ -200,7 +241,7 @@ function getclassSelectedArray(travelClassString) {
   let classSelected = [];
   let travelClass = travelClassString.split(",");
   classSelected[0] = travelClass.includes("economy");
-  classSelected[1] = travelClass.includes("premium_economy");
+  classSelected[1] = travelClass.includes("premium_economy") ;
   classSelected[2] = travelClass.includes("business");
   classSelected[3] = travelClass.includes("first");
   return classSelected;
@@ -1167,7 +1208,7 @@ class AlertsScreen extends React.Component {
         width:width+36,height:height,
         marginStart:-scale(38),
         marginEnd:-scale(27),
-        marginTop:-scale(20),
+        marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
         marginBottom:-scale(20),
         // borderWidth:3,borderColor:"green"
       }}>

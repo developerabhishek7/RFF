@@ -201,9 +201,30 @@ componentDidMount(){
     );
   }
 
-  renderHeader() {
-    return (
-      <View style={{marginHorizontal:scale(15)}}>
+  // renderHeader() {
+  //   return (
+  //     <View style={{marginHorizontal:scale(15)}}>
+  //       <ScreenHeader
+  //         {...this.props}
+  //         left
+  //         title={this.state.headerTxt}
+  //         notifCount={2}
+  //         clickOnRight={() => this.goToNotifications()}
+  //         clickOnLeft={() => {
+  //           this.props.navigation.goBack();
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+
+  renderHeader(alertLength){
+    const {alertCount} = this.state;
+    return(
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+        Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -214,8 +235,9 @@ componentDidMount(){
             this.props.navigation.goBack();
           }}
         />
+        </View>
       </View>
-    );
+    )
   }
 
 

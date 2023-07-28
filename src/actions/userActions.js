@@ -391,7 +391,10 @@ export function updatePassword(passwordInfo) {
   };
 }
 
-export function updateUserInfo(userInfo,addingUserDetail) {  
+export function updateUserInfo(userInfo,addingUserDetail) {
+  
+  console.log("yes inside the update user Info - - - - - - - -",)
+
   let isLastName = userInfo.last_name
   let userData = userInfo;
   return async (dispatch, getState) => {

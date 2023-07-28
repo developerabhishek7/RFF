@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginLeft: scale(40),
     fontFamily: appFonts.INTER_REGULAR,
     lineHeight: scale(15),
-    color: colours.lightGreyish,
+    color: colours.black,
   },
 
   textInput: {

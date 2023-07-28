@@ -264,16 +264,18 @@ export default class CalenderComponent extends Component {
     }, 1500);
     
 
-    console.log("yes check here searchData  - -  - - - -",this.state.searchData)
+    // console.log("yes check here searchData  - -  - - - -",this.state.searchData)
    
 
-    console.log("yes check here classSelected - -  - - - - - - - -",this.state.classSelected)
+    // console.log("yes check here classSelected - -  - - - - - - - -",this.state.classSelected)
 
 
     const today = moment();
     let currentDate = moment("2023-01-17T18:12:17.211Z", "DD-MM-YYYY").fromNow(today)
 
-    let data = this.state.airLinesDetailsObject.availability;
+    // let data = this.state.airLinesDetailsObject.availability;
+
+    let data = this.props.searchData.classSelected;
     let outBound = this.state.airLinesDetailsObject.outbound_availability;
 
     let inBound = this.state.airLinesDetailsObject.inbound_availability;
@@ -303,25 +305,25 @@ export default class CalenderComponent extends Component {
     });
     let classData = []
     if (data) {
-      if (data.economy == true) {
+      if (data[0] == true) {
         classData.push(true);
       }
       else {
         classData.push(false);
       }
-      if (data.premium == true) {
+      if (data[1] == true) {
         classData.push(true);
       }
       else {
         classData.push(false);
       }
-      if (data.business == true) {
+      if (data[2] == true) {
         classData.push(true);
       }
       else {
         classData.push(false);
       }
-      if (data.first == true) {
+      if (data[3] == true) {
         classData.push(true);
       }
       else {
@@ -405,6 +407,9 @@ export default class CalenderComponent extends Component {
   
 
   seatAvailabilityModal(day, isOffPeakValue1) {
+
+
+
     let firstDay = moment().startOf('month')
     let nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
     let clickDate
@@ -473,17 +478,19 @@ export default class CalenderComponent extends Component {
     let premium = availavleClassesData.premium
     let business = availavleClassesData.business
     let first = availavleClassesData.first
-    let pointsBA = []
-    pointsBA = this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA : this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS;
    
    let pointsSS = []
    
-   pointsSS = this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS : this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA;
+   pointsSS = this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS : []
    
-
+   let pointsBA = []
+   pointsBA = this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA : []
+  
     let points = []
 
-    points = [...pointsSS, ...pointsBA]
+    // points = [...pointsSS, ...pointsBA]
+    
+    points = [...pointsSS]
     
    if (requiredKey == true && this.props.isLoggedIn == false) {
       economySeats = 2
@@ -510,9 +517,7 @@ export default class CalenderComponent extends Component {
         clickDate = day.dateString
       }
       let date = moment(clickDate).format("YYYY-MM-DD")
-
       obj.map((singleMap) => {
-       
         if (this.state.clickDate == singleMap[0]) {
           if (singleMap[1].economy) {
             if (singleMap[1].economy.seats) {
@@ -562,28 +567,34 @@ export default class CalenderComponent extends Component {
       // }
     }
 
-    let isReturn = this.state.searchData.isReturn
-    let oneWay = []
-    let returnWay = []
-    let economy1 
-    let premium1
-    let business1
-    let first1
+
+    let economySS 
+    let premiumSS
+    let businessSS
+    let firstSS
+
+
+
+    let economyBA
+    let premiumBA
+    let businessBA
+    let firstBA
 
     
     // console.log("yes check here points details- -  - - - -",points)
 
 
     if (points && Object.keys(points).length !== 0 && this.props.isLoggedIn == false) { 
+
       if(offPeakKey == false){
         if(requiredKey == false) {
-          points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "offpeak" && singleMap.bot == "BA" && offPeakKey == false ){
+          pointsSS.map((singleMap)=>{
+            if(singleMap.one_way && singleMap.peak_type == "offpeak" && offPeakKey == false ){
               if(singleMap.economy_avios){
                 economy1 = singleMap.economy_avios
               }
               if(singleMap.premium_avios){
-                  premium1 = singleMap.premium_avios
+                  premium1 = singleMap.premium_avios         
               }
               if(singleMap.business_avios ){
                   business1 = singleMap.business_avios
@@ -595,7 +606,7 @@ export default class CalenderComponent extends Component {
           })
     
           points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "offpeak" && singleMap.bot == "SS" && offPeakKey == false){
+            if(singleMap.one_way && singleMap.peak_type == "offpeak" && offPeakKey == false){
               if(singleMap.economy_avios && economy1 == undefined){
                 economy1 = singleMap.economy_avios
               }
@@ -623,7 +634,7 @@ export default class CalenderComponent extends Component {
       if(offPeakKey == true){
         if(requiredKey == false) {
           points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "peak" && singleMap.bot == "BA" && offPeakKey == true ){
+            if(singleMap.one_way && singleMap.peak_type == "peak" && singleMap.bot == "SS" && offPeakKey == true ){
               if(singleMap.economy_avios){
                 economy1 = singleMap.economy_avios
               }
@@ -640,7 +651,7 @@ export default class CalenderComponent extends Component {
           })
     
           points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "peak" && singleMap.bot == "SS" && offPeakKey == true){
+            if(singleMap.one_way && singleMap.peak_type == "peak" && offPeakKey == true){
               if(singleMap.economy_avios && economy1 == undefined){
                 economy1 = singleMap.economy_avios
               }
@@ -670,89 +681,108 @@ export default class CalenderComponent extends Component {
 
 
 
+  
 
+      // BA array computation.  . . . . . . . . . ..
 
-    if (points && Object.keys(points).length !== 0 && this.props.isLoggedIn == true) {
-    if(offPeakKey == false){
-      points.map((singleMap)=>{
-        if(singleMap.one_way && singleMap.peak_type == "offpeak" && singleMap.bot == "SS" && offPeakKey == false ){
-          if(singleMap.economy_avios){
-            economy1 = singleMap.economy_avios
-          }
-          if(singleMap.premium_avios){
-              premium1 = singleMap.premium_avios
-          }
-          if(singleMap.business_avios ){
-              business1 = singleMap.business_avios
-          }
-          if(singleMap.first_avios){
-              first1 = singleMap.first_avios
-          } 
+      if (pointsBA && Object.keys(pointsBA).length !== 0 && this.props.isLoggedIn == true) {
+        if(offPeakKey == false){ 
+          console.log("yes inside here  BA - - - - -    false peak  ",offPeakKey)
+
+              pointsBA.map((singleMap)=>{
+                if(singleMap.one_way ==true && singleMap.peak_type === "offpeak" ){
+                  console.log("inside the offPeak key true BA #######",singleMap.premium_avios)
+                  if(singleMap.economy_avios){
+                    economyBA = singleMap.economy_avios
+                  }
+                  if(singleMap.premium_avios){
+                      premiumBA = singleMap.premium_avios
+                  }
+                  if(singleMap.business_avios ){
+                      businessBA = singleMap.business_avios
+                  }
+                  if(singleMap.first_avios){
+                      firstBA = singleMap.first_avios
+                  } 
+                }
+              })
         }
-      })
-
-      points.map((singleMap)=>{
-        if(singleMap.one_way && singleMap.peak_type == "offpeak"  && offPeakKey == false){
-          if(singleMap.economy_avios && economy1 == undefined){
-            economy1 = singleMap.economy_avios
-          }
-          if(singleMap.premium_avios && premium1 == undefined){
-              premium1 = singleMap.premium_avios
-          }
-          if(singleMap.business_avios && business1 == undefined ){
-              business1 = singleMap.business_avios
-          }
-          if(singleMap.first_avios && first1 == undefined){
-              first1 = singleMap.first_avios
-          }
+        else{
+              pointsBA.map((singleMap)=>{
+                  if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+                  if(singleMap.economy_avios){
+                    economyBA = singleMap.economy_avios
+                  }
+                  if(singleMap.premium_avios){
+                      premiumBA = singleMap.premium_avios
+                  }
+                  if(singleMap.business_avios ){
+                      businessBA = singleMap.business_avios
+                  }
+                  if(singleMap.first_avios){
+                      firstBA = singleMap.first_avios
+                  } 
+                }
+              })
         }
-      })
 
-    }
-
-    if(offPeakKey == true){
-      points.map((singleMap)=>{
-        if(singleMap.one_way && singleMap.peak_type == "peak" && offPeakKey == true ){
-          if(singleMap.economy_avios){
-            economy1 = singleMap.economy_avios
-          }
-          if(singleMap.premium_avios){
-              premium1 = singleMap.premium_avios
-          }
-          if(singleMap.business_avios ){
-              business1 = singleMap.business_avios
-          }
-          if(singleMap.first_avios){
-              first1 = singleMap.first_avios
-          } 
-        }
-      })
-
-      points.map((singleMap)=>{
-        if(singleMap.one_way && singleMap.peak_type == "peak"  && offPeakKey == true){
-          if(singleMap.economy_avios && economy1 == undefined){
-            economy1 = singleMap.economy_avios
-          }
-          if(singleMap.premium_avios && premium1 == undefined){
-              premium1 = singleMap.premium_avios
-          }
-          if(singleMap.business_avios && business1 == undefined ){
-              business1 = singleMap.business_avios
-          }
-          if(singleMap.first_avios && first1 == undefined){
-              first1 = singleMap.first_avios
-          }
-        }
-      })
-
-    }
   }
 
-    
+
+  if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == true) {
+    // console.log("yes check here points whole data  - - - - - -",points)
+    console.log("yes check here points whole data  - - - - - -",offPeakKey)
 
     
+  
+  
+  if(offPeakKey === false){
 
-    // SS POINTS CODE ........  .. . . . . . . . . . . . .
+    console.log("yes inside here  SS - - - - -    false peak  ",offPeakKey)
+
+    pointsSS.map((singleMap)=>{
+
+      if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+        console.log("inside the offPeak key true SS #######  ",singleMap.premium_avios)
+        if(singleMap.economy_avios){
+          economySS = singleMap.economy_avios
+        }
+        if(singleMap.premium_avios){
+            premiumSS = singleMap.premium_avios
+        }
+        if(singleMap.business_avios ){
+            businessSS = singleMap.business_avios
+        }
+        if(singleMap.first_avios){
+            firstSS = singleMap.first_avios
+        } 
+      }
+    })
+  }
+  else{
+    pointsSS.map((singleMap)=>{
+
+      if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+        console.log("inside the offPeak key false SS #######  ",singleMap.premium_avios)
+
+        if(singleMap.economy_avios){
+          economySS = singleMap.economy_avios
+        }
+        if(singleMap.premium_avios){
+            premiumSS = singleMap.premium_avios
+        }
+        if(singleMap.business_avios ){
+            businessSS = singleMap.business_avios
+        }
+        if(singleMap.first_avios){
+            firstSS = singleMap.first_avios
+        } 
+      }
+    })
+  }
+   
+  }
+  
 
     let economyClass
     let premiumClass
@@ -814,7 +844,7 @@ export default class CalenderComponent extends Component {
     }
 
 
-     console.log('ECONOMY POINTS - - ',this.state.dateString)
+    //  console.log('ECONOMY POINTS - - ',this.state.dateString)
    
     return (
       <Animated.View
@@ -926,8 +956,8 @@ export default class CalenderComponent extends Component {
                       <Text style={styles.seatNumberText}>
                         {
                           <Fragment>
-                            {  economy1 ? this.getPointsText(economy1) : 
-                                  "-"
+                            {  economySS ? this.getPointsText(economySS) : 
+                                 economyBA ? this.getPointsText(economyBA)  :  "-"
                               }
                           </Fragment>
                         }
@@ -974,9 +1004,9 @@ export default class CalenderComponent extends Component {
                       <Text style={styles.seatNumberText}>
                         {
                           <Fragment>
-                            {premium1
-                              ? this.getPointsText(premium1)
-                              : "-"}
+                             {  premiumSS ? this.getPointsText(premiumSS) : 
+                                 premiumBA ? this.getPointsText(premiumBA)  :  "-"
+                              }
 
                           </Fragment>
                         }
@@ -1026,9 +1056,9 @@ export default class CalenderComponent extends Component {
                       <Text style={styles.seatNumberText}>
                         {
                           <Fragment>
-                            {business1
-                              ? this.getPointsText(business1)
-                              : "-"}
+                             {  businessSS ? this.getPointsText(businessSS) : 
+                                 businessBA ? this.getPointsText(businessBA)  :  "-"
+                              }
                           </Fragment>
                         }
                       </Text>
@@ -1073,7 +1103,9 @@ export default class CalenderComponent extends Component {
                         {/* {firstSeats ? firstSeats : "0"} */}
                       </Text>
                       <Text style={styles.seatNumberText}>
-                            {first1 ? this.getPointsText(first1) : "-"}
+                      {  firstSS ? this.getPointsText(firstSS) : 
+                                 firstBA ? this.getPointsText(firstBA)  :  "-"
+                              }
                       </Text>
                       <Text style={styles.seatNumberText}>
                       </Text>
@@ -1101,7 +1133,7 @@ export default class CalenderComponent extends Component {
                 <Fragment>
                 <TouchableOpacity
                   style={[styles.checkOnAirlineButton,{
-                    marginTop:classSelectedArray.length > 2 ? scale(-10) : scale(16)
+                    marginTop:classSelectedArray.length > 2 ? scale(10) : scale(16)
                   }]}
                   onPress={() => {
                     if(trip_type == "one_way"){
@@ -1290,10 +1322,10 @@ export default class CalenderComponent extends Component {
                                 selectedDate: this.state.selectedDate,
                                 passengerCount: this.state.searchData.passengerCount,
                                 isOffPeakValue: this.state.isOffPeakValue,
-                                economyPoints: economy1,
-                                premiumPoints: premium1,
-                                businessPoints: business1,
-                                firstPoints: first1,
+                                economyPoints: economySS ? economySS : economyBA,
+                                premiumPoints: premiumSS ? premiumSS : premiumBA,
+                                businessPoints: businessSS ? businessSS : businessBA,
+                                firstPoints: firstSS ? firstSS : firstBA,
                                 trip_type: this.state.searchData.isReturn ? "return" : "one_way",
                                 businessSeats: businessSeats ? businessSeats : "",
                                 economySeats: economySeats ? economySeats : "",
@@ -1350,10 +1382,10 @@ export default class CalenderComponent extends Component {
                                 selectedDate: this.state.selectedDate,
                                 passengerCount: this.state.searchData.passengerCount,
                                 isOffPeakValue: this.state.isOffPeakValue,
-                                economyPoints: economy1,
-                                premiumPoints: premium1,
-                                businessPoints: business1,
-                                firstPoints: first1,
+                                economyPoints: economySS ? economySS : economyBA,
+                                premiumPoints: premiumSS ? premiumSS : premiumBA,
+                                businessPoints: businessSS ? businessSS : businessBA,
+                                firstPoints: firstSS ? firstSS : firstBA,
                                  trip_type: this.state.searchData.isReturn ? "return" : "one_way",
                                 businessSeats: businessSeats ? businessSeats : "",
                                 economySeats: economySeats ? economySeats : "",
@@ -2254,7 +2286,50 @@ export default class CalenderComponent extends Component {
       if (returnExpireDate < returnEndDate) {
         isAlertExpireDays2 = false
       }
-      let travel_classes = getBAClassesString(classSelected);
+
+
+
+
+
+      let data = this.state.airLinesDetailsObject.availability;
+
+      console.log("yes check here avaialbility data -  - - - - - - - ",data)
+      let classData = []
+      if (data) {
+        if (data.economy == true) {
+          classData.push(true);
+        }
+        else {
+          classData.push(false);
+        }
+        if (data.premium == true) {
+          classData.push(true);
+        }
+        else {
+          classData.push(false);
+        }
+        if (data.business == true) {
+          classData.push(true);
+        }
+        else {
+          classData.push(false);
+        }
+        if (data.first == true) {
+          classData.push(true);
+        }
+        else {
+          classData.push(false);
+        }
+      }
+
+
+      console.log("yes check here class Selected  - - - -  - - -",)
+
+      let travel_classes = getBAClassesString(classData);
+
+      console.log("yes check here travle classes  - - - - - - -",travel_classes)
+
+
       let availableclasses = this.state.airLinesDetailsObject.availability;
       let availableClassString = "";
       for (const item in availableclasses) {
@@ -2274,6 +2349,12 @@ export default class CalenderComponent extends Component {
       let airline_code = getAirlinesCode(this.state.searchData.airline)
       let membership = this.state.searchData.tier
       let airline = this.state.searchData.airline
+
+
+      console.log("yes check here avaialble class String data  - - - - - ",availableClassString)
+      console.log("yes check here avaialble class String data  - - - - - ",classData)
+
+
       const url = {
         aCode: "BA",
         numberOfPassengers: searchData.passengerCount,
@@ -2284,10 +2365,10 @@ export default class CalenderComponent extends Component {
         dId: searchData.sourceCode,
         aPlace: getLocationNameWithCode(selectedDestination),
         aId: searchData.destinationCode,
-        economy: searchData.classSelected[0],
-        premium: searchData.classSelected[1],
-        first: searchData.classSelected[2],
-        business: searchData.classSelected[3],
+        economy: classData[0],
+        premium: classData[1],
+        first: classData[2],
+        business: classData[3],
         start_date: moment(searchData.startDate).format("YYYY-MM-DD") || null,
         // airlineSelected: `${airline}_${membership}`,
         airlineMembership: membership,
@@ -2304,7 +2385,7 @@ export default class CalenderComponent extends Component {
           airline_name: airline.replace("-", "_"),
           number_of_passengers: searchData.passengerCount,
           travel_classes: this.props.userInfo.bronze_member ? 'economy' : travel_classes,
-          available_travel_classes: availableClassString,
+          available_travel_classes: travel_classes,
           trip_type: this.state.searchData.isReturn ? "return" : "one_way",
           membership_type: current_membership,
           start_date: moment(this.state.departStartDate).format("DD-MM-YYYY"),
@@ -2318,6 +2399,10 @@ export default class CalenderComponent extends Component {
           availability_url: `/calendar${this.jsonToQueryString(url)}`,
         },
       };
+
+      // console.log("yes check here body  - - - - -  - - -",body)
+
+
       if (this.state.searchData.isReturn) {
         if (isAlertExpireDays && isAlertExpireDays2) {
           const trackData = {
@@ -3388,9 +3473,16 @@ export default class CalenderComponent extends Component {
   }
 
 
-// ON DAY PRESS FUNCTIONALITY . . . . . . . .
+
+
 
   onDayPressed(day, isOffPeakValue1) {
+
+
+
+    console.log("yes check the value of isOffPeakValue1 = - -  - - - -",isOffPeakValue1)
+
+
     const { isOffPeakValue, isPeakValue, airLinesDetailsObject, searchData } = this.state;
     let txt = "No Flight Scheduled"
     let flightSchedule = this.props.flightSchedule;
@@ -3403,6 +3495,11 @@ export default class CalenderComponent extends Component {
         let scheduleDateKey = scheduleDate[actualDay]
         let availableDateKey = availableDate[actualDay]
 
+
+        // console.log("available date key - -  - -",availableDateKey)
+        // console.log("scheduleDateKey date key - -  - -",scheduleDateKey)
+        
+       
         availableDateKey ? this.setState({
           offPeakKey: availableDateKey.peak
         }) : this.setState({ offPeakKey: "" })
@@ -3410,7 +3507,10 @@ export default class CalenderComponent extends Component {
 
          if ((!scheduleDateKey) && (!availableDateKey) ) {
           this.Show_Custom_Alert2()
-          this.setState({ noFlightScheduleDate: actualDay })
+          this.setState({ noFlightScheduleDate: actualDay, showTicketDetailModal: false, })
+          availableDateKey ? this.setState({
+            offPeakKey: availableDateKey.peak
+          }) : this.setState({ offPeakKey: true })
           this.setState({ noFlightScheduleAlertTxt: "No Flight Available" })
         }
 
@@ -3440,13 +3540,17 @@ export default class CalenderComponent extends Component {
          let seatsAvailabilityData = data[day.dateString]
           let noflightschedule = true
           let showTicketDetailModal =  true
+
+          availableDateKey ? this.setState({
+            offPeakKey: availableDateKey.peak
+          }) : this.setState({ offPeakKey: true })
           // dateString,       
           let selectedDate = day
           let flightDate = day.dateString
           this.setState({isNoflightScheudlePopup:true})
           this.renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day)
-          this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate })
-          this.setState({ noFlightScheduleAlertTxt: "No Seats Available in any Cabin Classes" })
+          this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false,})
+          this.setState({ noFlightScheduleAlertTxt: "No Seat Available in any Cabin Class" })
 
         }
         else if (scheduleDateKey && availableDateKey) {
@@ -3471,12 +3575,12 @@ export default class CalenderComponent extends Component {
         let availableDateKey = availableDate[actualDay]
         availableDateKey ? this.setState({
           offPeakKey: availableDateKey.peak
-        }) : this.setState({ offPeakKey: "" })
+        }) : this.setState({ offPeakKey: true })
      
          if (!scheduleDateKey && !availableDateKey) {
           this.Show_Custom_Alert2()
           this.setState({ noFlightScheduleDate: actualDay })
-          this.setState({ noFlightScheduleAlertTxt: "No Flight Available" })
+          this.setState({ noFlightScheduleAlertTxt: "No Flight Available", showTicketDetailModal: false,})
 
         }
         else if (!scheduleDateKey && availableDateKey) {
@@ -3495,7 +3599,10 @@ export default class CalenderComponent extends Component {
           }
           this.Show_Custom_Alert2()
           this.setState({ noFlightScheduleDate: actualDay })
-          this.setState({ noFlightScheduleAlertTxt: "No Flight Schedule" })
+          availableDateKey ? this.setState({
+            offPeakKey: availableDateKey.peak
+          }) : this.setState({ offPeakKey: true })
+          this.setState({ noFlightScheduleAlertTxt: "No Flight Schedule", showTicketDetailModal: false, })
         }
         else if (!availableDateKey && scheduleDateKey) {
           this.Show_Custom_Alert2()
@@ -3507,8 +3614,18 @@ export default class CalenderComponent extends Component {
            let selectedDate = day
            let flightDate = day.dateString
            this.setState({isNoflightScheudlePopup:true})
-           this.renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day)
-           this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate })
+           availableDateKey ? this.setState({
+            offPeakKey: availableDateKey.peak
+          }) : this.setState({ offPeakKey: true })
+           this.renderNoFlight(data,
+            seatsAvailabilityData,
+            noflightschedule,
+            showTicketDetailModal,
+            selectedDate,
+            flightDate,
+            isOffPeakValue1,
+            day)
+           this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false, })
            this.setState({ noFlightScheduleAlertTxt: "No Seats Available in any Cabin Classes" })
          
         }
@@ -3582,12 +3699,16 @@ export default class CalenderComponent extends Component {
 
   }
 
+
   getDates = () => {
+
     var dateArray = [];
     let today = new Date()
 
-    let d = moment().year() + 2
-    let endDateKey = `${d}/01/01`
+    let d = moment().year() + 1
+    let month = moment().month() + 2
+
+    let endDateKey = `${d}-${month}-01`
     let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
 
     let endDay = new Date(exactEndDate)
@@ -3597,9 +3718,12 @@ export default class CalenderComponent extends Component {
       dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
       currentDate = moment(currentDate).add(1, 'days');
     }
+
     this.setState({
       staticDateArray: dateArray
     })
+
+   
     return dateArray;
   }
 
@@ -3661,7 +3785,7 @@ export default class CalenderComponent extends Component {
       let dateArray = this.state.staticDateArray.filter(val => !peakOffpeakData.includes(val));
 
 
-      console.log("yes check the dateArray - - - -  -",this.state.staticDateArray)
+      // console.log("yes check the dateArray - - - -  -",this.state.staticDateArray)
 
       for (let data of dateArray) {
         Obj[data] = { "peak": false }
@@ -3731,7 +3855,7 @@ export default class CalenderComponent extends Component {
     let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
        
    
-   console.log("yes check here availability classes inside getLocaiton -  - - - - - -",availability_data)
+  //  console.log("yes check here availability classes inside getLocaiton -  - - - - - -",availability_data)
    
    
     let finalData = {}
@@ -3756,244 +3880,6 @@ export default class CalenderComponent extends Component {
     return finalData;
   }
 
-
-
-
-  // renderSlider(isLoader){
-
-  //   const {airlinesDetailPoints,isRenderAll} = this.state
-  //   var data = []
-  //   var data1 = []
-  //   if (airlinesDetailPoints && Object.keys(airlinesDetailPoints).length !== 0 ) {
-  //     data = this.state.airlinesDetailPoints.airlinesDetailPoints.points.BA
-  //     data1 = this.state.airlinesDetailPoints.airlinesDetailPoints.points.SS
-  //   }
-
-  //   let pointsData = [...data, ...data1]
-
-
-
-  //   // code here for minimum classes points .................
-
-  //   var economyPointsMin = null
-  //   var premiumPointsMin = null
-  //   var businessPointsMin = null
-  //   var firstPointsMin = null
-
-  //   var economyPointsMinArray = []
-  //    var premiumPointsMinArray = []
-  //   var businessPointsMinArray = []
-  //   var firstPointsMinArray = []
-
-
-  //   if (pointsData && pointsData.length !== 0) {
-  //     pointsData.map((singleMap) => {
-  //      if (singleMap.one_way) {
-  //         if(singleMap.economy_avios){
-  //           economyPointsMinArray.push((singleMap.economy_avios))
-  //         }
-  //         if(singleMap.premium_avios ){
-  //           premiumPointsMinArray.push((singleMap.premium_avios))
-  //          }
-  //         if(singleMap.business_avios){ 
-  //           businessPointsMinArray.push((singleMap.business_avios))
-         
-  //         }
-  //         if(singleMap.first_avios ){ 
-  //           firstPointsMinArray.push((singleMap.first_avios))
-  //         }
-  //         }
-  //     })
-  //   }
-    
-  //   if(economyPointsMinArray && economyPointsMinArray.length !== 0){
-  //     economyPointsMin = Math.min(...economyPointsMinArray.map((item)=> item))
-  //   }
-  //   if(premiumPointsMinArray && premiumPointsMinArray.length !== 0){
-  //     premiumPointsMin = Math.min(...premiumPointsMinArray.map((item)=> item))
-  //   }  
-  //   if(businessPointsMinArray && businessPointsMinArray.length !== 0){
-  //     businessPointsMin = Math.min(...businessPointsMinArray.map((item)=> item))
-  //   }
-  //   if(firstPointsMinArray && firstPointsMinArray.length !== 0){
-  //     firstPointsMin = Math.min(...firstPointsMinArray.map((item)=> item))
-  //   }
-
-  //   let minClassesArray1 = [economyPointsMin,premiumPointsMin,businessPointsMin,firstPointsMin]
-  //   let minClassesArray = minClassesArray1.filter(Number);
-
-
-
-  //   // code here for maximum classes points...................
-  //   var economyPointsMax = null
-  //   var premiumPointsMax = null
-  //   var businessPointsMax = null
-  //   var firstPointsMax = null
-
-  //   var economyPointsMaxArray = []
-  //    var premiumPointsMaxArray = []
-  //   var businessPointsMaxArray = []
-  //   var firstPointsMaxArray = []
-
-
-  //     if (pointsData && pointsData.length !== 0) {
-  //       pointsData.map((singleMap) => {
-  //        if (singleMap.one_way) {
-  //           if(singleMap.economy_avios){
-  //             economyPointsMaxArray.push((singleMap.economy_avios))
-  //           }
-  //           if(singleMap.premium_avios ){
-  //             premiumPointsMaxArray.push((singleMap.premium_avios))
-  //            }
-  //           if(singleMap.business_avios){ 
-  //             businessPointsMaxArray.push((singleMap.business_avios))
-           
-  //           }
-  //           if(singleMap.first_avios ){ 
-  //             firstPointsMaxArray.push((singleMap.first_avios))
-  //           }
-  //           }
-  //       })
-  //     }
-      
-  //     if(economyPointsMaxArray && economyPointsMaxArray.length !== 0){
-  //       economyPointsMax = Math.max(...economyPointsMaxArray.map((item)=> item))
-  //     }
-  //     if(premiumPointsMaxArray && premiumPointsMaxArray.length !== 0){
-  //       premiumPointsMax = Math.max(...premiumPointsMaxArray.map((item)=> item))
-  //     }  
-  //     if(businessPointsMaxArray && businessPointsMaxArray.length !== 0){
-  //       businessPointsMax = Math.max(...businessPointsMaxArray.map((item)=> item))
-  //     }
-  //     if(firstPointsMaxArray && firstPointsMaxArray.length !== 0){
-  //       firstPointsMax = Math.max(...firstPointsMaxArray.map((item)=> item))
-  //     }
-
-  //     let maxClassesArray1 = [economyPointsMax,premiumPointsMax,businessPointsMax,firstPointsMax]
-  //     let maxClassesArray = maxClassesArray1.filter(Number);
-
-  //   let minimumSliderPoints = 0
-  
-  //   if(maxClassesArray && maxClassesArray.length !== 0){
-  //   maximumSliderPoints = Math.max(...maxClassesArray.map((item)=> item))
-
-  //  }
-  //  if(minClassesArray && minClassesArray.length !== 0){
-  //    minimumSliderPoints = Math.min(...minClassesArray.map((item)=> item))
- 
-  //  }
-
-
-  //   return (
-  //     <Fragment>
-  //       {
-  //         this.state.isSliderLoader  ?
-  //         <Slider
-  //         style={{ width: scale(170), height: scale(70)}}
-  //         minimumValue = {minimumSliderPoints ? minimumSliderPoints : null}
-  //         maximumValue={maximumSliderPoints ? maximumSliderPoints : null}
-  //         value={maximumSliderPoints ? maximumSliderPoints : null}
-  //         // minimumValue = {2000}
-  //         // maximumValue={10000}
-  //         // value={10000}
-  //         step={1000}
-  //         maximumTrackTintColor="#000000"
-  //         thumbTintColor="#03B2D8"
-  //         onValueChange={(value) => {
-  //           let newClassSliderArray = []
-  //           if (value) {
-  //             if(economyPointsMin == 0 || economyPointsMin > value ){
-  //               sliderEconomy = false 
-  //               // newClassSliderArray.splice(0,0,false);
-  //               newClassSliderArray.push(false)
-  //            }
-  //            else if(economyPointsMin == value || economyPointsMin < value){
-  //               sliderEconomy = true
-  //               newClassSliderArray.push(true)
-  //               // newClassSliderArray.splice(0,0,true);
-  //            }
-           
-  //           if(premiumPointsMin == 0 ||  premiumPointsMin > value){
-  //               sliderPremium = false
-  //               newClassSliderArray.push(false)
-  //               // newClassSliderArray.splice(1,1,false);
-  //             }
-  //            else if(premiumPointsMin == value || premiumPointsMin < value){
-  //               sliderPremium = true
-  //               newClassSliderArray.push(true)
-  //               // newClassSliderArray.splice(1,1,true);
-  //             }
-           
-  //          if(businessPointsMin == 0 || businessPointsMin > value){
-  //               sliderBusiness = false
-  //               // newClassSliderArray.splice(2,2,false);
-  //               newClassSliderArray.push(false)
-  //            }
-  //            else if(businessPointsMin == value || businessPointsMin < value){
-  //               sliderBusiness = true
-  //               // newClassSliderArray.splice(2,2,true);
-  //               newClassSliderArray.push(true)
-  //            }
-           
-  //          if(firstPointsMin == 0 || firstPointsMin >  value){
-  //               sliderFirst = false
-  //               // newClassSliderArray.push(false)
-  //               newClassSliderArray.splice(3,3,false);
-  //            }
-  //            else if(firstPointsMin == value || firstPointsMin <  value){
-  //               sliderFirst = true
-  //               newClassSliderArray.splice(3,3,true);
-  //               // newClassSliderArray.push(true)
-  //            }
-  //               this.setState({
-  //                 sliderPoints: parseInt(value),
-  //                 isLoader: true,
-  //                 newClassSliderArray:newClassSliderArray,
-  //                 isSliderRun: true,
-  //                 sliderEconomyMin: economyPointsMin,
-  //                 sliderPremiumMin: premiumPointsMin,
-  //                 sliderBusinessMin: businessPointsMin,
-  //                 sliderFirstMin: firstPointsMin,
-  //               })  
-  //           }
-  //         }}
-      
-  //         onSlidingComplete={(value1) => {
-  //           if (value1) {
-  //               this.setState({
-  //                 sliderPoints: parseInt(value1),
-  //                 isLoader: false,
-  //                 isSliderRun: true,
-  //                 isSliderRunDone: true,
-  //                 sliderEconomyMin: economyPointsMin,
-  //                 sliderPremiumMin: premiumPointsMin,
-  //                 sliderBusinessMin: businessPointsMin,
-  //                 sliderFirstMin: firstPointsMin,
-  //               })
-             
-  //           }
-  //         }}
-  //       />
-
-  //         : 
-  //         <View>
-  //           <Text></Text>
-  //         </View>
-  //       }
-  //     </Fragment>
-    
-  //   )
-  // }
-
-
-
-//   renderMaxMinPointsForSlider(){
-   
-
-//      if(maximumSliderPoints && minimumSliderPoints && economyPointsMin){
-//           this.renderSlider(minimumSliderPoints,maximumSliderPoints,economyPointsMin,premiumPointsMin,businessPointsMin,firstPointsMin)
-//      }
-// }
 
 
 
@@ -4067,7 +3953,7 @@ export default class CalenderComponent extends Component {
           backgroundColor: 'rgba(52, 52, 52, 0.8)',
           alignItems: 'center',
           width: width + 4, height: height,
-          marginStart: -scale(20),
+          marginStart: Platform.OS == "ios" ? -scale(20) : scale(-40),
           marginEnd: -scale(27),
           marginTop: -scale(20),
           marginBottom: -scale(20),
@@ -4423,19 +4309,43 @@ export default class CalenderComponent extends Component {
                   checkFlightCount > 1 ?
                   <TouchableOpacity
                     onPress={()=>{
-                        data = this.state.airLinesDetailsObject.inbound_availability;
-                      if (data && data[onDayPressedDate]) {
-                        dateString = getformattedDate(onDayPressedDate);
-                        this.setState({
-                          seatsAvailabilityData: data[onDayPressedDate],
-                          noflightschedule: true,
-                          showTicketDetailModal: true,
-                          dateString:onDayPressedDate,
-                          flightDate: onDayPressedDate,
-                        });
+                      if(this.state.selectedIndex == 0) {
+                        data = this.state.airLinesDetailsObject.outbound_availability;
+                        if (data && data[onDayPressedDate]) {
+                          dateString = getformattedDate(onDayPressedDate);
+                          this.setState({
+                            seatsAvailabilityData: data[onDayPressedDate],
+                            noflightschedule: true,
+                            showTicketDetailModal: true,
+                            dateString:onDayPressedDate,
+                            flightDate: onDayPressedDate,
+                          });
+                        }
+                        this.Hide_Custom_Alert2()
+                        this.seatAvailabilityModal(day, isOffPeakValue1)
                       }
-                      this.Hide_Custom_Alert2()
-                      this.seatAvailabilityModal(day, isOffPeakValue1)
+                      else{
+
+
+                        data = this.state.airLinesDetailsObject.inbound_availability;
+                        if (data && data[onDayPressedDate]) {
+  
+  
+  
+                          dateString = getformattedDate(onDayPressedDate);
+                          this.setState({
+                            seatsAvailabilityData: data[onDayPressedDate],
+                            noflightschedule: true,
+                            showTicketDetailModal: true,
+                            dateString:onDayPressedDate,
+                            flightDate: onDayPressedDate,
+                          });
+                        }
+                        this.Hide_Custom_Alert2()
+                        this.seatAvailabilityModal(day, isOffPeakValue1)
+                      }
+
+                     
                     }}
                   >
                   <View style={{marginTop:scale(5),marginBottom:scale(25)}}>
@@ -4520,7 +4430,7 @@ export default class CalenderComponent extends Component {
       outputRange:[0,-height1]
     })
 
-    console.log("yes check here static array insdie rener - - -  -- ",this.state.peakOffpeakData)
+    // console.log("yes check here static array insdie rener - - -  -- ",this.state.peakOffpeakData)
 
 
      return (

@@ -30,7 +30,7 @@ export default StyleSheet.create({
     marginTop: verticalScale(3),
   },
   rffLogo: {
-    marginTop: verticalScale(75),
+    marginTop: verticalScale(40),
     width: scale(60),
     height: scale(60),
     marginStart:scale(5)

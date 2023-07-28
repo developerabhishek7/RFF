@@ -333,7 +333,7 @@ class MapComponent extends Component {
           width:width+36,height:height,
           marginStart:-scale(20),
           marginEnd:-scale(27),
-          marginTop:-scale(20),
+          marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
           marginBottom:-scale(20),
           // borderWidth:3,borderColor:"green"
         }}>

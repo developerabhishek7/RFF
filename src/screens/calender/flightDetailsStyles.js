@@ -308,7 +308,7 @@ export default StyleSheet.create({
     alignItems: "center",
     marginStart:scale(30),
     paddingHorizontal: verticalScale(20),
-    marginTop: verticalScale(40),
+    marginTop: verticalScale(50),
   },
   titleText: {
     color: colours.darkBlueTheme,
@@ -322,7 +322,7 @@ export default StyleSheet.create({
     textAlign:'center'
   },
 
-  noflight: {alignSelf:'center',fontSize:scale(13),color:"#696969",marginTop:scale(2),padding:scale(2)},
+  noflight: {alignSelf:'center',fontWeight:"600",fontSize:scale(12),color:"#696969",marginTop:scale(2),padding:scale(2)},
 
   subTitleText2: {
     color: colours.lightBlueTheme,

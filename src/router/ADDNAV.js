@@ -41,7 +41,7 @@ import DestinationDetailsComponent from "../screens/mapSearch/DestinationDetails
 import findFlightDetails1 from '../screens/calender/flightDetailsContainer'
 import PriceDetailsScreen from '../screens/calender/PriceDetailScreen'
 import DrawerView from '../screens/Drawer/drawerModal'
-import Test from '../../Test'
+// import Test from '../../Test'
 import * as IMAGE_CONST from "../constants/ImageConst";
 import FlightDetailsCompoent from '../screens/calender/flightDetailsContainer'
 // import MoreOptions from '../screens/moreoptions'
