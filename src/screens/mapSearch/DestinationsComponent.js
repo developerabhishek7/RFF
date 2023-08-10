@@ -198,12 +198,15 @@ export default class DestinationsComponent extends Component {
           {
             sortedArray.map((singleMap, index) => {
               // console.log("yes chec k on destination list commponent  ####### ",singleMap)
-              let pointsData1 = []
-              let pointsData2 = []
-              let pointsData = []
-              pointsData1 = singleMap.points.BA
-              pointsData2 = singleMap.points.SS
-              pointsData = [...pointsData1, ...pointsData2]
+              let pointsDataSS = []
+              let pointsDatBA = []
+              pointsDatBA = singleMap.points.BA
+              pointsDataSS = singleMap.points.SS
+
+
+              // console.log("yes checkpoints dSSSS    ",pointsDataSS)
+              // console.log("yes checkpoints pointsDatBA    ",pointsDatBA)
+
               let economy = false
               let premium_economy = false
               let business = false
@@ -270,6 +273,11 @@ export default class DestinationsComponent extends Component {
             {
               economy || premium_economy || business || first ?
                 <TouchableOpacity onPress={() => {
+
+                  // console.log("yes hcekc here - - - - - - -before send  - - -  -",pointsDatBA)
+
+                  // return false
+
                   this.props.navigation.navigate("destinationdetailscomponent", {
                     singleMap: JSON.stringify(singleMap),
                     searchData: JSON.stringify(searchData),
@@ -277,7 +285,8 @@ export default class DestinationsComponent extends Component {
                     WhereFrom: this.props.route.params.WhereFrom,
                     tripType: this.state.tripType,
                     sourceCode: this.state.sourceCode,
-                    pointsData:pointsData,
+                    pointsDataSS:pointsDataSS,
+                    pointsDatBA:pointsDatBA,
                     destination:this.state.destination
 
                   })
@@ -320,6 +329,10 @@ export default class DestinationsComponent extends Component {
                           : null
                       }
                       <TouchableOpacity onPress={() => {
+
+                        // console.log("yes hcekc here - - - - - - -before send  - - -  -",pointsDatBA)
+                        // return false
+
                         this.props.navigation.navigate("destinationdetailscomponent", {
                           singleMap: JSON.stringify(singleMap),
                           WhereFrom: this.props.route.params.WhereFrom,
@@ -327,7 +340,8 @@ export default class DestinationsComponent extends Component {
                           auditData: JSON.stringify(auditData),
                           tripType: this.state.tripType,
                           sourceCode: this.state.sourceCode,
-                          pointsData:pointsData,
+                          pointsDataSS:pointsDataSS,
+                          pointsDatBA:pointsDatBA,
                           destination:this.state.destination
                         })
                       }}>

@@ -24,6 +24,7 @@ import {
   GET_CABIN_CLASS_SUCCESS,
   GET_CABIN_CLASS_FAIL
 } from "../constants/ActionConst";
+import {BASE_NODE_URL} from '../helpers/config'
 import * as CommonActions from './commonActions';
 import {NETWORK_ERROR} from '../constants/StringConst'
 export function resetCreateAlertData(){
@@ -272,15 +273,7 @@ export function getFlightSchedule(flightScheduleData) {
 
 
 export function getCabinClass(data) {  
-  // console.log("yes ceck here on cabinclass function #######   ",data)
-  // let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
- 
-  
-
-  // let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
- 
-  let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production//cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
- 
+  let URL = `${BASE_NODE_URL}/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
 
   return async (dispatch, getState) => {
     try {

@@ -13,6 +13,7 @@
  import * as CONST from '../../constants/StringConst'
  import { Alert } from "react-native";
  import * as STR_CONST from "../../constants/StringConst";
+ import {View, Text,TouchableOpacity,} from 'react-native'
  import {
   getFlightSchedule,
   getMultipleFlightSchedule
@@ -29,14 +30,14 @@
      };
    }
  
-   componentDidMount() {
+   componentDidMount = () => {
+    console.log("calendar container screen container - - - - - - - - - - - - - - - - - - - - - - - - -  -")
      this.props.getPeakOffPeakDataAction()
    }
  
    componentDidUpdate(prevProps){
      let bronze_member = this.props.userInfo.bronze_member
      if( this.props !== prevProps){
-       // this.props.resetCalendarDataAction()
        this.props
        if(this.props.createAlertSuccess && this.props.createAlertSuccess !== prevProps.createAlertSuccess )
        {
@@ -66,6 +67,14 @@
    render() {
     
      return (
+      // <View  style={{flex: 1,justifyContent:"center",alignContent:"center",}}>
+
+      //     <TouchableOpacity onPress={()=>{
+      //       this.props.navigation.goBack()
+      //     }}>
+      //         <Text>YES GO BACK ON FIND FLIGHT</Text>
+      //     </TouchableOpacity>
+      // </View>
        <CalenderComponent
          userInfo={this.props.userInfo}
          airLinesDetailsObject={this.state.airLinesDetailsObject}

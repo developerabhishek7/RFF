@@ -573,8 +573,8 @@ export default StyleSheet.create({
   },
   createAlertTakeOffIcon: {
     marginRight: scale(7),
-    height: scale(28),
-    width: scale(28),
+    height: scale(18),
+    width: scale(16),
   },
   checkOnAirlineView: {
     alignSelf: "center",

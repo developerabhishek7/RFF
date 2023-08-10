@@ -10,6 +10,7 @@ import { colours } from "../../constants/ColorConst";
 import { connect } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import scale, { verticalScale } from "../../helpers/scale";
+
 import { getAirlinesAvailability, getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
 import {
   getAirlinesMembership,
@@ -17,7 +18,8 @@ import {
   getLocations,
   getNearestAirport,
   sendAuditData,
-  getFlightSchedule
+  getFlightSchedule,
+  getCabinClass
 } from "../../actions/findFlightActions";
 import { CheckBox } from 'react-native';
 import styles from './DestinationDetailsStyles'
@@ -129,12 +131,32 @@ checkIfPeakOffPeakDataMonth = () => {
     let singleMap = this.props.route.params.singleMap;
 
     let searchData = this.props.route.params.searchData
-    let auditData = this.props.route.params.auditData
+
+
+    let auditData = JSON.parse(this.props.route.params.auditData)
     let WhereFrom = this.props.route.params.WhereFrom
     this.setState({ WhereFrom })
 
     this.checkIfPeakOffPeakDataMonth()
     this.props.getPeakOffPeakDataAction()
+    
+
+    // console.log("yes check here  search data - - -  - - - -",auditData.search_data.source)
+    // console.log("yes check here  search data - - -  - - - -",auditData.search_data.destination)
+  
+
+    const data = {
+      "source": auditData.search_data.source,
+     "destination": auditData.search_data.destination
+    }
+
+    console.log("yes chekc here before api send..........",data)
+
+    setTimeout(() => {
+      this.props.getCabinClassAction(data)
+    }, 1000);
+  
+
 
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -277,7 +299,16 @@ checkIfPeakOffPeakDataMonth = () => {
 
   showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints) {
     let dates = JSON.parse(this.props.route.params.singleMap)
-    let pointsData  = this.props.route.params.pointsData
+    let pointsDatBA  = this.props.route.params.pointsDatBA
+    let pointsDataSS  = this.props.route.params.pointsDataSS
+
+
+
+
+
+    // console.log("yes check here points DAta  BA - - - -  -",pointsDatBA)
+    // console.log("yes check here  pointsDataSS - - - -  -",pointsDataSS)
+
       // pointsData.map((singleMap) => {
       //   if(typeof this.state.peak !== 'string' || !this.state.peak instanceof String){
       //     if (singleMap.one_way == true && singleMap.peak_type == "offpeak" && this.state.peak === false) {
@@ -297,77 +328,183 @@ checkIfPeakOffPeakDataMonth = () => {
       // })
 
 
-      if(this.state.peak == false){
-        pointsData.map((singleMap)=>{
-          if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false ){
-            if(singleMap.economy_avios){
-              economyValue = singleMap.economy_avios
-            }
-            if(singleMap.premium_avios){
-              premiumValue = singleMap.premium_avios
-            }
-            if(singleMap.business_avios ){
-                businessValue = singleMap.business_avios
-            }
-            if(singleMap.first_avios){
-                firstValue = singleMap.first_avios
-            } 
-          }
-        })
+      // if(this.state.peak == false){
+      //   pointsData.map((singleMap)=>{
+      //     if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false ){
+      //       if(singleMap.economy_avios){
+      //         economyValue = singleMap.economy_avios
+      //       }
+      //       if(singleMap.premium_avios){
+      //         premiumValue = singleMap.premium_avios
+      //       }
+      //       if(singleMap.business_avios ){
+      //           businessValue = singleMap.business_avios
+      //       }
+      //       if(singleMap.first_avios){
+      //           firstValue = singleMap.first_avios
+      //       } 
+      //     }
+      //   })
   
-        pointsData.map((singleMap)=>{
-          if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false){
-            if(singleMap.economy_avios && economyValue == undefined){
-              economyValue = singleMap.economy_avios
-            }
-            if(singleMap.premium_avios && premiumValue == undefined){
-                premiumValue = singleMap.premium_avios
-            }
-            if(singleMap.business_avios && businessValue == undefined ){
-                businessValue = singleMap.business_avios
-            }
-            if(singleMap.first_avios && firstValue == undefined){
-                firstValue = singleMap.first_avios
-            }
-          }
-        })
-      }
+      //   pointsData.map((singleMap)=>{
+      //     if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false){
+      //       if(singleMap.economy_avios && economyValue == undefined){
+      //         economyValue = singleMap.economy_avios
+      //       }
+      //       if(singleMap.premium_avios && premiumValue == undefined){
+      //           premiumValue = singleMap.premium_avios
+      //       }
+      //       if(singleMap.business_avios && businessValue == undefined ){
+      //           businessValue = singleMap.business_avios
+      //       }
+      //       if(singleMap.first_avios && firstValue == undefined){
+      //           firstValue = singleMap.first_avios
+      //       }
+      //     }
+      //   })
+      // }
   
-      if(this.state.peak == true){
-        pointsData.map((singleMap)=>{
-          if(singleMap.one_way && singleMap.peak_type == "peak" && this.state.peak == true ){
-            if(singleMap.economy_avios){
-              economyValue = singleMap.economy_avios
-            }
-            if(singleMap.premium_avios){
-                premiumValue = singleMap.premium_avios
-            }
-            if(singleMap.business_avios ){
-                businessValue = singleMap.business_avios
-            }
-            if(singleMap.first_avios){
-                firstValue = singleMap.first_avios
-            } 
-          }
-        })
+      // if(this.state.peak == true){
+      //   pointsData.map((singleMap)=>{
+      //     if(singleMap.one_way && singleMap.peak_type == "peak" && this.state.peak == true ){
+      //       if(singleMap.economy_avios){
+      //         economyValue = singleMap.economy_avios
+      //       }
+      //       if(singleMap.premium_avios){
+      //           premiumValue = singleMap.premium_avios
+      //       }
+      //       if(singleMap.business_avios ){
+      //           businessValue = singleMap.business_avios
+      //       }
+      //       if(singleMap.first_avios){
+      //           firstValue = singleMap.first_avios
+      //       } 
+      //     }
+      //   })
   
-        pointsData.map((singleMap)=>{
-          if(singleMap.one_way && singleMap.peak_type == "peak"  && this.state.peak == true){
-            if(singleMap.economy_avios && economyValue == undefined){
-              economyValue = singleMap.economy_avios
-            }
-            if(singleMap.premium_avios && premiumValue == undefined){
-                premiumValue = singleMap.premium_avios
-            }
-            if(singleMap.business_avios && businessValue == undefined ){
-                businessValue = singleMap.business_avios
-            }
-            if(singleMap.first_avios && firstValue == undefined){
-                firstValue = singleMap.first_avios
-            }
+      //   pointsData.map((singleMap)=>{
+      //     if(singleMap.one_way && singleMap.peak_type == "peak"  && this.state.peak == true){
+      //       if(singleMap.economy_avios && economyValue == undefined){
+      //         economyValue = singleMap.economy_avios
+      //       }
+      //       if(singleMap.premium_avios && premiumValue == undefined){
+      //           premiumValue = singleMap.premium_avios
+      //       }
+      //       if(singleMap.business_avios && businessValue == undefined ){
+      //           businessValue = singleMap.business_avios
+      //       }
+      //       if(singleMap.first_avios && firstValue == undefined){
+      //           firstValue = singleMap.first_avios
+      //       }
+      //     }
+      //   })
+      // }
+
+
+
+
+
+
+
+
+
+
+
+
+    // console.log("yes check here poi ts data  - - - - - - ",this.state.peak)
+
+
+      if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
+        if(this.state.peak  == false){ 
+              pointsDatBA.map((singleMap)=>{
+                if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+                  if(singleMap.economy_avios){
+                    economyValue = singleMap.economy_avios
+                  }
+                  if(singleMap.premium_avios){
+                    premiumValue = singleMap.premium_avios
+                  }
+                  if(singleMap.business_avios ){
+                    businessValue = singleMap.business_avios
+                  }
+                  if(singleMap.first_avios){
+                    firstValue = singleMap.first_avios
+                  } 
+                }
+              })
+        }
+        else{
+              pointsDatBA.map((singleMap)=>{
+                  if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+                  if(singleMap.economy_avios){
+                    economyValue = singleMap.economy_avios
+                  }
+                  if(singleMap.premium_avios){
+                    premiumValue = singleMap.premium_avios
+                  }
+                  if(singleMap.business_avios ){
+                    businessValue = singleMap.business_avios
+                  }
+                  if(singleMap.first_avios){
+                    firstValue = singleMap.first_avios
+                  } 
+                }
+              })
+        }
+
+  }
+
+
+
+
+
+
+
+  if (pointsDataSS && Object.keys(pointsDataSS).length !== 0 ) {
+   
+  
+    if(this.state.peak === false){
+  
+      pointsDataSS.map((singleMap)=>{
+  
+        if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+          if(singleMap.economy_avios){
+            economyValue = singleMap.economy_avios
           }
-        })
-      }
+          if(singleMap.premium_avios){
+            premiumValue = singleMap.premium_avios
+          }
+          if(singleMap.business_avios ){
+            businessValue = singleMap.business_avios
+          }
+          if(singleMap.first_avios){
+            firstValue = singleMap.first_avios
+          } 
+        }
+      })
+    }
+    else{
+      pointsDataSS.map((singleMap)=>{
+  
+        if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+          if(singleMap.economy_avios){
+            economyValue = singleMap.economy_avios
+          }
+          if(singleMap.premium_avios){
+            premiumValue = singleMap.premium_avios
+          }
+          if(singleMap.business_avios ){
+            businessValue = singleMap.business_avios
+          }
+          if(singleMap.first_avios){
+            firstValue = singleMap.first_avios
+          } 
+        }
+      })
+    }
+     
+    }
+    
 
 
     let economyClass = dates.available_classes.economy;
@@ -888,6 +1025,8 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+
+
                                   this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
@@ -1103,7 +1242,7 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                  this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2515,6 +2654,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
+    getCabinClassAction:(data)=> dispatch(getCabinClass(data)),
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
     getPeakOffPeakDataAction:() => dispatch(getPeakOffPeakData()),
   };

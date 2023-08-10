@@ -22,7 +22,7 @@ import { colours } from "../../constants/ColorConst";
 import scale, { verticalScale } from "../../helpers/scale";
 import { logoutUser } from "../../actions/loginActions";
 import { resetSession } from "../../actions/commonActions";
-
+import {APP_LINK} from '../../helpers/config'
 import {DrawerActions,NavigationContainer} from '@react-navigation/native';
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
@@ -191,9 +191,9 @@ class DrawerComponentComponent extends Component {
           {/* </ImageBackground>
         </ImageBackground> */}
         <View style={styles.greetingsView}>
-          <Text style={styles.nameStyle}>
+          {/* <Text style={styles.nameStyle}>
             {isLoggedIn ? STR_CONST.HELLO : STR_CONST.RFF}
-          </Text>
+          </Text> */}
           <Text style={styles.nameStyle}>
             { `${this.getCapitalName(userData.first_name)} ${this.getCapitalName(userData.last_name)}`}
           </Text>
@@ -218,11 +218,7 @@ class DrawerComponentComponent extends Component {
                 onPress={async()=>{
                   const accesstoken = await getAccessToken();
                   const userId = await getUserId()
-                
-                  let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
-               
-                  console.log("yes check here URL _ _  _ _ _ _ _",url)
-               
+                  let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
                   this.reloaderApp()
                   Linking.openURL(url)
                 }}

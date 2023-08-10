@@ -205,7 +205,11 @@ export default class AirlineMembershipComponent extends Component {
   }
 
   renderListItem(itemObject, index) {
-    const {tierSelected,isOpenDialog} = this.state
+    const {tierSelected,isOpenDialog} = this.state;
+
+    console.log("yes check here - - - - - - ",tierSelected)
+    
+
     return (
       <TouchableOpacity onPress={()=>{
         this.setState({isOpenDialog:!this.state.isOpenDialog})
@@ -218,7 +222,7 @@ export default class AirlineMembershipComponent extends Component {
             <Text style={styles.membershipListTextStyle}>{itemObject.airline}</Text>
             {tierSelected ?
               <View style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 13, marginStart: 13, }}>
-                <Text style={styles.membershipListTextStyle1} >{`${this.state.tierSelected}`}
+                <Text style={styles.membershipListTextStyle1} >{`${tierSelected.title ?  tierSelected.title : tierSelected}`}
                 </Text>
               </View>
               : null} 

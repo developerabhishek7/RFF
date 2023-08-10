@@ -138,7 +138,7 @@ export default class NotificationsComponent extends Component {
         activeOpacity={0.6}
         onPress={() => this.goToNotifDetail(item, index)}
       >
-        <View style={{flexDirection:"row",justifyContent:"space-around"}}>
+        <View style={{flexDirection:"row",justifyContent:"space-around",borderWidth:0,width:scale(340)}}>
             <FastImage source={IMAGE_CONST.LOGO_ICON} style={{width:scale(40),height:scale(40)}} resizeMode="contain" />
             <Text style={[styles.notifTitle, { opacity: !item.unread ? 1 : 0.6 }]}>
           {item.title}

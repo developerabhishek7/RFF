@@ -8,6 +8,7 @@ export const NODE_USER_API = USER_API_URL
 export const NODE_ALERT = NODE_URL_ALERT
 
 
+
 export const FACEBOOK_URL = 'https://graph.facebook.com/me?fields=id,name,email,birthday,picture&access_token=';
 export const AUTH0RIZATION_TOKEN = 'cmV3YXJkX2ZsaWdodF9maW5kZXI6SERGa2ZSZXdhcmRGbGlnaHRGaW5kZXIzMjE=';
 export const FACEBOOK_APP_ID = '547320892866347';
@@ -29,9 +30,15 @@ export const PRIVACY_POLICY_URL = `${'https://rewardflightfinder.com'}/privacy-p
 export const TERMS_CONDITIONS_URL = `${'https://rewardflightfinder.com'}/terms-of-use`;
 export const DISCLAIMER_URL = `${'https://rewardflightfinder.com'}/disclaimer`;
 export const MEMBERSHIP_URL = `${WEB_BASE_URL}/dashboard/membership`;
-export const WEB_CLIENT_URL = '354611927309-1q1dbpo92q1931f66b45f6d56srmegap.apps.googleusercontent.com';
+// export const WEB_CLIENT_URL = '354611927309-1q1dbpo92q1931f66b45f6d56srmegap.apps.googleusercontent.com';
+export const WEB_CLIENT_URL = '889841388445-qe3iquc02n3ig862pn5nsvirgj8b0j5j.apps.googleusercontent.com'
                                 
+export const SKY_SCANNER_URL = `https://www.skyscanner.co.in/transport/flights`;
 
+export const BA_EXE_URL = `https://www.britishairways.com/travel/redeem/execclub/`
+
+export const APP_LINK ='https://rewardflightfinder.app.link/hNWhSC7mzxb'
+export const SVG_URL = `https://purecatamphetamine.github.io/country-flag-icons/3x2/`
 export const MAPBOX_TOKEN = "pk.eyJ1IjoicmZmYWRtaW4iLCJhIjoiY2tiY2llOXIwMDI2dzJ5azA0c2k0Nno0ZCJ9.gXz54nUwCAgY170oY8wHcA";
 // export const MAPBOX_TOKEN = "pk.eyJ1IjoiZmxpZ2h0bWFwcHJvamVjdCIsImEiOiJjbDFkd2VtajIwZzRrM2NueGlkNjMwaXloIn0.79HzZ8IKZFzUgiH1i_RJfQ"
 export const FORGET_PASSWORD_URL = `${WEB_BASE_URL}/forgot-password`;

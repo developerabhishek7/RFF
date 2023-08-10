@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,PixelRatio } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import { appFonts } from "../../constants/StringConst";
@@ -14,16 +14,17 @@ export default StyleSheet.create({
     fontSize: scale(30),
     color: "#2B3F5E",
     width:scale(200),
+    marginBottom:scale(10),
     // textAlign: "center",
     fontFamily: appFonts.INTER_REGULAR,
   },
   subtextStyle: {
-    fontSize: scale(13),
+    fontSize: scale(15),
     color: "#2B3F5E",
     paddingBottom:scale(14),
-    width:scale(200),
+    width:scale(260),
     marginTop:scale(10),
-  
+    fontWeight:"800",
     // marginTop: verticalScale(5),
     fontFamily: appFonts.INTER_SEMI_BOLD,
   },
@@ -41,7 +42,7 @@ export default StyleSheet.create({
     height: verticalScale(55),
     borderRadius: scale(100),
     marginRight:scale(20),
-    marginBottom: verticalScale(30),
+    marginBottom: verticalScale(0),
   },
   textView: {
     width: width,
@@ -82,5 +83,40 @@ export default StyleSheet.create({
     borderRadius: scale(5),
     height: scale(10),
     backgroundColor: colours.darkBlueTheme,
-  }
+  },
+
+
+
+  imageStyle: {
+    height: PixelRatio.getPixelSizeForLayoutSize(135),
+    width: '100%',
+  },
+  wrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 30,
+  },
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  paragraph: {
+    fontSize: 17,
+  },
+  paginationWrapper: {
+    position: 'absolute',
+    bottom: scale(50),
+    left: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  paginationDots: {
+    height: 10,
+    width: 10,
+    borderRadius: 10 / 2,
+    backgroundColor: '#0898A0',
+    marginLeft: 10,
+  },
 });

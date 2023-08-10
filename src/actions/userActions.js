@@ -183,12 +183,6 @@ export function updateUserProfile(imageData) {
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
       const accesstoken = await getAccessToken();
       const userId = await getUserId();
-      // userData["access_token"] = accesstoken;
-      // let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-      // let  headers =  {
-      //   'authorization': authToken,
-      //   "Content-Type": "multipart/form-data",
-      // }
       const data = new FormData();
       data.append('image', { 
         uri: imageData.uri,
@@ -312,6 +306,8 @@ export function getUserInfo() {
         authToken
       );
       if (res) {
+
+     
         await dispatch({
           type: SET_BADGE_COUNT,
           badgeCount: res.data.unread_notifications_count,

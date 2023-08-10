@@ -13,7 +13,7 @@ import {
   BackHandler, Modal, Dimensions, ImageBackground, Platform
 } from "react-native";
 import FastImage from 'react-native-fast-image'
-
+import {BA_EXE_URL,SKY_SCANNER_URL} from '../../helpers/config'
 import styles from "./flightDetailsStyles";
 import * as STRING_CONST from "../../constants/StringConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
@@ -73,7 +73,7 @@ class FlightDetailsCompoent extends Component {
       trip_type: this.props.trip_type,
       source: this.props.source,
       destination: this.props.destination,
-      flightCount: this.props.checkFlightCount,
+      flightCount: this.props.flightCount,
       cabinCode: "M",
       skyScannerCabinCode: "economy",
       classDataArray: this.props.classDataArray,
@@ -715,7 +715,7 @@ class FlightDetailsCompoent extends Component {
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <FastImage
+          <Image
             source={IMAGE_CONST.BIG_TAKE_OFF}
             style={{ marginRight: scale(10) }}
           />
@@ -725,7 +725,7 @@ class FlightDetailsCompoent extends Component {
         </View>
         <Text style={styles.flightDetailText}>{` - `}</Text>
         <View style={{ flexDirection: "row" }}>
-          <FastImage
+          <Image
             source={IMAGE_CONST.BIG_LANDING}
             style={{ marginRight: scale(10) }}
           />
@@ -757,10 +757,6 @@ class FlightDetailsCompoent extends Component {
         })
       }
     }
-
-    console.log("yes check here flight data  - - - - -  - - -",flightData)
-
-
     flightData.sort(function(a,b){
       return a.departure_time.localeCompare(b.departure_time);
     });
@@ -870,7 +866,6 @@ class FlightDetailsCompoent extends Component {
 
 
 
-  // https://www.skyscanner.co.in/transport/flights/lon/abz/230325/230329/?adults=1&adultsv2=1&cabinclass=economy&iym=2303&oym=2303&rtn=1&selectediday=29&selectedoday=25
   handleSkyScannerRedirection = () => {
     // const { dId, aId, numberOfPassengers, jType, date, cabinCode, returnDate } = data || {}  
 
@@ -891,21 +886,18 @@ class FlightDetailsCompoent extends Component {
     let url = ""
     if (source) {
       if (trip_type == "return") {
-        url = `https://www.skyscanner.co.in/transport/flights/${sourceCode}/${destinationCode}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
+        url = `${SKY_SCANNER_URL}/${sourceCode}/${destinationCode}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
       }
       if (trip_type == "one_way") {
-        url = `https://www.skyscanner.co.in/transport/flights/${sourceCode}/${destinationCode}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
+        url = `${SKY_SCANNER_URL}/${sourceCode}/${destinationCode}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
       }
-
-      console.log("yes checking what URL is GETTING ########     ", url)
 
       Linking.openURL(url, '_blank')
     } else {
-      Linking.openURL("https://www.skyscanner.co.in/transport/flights/", "_blank")
+      Linking.openURL(`${SKY_SCANNER_URL}/", "_blank`)
     }
   }
 
-  // https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=LON&destinationPoint=ABZ&departInputDate=02/07/2023&returnInputDate=23/03/2023&oneWay=false&RestrictionType=Restricted&NumberOfAdults=1&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=M
   handleBaRedirection = () => {
     // const { dId, aId,  jType, date, returnDate } = data || {}   
 
@@ -920,17 +912,19 @@ class FlightDetailsCompoent extends Component {
     const returnInputDate = moment().format('DD/MM/YYYY')
 
     if (source) {
-      const url = `https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${sourceCode}&destinationPoint=${destinationCode}&departInputDate=${departInputDate}${oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
+      const url = `${BA_EXE_URL}/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${sourceCode}&destinationPoint=${destinationCode}&departInputDate=${departInputDate}${oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
       console.log("yes what url is getting on book on BA        - -- - - ", url)
 
       Linking.openURL(url, '_blank')
     } else {
-      Linking.openURL("https://www.britishairways.com/travel/redeem/execclub/", "_blank")
+      Linking.openURL(`${BA_EXE_URL}/", "_blank`)
     }
   }
 
   noflightDataFunction() {
     const { flightCount } = this.state
+
+    console.log("yes check here flight count - - - - - - - -",flightCount)
     return (
       <FastImage
         source={require('../../assets/calendar/flightdetail.png')}
@@ -1021,7 +1015,7 @@ class FlightDetailsCompoent extends Component {
               </View>
               <View style={styles.innerContainer}>
                 <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
-                  } (${this.state.isOffPeakValue
+                  } (${!this.state.isOffPeakValue
                     ? STRING_CONST.OFF_PEAK_FARE
                     : STRING_CONST.PEAK_FARE
                   })`}</Text>

@@ -7,7 +7,6 @@ import {
   secureGet,
   secureDelete,
   securePut,
-  secureDeleteForAlert,
   securePutForAlert,
   secureGetForUser,
   secureDeleteForUser,
@@ -153,12 +152,12 @@ export function cancelAlerts(id,screenType) {
         //   type: ALERT_CANCEL_SUCCESS,
         // });
         RootNavigation.navigationRef.navigate("Alerts")
-        Alert.alert("Your alert has been deleted successfully!")
+        Alert.alert("Your Alert has been deleted")
        
       } else {
         dispatch(getUserInfo())
         RootNavigation.navigationRef.navigate("Alerts")
-        Alert.alert("Your alert has been deleted successfully!")
+        Alert.alert("Your Alert has been deleted")
         // NavigationService.navigate("Alerts")
         // await dispatch({
         //   type: ALERT_CANCEL_ERROR,

@@ -16,14 +16,13 @@ import {
   BackHandler,
   Dimensions,
   Platform,
-  ScrollView
+  ScrollView,
+  ImageBackground
 } from "react-native";
-
-
+import {BA_EXE_URL,SKY_SCANNER_URL} from '../../helpers/config'
 import styles from "./calenderStyles";
 import * as STRING_CONST from "../../constants/StringConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
-import * as CONFIG from "../../helpers/config";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/dist/Ionicons";
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
@@ -37,11 +36,8 @@ import { getAccessToken } from "../../constants/DataConst";
 import Entypo from "react-native-vector-icons/dist/Entypo";
 var uuid = require('react-native-uuid');
 import DeviceInfo from "react-native-device-info";
-// import Slider from '@react-native-community/slider';
-// import PostHog from 'posthog-react-native';
- classes1 = ["Economy","Premium Economy","Businness", "First"]
-let getEmptyObj = {}
-
+const {width,height} = Dimensions.get("window")  
+classes1 = ["Economy","Premium Economy","Businness", "First"]
 import {
   getCalendarLocals,
   isAndroid,
@@ -55,10 +51,6 @@ import {
   getTimeFromMins,
 } from "../../utils/commonMethods";
 import PopUpComponent from "../../shared/popUpComponent";
-import * as Config from "../../helpers/config";
-import appStyle from 'app_style'
-import { getFontScaleSync } from "react-native-device-info";
-import { toNumber } from "lodash";
 
 let economyPoints = "";
 let premiumPoints = "";
@@ -70,21 +62,54 @@ let economySeats = 0
 let premiumSeats = 0
 let businessSeats = 0
 let firstSeats = 0
-let requiredKey = true
+
 
 let dateExpire = false
 let expireDate = ""
 let isAlertExpireDays = ""
 let isAlertExpireDays2 = ""
-let maximumSliderPoints = 0
-let minimumSliderPoints = 0
-const { height, width } = Dimensions.get("window");
 
 export default class CalenderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedIndex: 0,
+      classObject: [
+        {
+          class: "Economy",
+          isSelected: true,
+        },
+        {
+          class: "Premium Economy",
+          isSelected: true,
+        },
+        {
+          class: "Business",
+          isSelected: true,
+        },
+        {
+          class: "First",
+          isSelected: true,
+        },
+      ],
+      classObject1:[
+        {
+          class: "Economy",
+          isSelected: true,
+        },
+        {
+          class: "Premium Economy",
+          isSelected: false,
+        },
+        {
+          class: "Business",
+          isSelected: false,
+        },
+        {
+          class: "First",
+          isSelected: false,
+        },
+      ],
       classSelected: this.props.searchData.classSelected,
       showCreateAlertModal: false,
       airLinesDetailsObject: this.props.airLinesDetailsObject,
@@ -100,7 +125,9 @@ export default class CalenderComponent extends Component {
       departStartDate: "",
       departEndDate: "",
       returnStartDate: "",
-      scheuldeDateKey:"",
+      scheuldeDateKey:"",      
+      onPressDate:"",
+      classSelected1: [true, false, false, false],
       returnEndDate: "",
       isRenderAll: false,
       searchData: this.props.searchData,
@@ -132,9 +159,7 @@ export default class CalenderComponent extends Component {
       staticDateArray: [],
       flightData: [],
       onDayPressedDate: "",
-      // monthNumber: this.props.route.params.selectedDate,
       isLoader: true,
-      // monthKey: this.props.route.params.monthKey,
       flightCount: 0,
       showDetailsModal: false, noflightschedule: false,
       clickDate: "",
@@ -161,6 +186,7 @@ export default class CalenderComponent extends Component {
       maximumSliderPoints:0,
       minimumSliderPoints:0,
       isSliderLoader:false,
+      classTypeArray:[]
     };
     getCalendarLocals();
     LocaleConfig.defaultLocale = "us";
@@ -187,15 +213,7 @@ export default class CalenderComponent extends Component {
   }
 
   getPointsText(points) {
-
     return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
-
-
-    // if (points % 1000 == 0) {
-    //   return `${points / 1000}k`;
-    // } else {
-    //   return points;
-    // }
   }
 
   componentDidUpdate(prevProps) {
@@ -254,26 +272,66 @@ export default class CalenderComponent extends Component {
     }
   };
 
+
+  renderCabinClass = ()   => {
+    let cabinClassData = this.props.cabinClassData
+    let classTypeArray = [
+      {
+        "class":cabinClassData.economy ? "Economy" : false,
+        "isSelected":cabinClassData.economy ? true : false,
+      },
+      {
+        "class":cabinClassData.premium_economy ? "Premium Economy" : false,
+        "isSelected":cabinClassData.premium_economy ? true : false,
+      },
+      {
+        "class":cabinClassData.business ? "Business" : false,
+        "isSelected":cabinClassData.business ? true : false,
+      },
+      {
+        "class":cabinClassData.first ? "First" : false,
+        "isSelected":cabinClassData.first ? true : false,
+      }
+    ]
+
+
+    let classTypeArray1 = [
+      {
+        "class":cabinClassData.economy ? "Economy" : false,
+        "isSelected":cabinClassData.economy ? true : false,
+      },
+      {
+        "class":cabinClassData.premium_economy ? "Premium Economy" : false,
+        "isSelected" : false,
+      },
+      {
+        "class":cabinClassData.business ? "Business" : false,
+        "isSelected":false,
+      },
+      {
+        "class":cabinClassData.first ? "First" : false,
+        "isSelected": false,
+      }
+    ]
+    let userData = this.props.userInfo
+    let bronzeMember = userData.bronze_member
+    this.setState({
+      classTypeArray:bronzeMember ? classTypeArray1 : classTypeArray
+    })
+  }
+
+
   componentDidMount = async () => {
+
+    console.log("yes check here on calendar did mount screen - - - - - - ---------------------------------- ",)
     this.getDates()
     this.checkOnloaderFalse()
 
-    setTimeout(() => {
-       this.setState({cabinClassData:this.props.cabinClassData})
-      //  this.renderClassValues()
-    }, 1500);
-    
-
-    // console.log("yes check here searchData  - -  - - - -",this.state.searchData)
-   
-
-    // console.log("yes check here classSelected - -  - - - - - - - -",this.state.classSelected)
-
+    let userData = this.props.userInfo
+  
+    let bronzeMember = userData.bronze_member
 
     const today = moment();
-    let currentDate = moment("2023-01-17T18:12:17.211Z", "DD-MM-YYYY").fromNow(today)
-
-    // let data = this.state.airLinesDetailsObject.availability;
 
     let data = this.props.searchData.classSelected;
     let outBound = this.state.airLinesDetailsObject.outbound_availability;
@@ -332,10 +390,10 @@ export default class CalenderComponent extends Component {
     }
     setTimeout(() => {
       this.setState({ isRenderAll: true, })
+      this.renderCabinClass()
+
     }, 1000);
-    setTimeout(() => {
-      this.setState({   isSliderLoader:true, })
-    }, 2000);
+
 
     // for (const item in data) {
     //   console.log("check item on the did mount #######    ",data)
@@ -369,22 +427,14 @@ export default class CalenderComponent extends Component {
     //   }
     // }
 
-    let userData = this.props.userInfo
 
-    let bronzeMember = userData.bronze_member
 
     var data2 = [true,false,false,false]
     
     this.setState({
       classSelected: bronzeMember ? data2 : classData,
     });
-    if (this.props.route.params.focusedDate) {
-      setTimeout(() => {
-        this._refCalendarList.scrollToDay(
-          this.props.route.params.focusedDate
-        );
-      });
-    }
+    
 
       BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -410,32 +460,46 @@ export default class CalenderComponent extends Component {
 
 
 
-    let firstDay = moment().startOf('month')
-    let nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
+
+    const firstDay = moment().startOf('month')
+
+
+    const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
+ 
+    
+
     let clickDate
-    let dt1
-    let dt2
+    var requiredKey = false
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
-    if (day) {
-      clickDate = day.dateString
-      let date1 = moment(clickDate).format("MM/DD/YYYY")
-      let date2 = moment(nextThreeMonth).format("MM/DD/YYYY")
+    if (this.state.clickDate) {
+      let date = this.state.clickDate
 
-      dt1 = new Date(date1).getTime()
-      dt2 = new Date(date2).getTime()
-      if (dt1 === dt2) {
-        requiredKey = true
+      let date1 = moment(date).format('DD-MM-YYYY')
+      let date2 = moment(nextThreeMonth).format('DD-MM-YYYY')
+
+
+      const dt1 = moment(date, 'DD-MM-YYYY').valueOf()
+      const dt2 = moment(date2, 'DD-MM-YYYY').valueOf()
+
+ 
+      if (dt1 == dt2) {
+        requiredKey = false
       }
       if (dt1 > dt2) {
-        requiredKey = true
+        requiredKey = false
       }
       if (dt2 > dt1) {
-        requiredKey = false
+        requiredKey = true
       }
     }
 
+
+
     const { searchData, offPeakKey,showModelDropdownForBA,showModelDropdownForSS, airLinesDetailsObject,cabinClassData } = this.state;
+   
+
+   
     let airline = searchData.airline
     let destination = searchData.destinationCode
     let sourceCode = searchData.sourceCode
@@ -491,19 +555,17 @@ export default class CalenderComponent extends Component {
     // points = [...pointsSS, ...pointsBA]
     
     points = [...pointsSS]
-    
-   if (requiredKey == true && this.props.isLoggedIn == false) {
-      economySeats = 2
-      premiumSeats = 0
-      businessSeats = 0
-      firstSeats = 2
-      dateExpire = true
 
-      // businessPoints = 1100
-      // economyPoints = 1100
-      // premiumPoints = 1100
-      // firstPoints = 1100
-    }
+
+  
+   if (this.props.isLoggedIn == false) {
+      if(requiredKey === true ){
+        economySeats = 2
+        premiumSeats = 0
+        businessSeats = 0
+        firstSeats = 2
+        dateExpire = true
+      }
     else {
       dateExpire = false
       let obj
@@ -518,6 +580,7 @@ export default class CalenderComponent extends Component {
       }
       let date = moment(clickDate).format("YYYY-MM-DD")
       obj.map((singleMap) => {
+
         if (this.state.clickDate == singleMap[0]) {
           if (singleMap[1].economy) {
             if (singleMap[1].economy.seats) {
@@ -553,20 +616,58 @@ export default class CalenderComponent extends Component {
           }
         }
       })
-      // if (data.economy) {
-      //   economySeats = data.economy.seats
-      // }
-      // if (data.premium) {
-      //   premiumSeats = data.premium.seats
-      // }
-      // if (data.business) {
-      //   businessSeats = data.business.seats
-      // }
-      // if (data.first) {
-      //   firstSeats = data.first.seats
-      // }
     }
-
+  }
+  else {
+    dateExpire = false
+    let obj
+    if (this.state.selectedIndex == 0) {
+      obj = Object.entries(availableOutBoundDate)
+    }
+    else {
+      obj = Object.entries(availableInBoundDate)
+    }
+    if (day) {
+      clickDate = day.dateString
+    }
+    let date = moment(clickDate).format("YYYY-MM-DD")
+    obj.map((singleMap) => {
+      if (this.state.clickDate == singleMap[0]) {
+        if (singleMap[1].economy) {
+          if (singleMap[1].economy.seats) {
+            economySeats = singleMap[1].economy.seats
+          }
+        }
+        else {
+          economySeats = 0
+        }
+        if (singleMap[1].premium) {
+          if (singleMap[1].premium.seats) {
+            premiumSeats = singleMap[1].premium.seats
+          }
+        }
+        else {
+          premiumSeats = 0
+        }
+        if (singleMap[1].business) {
+          if (singleMap[1].business.seats) {
+            businessSeats = singleMap[1].business.seats
+          }
+        }
+        else {
+          businessSeats = 0
+        }
+        if (singleMap[1] && singleMap[1].first) {
+          if (singleMap[1].first.seats) {
+            firstSeats = singleMap[1].first.seats
+          }
+        }
+        else {
+          firstSeats = 0
+        }
+      }
+    })
+  }
 
     let economySS 
     let premiumSS
@@ -580,118 +681,134 @@ export default class CalenderComponent extends Component {
     let businessBA
     let firstBA
 
-    
-    // console.log("yes check here points details- -  - - - -",points)
-
-
-    if (points && Object.keys(points).length !== 0 && this.props.isLoggedIn == false) { 
-
-      if(offPeakKey == false){
-        if(requiredKey == false) {
-          pointsSS.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "offpeak" && offPeakKey == false ){
+    // Test here as a guest user.............
+    if (pointsBA && Object.keys(pointsBA).length !== 0 && this.props.isLoggedIn == false) {
+      if(requiredKey === false){ 
+        if(offPeakKey == false){ 
+          pointsBA.map((singleMap)=>{
+            if(singleMap.one_way ==true && singleMap.peak_type === "offpeak" ){
               if(singleMap.economy_avios){
-                economy1 = singleMap.economy_avios
+                economyBA = singleMap.economy_avios
               }
               if(singleMap.premium_avios){
-                  premium1 = singleMap.premium_avios         
+                  premiumBA = singleMap.premium_avios
               }
               if(singleMap.business_avios ){
-                  business1 = singleMap.business_avios
+                  businessBA = singleMap.business_avios
               }
               if(singleMap.first_avios){
-                  first1 = singleMap.first_avios
+                  firstBA = singleMap.first_avios
               } 
             }
           })
-    
-          points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "offpeak" && offPeakKey == false){
-              if(singleMap.economy_avios && economy1 == undefined){
-                economy1 = singleMap.economy_avios
-              }
-              if(singleMap.premium_avios && premium1 == undefined){
-                  premium1 = singleMap.premium_avios
-              }
-              if(singleMap.business_avios && business1 == undefined ){
-                  business1 = singleMap.business_avios
-              }
-              if(singleMap.first_avios && first1 == undefined){
-                  first1 = singleMap.first_avios
-              }
-            }
-          })
-        }
-        if(requiredKey == true){
-          business1 = 1100
-          economy1 = 1100
-          premium1 = 1100
-          first1 = 1100
-          hideFlight = true
-        }
-      }
-  
-      if(offPeakKey == true){
-        if(requiredKey == false) {
-          points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "peak" && singleMap.bot == "SS" && offPeakKey == true ){
-              if(singleMap.economy_avios){
-                economy1 = singleMap.economy_avios
-              }
-              if(singleMap.premium_avios){
-                  premium1 = singleMap.premium_avios
-              }
-              if(singleMap.business_avios ){
-                  business1 = singleMap.business_avios
-              }
-              if(singleMap.first_avios){
-                  first1 = singleMap.first_avios
-              } 
-            }
-          })
-    
-          points.map((singleMap)=>{
-            if(singleMap.one_way && singleMap.peak_type == "peak" && offPeakKey == true){
-              if(singleMap.economy_avios && economy1 == undefined){
-                economy1 = singleMap.economy_avios
-              }
-              if(singleMap.premium_avios && premium1 == undefined){
-                  premium1 = singleMap.premium_avios
-              }
-              if(singleMap.business_avios && business1 == undefined ){
-                  business1 = singleMap.business_avios
-              }
-              if(singleMap.first_avios && first1 == undefined){
-                  first1 = singleMap.first_avios
-              }
-            }
-          })
-        }
-        if(requiredKey == true){
-          business1 = 1100
-          economy1 = 1100
-          premium1 = 1100
-          first1 = 1100
-          hideFlight = true
-        }
-      }
     }
+    else{
+          pointsBA.map((singleMap)=>{
+              if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+              if(singleMap.economy_avios){
+                economyBA = singleMap.economy_avios
+              }
+              if(singleMap.premium_avios){
+                  premiumBA = singleMap.premium_avios
+              }
+              if(singleMap.business_avios ){
+                  businessBA = singleMap.business_avios
+              }
+              if(singleMap.first_avios){
+                  firstBA = singleMap.first_avios
+              } 
+            }
+          })
+    }
+      }
+      else{
+        if(requiredKey === true){ 
+          economyBA = 1100
+          premiumBA = 1100
+          businessBA = 1100
+          firstBA = 1100
+      
+          economySS = 1100
+          premiumSS = 1100
+          businessSS = 1100
+          firstSS = 1100
+          hideFlight = true
+      
+          }
+      }
+}
+
+
+if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == false) {
+ 
+
+  if(requiredKey === false){ 
+
+    if(offPeakKey === false){
+      pointsSS.map((singleMap)=>{
+        if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+          if(singleMap.economy_avios){
+            economySS = singleMap.economy_avios
+          }
+          if(singleMap.premium_avios){
+              premiumSS = singleMap.premium_avios
+          }
+          if(singleMap.business_avios ){
+              businessSS = singleMap.business_avios
+          }
+          if(singleMap.first_avios){
+              firstSS = singleMap.first_avios
+          } 
+        }
+      })
+    }
+    else{
+      pointsSS.map((singleMap)=>{
+    
+        if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+          if(singleMap.economy_avios){
+            economySS = singleMap.economy_avios
+          }
+          if(singleMap.premium_avios){
+              premiumSS = singleMap.premium_avios
+          }
+          if(singleMap.business_avios ){
+              businessSS = singleMap.business_avios
+          }
+          if(singleMap.first_avios){
+              firstSS = singleMap.first_avios
+          } 
+        }
+      })
+    } 
 
 
 
+   }
+  else{
+    if(requiredKey === true){ 
 
+    economyBA = 1100
+    premiumBA = 1100
+    businessBA = 1100
+    firstBA = 1100
 
-  
+    economySS = 1100
+    premiumSS = 1100
+    businessSS = 1100
+    firstSS = 1100
+    hideFlight = true
+
+    }
+  } 
+}
 
       // BA array computation.  . . . . . . . . . ..
 
       if (pointsBA && Object.keys(pointsBA).length !== 0 && this.props.isLoggedIn == true) {
         if(offPeakKey == false){ 
-          console.log("yes inside here  BA - - - - -    false peak  ",offPeakKey)
-
               pointsBA.map((singleMap)=>{
                 if(singleMap.one_way ==true && singleMap.peak_type === "offpeak" ){
-                  console.log("inside the offPeak key true BA #######",singleMap.premium_avios)
                   if(singleMap.economy_avios){
                     economyBA = singleMap.economy_avios
                   }
@@ -725,25 +842,13 @@ export default class CalenderComponent extends Component {
                 }
               })
         }
-
   }
 
 
   if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == true) {
-    // console.log("yes check here points whole data  - - - - - -",points)
-    console.log("yes check here points whole data  - - - - - -",offPeakKey)
-
-    
-  
-  
   if(offPeakKey === false){
-
-    console.log("yes inside here  SS - - - - -    false peak  ",offPeakKey)
-
     pointsSS.map((singleMap)=>{
-
       if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
-        console.log("inside the offPeak key true SS #######  ",singleMap.premium_avios)
         if(singleMap.economy_avios){
           economySS = singleMap.economy_avios
         }
@@ -761,10 +866,7 @@ export default class CalenderComponent extends Component {
   }
   else{
     pointsSS.map((singleMap)=>{
-
       if(singleMap.one_way == true && singleMap.peak_type === "peak"){
-        console.log("inside the offPeak key false SS #######  ",singleMap.premium_avios)
-
         if(singleMap.economy_avios){
           economySS = singleMap.economy_avios
         }
@@ -780,10 +882,7 @@ export default class CalenderComponent extends Component {
       }
     })
   }
-   
   }
-  
-
     let economyClass
     let premiumClass
     let businessClas
@@ -844,8 +943,6 @@ export default class CalenderComponent extends Component {
     }
 
 
-    //  console.log('ECONOMY POINTS - - ',this.state.dateString)
-   
     return (
       <Animated.View
         style={[
@@ -905,7 +1002,7 @@ export default class CalenderComponent extends Component {
                   paddingEnd: scale(9)
                 }}
               >
-                {`${!data.peak ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
+                {`${!offPeakKey ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
                   }`}
               </Text>
             </View>
@@ -1051,7 +1148,6 @@ export default class CalenderComponent extends Component {
                               {"-"}
                             </>
                           }
-                        {/* {data.business ? data.business.seats : "0"} */}
                       </Text>
                       <Text style={styles.seatNumberText}>
                         {
@@ -1304,8 +1400,12 @@ export default class CalenderComponent extends Component {
                               this.setState({
                                 showTicketDetailModal: false,
                                 showModelDropdownForBA:false,
-                                showModelDropdownForSS:false
+                                showModelDropdownForSS:false,
+                                bounceValue: new Animated.Value(250),
+                                isHidden: true,
+                                selectedDate: {},
                               })
+                              this._toggleSubview();
                               // this.props.navigation.navigate("test1")
                               this.props.navigation.navigate(
                                 'findFlightDetails1', {
@@ -1321,7 +1421,7 @@ export default class CalenderComponent extends Component {
                                 destination:searchData.selectedDestination,
                                 selectedDate: this.state.selectedDate,
                                 passengerCount: this.state.searchData.passengerCount,
-                                isOffPeakValue: this.state.isOffPeakValue,
+                                isOffPeakValue: offPeakKey,
                                 economyPoints: economySS ? economySS : economyBA,
                                 premiumPoints: premiumSS ? premiumSS : premiumBA,
                                 businessPoints: businessSS ? businessSS : businessBA,
@@ -1381,7 +1481,7 @@ export default class CalenderComponent extends Component {
                                 destination:searchData.selectedDestination,
                                 selectedDate: this.state.selectedDate,
                                 passengerCount: this.state.searchData.passengerCount,
-                                isOffPeakValue: this.state.isOffPeakValue,
+                                isOffPeakValue: offPeakKey,
                                 economyPoints: economySS ? economySS : economyBA,
                                 premiumPoints: premiumSS ? premiumSS : premiumBA,
                                 businessPoints: businessSS ? businessSS : businessBA,
@@ -1418,12 +1518,8 @@ export default class CalenderComponent extends Component {
 
   handleSkyScannerRedirection = () => {
     // const { dId, aId, numberOfPassengers, jType, date, cabinCode, returnDate } = data || {}  
-    
     const {selectedIndex,searchData,passengerCount,dateString,skyScannerCabinCode,}  = this.state;
-    
-
-
-
+  
     let sourceCode = searchData.selectedSource.code.toLowerCase()
     let destinationCode = searchData.selectedDestination.code.toLowerCase()
 
@@ -1437,24 +1533,20 @@ export default class CalenderComponent extends Component {
     let url = ""
      if(sourceCode){
       if(selectedIndex == 1){
-         url = `https://www.skyscanner.co.in/transport/flights/${sourceCode}/${destinationCode}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
+         url = `${SKY_SCANNER_URL}/${sourceCode}/${destinationCode}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
       }
       if(selectedIndex == 0){
-         url = `https://www.skyscanner.co.in/transport/flights/${sourceCode}/${destinationCode}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
+         url = `${SKY_SCANNER_URL}/${sourceCode}/${destinationCode}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
       }
-
-    
        Linking.openURL(url, '_blank') 
      }else{
-        Linking.openURL("https://www.skyscanner.co.in/transport/flights/", "_blank")
+        Linking.openURL(`${SKY_SCANNER_URL}/, "_blank`)
      }
   }
 
-  // https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=LON&destinationPoint=ABZ&departInputDate=02/07/2023&returnInputDate=23/03/2023&oneWay=false&RestrictionType=Restricted&NumberOfAdults=1&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=M
   handleBaRedirection = () => {  
     
     const {selectedIndex,passengerCount,dateString,cabinCode,searchData,destination}  = this.state;
-    
 
     let sourceCode = searchData.selectedSource.code.toLowerCase()
     let destinationCode = searchData.selectedDestination.code.toLowerCase()
@@ -1465,10 +1557,10 @@ export default class CalenderComponent extends Component {
     const returnInputDate =  moment().format('DD/MM/YYYY')
 
      if(sourceCode){
-      const url = `https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${sourceCode}&destinationPoint=${destinationCode}&departInputDate=${departInputDate}${oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
+      const url = `${BA_EXE_URL}_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${sourceCode}&destinationPoint=${destinationCode}&departInputDate=${departInputDate}${oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
         Linking.openURL(url, '_blank')
      }else{
-      Linking.openURL("https://www.britishairways.com/travel/redeem/execclub/", "_blank")
+      Linking.openURL(`${BA_EXE_URL}`, "_blank")
      }
   }
 
@@ -1572,280 +1664,6 @@ export default class CalenderComponent extends Component {
         {
           flightData && flightData.map((selectedFlight) => {
             return (
-              // <Animated.View
-              //   style={[
-              //     styles.animatedView1,
-              //     {
-              //       transform: [{ translateY: this.state.bounceValue }],
-              //     },
-              //   ]}
-              // >
-              //   <View style={styles.animatedInnerView}>
-              //     <View
-              //       style={{
-              //         alignItems: "center",
-              //         alignSelf: "stretch",
-              //       }}
-              //     >
-              //       <View style={[styles.titleView]}>
-              //         <TouchableOpacity onPress={() => { }}>
-              //           <Image
-              //             source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
-              //             style={{ marginRight: scale(10) }}
-              //           />
-              //         </TouchableOpacity>
-              //         <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
-              //           } (${this.state.isOffPeakValue
-              //             ? STRING_CONST.OFF_PEAK_FARE
-              //             : STRING_CONST.PEAK_FARE
-              //           })`}</Text>
-              //         <TouchableOpacity
-              //           style={{
-              //             alignSelf: "flex-end",
-              //           }}
-              //           onPress={() => {
-              //             this.setState({
-              //               showDetailsModal: false,
-              //               bounceValue: new Animated.Value(250),
-              //               isHidden: true,
-              //             });
-              //             this._toggleSubview();
-              //           }}
-              //         >
-              //           <Entypo
-              //             name="cross"
-              //             size={scale(35)}
-              //             color={colours.lightGreyish}
-              //           />
-              //         </TouchableOpacity>
-              //       </View>
-              //       {
-              //         this.state.selectedIndex == 0 ?
-              //           <Fragment>
-              //             <Text style={styles.detailLocationText}>
-              //               {data.selectedSource.name}{" "}
-              //               to{" "}
-              //               {data.selectedDestination.name}
-              //             </Text>
-              //           </Fragment>
-              //           :
-              //           <Fragment>
-              //             <Text style={styles.detailLocationText}>
-              //               {data.selectedDestination.name}{" "}
-              //               to{" "}
-              //               {data.selectedSource.name}
-              //             </Text>
-              //           </Fragment>
-              //       }
-              //       <View
-              //         style={[styles.timingContainer]}
-              //         activeOpacity={0.6}
-              //         onPress={() => { }}
-              //       >
-              //         <View style={{ flexDirection: "row", marginRight: scale(30) }}>
-              //           <Image
-              //             source={IMAGE_CONST.BIG_TAKE_OFF}
-              //             style={{ marginRight: scale(10) }}
-              //           />
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               { color: colours.white, fontSize: scale(14) },
-              //             ]}
-              //           >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
-              //         </View>
-              //         <View style={{ flexDirection: "row" }}>
-              //           <Image
-              //             source={IMAGE_CONST.BIG_LANDING}
-              //             style={{ marginRight: scale(10) }}
-              //           />
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               { color: colours.white, fontSize: scale(14) },
-              //             ]}
-              //           >{`${selectedFlight.arrival_time} ${selectedFlight.destination_code}`}</Text>
-              //         </View>
-              //       </View>
-              //       <View style={{ alignSelf: "stretch", flex: 1 }}>
-              //         <View
-              //           style={{
-              //             flexDirection: "row",
-              //             backgroundColor: "rgba(255,255,255,0.1)",
-              //             flex: 1,
-              //             paddingHorizontal: scale(20),
-              //           }}
-              //         >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${"Airline:"}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{`${"British Airways"}`}</Text>
-              //         </View>
-              //         <View
-              //           style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-              //         >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${"Aircraft:"}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{`${selectedFlight.aircraft_details}`}</Text>
-              //         </View>
-              //         <View
-              //           style={{
-              //             flexDirection: "row",
-              //             backgroundColor: "rgba(255,255,255,0.1)",
-              //             flex: 1,
-              //             paddingHorizontal: scale(20),
-              //           }} >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${`Flight:`}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{selectedFlight.flight}</Text>
-              //         </View>
-              //         <View
-              //           style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-              //         >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${`Departure:`}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{`${moment(selectedFlight.departure).format(
-              //             "ddd, DD MMM YYYY, "
-              //           )}${selectedFlight.departure_time}`}</Text>
-              //         </View>
-              //         <View
-              //           style={{
-              //             flexDirection: "row",
-              //             backgroundColor: "rgba(255,255,255,0.1)",
-              //             alignItems: "center",
-              //             paddingHorizontal: scale(20),
-              //           }}
-              //         >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${`Arrival:`}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{`${moment(selectedFlight.arrival_date).format(
-              //             "ddd, DD MMM YYYY, "
-              //           )}${selectedFlight.arrival_time}`}</Text>
-              //         </View>
-              //         <View
-              //           style={{ flexDirection: "row", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
-              //         >
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 4,
-              //               },
-              //             ]}
-              //           >{`${"Duration:"}`}</Text>
-              //           <Text
-              //             style={[
-              //               styles.flightDetailText,
-              //               {
-              //                 color: colours.white,
-              //                 fontSize: scale(14),
-              //                 padding: scale(10),
-              //                 flex: 6,
-              //               },
-              //             ]}
-              //           >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
-              //         </View>
-              //       </View>
-              //     </View>
-              //   </View>
-              // </Animated.View>
               <Animated.View
               style={[
                 styles.animatedView1,
@@ -2152,9 +1970,6 @@ export default class CalenderComponent extends Component {
   }
 
 
-
-
-
     renderClassValues(){
       const { classSelected } = this.state;
   
@@ -2167,7 +1982,8 @@ export default class CalenderComponent extends Component {
             classSelected1 = classSelected1.concat(`,${classes1[i]}`);
           }
         }
-      }   
+      }  
+
       return classSelected1;
     }
 
@@ -2191,26 +2007,21 @@ export default class CalenderComponent extends Component {
       // let curreantDate = moment().format("YYYY-MM-DD")
       // Test all condition for the outbound date range..........
 
-
       let goldMember = userData.gold_member
       let silverMember = userData.silver_member
       let bronzeMember = userData.bronze_member
   
-  
-      let bronzeExpireDate = moment(this.state.departStartDate).add(20, 'days').format("YYYY-MM-DD")
-      let silverExpireDate = moment(this.state.departStartDate).add(45, 'days').format("YYYY-MM-DD")
-      let goldExpireDate = moment(this.state.departStartDate).add(90, 'days').format("YYYY-MM-DD")
+      let bronzeExpireDate = moment(this.state.departStartDate).add(19, 'days').format("YYYY-MM-DD")
+      let silverExpireDate = moment(this.state.departStartDate).add(44, 'days').format("YYYY-MM-DD")
+      let goldExpireDate = moment(this.state.departStartDate).add(89, 'days').format("YYYY-MM-DD")
 
-
-      let bronzeExpirertnDate = moment(this.state.returnStartDate).add(20, 'days').format("YYYY-MM-DD")
-      let silverExpirertnDate = moment(this.state.returnStartDate).add(45, 'days').format("YYYY-MM-DD")
-      let goldExpirertnDate = moment(this.state.returnStartDate).add(90, 'days').format("YYYY-MM-DD")
-
+      let bronzeExpirertnDate = moment(this.state.returnStartDate).add(19, 'days').format("YYYY-MM-DD")
+      let silverExpirertnDate = moment(this.state.returnStartDate).add(44, 'days').format("YYYY-MM-DD")
+      let goldExpirertnDate = moment(this.state.returnStartDate).add(89, 'days').format("YYYY-MM-DD")
       // expireDate = new Date(goldExpireDate).getTime()
       let txtForPopup = ""
       let alertDate = moment(this.state.departEndDate).format("YYYY-MM-DD")
       let rtnEndDate = moment(this.state.returnEndDate).format("YYYY-MM-DD")
-
       let expireDate = ""
       let departureEndDate = ""
       let returnEndDate = ""
@@ -2287,13 +2098,8 @@ export default class CalenderComponent extends Component {
         isAlertExpireDays2 = false
       }
 
-
-
-
-
       let data = this.state.airLinesDetailsObject.availability;
 
-      console.log("yes check here avaialbility data -  - - - - - - - ",data)
       let classData = []
       if (data) {
         if (data.economy == true) {
@@ -2322,13 +2128,12 @@ export default class CalenderComponent extends Component {
         }
       }
 
+      let newArray = []
+      this.state.classTypeArray.map((singleMap)=>{
+        newArray.push(singleMap.isSelected)
+      })
 
-      console.log("yes check here class Selected  - - - -  - - -",)
-
-      let travel_classes = getBAClassesString(classData);
-
-      console.log("yes check here travle classes  - - - - - - -",travel_classes)
-
+      let travel_classes = getBAClassesString(newArray);
 
       let availableclasses = this.state.airLinesDetailsObject.availability;
       let availableClassString = "";
@@ -2349,11 +2154,6 @@ export default class CalenderComponent extends Component {
       let airline_code = getAirlinesCode(this.state.searchData.airline)
       let membership = this.state.searchData.tier
       let airline = this.state.searchData.airline
-
-
-      console.log("yes check here avaialble class String data  - - - - - ",availableClassString)
-      console.log("yes check here avaialble class String data  - - - - - ",classData)
-
 
       const url = {
         aCode: "BA",
@@ -2400,9 +2200,7 @@ export default class CalenderComponent extends Component {
         },
       };
 
-      // console.log("yes check here body  - - - - -  - - -",body)
-
-
+    
       if (this.state.searchData.isReturn) {
         if (isAlertExpireDays && isAlertExpireDays2) {
           const trackData = {
@@ -2578,7 +2376,7 @@ export default class CalenderComponent extends Component {
           }
     
           // PostHog.capture('Alert', trackData);
-        
+
           this.props.onSubmitAlertPress(body);
           this.setState({
             departStartDate: "",
@@ -2775,7 +2573,8 @@ export default class CalenderComponent extends Component {
                       styles.createAlertTakeOffIcon,
                       { marginHorizontal: scale(22) },
                     ]}
-                    source={IMG_CONST.TAKE_OFF}
+                    resizeMode="contain"
+                    source={IMG_CONST.DEPARTURE}
                   />
                   <TouchableOpacity
                     onPress={() => {
@@ -2835,7 +2634,8 @@ export default class CalenderComponent extends Component {
                           marginHorizontal: scale(22),
                         },
                       ]}
-                      source={IMG_CONST.RETURN_LANDING}
+                      source={IMG_CONST.DEPARTURE}
+                      resizeMode="contain"
                     />
                     <TouchableOpacity
                       onPress={() => {
@@ -2905,7 +2705,6 @@ export default class CalenderComponent extends Component {
                     </Text>
                   )}
               </View>
-              {/* <Text style={{textAlign:'center',alignSelf:"center",color:"red"}}>{"Maximum date range allowed is 60 days Please reduce your Outbound date range."}</Text> */}
               {
                 <Fragment>
                   {
@@ -2919,8 +2718,6 @@ export default class CalenderComponent extends Component {
                             : null
                           }
                       </Fragment>
-
-
                     : 
                     <Fragment>
                             {
@@ -2931,17 +2728,14 @@ export default class CalenderComponent extends Component {
                               : null
                           }
                       </Fragment>
-
-
                   }
-
-
                 </Fragment>
               }
-              
-            
-             
-              {this.renderSubmitAlertButton(STRING_CONST.SUBMIT_ALERT, () => {
+            <View>
+            <Text style={{fontSize:scale(14),fontWeight:"700",padding:scale(7),marginTop:scale(10)}}>Select Cabin Class</Text>
+                {this.getClassType()}
+            </View>
+              {this.renderSubmitAlertButton("Create Alert", () => {
                 // this.setState({
                 //   departStartDate:"",
                 //   departEndDate:"",
@@ -2956,6 +2750,212 @@ export default class CalenderComponent extends Component {
       </View>
     );
   }
+
+
+  getClassText() {
+
+    const {userData}  = this.props;
+
+    let goldMember = userData.gold_member
+    let silverMember = userData.silver_member
+    let bronzeMember = userData.bronze_member
+
+    let classObject
+    let classSelected 
+
+    if(bronzeMember){
+      classObject = this.state.classObject1;
+      classSelected = this.state.classSelected1;
+
+    }
+    else{
+      classObject = this.state.classObject1;
+      classSelected = this.state.classSelected;
+    }
+
+    let selectedClassCount = 0;
+    let index = -1;
+    for (i = 0; i < classSelected.length; i++) {
+      if (classSelected[i]) {
+        selectedClassCount = selectedClassCount + 1;
+        index = i;
+      }
+    }
+    if (selectedClassCount == 1) {
+      return `${classObject[index].class}`;
+    } else if (selectedClassCount == 0) {
+      return ` None`;
+    } else {
+      return `${selectedClassCount} Classes`;
+    }
+  }
+
+  onClassTypeSelected(item, index) {
+    let classTypeArray = this.state.classTypeArray;
+    classTypeArray[index].isSelected = !classTypeArray[index].isSelected;
+   
+    this.setState({
+      classTypeArray: classTypeArray,
+    });
+  }
+
+  getClassType() {
+
+    let isEconomySelected = this.state.classTypeArray[0].isSelected
+    let isPremiumSelected = this.state.classTypeArray[1].isSelected
+    let isBusinessSelected = this.state.classTypeArray[2].isSelected
+    let isFirstSelected = this.state.classTypeArray[3].isSelected
+    let userData = this.props.userInfo
+    let bronzeMember = userData.bronze_member
+    let showClassModal = true
+
+    return (
+      <View>
+        {
+          shwClassModal ?
+          <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
+          {
+            this.state.classTypeArray.map((item, index) => { 
+                return (
+                <Fragment>
+                 {
+                  item.class ? 
+                  <Fragment>
+                  
+                  <View>
+                    <TouchableOpacity
+                      style={{ backgroundColor:  item.class  == "Economy" ?
+                      "#edf0ff" : item.class == "Premium Economy" ?
+                      "#fef8ed" : item.class == "Business" ?
+                      "#f8ebfe" : item.class == "First" ? 
+                      "#fde8f1" : null,
+                      borderColor:  item.class  == "Economy" ?
+                      "#bfc9ff" : item.class == "Premium Economy" ?
+                      "#fce1b3" : item.class == "Business" ?
+                      "#d7a1f0" : item.class == "First" ? 
+                      "#f9b9d4" : null,
+                      
+                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120) }}
+                      onPress={() => {
+                        if(item.class == "Economy") { 
+                          if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
+                            this.onClassTypeSelected(item, index);
+                          }
+                        }
+                        else if(item.class == "Premium Economy") { 
+                          if(!bronzeMember){
+                            if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
+                              this.onClassTypeSelected(item, index);
+                            }
+                          }
+                        }
+                        else if(item.class == "Business"){
+                          if(!bronzeMember){
+                            if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
+                              this.onClassTypeSelected(item, index);
+                            }
+                          }
+                        }
+                        else if(item.class == "First"){
+                          if(!bronzeMember){
+                            if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
+                              this.onClassTypeSelected(item, index);
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if(item.class == "Economy") { 
+                            if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
+                              this.onClassTypeSelected(item, index);
+                            }
+                          }
+                          else if(item.class == "Premium Economy") { 
+                            if(!bronzeMember){
+                              if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                          else if(item.class == "Business"){
+                            if(!bronzeMember){
+                              if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                          else if(item.class == "First"){
+                            if(!bronzeMember){
+                              if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
+                                this.onClassTypeSelected(item, index);
+                              }
+                            }
+                          }
+                        }}
+                      >
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",margin:scale(7),marginStart:scale(70)}}>
+
+                        <MaterialIcon
+                          name={
+                            item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                          }
+                          size={verticalScale(22)}
+                        
+                          color={
+                            item.class == "Economy" ?
+                            item.isSelected ? "#2044ff" : colours.lightGreyish :
+                            item.class == "Premium Economy" ?
+                            item.isSelected ? "#f8a41e" : colours.lightGreyish :
+                            item.class == "Business" ? 
+                            item.isSelected ? "#af49de" : colours.lightGreyish :
+                            item.class == "First" ? 
+                            item.isSelected ? "#eb186f" : colours.lightGreyish :
+                             null
+                          }
+                        />
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{flexDirection:"column",margin:scale(4)}}>
+                      <ImageBackground
+                        source={
+                          item.class  == "Economy" ?
+                          IMAGE_CONST.ECONOMYC : item.class == "Premium Economy" ?
+                          IMAGE_CONST.PREMIUMC : item.class == "Business" ?
+                          IMAGE_CONST.BUSINESSC : item.class == "First" ? 
+                          IMAGE_CONST.FIRSTC : null
+                        }
+                        resizeMode="contain"
+                        style={{height:scale(40),width:scale(40),alignSelf:"center",justifyContent:"center",alignItems:"center"}}
+                      >
+                      </ImageBackground>
+                      <Text
+                        style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
+                      >
+                        {item.class == "First" ? "First Class " : item.class}
+                        {/* {item.class} */}
+                      </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  </Fragment>
+                  : null
+                 }
+                  </Fragment>
+                )                       
+            })
+          }
+          </View>
+          : 
+          null
+        }
+      </View>
+    );
+  }
+
+
+
   renderBottomButton(buttonText, onButtonPress) {
     return (
       <TouchableOpacity
@@ -2988,43 +2988,17 @@ export default class CalenderComponent extends Component {
   }
 
   renderHeader() {
-
-
-
     return (
-      // <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
       <TouchableOpacity
         style={
           styles.headerContainer
         }
         onPress={() => { this.props.navigation.goBack() }}
-      // onPress={() => {
-      //   fromdestinationDetails == true ?
-      //   this.props.navigation.navigate("MapComponentScreen",{
-      //     destinations:destination,
-      //     WhereFrom:WhereFrom,
-      //     auditData:auditData,
-      //     searchData:searchData,
-      //     tripType:tripType
-      //   })
-      //   : 
-      //   this.props.navigation.navigate("FindFlightContainerScreen")
-      // }}
+     
       >
         <TouchableOpacity
           onPress={() => { this.props.navigation.goBack() }}
-        // onPress={() => {
-        //   fromdestinationDetails == true ?
-        //   this.props.navigation.navigate("MapComponentScreen",{
-        //     destinations:destination,
-        //     WhereFrom:WhereFrom,
-        //     auditData:auditData,
-        //     searchData:searchData,
-        //     tripType:tripType
-        //   })
-        //   : 
-        //   this.props.navigation.navigate("FindFlightContainerScreen")
-        //    }}
+       
         >
           <Icon name="ios-arrow-back" size={scale(30)} color="#22395d" />
         </TouchableOpacity>
@@ -3074,7 +3048,6 @@ export default class CalenderComponent extends Component {
   }
 
   ticketClass() {
-    // let classes = this.state.airLinesDetailsObject.availability;
   
     let classSelected =  this.props.searchData.classSelected
 
@@ -3099,8 +3072,7 @@ export default class CalenderComponent extends Component {
     }
 
 
-    // console.log("yes check inside the ticekt class  - - - -",economy,  premium,  business,    first)
-
+   
 
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
@@ -3397,8 +3369,7 @@ export default class CalenderComponent extends Component {
               fontSize: scale(14),
             }}
           >
-            {"Inbound Seats"}
-            {/* {STRING_CONST.RETURN_SEATS} */}
+            {STRING_CONST.RETURN_SEATS}
           </Text>
         </TouchableOpacity>
       </View>
@@ -3478,12 +3449,9 @@ export default class CalenderComponent extends Component {
 
   onDayPressed(day, isOffPeakValue1) {
 
-
-
-    console.log("yes check the value of isOffPeakValue1 = - -  - - - -",isOffPeakValue1)
-
-
     const { isOffPeakValue, isPeakValue, airLinesDetailsObject, searchData } = this.state;
+
+
     let txt = "No Flight Scheduled"
     let flightSchedule = this.props.flightSchedule;
     let actualDay = day.dateString;
@@ -3495,10 +3463,6 @@ export default class CalenderComponent extends Component {
         let scheduleDateKey = scheduleDate[actualDay]
         let availableDateKey = availableDate[actualDay]
 
-
-        // console.log("available date key - -  - -",availableDateKey)
-        // console.log("scheduleDateKey date key - -  - -",scheduleDateKey)
-        
        
         availableDateKey ? this.setState({
           offPeakKey: availableDateKey.peak
@@ -3528,13 +3492,13 @@ export default class CalenderComponent extends Component {
               flightDate: day.dateString,
             });
           }
-          // this.Show_Custom_Alert2()
-          // this.setState({ noFlightScheduleDate: actualDay })
-          // this.setState({ noFlightScheduleAlertTxt: "No Flight Scheduled" })
-        }
+           }
 
 
         else if ((!availableDateKey)  && (scheduleDateKey)) {
+
+          console.log("gettin on first one yes ---------------------------")
+
           this.Show_Custom_Alert2()
           data = this.state.airLinesDetailsObject.outbound_availability;
          let seatsAvailabilityData = data[day.dateString]
@@ -3605,6 +3569,8 @@ export default class CalenderComponent extends Component {
           this.setState({ noFlightScheduleAlertTxt: "No Flight Schedule", showTicketDetailModal: false, })
         }
         else if (!availableDateKey && scheduleDateKey) {
+
+          console.log("gettin on second one yes ---------------------------")
           this.Show_Custom_Alert2()
           // Alert.alert("Alert", "No Seats Available!")
           data = this.state.airLinesDetailsObject.outbound_availability;
@@ -3739,12 +3705,8 @@ export default class CalenderComponent extends Component {
 
 
   getLocations(isLoader) {
-
     const {  airLinesDetailsObject, peakOffpeakData, } = this.state;
-   
     let classSelected =  this.props.searchData.classSelected
-
-
     let flightSchedule = this.props.flightSchedule;
     let outboundData = {};
     let inboundData = {};
@@ -3752,6 +3714,7 @@ export default class CalenderComponent extends Component {
     let availableOutBoundDate = {}
     let scheduleInboundData = {}
     let availableInBoundDate = {}
+
     if (flightSchedule) {
       scheduleOutBoundDate = flightSchedule.outbound_availability
       availableOutBoundDate = airLinesDetailsObject.outbound_availability;
@@ -3772,7 +3735,6 @@ export default class CalenderComponent extends Component {
           }
         }
       }
-     
     }
 
     let userData = this.props.userInfo
@@ -3783,9 +3745,6 @@ export default class CalenderComponent extends Component {
     let Obj = {}
     if (peakOffpeakData) {
       let dateArray = this.state.staticDateArray.filter(val => !peakOffpeakData.includes(val));
-
-
-      // console.log("yes check the dateArray - - - -  -",this.state.staticDateArray)
 
       for (let data of dateArray) {
         Obj[data] = { "peak": false }
@@ -3842,22 +3801,14 @@ export default class CalenderComponent extends Component {
       }
     }
 
-
-
     let availability = airLinesDetailsObject.availability;
     var economyClass = classSelected[0]
     var premiumClass = classSelected[1]
     var businessClass = classSelected[2]
     var firstClass = classSelected[3]
 
-
-
     let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
        
-   
-  //  console.log("yes check here availability classes inside getLocaiton -  - - - - - -",availability_data)
-   
-   
     let finalData = {}
     if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
       finalData = {
@@ -3880,11 +3831,7 @@ export default class CalenderComponent extends Component {
     return finalData;
   }
 
-
-
-
   getDummyData = () => {
-
     let key = "outbound_availability"
     let mainObj = this.state.airLinesDetailsObject.inbound_availability
 
@@ -4096,8 +4043,6 @@ export default class CalenderComponent extends Component {
               </Text>
             </TouchableOpacity>
             </View>
-           
-
           </View>
         </View>
       </Modal>
@@ -4115,19 +4060,10 @@ export default class CalenderComponent extends Component {
       this.props.guestUserPostHogFunc(body)
     }
   }
-  // getPointsText(points) {
-  //   if (points % 1000 == 0) {
-  //     return `${points / 1000}k`;
-  //   } else {
-  //     return points;
-  //   }
-  // }
-
 
 
 
   renderCalendarList(){
-
 
     const {
       showTicketDetailModal,
@@ -4147,6 +4083,7 @@ export default class CalenderComponent extends Component {
     let userInfo  =  this.props.userInfo
     let currentPlan = userInfo.gold_member
     let isLoggedIn = this.props.isLoggedIn
+
 
       return(
         <View style={[styles.calendarContainer,{
@@ -4177,11 +4114,15 @@ export default class CalenderComponent extends Component {
             }
             }
             onDayPress={(day) => {
+              let onPressDate = day
               let scheuldeDateKey = day
               let clickDate = day.dateString
+
+          
+
               let isOffPeakValue1 = this.state.isOffPeakValue
               this.onDayPressed(day, isOffPeakValue1);
-              this.setState({ onDayPressedDate: day.dateString, clickDate: clickDate ,scheuldeDateKey:scheuldeDateKey})
+              this.setState({ onDayPressedDate: day.dateString, clickDate: clickDate ,scheuldeDateKey:scheuldeDateKey,onPressDate:onPressDate})
               this._toggleSubview();
               this.seatAvailabilityModal(day, isOffPeakValue1)
             }}
@@ -4238,8 +4179,11 @@ export default class CalenderComponent extends Component {
 
 
   renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day){
+   
+    console.log("yes check here day inside no render flight= - =  = = = =",day)
+
     let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
-      const {onDayPressedDate,scheuldeDateKey} = this.state;
+      const {onDayPressedDate,scheuldeDateKey,onPressDate} = this.state;
     let scheduleData = {}
     if (this.state.selectedIndex == 0) {
       scheduleData = this.props.flightSchedule.outbound_availability
@@ -4262,7 +4206,7 @@ export default class CalenderComponent extends Component {
       }
     })
 
-    
+
     data = this.state.airLinesDetailsObject.inbound_availability;
     let peakTxt = ""
 
@@ -4311,36 +4255,31 @@ export default class CalenderComponent extends Component {
                     onPress={()=>{
                       if(this.state.selectedIndex == 0) {
                         data = this.state.airLinesDetailsObject.outbound_availability;
-                        if (data && data[onDayPressedDate]) {
-                          dateString = getformattedDate(onDayPressedDate);
+                        let onDayPressedDate = onPressDate.dateString
+                        let   dateString = getformattedDate(onDayPressedDate);
                           this.setState({
-                            seatsAvailabilityData: data[onDayPressedDate],
-                            noflightschedule: true,
                             showTicketDetailModal: true,
-                            dateString:onDayPressedDate,
+                            noflightschedule: true,
+                            dateString:dateString,
+                            selectedDate: onPressDate,
                             flightDate: onDayPressedDate,
                           });
-                        }
+                        
                         this.Hide_Custom_Alert2()
                         this.seatAvailabilityModal(day, isOffPeakValue1)
                       }
                       else{
-
+                      
 
                         data = this.state.airLinesDetailsObject.inbound_availability;
-                        if (data && data[onDayPressedDate]) {
-  
-  
-  
-                          dateString = getformattedDate(onDayPressedDate);
+                         let  dateString = getformattedDate(onDayPressedDate);
                           this.setState({
-                            seatsAvailabilityData: data[onDayPressedDate],
                             noflightschedule: true,
                             showTicketDetailModal: true,
-                            dateString:onDayPressedDate,
+                            showTicketDetailModal: true,
+                            dateString:dateString,
                             flightDate: onDayPressedDate,
                           });
-                        }
                         this.Hide_Custom_Alert2()
                         this.seatAvailabilityModal(day, isOffPeakValue1)
                       }
@@ -4375,18 +4314,12 @@ export default class CalenderComponent extends Component {
                </View>
             
                </TouchableOpacity>
-               
-                  // <Text style={{ fontSize: scale(14), color: colours.gray, padding: scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{"There is no available flight for this date."}</Text>
-               }
+                   }
             </Fragment>
             : 
             <Text style={{ fontSize: scale(14), color: colours.gray, padding: scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,marginBottom:scale(20) }}>{"There is no available flight for this date."}</Text>
           }
-          {/* <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
-            style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 9, margin: 7, marginTop: 10, }}
-          >
-            <Text style={{ marginStart: 30, marginEnd: 30, margin: 9, color: "#FFF" }}>OK</Text>
-          </TouchableOpacity> */}
+        
         </View>
       </View>
     </Modal>
@@ -4399,20 +4332,11 @@ export default class CalenderComponent extends Component {
       showCreateAlertModal,
       showUpgradePopUp,
       showLoginPopup,
-      peakOffpeakData,
-      PeakOffPeakMonth,
-      sliderPoints,
-      isSliderRunDone,
-      isRenderAll,
-      newClassSliderArray,
     } = this.state;
     const today = moment().format("YYYY-MM-DD");
 
-   
-    let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
-    let isLoader = this.state.isLoader
+
     let userInfo  =  this.props.userInfo
-    let currentPlan = userInfo.gold_member
     let isLoggedIn = this.props.isLoggedIn
     let height1
 
@@ -4430,20 +4354,11 @@ export default class CalenderComponent extends Component {
       outputRange:[0,-height1]
     })
 
-    // console.log("yes check here static array insdie rener - - -  -- ",this.state.peakOffpeakData)
-
 
      return (
-      <Fragment>
-        <SafeAreaView style={[styles.container,{
-          // backgroundColor:showTicketDetailModal? 'transparent' : "#FFF"
-          // ,opacity:0.5,
-        }]}>
+        <SafeAreaView style={[styles.container]}>
            {this.renderHeader()}
-          <View style={{ backgroundColor: "#FFF", flex: 1,
-            // opacity:showTicketDetailModal ?
-            // 0.7:1
-            }}>
+          <View style={{ backgroundColor: "#FFF", flex: 1}}>
             {this.renderLoader()}
             {this.renderLoginPopup()}
             {
@@ -4492,12 +4407,12 @@ export default class CalenderComponent extends Component {
             scrollEventThrottle={16} 
         >
           <View style={{  flex: 1, marginTop:Platform.OS =="android"?scale(50):scale(0)}}>
-           {this.renderCalendarList()}
+           {/* {this.renderCalendarList()} */}
            </View>
           </ScrollView>
             : 
             <View style={{  flex: 1,}}>
-            {this.renderCalendarList()}
+            {/* {this.renderCalendarList()} */}
            </View>
           }
             {showTicketDetailModal && this.seatAvailabilityModal()}
@@ -4559,31 +4474,7 @@ export default class CalenderComponent extends Component {
                     showUpgradePopUp: false,
                   });
                   this.props.navigation.navigate("MembershipContainerScreen")
-                  // After Verfiy app on live will uncommment this code accordinlgy.......
-                  // if (isAndroid()) {
-                  //   Linking.canOpenURL(Config.UPGRADE_MEMBERSHIP_URL).then(
-                  //     (supported) => {
-                  //       if (supported) {
-                  //         Linking.openURL(Config.UPGRADE_MEMBERSHIP_URL);
-                  //       } else {
-                  //         // console.log(
-                  //         //   "Can not open URI: " + Config.UPGRADE_MEMBERSHIP_URL
-                  //         // );
-                  //       }
-                  //     }
-                  //   );
-                  // } else {
-                  //   this.setState(
-                  //     {
-                  //       showUpgradePopUp: false,
-                  //     },
-                  //     () => {
-                  //       this.props.navigation.navigate(
-                  //         STRING_CONST.PRICING_SCREEN
-                  //       );
-                  //     }
-                  //   );
-                  // }
+                 
                 }}
               />
             )}
@@ -4608,66 +4499,12 @@ export default class CalenderComponent extends Component {
                 }}
               />
             )}
-            {/* {this.state.showAirlineModal && (
-            <Modal isVisible={true}>
-              <View style={styles.airlineContainerView}>
-                <View style={styles.airlineViewHeader}>
-                  <Text style={styles.airlineHeaderText}>
-                    {STRING_CONST.AIRLINE_MEMBERSHIP_TIERS}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({ showAirlineModal: false });
-                    }}
-                  >
-                    {IMAGE_CONST.GREY_CROSS}
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.airlineInnerContainerView} />
-                <Text style={styles.confirmTierText}>
-                  {STRING_CONST.CONFIRM_AIRLINE_TIERS}
-                </Text>
-                <FlatList
-                  style={{ marginTop: verticalScale(10) }}
-                  keyboardShouldPersistTaps="always"
-                  data={this.props.airlinesMembershipDetails}
-                  renderItem={({ item, index }) => {
-                    return this.renderListItem(item, index);
-                  }}
-                />
-                <TouchableOpacity
-                  style={styles.okButton}
-                  onPress={() => {
-                    const {
-                      userSelectedAirline,
-                      userSelectedAirlineMembership,
-                    } = this.state;
-                    var userInfo = {};
-                    userInfo[
-                      "airline_name"
-                    ] = userSelectedAirline.airline
-                      .replace(" ", "_")
-                      .toLowerCase();
-                    userInfo["membership_type"] =
-                      userSelectedAirlineMembership.value;
-                    userInfo["airline_code"] = "BA"
-                    this.props.onAirlineSelected(userInfo);
-                    this.setState({ showAirlineModal: false });
-                  }}
-                >
-                  <Text style={styles.okText}>{STRING_CONST.OK}</Text>
-                </TouchableOpacity>
-                <Text style={styles.airlineMessageText}>
-                  {STRING_CONST.AIRLINE_MESSAGE}
-                </Text>
-              </View>
-            </Modal>
-          )} */}
+           
           </View>
           {this.state.isNoflightScheudlePopup &&  this.renderNoFlight()}
+          {this.state.showDetailsModal && this.flightDetailsModal()}
         </SafeAreaView>
-        {this.state.showDetailsModal && this.flightDetailsModal()}
-      </Fragment>
+      
     );
   }
 }

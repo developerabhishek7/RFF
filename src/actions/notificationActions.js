@@ -231,7 +231,7 @@
        let userData = {};
  
        userData["access_token"] = accesstoken;
-       const res = await securePut(
+       const res = await securePutForUser(
          `/v1/users/${userId}/notifications/${id}`,
          authToken,
          {

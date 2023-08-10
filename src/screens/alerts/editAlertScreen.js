@@ -1,5 +1,5 @@
 import React, { Component, Fragment,useContext } from "react";
-import { View, Text, Image, Alert,BackHandler, Platform } from "react-native";
+import { View, Text, Image, Alert,BackHandler, Dimensions,Platform,Modal } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import { connect } from "react-redux";
 import {SafeAreaView} from 'react-native'
@@ -16,7 +16,7 @@ import FastImage from 'react-native-fast-image'
 import PosthogComponent from '../posthog/index'
 // import PostHog from 'posthog-react-native';
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
-
+const { height, width } = Dimensions.get("window");
 import styles from "./editAlertStyle";
 import PopUpComponent from "../../shared/popUpComponent";
 import {
@@ -60,7 +60,9 @@ class EditAlertComponent extends Component {
       isEconomy:false,
       isPremium:false,
       isBusiness:false,
-      isFirst:false,     
+      isFirst:false,   
+      isLoader:true,  
+      cabinClassData:{}
     };
   }
 
@@ -99,36 +101,89 @@ class EditAlertComponent extends Component {
     }
   }
 
-  componentDidMount() {
-    data = this.props.route.params.alertData;
-    let searchData = this.props.route.params.data;
+
+
+  renderCabinClass(){
+
+
+    let newArray = []
+  
+
+    let data = this.state.cabinClassData
+
+
+    console.log("insdie cabin class function - - - - - -",data)
+
+    if(data.economy == true){
+       newArray.push("economy")
+    }
+    if(data.premium_economy == true){
+      newArray.push("premium_economy")
+    }
+    if(data.business == true){
+      newArray.push("business")
+    }
+    if(data.first == true){
+      newArray.push("first")
+    }
+
+
+    setTimeout(() => {
+      this.setState({
+        availableClasses:newArray,
+  
+      })
+    }, 1000);
+   
+  }
+
+  componentDidMount = () => {
+      data = this.props.route.params.alertData;
+      let searchData = this.props.route.params.data;
 
 
 
-    this.setState({
-      passengerCount: searchData.passengerCount,
-      selectedIndex: searchData.isReturn ? 1 : 0,
-      departStartDate: moment(searchData.startDate).format("YYYY-MM-DD"),
-      departEndDate: moment(searchData.endDate).format("YYYY-MM-DD"),
-      returnStartDate: searchData.arrivalStartDate
-        ? moment(searchData.arrivalStartDate).format("YYYY-MM-DD")
-        : "",
-      returnEndDate: searchData.arrivalEndDate
-        ? moment(searchData.arrivalEndDate).format("YYYY-MM-DD")
-        : "",
-      classSelectedArray: searchData.classSelected,
-      id: searchData.alertID,
-      airline: searchData.airways,
-      membershipType: searchData.tier,
-      source: searchData.selectedSource,
-      destination: searchData.selectedDestination,
-      availabilityUrl: searchData.availabilityUrl,
-      availableClasses: searchData.availableClasses.split(","),
-      isEconomy:searchData.classSelected[0],
-      isPremium:searchData.classSelected[1],
-      isBusiness:searchData.classSelected[2],
-      isFirst:searchData.classSelected[3],
-    });
+
+    
+      this.setState({
+        passengerCount: searchData.passengerCount,
+        selectedIndex: searchData.isReturn ? 1 : 0,
+        departStartDate: moment(searchData.startDate).format("YYYY-MM-DD"),
+        departEndDate: moment(searchData.endDate).format("YYYY-MM-DD"),
+        returnStartDate: searchData.arrivalStartDate
+          ? moment(searchData.arrivalStartDate).format("YYYY-MM-DD")
+          : "",
+        returnEndDate: searchData.arrivalEndDate
+          ? moment(searchData.arrivalEndDate).format("YYYY-MM-DD")
+          : "",
+        classSelectedArray: searchData.classSelected,
+        id: searchData.alertID,
+        airline: searchData.airways,
+        membershipType: searchData.tier,
+        source: searchData.selectedSource,
+        destination: searchData.selectedDestination,
+        availabilityUrl: searchData.availabilityUrl,
+        isEconomy:searchData.classSelected[0],
+        isPremium:searchData.classSelected[1],
+        isBusiness:searchData.classSelected[2],
+        isFirst:searchData.classSelected[3],
+      });
+
+
+      setTimeout(() => {
+        this.setState({
+          cabinClassData :this.props.cabinClassData
+        })
+      }, 1000);
+     
+    
+      setTimeout(() => {
+        this.renderCabinClass()
+      }, 2000);
+
+      setTimeout(() => {
+        this.setState({isLoader:false})   
+      }, 3000);
 
 
 
@@ -262,7 +317,7 @@ class EditAlertComponent extends Component {
                   departEndDate: endDate,
                 });
               },
-              minDate : "2023-05-03",
+              minDate : new Date(),
               showDateRange: true,
               selectedStartDate: departStartDate
                             ? departStartDate
@@ -273,7 +328,6 @@ class EditAlertComponent extends Component {
         >
           <Text style={styles.dateTextStyle}>
             {`${
-
             !isEmptyString(this.state.departStartDate)
                 ? `${getformattedDate(this.state.departStartDate)}`
                 : STRING_CONST.START_DATE
@@ -348,6 +402,10 @@ class EditAlertComponent extends Component {
   }
   
   renderTravelClass(classType, index) {
+
+
+    // console.log("yes chekc here classType - - - - - - ",classType)
+
     let marginStyle = {};
     const {userInfo} = this.state
 
@@ -410,11 +468,7 @@ class EditAlertComponent extends Component {
             style={[styles.classCheckboxContainer, marginStyle,{
               backgroundColor:"#f6f4e9"
             }]}
-            
-            
             onPress={() => {
-
-
               if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
                         
               let newClassArray = this.state.classSelectedArray;
@@ -501,9 +555,55 @@ class EditAlertComponent extends Component {
       }
     }
   }
+
+
+
+  renderLoader () {
+    return (
+      <Modal
+        transparent={true}
+        animationType={'none'}
+        visible={this.state.isLoader}             
+      >
+        <View style={{flex:1,justifyContent:'center',  
+        backgroundColor: 'rgba(52, 52, 52, 0.4)',
+        alignItems:'center',
+        width:width+36,height:height,
+        marginStart:-scale(20),
+        marginEnd:-scale(27),
+        marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
+        marginBottom:-scale(20),
+        // borderWidth:3,borderColor:"green"
+      }}>
+        <View style={{             
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',          
+        }}>
+          <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
+            <FastImage source={IMG_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+          </View>
+        </View>
+        </View>
+      </Modal>
+    
+    )
+  }
+
+
+
+
+
   travelClassView() {
     const { availableClasses, classSelectedArray, } = this.state;
 
+
+    // console.log("yes check here availableClasses $$$$$$$$ ",availableClasses)
+    // console.log("yes check here classSelectedArray $$$$$$$$ ",classSelectedArray)
 
     const {userInfo} = this.state
 
@@ -513,9 +613,9 @@ class EditAlertComponent extends Component {
  
     let travelData = []
      let economy = availableClasses[0]
-        let premium = availableClasses[3]
-        let business = availableClasses[1]
-        let first  = availableClasses[2]
+        let premium = availableClasses[1]
+        let business = availableClasses[2]
+        let first  = availableClasses[3]
         // let travelData =  [economy?"economy",premium?"premium",business?"business",first?"first"]
         if(economy){
           economy = "economy"
@@ -534,6 +634,7 @@ class EditAlertComponent extends Component {
         travelData[1] = premium
         travelData[2] = business
         travelData[3] = first
+
 
     return (
       <View style={{ marginTop: verticalScale(20) }}>
@@ -689,8 +790,7 @@ class EditAlertComponent extends Component {
             {STRING_CONST.SELECT_RETURN_DATE}
           </Text>
         ) : null}
-
-        {this.travelClassView()}
+          {this.travelClassView()}
       </View>
     );
   }
@@ -747,19 +847,22 @@ class EditAlertComponent extends Component {
     let bronzeMember = userInfo.bronze_member
 
 
-    let bronzeExpireDate = moment(this.state.departStartDate).add(20, 'days').format("YYYY-MM-DD")
-    let silverExpireDate = moment(this.state.departStartDate).add(45, 'days').format("YYYY-MM-DD")
-    let goldExpireDate = moment(this.state.departStartDate).add(90, 'days').format("YYYY-MM-DD")
+    let bronzeExpireDate = moment(this.state.departStartDate).add(19, 'days').format("YYYY-MM-DD")
+    let silverExpireDate = moment(this.state.departStartDate).add(44, 'days').format("YYYY-MM-DD")
+    let goldExpireDate = moment(this.state.departStartDate).add(89, 'days').format("YYYY-MM-DD")
 
 
-    let bronzeExpirertnDate = moment(this.state.returnStartDate).add(20, 'days').format("YYYY-MM-DD")
-    let silverExpirertnDate = moment(this.state.returnStartDate).add(45, 'days').format("YYYY-MM-DD")
-    let goldExpirertnDate = moment(this.state.returnStartDate).add(90, 'days').format("YYYY-MM-DD")
+    let bronzeExpirertnDate = moment(this.state.returnStartDate).add(19, 'days').format("YYYY-MM-DD")
+    let silverExpirertnDate = moment(this.state.returnStartDate).add(44, 'days').format("YYYY-MM-DD")
+    let goldExpirertnDate = moment(this.state.returnStartDate).add(89, 'days').format("YYYY-MM-DD")
 
     // expireDate = new Date(goldExpireDate).getTime()
     let txtForPopup = ""
     let alertDate = moment(this.state.departEndDate).format("YYYY-MM-DD")
     let rtnEndDate = moment(this.state.returnEndDate).format("YYYY-MM-DD")
+
+
+
 
 
     let expireDate = ""
@@ -1117,6 +1220,7 @@ class EditAlertComponent extends Component {
         ? moment(searchData.arrivalEndDate).format("YYYY-MM-DD")
         : ""
     
+
   
     return (
       <View style={styles.buttonViewContainer}>
@@ -1160,8 +1264,8 @@ class EditAlertComponent extends Component {
               },
             ]}
           >
-            {/* {STRING_CONST.SAVE} */}
-            {"Update"}
+            {STRING_CONST.SAVE}
+            {/* {"Update"} */}
           </Text>
         </TouchableOpacity>
           :   <TouchableOpacity
@@ -1181,8 +1285,8 @@ class EditAlertComponent extends Component {
               },
             ]}
           >
-            {/* {STRING_CONST.SAVE} */}
-            {"Update"}
+            {STRING_CONST.SAVE}
+            {/* {"Update"} */}
           </Text>
         </TouchableOpacity>
         }
@@ -1198,7 +1302,10 @@ class EditAlertComponent extends Component {
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
         <View style={{ flex: 1,  }}>
+          
           {this.renderHeader()}
+          {this.renderLoader()}
+
           {this.renderBody()}
           {this.state.showPopUp && (
             <PopUpComponent
@@ -1289,14 +1396,16 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { alerts, findFlight,userInfo } = state;
+
   return {
     alertCancelSuccess: alerts.alertCancelSuccess,
     userInfo: userInfo.userData,
     alertCancelError: alerts.alertCancelError,
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     editAlertSuccess: alerts.editAlertSuccess,
-    editAlertError: alerts.editAlertError
-    
+    editAlertError: alerts.editAlertError,
+    cabinClassData:findFlight.cabinClassData
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditAlertComponent);
