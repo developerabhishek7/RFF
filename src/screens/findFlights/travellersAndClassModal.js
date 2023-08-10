@@ -151,6 +151,12 @@ export default class TravellersAndClassModal extends Component {
     let first = this.state.classTypeArray[3].class
     let isFirstSelected = this.state.classTypeArray[3].isSelected
 
+
+    console.log("yes check the classSelected Array - - - - - - -",this.state.classTypeArray)
+    // console.log("yes check the classSelected Array - - - - - - -",this.state.classTypeArray)
+
+
+
     const {userData,showClassModal}  = this.props;
 
     let goldMember = userData.gold_member
@@ -162,7 +168,6 @@ export default class TravellersAndClassModal extends Component {
         {
           showClassModal ?
           <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
-
           {
             this.state.classTypeArray.map((item, index) => { 
                 return (

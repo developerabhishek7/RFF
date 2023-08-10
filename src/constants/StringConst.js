@@ -94,8 +94,8 @@ export const NO_NOTIFICATION_YET = "No Notifications Yet!";
 export const NO_NOTIFICATION_DESCI = `We’ll notify you when there is something new`;
 export const CANCEL_ALERT = `Are you sure you want to delete this alert?`;
 export const CANCEL_ALERT_ERROR = `"We couldn't cancel your alert. Please make sure you're connected to the internet, and then try again."`;
-export const ALERT_CREATED = `Alert is Successfully Created`;
-export const CREATE_ALERT_MSG = `You don't have any alerts at the moment. Please create one.`;
+export const ALERT_CREATED = `Your Alert is now setup. Happy flying!`;
+export const CREATE_ALERT_MSG = `You don't have any Alerts set up right now. Don't forget to set them up so you don't miss out on reward seats`;
 export const CANCEL_ALERT_SUCCESS_MSG = `Your alert has been cancelled.`;
 export const CANCEL_ALERT_SUCCESS_SUBTEXT =
   "Feel free to set it up again if you change your mind.";
@@ -136,10 +136,10 @@ export const SEAT_AVAILABILITY = `Seat Availability`;
 export const PEAK_FARE = `Peak Fare`;
 export const OFF_PEAK_FARE = `Off-Peak Fare`;
 export const HIGHLIGHT_OFF_PEAK = `Highlight Off-Peak`;
-export const OUT_BOUND_SEATS = `Outbound Seats`;
+export const OUT_BOUND_SEATS = `Departure Seats`;
 export const RETURN_SEATS = `Return Seats`;
-export const DEPARTURE_DATE_RANGE = `Outbound Date Range`;
-export const RETURN_DATE_RANGE = `Inbound Date Range`;
+export const DEPARTURE_DATE_RANGE = `Departure Date Range`;
+export const RETURN_DATE_RANGE = `Return Date Range`;
 export const VERIFY_EMAIL = `Please verify your email to create alerts. `;
 export const SELECT_DEPARTURE_DATE = `Please select departure date`;
 export const SELECT_RETURN_DATE = `Please select return date`;
@@ -210,7 +210,7 @@ export const EDIT_ALERTS_TITLE = "Edit Alerts";
 export const FIND_FLIGHT_TITLE = "Find Flights";
 export const MAP_SEARCH_TITLE = "World Map Search";
 export const MANAGE_CONTACT_DETAILS = "Manage Contact Details";
-export const NOTIFICATION_SETTINGS = "Notification Settings";
+export const NOTIFICATION_SETTINGS = "Alert Notification Settings";
 export const PERSONAL_INFO = "Personal Info";
 export const UPDATE_INFO = "Update Profile";
 
@@ -366,13 +366,13 @@ export const SKIP = "Skip";
 // export const GET_REWARD_SEATS_DESCRIPTION = `Increase your chances with Reward Flight Finder`;
 
 
-export const QUICKLY = `Quickly & Easily search any route`
+export const QUICKLY = `Quickly & easily search any route`
 export const QUICKLY_DES = `We support all direct BA operated routes`
 
-export const DATES_NOT_AVAILABLE = `Dates not available? Set up an alert!`
+export const DATES_NOT_AVAILABLE = `Dates not available? Set up an Alert!`
 export const DATES_NOT_AVAILABLE_DES = `We'll check once daily for free, and notify you if seats open up`
 
-export const QUICKLY_TRAVLE = `Quickly See where you can travel`
+export const QUICKLY_TRAVLE = `Quickly see where you can travel`
 export const QUICKLY_TRAVLE_DES = `Find all available routes from a given destination`
 
 export const GET_REWARDS = `Get the reward seats you deserve`
@@ -508,7 +508,7 @@ export const OFF = "Off";
 export const IGNORE = "Ignore";
 export const BRITISH_AIRWAYS = "British Airways";
 export const AMERICAN_AIRLINES = "American Airlines";
-export const AIRLINE_MEMBERSHIP_TIERS = "Airline Membership Tiers";
+export const AIRLINE_MEMBERSHIP_TIERS = "Airline Membership Tier";
 export const CONFIRM_AIRLINE_TIERS = "Confirm Your Airline Membership Tier"
 export const AIRLINE_MESSAGE = "We’ve moved this setting away from the search bar.If you need to update it in the future you can do so in your User Dashboard."
 export const BRONZE_ALERT_INFO = "Bronze Member can create alert with Economy Class only."
@@ -891,7 +891,7 @@ export const approxNumberFlights = [
   {
     value: '6+',
     label: '6+'
-  }
+  },
 ]
 
 export const genderOptions = [
@@ -903,10 +903,10 @@ export const genderOptions = [
     value: 'Female',
     label: 'Female'
   },
-  {
-    value: 'Other',
-    label: 'Other'
-  },
+  // {
+  //   value: 'Other',
+  //   label: 'Other'
+  // },
   {
     value: 'Other',
     label: 'I\'d prefer not to say'

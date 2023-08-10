@@ -3,7 +3,7 @@
  * All actions of Calendar Screen
  *
  */
-import { securePost, nodeSecureGet,securePostForAlert, securePostForUser} from "../services/apiService";
+import { securePost, nodeSecureGet,securePostForUser} from "../services/apiService";
 import * as API_CONST from "../helpers/config";
 import { Alert  } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -23,6 +23,7 @@ import {
   RESET_CALENDAR_DATA
 
 } from "../constants/ActionConst";
+import {BASE_NODE_URL} from '../helpers/config'
 import * as CommonActions from './commonActions';
 import {NETWORK_ERROR} from '../constants/StringConst'
 import { getUserInfo } from "./userActions";
@@ -41,7 +42,7 @@ export function createAlert(body) {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader
       const token = API_CONST.AUTH0RIZATION_TOKEN;
-      const res = await securePostForAlert(`/v1/alerts`, token, body, true);
+      const res = await securePostForUser(`/v1/alerts`, token, body, true);
      
       if (res && res.status == 201) {
         await dispatch({
@@ -78,9 +79,7 @@ export function createAlert(body) {
 
 export function getAirlinesAvailability(propsData,type) {
 
- 
-  let NEW_URL = `${API_CONST.BASE_NODE_URL}/calendar-availability/${propsData.airline}?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}&from=executive` 
-  
+  let NEW_URL = `${API_CONST.BASE_NODE_URL}/calendar-availability/${propsData.airline}?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}&from=executive`   
   console.log("NEW URL ‹‹‹‹‹‹‹‹ ",NEW_URL)
     return async (dispatch, getState) => {
     try {
@@ -169,9 +168,8 @@ export function getPointsAvailability(searchData) {
 
 
 export function getPeakOffPeakData() {  
-  // let URL = `https://hb4rj6hzo7.execute-api.eu-west-2.amazonaws.com/staging/getPeakDates/british-airways`
  
-  let URL = `https://lu7oe93qmi.execute-api.eu-west-2.amazonaws.com/production/getPeakDates/british-airways`
+  let URL = `${BASE_NODE_URL}/getPeakDates/british-airways`
  
   return async (dispatch, getState) => {
     try {

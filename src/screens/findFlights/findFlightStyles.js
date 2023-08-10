@@ -208,7 +208,7 @@ export default StyleSheet.create({
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(20),
     color: colours.darkBlueTheme,
-    marginTop: verticalScale(60),
+    marginTop: verticalScale(30),
     alignSelf: "center",
     width:width*0.6,
     textAlign:'center',
@@ -371,7 +371,8 @@ export default StyleSheet.create({
     borderRadius:scale(9),
     justifyContent:"center",
     alignItems:"center",
-    marginStart:scale(5),marginEnd:scale(6),
+    marginStart:scale(5),
+    marginEnd:scale(6),
     backgroundColor:"#ffffff"
     // borderBottomWidth: 1,
   },

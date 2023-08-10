@@ -89,7 +89,7 @@ class MapComponent extends Component {
 
 
     // MapboxGL.setAccessToken(CONFIG.MAPBOX_TOKEN);
-    MapboxGL.setTelemetryEnabled(true);
+    // MapboxGL.setTelemetryEnabled(true);
     
     let uuid_Key = uuid.v4()
     let userId = this.props.userInfo.id
@@ -198,15 +198,14 @@ class MapComponent extends Component {
     // console.log("yes check here point s data ###### ",JSON.stringify(singleMap))
 
     let data1 = JSON.stringify(singleMap)
-    let baPoints =  []
-    let ssPoints = []
+    let pointsDatBA =  []
+    let pointsDataSS = []
 
-    let pointsData = []
     if(data1 && Object.keys(data1).length !== 0){
       let data = JSON.parse(data1)
-         baPoints =  data.points.BA
-     ssPoints = data.points.SS
-     pointsData = [...baPoints, ...ssPoints]
+      pointsDatBA =  data.points.BA
+      pointsDataSS = data.points.SS
+   
      
     }
 
@@ -226,7 +225,8 @@ class MapComponent extends Component {
             auditData: JSON.stringify(auditData),    
             tripType:this.state.tripType,
             sourceCode:this.state.sourceCode   ,
-            pointsData:pointsData
+            pointsDatBA:pointsDatBA,
+            pointsDataSS:pointsDataSS
           });
         }
       }

@@ -52,6 +52,11 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 }
 
+project.ext.react = [
+    enableHermes: true
+]
+
+
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
@@ -137,21 +142,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:21.3.0'
     // implementation("com.google.firebase:firebase-crashlytics")
 
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:6.1.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:6.3.0'
 
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-core:0.2.1'
-
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-core:4.0.0'
 
     implementation 'com.android.support:multidex:1.0.3'
-    //    implementation 'com.android.support:design:28.0.0'
-    //implementation 'com.google.android.material:material:1.0.0-rc01'
     implementation 'com.google.android.material:material:1.10.0-alpha05'
 
-    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.10.0")
     
     implementation 'io.branch.sdk.android:library:4.+'
 
-    implementation 'androidx.work:work-runtime-ktx:2.8.1'
+    // implementation 'androidx.work:work-runtime-ktx:2.7.0'
+    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha01'
 
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")

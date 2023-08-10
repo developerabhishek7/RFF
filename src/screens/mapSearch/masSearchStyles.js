@@ -183,7 +183,7 @@ export default StyleSheet.create({
     // fontSize: scale(14),
     fontSize:scale(20),
     color: colours.darkBlueTheme,
-    marginTop: verticalScale(60),
+    marginTop: verticalScale(30),
     alignSelf: "center",
     marginBottom: verticalScale(20),
     fontWeight: "600",

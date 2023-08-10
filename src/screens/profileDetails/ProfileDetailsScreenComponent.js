@@ -10,7 +10,8 @@ import {
   BackHandler,
   Platform,
   Modal,
-  SafeAreaView
+  SafeAreaView,
+
 } from "react-native";
 import Validators from "../../helpers/Validator";
 import FastImage from 'react-native-fast-image'
@@ -38,6 +39,9 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import { getUserInfo } from "../../actions/userActions";
 import axios from 'axios'
 import { Alert } from "react-native";
+
+
+import { URL,USER_API_URL } from "../../../env.json";
 
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
@@ -425,9 +429,7 @@ uploadImage = async (imageData) => {
       }
       );
 
-      let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-     
-      // let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+      let url = `${USER_API_URL}/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
 
       var config = {
@@ -550,7 +552,7 @@ isAlert = () => {
   }
   renderRow(option) {
     return (
-      <View style={{ padding: scale(15) }}>
+      <View style={{ padding: scale(15),backgroundColor:"#FFF" }}>
         <Text style={{ fontSize: scale(14), color: colours.darkBlueTheme }}>
           {option.label}
         </Text>
@@ -1006,7 +1008,7 @@ isAlert = () => {
           style={[
             styles.textInputView,
             {
-              marginTop: scale(5),
+              marginTop:scale(5),
               borderBottomColor:
                 submitPressed && !ageBand
                   ? colours.redColor
@@ -1016,11 +1018,13 @@ isAlert = () => {
           dropdownStyle={{
             width: scale(302),
             borderColor: "gray",
-            height: STR_CONST.ageBandOption.length * 50,
+            height: STR_CONST.ageBandOption.length * 30,
             borderTopWidth: 0.5,
             borderTopColor:showBorder == 1 ? "gray": "skyblue",
             borderBottomColor:showBorder == 1 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderBottomWidth:0.5,
+            marginTop:Platform.OS == "android" ? scale(-24) : scale(1)
+          
           }}
           onSelect={(option) => {
             this.setState({
@@ -1086,16 +1090,19 @@ isAlert = () => {
           ]}
           dropdownStyle={{
             width: scale(302),          
-            height: STR_CONST.genderOptions.length * 50,                     
+            height: STR_CONST.genderOptions.length * 30,   
+                         
             borderColor: "gray",       
             borderTopWidth: 0.5,
             borderTopColor:showBorder == 2 ? "gray": "skyblue",
             borderBottomColor:showBorder == 2 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderBottomWidth:0.5,
+            marginTop:Platform.OS == "android" ? scale(-24) : scale(1)
+
           }}
           onSelect={(option) => {
-            this.setState({
-              gender: STR_CONST.genderOptions[option],
+            this.setState({                            
+              gender: STR_CONST.genderOptions[option],               
             });
           }}
           renderRow={(option, index, isSelected) => {
@@ -1160,12 +1167,14 @@ isAlert = () => {
           ]}
           dropdownStyle={{
             width: scale(302),          
-            height: STR_CONST.genderOptions.length * scale(36),                     
+            height: STR_CONST.genderOptions.length * 30 ,                     
             borderColor: "gray",       
             borderTopWidth: 0.5,
             borderTopColor:showBorder == 3 ? "gray": "skyblue",
             borderBottomColor:showBorder == 3 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderBottomWidth:0.5,
+            marginTop:Platform.OS == "android" ? scale(-24) : scale(1)
+
           }}
           onSelect={(option) => {
             this.setState({
@@ -1299,13 +1308,16 @@ isAlert = () => {
           ]}
           dropdownStyle={{  
             width: scale(302),          
-            height: STR_CONST.genderOptions.length * scale(36),                     
+            height: STR_CONST.genderOptions.length * 30,                     
             borderColor: "gray",       
             borderTopWidth: 0.5,
             borderTopColor:showBorder == 4 ? "gray": "skyblue",
             borderBottomColor:showBorder == 4 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderBottomWidth:0.5,
+            marginTop:Platform.OS == "android" ? scale(-24) : scale(1)
+
           }}
+        
           onSelect={(option) => {
             this.setState({
               travellingAbroadInNext12Months:
@@ -1351,26 +1363,19 @@ isAlert = () => {
  <ImageBackground source={IMG_CONST.EDIT_BG} style={{justifyContent:'center',alignItems:"center",marginTop:scale(20),
  width:"100%",height:"100%",
  marginTop:scale(-20),
+ 
  }} 
         imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
           resizeMode="cover"
         > 
-{this.renderHeader()}
-
-
+          {this.renderHeader()}
           {/* <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always"> */}
           {this.renderLoader()}
-         
           {this.profileImage()}
-
           <KeyboardAwareScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always" extraHeight={120} extraScrollHeight={120}
-            // showsHorizontalScrollIndicator={false}
-            // horizontal={false}
             showsVerticalScrollIndicator={false}
-
           >
-     
-          <View style={{ flex: 1 ,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center",}}>
+          <View style={{ flex:1,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center",}}>
             <View
               style={{ marginTop: verticalScale(32) }}
             >

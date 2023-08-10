@@ -124,7 +124,7 @@ export default StyleSheet.create({
   nextRowContainer: {
     flexDirection: "row",
     marginTop: scale(5),
-
+    // borderWidth:1
   },
 
   iconContainer: {
@@ -145,6 +145,7 @@ export default StyleSheet.create({
     fontFamily: appFonts.INTER_REGULAR,
     color: colours.darkBlueTheme,
     marginLeft: scale(8),
+    // marginTop:scale(5)
   },
 
   line: {
