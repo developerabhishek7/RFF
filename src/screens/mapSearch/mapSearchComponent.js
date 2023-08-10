@@ -523,6 +523,9 @@ export default class FindFlightComponent extends Component {
   }
 
   async validateFindFlightData() {
+
+
+
     this.setState({
       isSearchClicked: true,
     });
@@ -552,6 +555,9 @@ export default class FindFlightComponent extends Component {
           !this.props.userInfo.gold_member
         ) {
           if (isAndroid() || isIOS()) {
+
+            console.log("yes hcekc here inside is Androd  -  - === =",)
+
             // let loggedInUserPostHog = {}
             // loggedInUserPostHog["user"] = {
             //   access_token: this.state.access_token
@@ -639,6 +645,8 @@ export default class FindFlightComponent extends Component {
             }
           }   
           
+          console.log("yes getting here on onseach - - - - - - -")
+
           const trackData = {
             "Search Type": 'Map Page',
             "Search Parameters": {   
@@ -659,10 +667,7 @@ export default class FindFlightComponent extends Component {
               inboundEndDate: returnEndDate ? returnEndDate : 'N/A'
             },
           }
-
-     
           // PostHog.capture('Search', trackData);
-        
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }
       }
@@ -1208,7 +1213,7 @@ export default class FindFlightComponent extends Component {
     const { navigation, } = this.props;    
     let bronzeMember = userData.bronze_member     
     return (
-      <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
+      <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
         <MyStatusBar  />
         <SafeAreaView style={styles.container}>
           {this.renderHeader()}
@@ -1378,7 +1383,7 @@ export default class FindFlightComponent extends Component {
             )}
         </ScrollView>
       </SafeAreaView>
-      </FastImage>
+      </ImageBackground>
     );
   }
 }

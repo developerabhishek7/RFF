@@ -346,41 +346,6 @@ export default class FindFlightComponent extends Component {
   // }
 
 
-  renderLoader () {
-    return (
-      <Modal
-        transparent={true}
-        animationType={'none'}
-        visible={this.state.isLoader}             
-      >
-        <View style={{flex:1,justifyContent:'center',  
-        backgroundColor: 'rgba(52, 52, 52, 0.4)',
-        alignItems:'center',
-        width:width+36,height:height,
-        marginStart:-scale(20),
-        marginEnd:-scale(27),
-        marginTop:-scale(20),
-        marginBottom:-scale(20),
-        // borderWidth:3,borderColor:"green"
-      }}>
-        <View style={{             
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          alignItems: 'center',
-          justifyContent: 'center',          
-        }}>
-          <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
-          </View>
-        </View>
-        </View>
-      </Modal>
-    )
-  }
-
   componentDidUpdate = async (prevProps) => {
 
     let userId = await AsyncStorage.getItem("userId");
@@ -1494,6 +1459,8 @@ export default class FindFlightComponent extends Component {
                     });
                   }}
                   onDonePressed={(data, array, travellersCount) => {
+               
+               console.log("yes check both data and array - -  - - - -",data,          array)
                     this.setState({
                       classObject: data,
                       classSelected: array,
@@ -1549,7 +1516,7 @@ export default class FindFlightComponent extends Component {
     let bronzeMember = userData.bronze_member
 
        return (
-          <FastImage source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
+          <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
            
           <SafeAreaView >
           <MyStatusBar  />
@@ -1657,7 +1624,7 @@ export default class FindFlightComponent extends Component {
             </ScrollView>
           </View>
           </SafeAreaView>
-          </FastImage>
+          </ImageBackground>
     );
   }
 }

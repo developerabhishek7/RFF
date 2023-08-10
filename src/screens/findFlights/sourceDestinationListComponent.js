@@ -17,7 +17,7 @@ import { colours } from "../../constants/ColorConst";
 import { Dimensions } from 'react-native';
 import * as STRING_CONST from "../../constants/StringConst";
 import FastImage from 'react-native-fast-image'
-
+import {SVG_URL} from '../../helpers/config'
 const { height, width } = Dimensions.get('window');
 import { appFonts, LOCATION_NOT_AVAILABLE } from "../../constants/StringConst";
 import ScreenHeader from "../../components/header/Header";
@@ -149,8 +149,7 @@ export default class SourceDestinationListComponent extends Component {
       countryName = itemObject.country_name
     }
 
-    let url = `http://purecatamphetamine.github.io/country-flag-icons/3x2/${itemObject.country_code}.svg`
-
+ 
     return (
       <View>
         {itemObject.airports &&
@@ -162,7 +161,7 @@ export default class SourceDestinationListComponent extends Component {
               <SvgUri
                width={scale(20)}
                height={scale(20)}
-               source={{uri:`https://purecatamphetamine.github.io/country-flag-icons/3x2/${itemObject.country_code}.svg`}}
+               source={{uri:`${SVG_URL}${itemObject.country_code}.svg`}}
              /> 
           </View> 
               : null
@@ -175,7 +174,9 @@ export default class SourceDestinationListComponent extends Component {
           }}
             activeOpacity={1}
              underlayColor={colours.dimLightBlueBackgroundColor}
-            style={{ marginTop: verticalScale(10), borderRadius: scale(5), paddingHorizontal: scale(10), paddingVertical: verticalScale(10), backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
+            style={{ marginTop: verticalScale(10), borderRadius: scale(5), paddingHorizontal: scale(10),
+            width:scale(290),borderWidth:0, 
+            paddingVertical: verticalScale(10), backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
                <Text style={styles.membershipSubListTextStyle}>{this.getLocationText(itemObject, countryName)} </Text>
           </TouchableHighlight>
           </View>

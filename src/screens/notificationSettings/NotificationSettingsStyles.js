@@ -24,6 +24,10 @@ export default StyleSheet.create({
     color: colours.greyText,
     fontFamily: appFonts.INTER_REGULAR,
     marginTop:verticalScale(5),
+    borderWidth:0,
+    width:scale(270),
+    fontWeight:"600",
+    alignSelf:"center",
     margin:scale(7),marginBottom:scale(20)
   },
   textInputHeading: {
@@ -91,7 +95,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: scale(5), 
+    marginBottom: scale(0),
+    borderWidth:0 
     // margin:scale(9)
 
 

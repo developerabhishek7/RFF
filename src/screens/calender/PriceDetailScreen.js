@@ -15,6 +15,8 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import ModalDropdown from "react-native-modal-dropdown";
 import * as STR_CONST from "../../constants/StringConst";
 import FastImage from 'react-native-fast-image'
+import {BA_EXE_URL,SKY_SCANNER_URL} from '../../helpers/config'
+
 
 import styles from "./PriceDetailsStyle";
 import {
@@ -132,8 +134,6 @@ componentDidMount(){
   const {selectedSource, selectedDestination,searchData} = this.state
 
   setTimeout(() => {
-
-    console.log("yes check here prevSelected Date = =  = = = =",searchData)
 
     this.setState({
       airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
@@ -801,7 +801,6 @@ componentDidMount(){
 
  
 
-  // https://www.skyscanner.co.in/transport/flights/lon/abz/230325/230329/?adults=1&adultsv2=1&cabinclass=economy&iym=2303&oym=2303&rtn=1&selectediday=29&selectedoday=25
    handleSkyScannerRedirection = () => {
     // const { dId, aId, numberOfPassengers, jType, date, cabinCode, returnDate } = data || {}  
     
@@ -848,23 +847,22 @@ componentDidMount(){
     let url = ""
      if(source){
       if(trip_type == "return"){
-         url = `https://www.skyscanner.co.in/transport/flights/${source}/${destination}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
+         url = `${SKY_SCANNER_URL}/${source}/${destination}/${dYear}${dDate}/${aYear}${aDate}/?adults=${numberOfPassengers}&adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&iym=${aYear}&selectediday=${aDate}&rtn=1`
       
         console.log("yes chec here url ##### ",url)
         }
       if(trip_type == "one_way"){
-         url = `https://www.skyscanner.co.in/transport/flights/${source}/${destination}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
+         url = `${SKY_SCANNER_URL}/${source}/${destination}/${dYear}${dDate}/?adultsv2=${numberOfPassengers}&cabinclass=${skyScannerCabinCode}&oym=${dYear}&selectedoday=${dDate}&rtn=0`
          console.log("yes chec here url ##### ",url)
         }
           //  console.log("yes checking what URL is GETTING ########     ",url)
        Linking.openURL(url, '_blank') 
      }
      else{
-        Linking.openURL("https://www.skyscanner.co.in/transport/flights/", "_blank")
+        Linking.openURL(`${SKY_SCANNER_URL}/", "_blank`)
      }
   }
 
-  // https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=LON&destinationPoint=NYC&departInputDate=24/03/2023&returnInputDate=29/03/2023&oneWay=false&RestrictionType=Restricted&NumberOfAdults=1&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=M
    handleBaRedirection = () => {
     // const { dId, aId,  jType, date, returnDate } = data || {}   
     
@@ -902,17 +900,16 @@ componentDidMount(){
     const returnInputDate =  moment(returnStartDate).format('DD/MM/YYYY')
   
      if(source){
-      const url = `https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${source}&destinationPoint=${destination}&departInputDate=${departInputDate}${!oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
-      console.log("yes what url is getting on book on BA        - -- - - ",url)
+      const url = `${BA_EXE_URL}_gf/en_gb?eId=100002&pageid=PLANREDEMPTIONJOURNEY&tab_selected=redeem&redemption_type=STD_RED&amex_redemption_type=&upgradeOutbound=true&WebApplicationID=BOD&Output=&hdnAgencyCode=&departurePoint=${source}&destinationPoint=${destination}&departInputDate=${departInputDate}${!oneWay && departInputDate ? `&returnInputDate=${returnInputDate}` : ''}&oneWay=${oneWay}&RestrictionType=Restricted&NumberOfAdults=${numberOfPassengers}&NumberOfYoungAdults=0&NumberOfChildren=0&NumberOfInfants=0&aviosapp=true&CabinCode=${cabinCode}`
    
       Linking.openURL(url, '_blank')
      }else{
-      Linking.openURL("https://www.britishairways.com/travel/redeem/execclub/", "_blank")
+      Linking.openURL(`${BA_EXE_URL}", "_blank`)
      }
   }
 
 
-  renderBody() {
+    renderBody() {
     const { source, destination } = this.state;
 
     // let PrevSource = JSON.stringify(source)
@@ -1077,12 +1074,11 @@ componentDidMount(){
   buttonView() {
  
     const {headerTxt,departStartDate,selectedDate,returnStartDate,selectedSource,selectedDestination,prevSelectedSource,prevSelectedDestination,selectedIndex} = this.state
-  
-
+    
     return ( 
       <View style={styles.buttonViewContainer}>
        {
-        (departStartDate || selectedDate ||   returnStartDate) && (selectedSource!= null || prevSelectedSource!=null) &&  (selectedDestination!=null || prevSelectedDestination !=null)  ?
+        (selectedIndex == 0 &&  selectedDate || departStartDate) || (selectedIndex == 1 && returnStartDate) && (selectedSource!= null || prevSelectedSource!=null) &&  (selectedDestination!=null || prevSelectedDestination !=null)  ?
         <TouchableOpacity
         style={styles.checkOnAirlineButton}
         onPress={() => {
@@ -1275,7 +1271,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { alerts, findFlight } = state;
-  console.log("-------------------map state to props function ##############       ",findFlight.cabinClassData)
+  // console.log("-------------------map state to props function ##############       ",findFlight.cabinClassData)
    return {
     alertCancelSuccess: alerts.alertCancelSuccess,
     alertCancelError: alerts.alertCancelError,

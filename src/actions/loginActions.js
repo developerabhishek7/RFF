@@ -22,6 +22,7 @@ import {
  import { NETWORK_ERROR } from "../constants/StringConst";
  import { getAccessToken } from "../constants/DataConst";
  import { getUserInfo } from "./userActions";
+import {Alert} from 'react-native'
  
  export function setLoginStatus(loginStatus) {
    return async (dispatch) => {
@@ -120,13 +121,10 @@ import {
  
  export function signIn(body, successCallBack, errorCallBack) {
    return async (dispatch, getState) => {
-
-    console.log("yes check here inside the sign in function ####### ",body)
-
      try {
        dispatch(CommonActions.startLoader()); // To start Loader
        const authToken = API_CONST.AUTH0RIZATION_TOKEN;
-       const data = await securePostForUser(`/v1/users/login`, authToken, body, true); 
+       const data = await securePostForUser(`/v1/users/login`, authToken, body, true);  
        if (data.status === 200) {
        let res = await data.json()
         const authorizationHeader = res.accesstoken;
@@ -139,7 +137,8 @@ import {
            payload: { isLoggedIn: true, loginError: "" },
          });
          dispatch(CommonActions.stopLoader()); // To stop Loader
-       } else {
+       } 
+       else {
          dispatch(CommonActions.stopLoader()); // To stop Loader
          await dispatch({
            type: LOGIN_ERROR,

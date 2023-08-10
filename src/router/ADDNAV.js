@@ -44,11 +44,9 @@ import DrawerView from '../screens/Drawer/drawerModal'
 // import Test from '../../Test'
 import * as IMAGE_CONST from "../constants/ImageConst";
 import FlightDetailsCompoent from '../screens/calender/flightDetailsContainer'
-// import MoreOptions from '../screens/moreoptions'
 import SplashComponent from '../screens/splash/SplashComponent'
 import { connect } from "react-redux";
 import scale, { verticalScale } from '../helpers/scale'
-import CheckParamScrenn from '../screens/calender/checkParamScrenn';
 import FindFlightComponent from '../screens/findFlights/findFlightComponent';
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +54,8 @@ const Drawer = createDrawerNavigator();
 
 import NavigationService from "../utils/NavigationService";
 import { navigationRef } from './RouteNavigation';
+
+import calendarTest from '../screens/calender/calendarTest';
 
 
 // const Drawer = createDrawerNavigator();
@@ -221,6 +221,15 @@ const drawerViewModel = (navigation) => {
 
 
 <Stack.Screen
+          name="calendarTest"
+          component={calendarTest}
+          options={{
+            headerShown: false
+          }}
+        />
+
+
+<Stack.Screen
           name="FlightDetailsCompoent"
           component={FlightDetailsCompoent}
           options={{
@@ -282,13 +291,6 @@ const drawerViewModel = (navigation) => {
         <Stack.Screen
           name="Alerts"
           component={AlertsScreen}
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="checkParamScrenn"
-          component={CheckParamScrenn}
           options={{
             headerShown: false
           }}

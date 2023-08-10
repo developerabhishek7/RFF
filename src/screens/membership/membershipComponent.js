@@ -30,7 +30,7 @@ import {
   getSilverFeatures,
   getBronzeFeatures,
 } from "../../utils/commonMethods";
-import { URL } from "../../../env.json";
+import { URL,APP_LINK } from "../../../env.json";
 import moment from "moment";
 import RNRestart from 'react-native-restart'; 
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
@@ -207,126 +207,6 @@ class MembershipComponent extends Component{
     return daysLeft
   }
 
-  membershipView  =  async() => {
-    const {userData} = this.props
-    let currentPlan = ""
-    let userId = ""
-    let yearly = ""
-    let bronze_member = ""
-    let current_subscription_expiry = ""
-    let cancelled_subscription = ""
-    let gold_to_silver_downgrade = "" 
-    let current_plan =  ""
-    let txt = ""
-    // if(userData && Object.keys(userData).length !== 0){
-    //    currentPlan = userData.current_plan;
-    //    userId = userData.id;
-    //    yearly = userData.current_plan.period_unit
-    //    bronze_member = userData.bronze_member
-    //    txt = ""
-    //    current_subscription_expiry = userData.current_subscription_expiry
-    //    current_plan = userData.current_plan.on_trial
-    //    cancelled_subscription = userData.cancelled_subscription
-    //    gold_to_silver_downgrade = userData.gold_to_silver_downgrade
-     
-    // }
-    // const today = moment().format('DD-MM-YYYY')
-    // const todaysdate = moment(today, 'DD-MM-YYYY')
-    // const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
-    // const datediff = moment(eventdate, 'DD-MM-YYYY')
-    // const daysLeft = datediff.diff(todaysdate, 'days')
- 
-    // let expireTime =   moment.unix(current_subscription_expiry).format('MMMM Do, YYYY')
-    // if(current_subscription_expiry && current_plan){
-    //   txt = `${daysLeft} days left of free trial`
-    // }
-    // if(cancelled_subscription && current_subscription_expiry) {
-    //    txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
-    // }
-    // let silver_member = userData.silver_member
-    // let gold_member = userData.gold_member
-    return (
-      <View>
-        {/* <View style={styles.emailIdsInnerView}>
-           {
-            txt ?
-            <View>
-            <Text style={styles.memberText}>
-              {
-                !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
-                <Fragment>
-                 {this.state.member}
-                {
-                  yearly == "year" ? " Yearly" : " Monthly"
-                }
-                </Fragment>
-                : "Bronze"
-              }
-            </Text>
-            <Text style={[styles.memberText1,{fontSize:scale(13),color:colours.darkBlueTheme}]}>  
-              {txt ?  `(${txt})` :  ""}
-            </Text>
-            </View>
-            : 
-            <View>
-            <Text style={styles.memberText}>
-              {
-                !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
-                <Fragment>
-                 {this.state.member}
-                {
-                  yearly == "year" ? " Yearly" : " Monthly"
-                }
-                </Fragment>
-                : "Bronze"
-              }
-            </Text>
-            </View>
-          } 
-         {              
-               isAppReviewSuccess  == false|| buildVersion == 0 ?
-               <Fragment>
-             <Menu
-              style={{ marginTop: verticalScale(25), width:scale(155) }}
-              ref={this.setMenuRef}
-              button={
-                <TouchableOpacity
-                  style={{ paddingHorizontal: scale(15), marginTop: verticalScale(5) }}
-                  onPress={() => {
-                    this.showMenu();
-                  }}
-                >
-                <FontAwesome name="more-vertical" 
-                    color={colours.darkBlueTheme}
-                    size={scale(22)} />
-                </TouchableOpacity>
-              }
-            >
-                 <MenuItem
-                onPress={() => {
-                  this.hideMenu();
-                  this.reloaderApp()
-                  let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${this.state.accesstoken}&id=${this.state.userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
-                  Linking.openURL(
-                    url
-                  );
-                }}
-                style={styles.menuStyle}
-                textStyle={styles.menuTextStyle}
-              >
-                {currentPlan && currentPlan.chargebee_plan_id == "gold-free"
-                  ? STRING_CONST.CANCEL_TRIAL
-                  : STRING_CONST.CHANGE_PLAN}
-              </MenuItem>
-            </Menu>
-            </Fragment> : null
-          } 
-        </View> */}
-        {/* <View style={styles.line}
-        /> */}
-      </View>
-    );
-  }
 
 
 
@@ -452,7 +332,7 @@ class MembershipComponent extends Component{
                 this.reloaderApp()
                 const accesstoken = await getAccessToken();
                 const userId = await getUserId()
-                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
                 Linking.openURL(
                   url
                 );
@@ -594,7 +474,7 @@ class MembershipComponent extends Component{
             const accesstoken = await getAccessToken();
             const userId = await getUserId()
             this.reloaderApp()
-            let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${'https://rewardflightfinder.app.link/hNWhSC7mzxb'}`
+            let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
             Linking.openURL(
               url
             );
@@ -620,7 +500,6 @@ class MembershipComponent extends Component{
           {this.renderHeader()}
           <ScrollView style={styles.container}>
             <View style={{ marginHorizontal: scale(20) }}>
-              {/* {this.membershipView()} */}
               {this.membershipViewList()}
               {this.featureList()}
               {!userData.gold_member && this.upgradeView()}

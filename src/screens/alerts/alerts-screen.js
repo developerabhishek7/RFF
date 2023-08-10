@@ -41,10 +41,10 @@ import { getStoreData, getUserId } from "../../constants/DataConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 
-// import { sendAuditData } from "../../actions/findFlightActions";
 import {
   sendAuditData,
-  getFlightSchedule
+  getFlightSchedule,
+  getCabinClass
 } from "../../actions/findFlightActions";
 var uuid = require("react-native-uuid");
 import {
@@ -144,7 +144,6 @@ function makeUpperCaseAfterSpace(str) {
 
 function travelClassView(travelClass) {
 
-  console.log("yes check here trackeClass - - - -  - - ",travelClass)
 
   return (
     <View style={[styles.travelClassView,
@@ -152,7 +151,6 @@ function travelClassView(travelClass) {
         width:travelClass.length > 1 ? scale(340) : scale(190),
     }]}>
       {travelClass.map((cabinClass) => {
-        console.log("yes check here cabin calss - - - - - -",cabinClass)
 
         return (
           <View
@@ -353,7 +351,6 @@ const AlertCard = (props) => {
   let travel_classes = props.travelClass.split(",");
 
 
-  console.log("ye sbefoer e  - - - -",travelClass)
 
   return (  
     //   <ImageBackground
@@ -537,7 +534,7 @@ const AlertCard = (props) => {
           </View>
           <View
             style={[
-              styles.nextRowContainer,
+              styles.rowContainer,
               {
                 marginLeft: scale(20),
                 borderLeftColor: colours.lightGreyish,
@@ -1263,8 +1260,6 @@ class AlertsScreen extends React.Component {
             style={{ marginTop: verticalScale(20) }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              // console.log("inside the rende method  - - - - -",item),
-
               <AlertCard
                 cancelAlert={this.confirmCancelAlert}
                 {...item}
@@ -1276,7 +1271,9 @@ class AlertsScreen extends React.Component {
                     source: searchData.sourceCode,
                     destination: searchData.destinationCode,
                   }                  
-                  let auditData = await this.getAuditData(searchData);                
+                
+                  let auditData = await this.getAuditData(searchData);   
+                
                   this.props.getAirlinesAvailabilityAction(searchData);
                   this.props.sendAuditDataAction(auditData);
                   this.props.getPointsAvailabilityAction(searchData)
@@ -1285,15 +1282,22 @@ class AlertsScreen extends React.Component {
                 showMenu={this.state.showMenu}
                 AlertId={this.state.AlertId}
                 onEditPress={() => {
+                  let searchData = this.getSearchData(item);                  
+                  let data1 = {
+                    source: searchData.sourceCode,
+                    destination: searchData.destinationCode
+                  }
+                  this.props.getCabinClassAction(data1)
                   this.setState({
                     showMenu:false
                   })
-                     let data = this.getSearchData(item);
-                  this.props.navigation.navigate(STR_CONST.EDIT_ALERT, {
-                    alertData: item,
-                    props: this.props,
-                    data: data,
-                  });
+                  let data = this.getSearchData(item);
+                    this.props.navigation.navigate(STR_CONST.EDIT_ALERT, {
+                      alertData: item,
+                      props: this.props,
+                      data: data,
+                      cabinClassData:this.props.cabinClassData
+                    });
                 }}
                 onMenuPress={()=>{
                     this.setState({
@@ -1336,6 +1340,7 @@ const mapDispatchToProps = (dispatch) => {
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
     getAlertsAction: () => dispatch(getAlerts()),
     getUserInfoAction: () => dispatch(getUserInfo()),
+    getCabinClassAction:(data)=> dispatch(getCabinClass(data)),
     cancelAlertAction: (id) => {
       dispatch(cancelAlerts(id));
     },
@@ -1362,6 +1367,8 @@ const mapStateToProps = (state) => {
     screenType: calendar.screenType,
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,
+    cabinClassData:findFlight.cabinClassData
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AlertsScreen);

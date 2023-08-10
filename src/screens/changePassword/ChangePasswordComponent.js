@@ -405,18 +405,19 @@ export default class ChangePasswordComponent extends Component {
         <SafeAreaView style={{ flex: 1 }}>
            {this.renderHeader()}
            <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{height:scale(250),marginTop:scale(-30),alignSelf:"center",width:scale(200),justifyContent:"center",alignItems:"center"}} />
-       
-           <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} keyboardShouldPersistTaps="always">
+           {/* <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={10} extraScrollHeight={10} showsVerticalScrollIndicator={false}> */}
+        
+           <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} keyboardShouldPersistTaps="handled">
 
-         <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={130} extraScrollHeight={130} showsVerticalScrollIndicator={false}>
         {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
        
           <View style={{ flex: 1, borderWidth: 0, borderColor: "green", justifyContent: "center", alignItems: 'center' }}>
             {this.editPasswordView()}
           </View>
  
-        </KeyboardAwareScrollView>
         </ScrollView>
+        {/* </KeyboardAwareScrollView> */}
+        
       </SafeAreaView>
       // </FastImage>
 

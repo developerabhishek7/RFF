@@ -18,7 +18,8 @@ module.exports = StyleSheet.create({
   notifTitle: {
     fontSize: scale(16),
     lineHeight: scale(19),
-    paddingStart:scale(30),
+    paddingStart:scale(0),
+    borderWidth:0,width:scale(260),
     color: colours.darkBlueTheme,
     fontFamily: CONST.appFonts.INTER_SEMI_BOLD
   },
@@ -36,7 +37,7 @@ module.exports = StyleSheet.create({
     fontWeight:"700",
     fontFamily: CONST.appFonts.INTER_REGULAR,
     marginTop: verticalScale(10),
-    paddingStart:scale(50)
+    paddingStart:scale(70)
   },
 
   line: {

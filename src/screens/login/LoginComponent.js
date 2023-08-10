@@ -82,7 +82,7 @@ class LoginComponent extends Component {
     // console.log("yes check here uuid  - - - - -",uuid())
 
     // crashlytics().log("App mounted.............................");
-    GoogleSignin.configure()
+   await GoogleSignin.configure()
     this.props.getCountryListAction()
     await this.componentWillFocus();
 
@@ -403,7 +403,7 @@ class LoginComponent extends Component {
 
         this.setState({ userInfo: userGoogleInfo });
 
-        // console.log("yes chekc here  - - - - - - ",userGoogleInfo.user.photo)
+        console.log("yes chekc here  - - - - - - ",userGoogleInfo.user.photo)
 
         const image = await Utils.getImageInfo(userGoogleInfo.user.photo);
         // imageObject["uri"] = userGoogleInfo.user.photo;
@@ -453,6 +453,7 @@ class LoginComponent extends Component {
           imageObject.type ? imageObject.type : null
         );
       } catch (error) {
+        
         console.log("Message", error.message);
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
           console.log("User Cancelled the Login Flow");
@@ -576,9 +577,7 @@ class LoginComponent extends Component {
             underlineColorAndroid={'#FFFFFF'}
           />
           <TouchableOpacity
-            onPress={() =>
-              this.setState({ isHidePassword: !this.state.isHidePassword })
-            }
+           
             style={styles.eyeContainer}
           >
             <FastImage
@@ -606,7 +605,7 @@ class LoginComponent extends Component {
                   isLoginPressed && Utils.isEmptyString(password)
                     ? colours.errorColor
                     : colours.lightGreyish,
-                    marginTop:scale(30),marginBottom:scale(-23)
+                    marginTop:scale(30),marginBottom:scale(-19)
               },
             ]}
           >
@@ -678,7 +677,9 @@ class LoginComponent extends Component {
       <TouchableOpacity
         onPress={() => this.validation()}
         style={styles.signInButton}
-      >
+        activeOpacity={1}
+>
+
         <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
       </TouchableOpacity>
     );
@@ -771,7 +772,7 @@ class LoginComponent extends Component {
           imageStyle={{marginTop:scale(30)}}
         >
         {this.renderLogoContainer()}
-        <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(50)}}>
+        <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(60)}}>
         {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
          > */}
           {/* {this.renderLogoContainer()} */}

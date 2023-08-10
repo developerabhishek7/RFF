@@ -37,6 +37,7 @@ import { getUserInfo } from "../../actions/userActions";
 import axios from 'axios'
 import { Alert } from "react-native";
 
+import { URL,USER_API_URL } from "../../../env.json";
 
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
@@ -423,10 +424,9 @@ uploadImage = async (imageData) => {
         type: imageData.type
       }
       );
-      let url =  `https://3q0drqg9aj.execute-api.eu-west-2.amazonaws.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
      
-      // let url =  `https://prod-apin.rewardflightfinder.com/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-    
+      let url = `${USER_API_URL}/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+     
       var config = {
         method: 'put',
         url: url,

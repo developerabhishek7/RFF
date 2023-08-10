@@ -51,7 +51,7 @@ export default StyleSheet.create({
 
   emailText: {
     fontSize: scale(13),
-    margin:scale(10),
+    margin:scale(7),
     marginLeft:scale(6),
     fontFamily:appFonts.INTER_SEMI_BOLD,
     // lineHeight: scale(15),
