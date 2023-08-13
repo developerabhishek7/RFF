@@ -18,6 +18,7 @@
   getFlightSchedule,
   getMultipleFlightSchedule
 } from "../../actions/findFlightActions";
+import moment from "moment";
  class CalenderContainer extends Component {
    constructor(props) {
      super(props);
@@ -26,14 +27,13 @@
        airLinesDetailsObject: this.props.airlinesDetails,
        airlinesDetailPoints:this.props.airlinesDetailPoints,
        cabinClassData:this.props.cabinClassData,
-       searchData:this.props.route.params.searchData
+       searchData:this.props.route.params.searchData,
+       peakOffpeakData:this.props.peakOffpeakData.peakOffpeakData,
+       staticDateArray:this.props.route.params.staticDateArray,
+       finalData:{}
      };
    }
- 
-   componentDidMount = () => {
-    console.log("calendar container screen container - - - - - - - - - - - - - - - - - - - - - - - - -  -")
-     this.props.getPeakOffPeakDataAction()
-   }
+
  
    componentDidUpdate(prevProps){
      let bronze_member = this.props.userInfo.bronze_member
@@ -59,22 +59,11 @@
          alert(this.props.createAlertError)
          this.props.resetCreateAlertDataAction()
        }
- 
      }
- 
    }
  
    render() {
-    
      return (
-      // <View  style={{flex: 1,justifyContent:"center",alignContent:"center",}}>
-
-      //     <TouchableOpacity onPress={()=>{
-      //       this.props.navigation.goBack()
-      //     }}>
-      //         <Text>YES GO BACK ON FIND FLIGHT</Text>
-      //     </TouchableOpacity>
-      // </View>
        <CalenderComponent
          userInfo={this.props.userInfo}
          airLinesDetailsObject={this.state.airLinesDetailsObject}
@@ -87,8 +76,9 @@
          airlinesDetailPoints={this.props.airlinesDetailPoints}
          onGetScheduleData={(flightScheduleData) => this.props.getFlightScheduleAction(flightScheduleData)}
          onAirlineSelected = {(data)=>this.props.updateAirlineTierAction(data)}
-         peakOffpeakData={this.props.peakOffpeakData}
+         peakOffpeakData={this.props.route.params.peakOffpeakData}
          cabinClassData={this.props.cabinClassData}
+         staticDateArray={this.props.route.params.staticDateArray}
          getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
          guestUserPostHogFunc = {(guestUserPostHog)=>{this.props.updateGuestUserPostHogAction(guestUserPostHog)}}
          loggedinUserPostHogFun = {(loggedInUserPostHog)=>{this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)}}
@@ -98,6 +88,7 @@
      );
    }
  }
+
  
  const mapStateToProps = (state) => {
    const { calendar,userInfo,logIn, findFlight } = state; 
