@@ -156,7 +156,7 @@ export default class CalenderComponent extends Component {
       PeakOffPeakMonth: "",
       offPeakKey: '',
       lastRefresh: Date(Date.now()).toString(),
-      staticDateArray: [],
+      staticDateArray: this.props.staticDateArray,
       flightData: [],
       onDayPressedDate: "",
       isLoader: true,
@@ -177,15 +177,13 @@ export default class CalenderComponent extends Component {
       multipleFlightScheduleData: this.props.multipleFlightScheduleData,
       sliderEconomyMin: 0, sliderPremiumMin: 0, sliderBusinessMin: 0, sliderFirstMin: 0,
       sliderEconomyMax: 0, sliderPremiumMax: 0, sliderBusinessMax: 0, sliderFirstMax: 0,
-      finalData1:{},
-      finalData:{},
+      finalData:this.props.finalData,
       originalGuestOutBoundObj:{},orignalGuestInboundObj:{},
       availableOutBoundDate:{},availableInBoundDate:{},availability_data:{},
       orignalInboundObj:{},
       originalOutBoundObj:{},
       maximumSliderPoints:0,
       minimumSliderPoints:0,
-      isSliderLoader:false,
       classTypeArray:[]
     };
     getCalendarLocals();
@@ -323,36 +321,24 @@ export default class CalenderComponent extends Component {
 
   componentDidMount = async () => {
 
-    console.log("yes check here on calendar did mount screen - - - - - - ---------------------------------- ",)
-    this.getDates()
     this.checkOnloaderFalse()
-
     let userData = this.props.userInfo
-  
     let bronzeMember = userData.bronze_member
-
     const today = moment();
-
     let data = this.props.searchData.classSelected;
     let outBound = this.state.airLinesDetailsObject.outbound_availability;
-
     let inBound = this.state.airLinesDetailsObject.inbound_availability;
-
     let outBoundVisibleArray = this.getVisibilityArray(outBound)
     let inBoundVisibleArray = this.getVisibilityArray(inBound)
     const accesstoken = await getAccessToken();
-
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
-
-
     this.setState({
       deviecBrand, deviceName, isTablet, isEmulator
     })
     let data1 = ["economy", "premium", "business", "first"]
-
 
     this.setState({
       // outBoundVisibleArray:data1,
@@ -391,8 +377,8 @@ export default class CalenderComponent extends Component {
     setTimeout(() => {
       this.setState({ isRenderAll: true, })
       this.renderCabinClass()
-
     }, 1000);
+
 
 
     // for (const item in data) {
@@ -434,8 +420,7 @@ export default class CalenderComponent extends Component {
     this.setState({
       classSelected: bronzeMember ? data2 : classData,
     });
-    
-
+  
       BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -3047,9 +3032,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     return <MaterialIcon name={icon} size={scale(16)} color={color} />;
   }
 
-  ticketClass() {
+  ticketClass = () => {
+
+    const {searchData} = this.state
   
-    let classSelected =  this.props.searchData.classSelected
+    let classSelected = searchData.classSelected
 
     let economy = classSelected[0]
     let premium = classSelected[1]
@@ -3071,6 +3058,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       classSelectedArray.push(first)
     }
 
+
+    console.log("yes check here search data - - - - - - ",searchData.classSelected)
 
    
 
@@ -3666,37 +3655,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   }
 
 
-  getDates = () => {
 
-    var dateArray = [];
-    let today = new Date()
-
-    let d = moment().year() + 1
-    let month = moment().month() + 2
-
-    let endDateKey = `${d}-${month}-01`
-    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
-
-    let endDay = new Date(exactEndDate)
-    var currentDate = moment(today);
-    var stopDate = moment(endDay);
-    while (currentDate <= stopDate) {
-      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
-      currentDate = moment(currentDate).add(1, 'days');
-    }
-
-    this.setState({
-      staticDateArray: dateArray
-    })
-
-   
-    return dateArray;
-  }
 
 
   checkOnloaderFalse = () => {
     const { airLinesDetailsObject } = this.state
     let availableOutBoundDate = airLinesDetailsObject.outbound_availability;
+    console.log("yes chcke on airlinedeatils obje - - - - - - ",airLinesDetailsObject)
     if (availableOutBoundDate) {
       this.setState({ isLoader: false })
     }
@@ -3704,9 +3669,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
 
-  getLocations(isLoader) {
-    const {  airLinesDetailsObject, peakOffpeakData, } = this.state;
-    let classSelected =  this.props.searchData.classSelected
+  getLocations = () => {
+    const {  airLinesDetailsObject, peakOffpeakData,searchData,staticDateArray } = this.state;
+    let classSelected =  searchData.classSelected
     let flightSchedule = this.props.flightSchedule;
     let outboundData = {};
     let inboundData = {};
@@ -3827,7 +3792,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         source: airLinesDetailsObject.source,
         destination: airLinesDetailsObject.destination,
       }
-    }
+    }  
     return finalData;
   }
 
@@ -4075,7 +4040,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       sliderPoints,
       isSliderRunDone,
       isRenderAll,
-      newClassSliderArray
+      newClassSliderArray,
+      finalData
     } = this.state;
     const today = moment().format("YYYY-MM-DD");
     let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
@@ -4083,7 +4049,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let userInfo  =  this.props.userInfo
     let currentPlan = userInfo.gold_member
     let isLoggedIn = this.props.isLoggedIn
-
 
       return(
         <View style={[styles.calendarContainer,{
@@ -4117,9 +4082,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               let onPressDate = day
               let scheuldeDateKey = day
               let clickDate = day.dateString
-
-          
-
               let isOffPeakValue1 = this.state.isOffPeakValue
               this.onDayPressed(day, isOffPeakValue1);
               this.setState({ onDayPressedDate: day.dateString, clickDate: clickDate ,scheuldeDateKey:scheuldeDateKey,onPressDate:onPressDate})
@@ -4129,7 +4091,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             pastScrollRange={0}
             minDate={today}
             calendarHeight={350}
-            // futureScrollRange={peakOffpeakData ? this.state.monthKey : 12}
             futureScrollRange={ isLoggedIn ? 12 : 3}
             scrollEnabled={true}
             calendarWidth={scale(343)}
@@ -4142,10 +4103,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             theme={{
               isOutBounded: this.state.selectedIndex == 0,
               classSelected: this.state.classSelected,
-              availabilityData:this.getLocations(isLoader),
+              availabilityData:this.getLocations(),
               width: scale(20),
               selectedDayBackgroundColor: "gray",
-              // backgroundColor: "#eafcfc",
               calendarBackground: colours.white,
               textSectionTitleColor: colours.lightGreyish,
               selectedDayTextColor: colours.white,
@@ -4180,7 +4140,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
   renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day){
    
-    console.log("yes check here day inside no render flight= - =  = = = =",day)
 
     let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
       const {onDayPressedDate,scheuldeDateKey,onPressDate} = this.state;
@@ -4332,12 +4291,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       showCreateAlertModal,
       showUpgradePopUp,
       showLoginPopup,
+      searchData
     } = this.state;
     const today = moment().format("YYYY-MM-DD");
-
-
     let userInfo  =  this.props.userInfo
     let isLoggedIn = this.props.isLoggedIn
+    let classData = searchData.classSelected
     let height1
 
     if(isLoggedIn){
@@ -4375,9 +4334,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               borderWidth:1,borderColor:"#FFFFFF",  
             }}
             >
-                {this.state.airLinesDetailsObject.availability
-                              ? this.ticketClass()
-                              : null}
+             {this.state.airLinesDetailsObject ? this.ticketClass() : null}
+                             
                 {this.fareView()}
                 {this.state.searchData.isReturn
                   ? this.tabView()
@@ -4385,9 +4343,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             </Animated.View>
             :
             <View>
-            {this.state.airLinesDetailsObject.availability
-                              ? this.ticketClass()
-                              : null}
+             {this.state.airLinesDetailsObject ? this.ticketClass() : null}
 
                 {this.fareView()}
                 {this.state.searchData.isReturn
@@ -4407,12 +4363,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             scrollEventThrottle={16} 
         >
           <View style={{  flex: 1, marginTop:Platform.OS =="android"?scale(50):scale(0)}}>
-           {/* {this.renderCalendarList()} */}
+           {this.renderCalendarList()}
            </View>
           </ScrollView>
             : 
             <View style={{  flex: 1,}}>
-            {/* {this.renderCalendarList()} */}
+            {this.renderCalendarList()}
            </View>
           }
             {showTicketDetailModal && this.seatAvailabilityModal()}
@@ -4467,7 +4423,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   this.setState({
                     showUpgradePopUp: false,
                   });
-                  // this.props.navigation.navigate("MembershipContainerScreen")
                 }}
                 onRightButtonPress={() => {
                   this.setState({

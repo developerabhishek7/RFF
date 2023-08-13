@@ -69,6 +69,7 @@ class FindFlightContainer extends Component {
       currentLongitude: null,
       currentLatitude: null,
       nearestAirport: {},
+      staticDateArray:[],
       isLoader: false,
       accesstoken: "",
       deviceName:"",
@@ -99,6 +100,7 @@ class FindFlightContainer extends Component {
       await AsyncStorage.setItem("guestId", uuid.v4());
     }
 
+    this.getDates()
     // let deviceName = await DeviceInfo.getDeviceName()
     // let deviecBrand = await DeviceInfo.getBrand()
     // let isTablet = await DeviceInfo.isTablet()
@@ -204,10 +206,10 @@ class FindFlightContainer extends Component {
               this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
                 searchData: this.state.searchData, focusedDate: null,
                 peakOffpeakData: this.props.peakOffpeakData,
+                staticDateArray:this.state.staticDateArray
               })
           })
           }else{  
-            console.log("yes check here search details key on else  - - - -",searchDetails)
             if(this.props.userInfo.bronze_member && searchDetails.searchCount >= 3){
               this.isAlert()
             }
@@ -216,6 +218,7 @@ class FindFlightContainer extends Component {
                 this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
                   searchData: this.state.searchData, focusedDate: null,
                   peakOffpeakData: this.props.peakOffpeakData,
+                  staticDateArray:this.state.staticDateArray
                 })
               })
             }
@@ -277,6 +280,35 @@ class FindFlightContainer extends Component {
       [{text: 'OK',onPress: ()=>{ }}],
       {cancelable: false},
     );
+  }
+
+
+
+  getDates = () => {
+
+    var dateArray = [];
+    let today = new Date()
+
+    let d = moment().year() + 1
+    let month = moment().month() + 2
+
+    let endDateKey = `${d}-${month}-01`
+    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
+
+    let endDay = new Date(exactEndDate)
+    var currentDate = moment(today);
+    var stopDate = moment(endDay);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
+      currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    this.setState({
+      staticDateArray: dateArray
+    })
+
+   
+    return dateArray;
   }
 
   render() {

@@ -98,6 +98,7 @@ export default class FindFlightComponent extends Component {
       userSelectedAirline: null,
       userSelectedAirlineMembership: null,
       airlinesMembershipDetails: null,
+      staticDateArray: [],
       isLoader:false,
       // userConfigDetails:this.props.userConfigDetails
 
@@ -187,38 +188,11 @@ export default class FindFlightComponent extends Component {
   // };
 
 
-  getDates = () => {
-
-    var dateArray = [];
-    let today = new Date()
-
-    let d = moment().year() + 1
-    let month = moment().month() + 2
-
-    let endDateKey = `${d}-${month}-01`
-    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
-
-    let endDay = new Date(exactEndDate)
-    var currentDate = moment(today);
-    var stopDate = moment(endDay);
-    while (currentDate <= stopDate) {
-      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
-      currentDate = moment(currentDate).add(1, 'days');
-    }
-
-    this.setState({
-      staticDateArray: dateArray
-    })
-
-   
-    return dateArray;
-  }
 
   componentDidMount = async () => {
 
     const userData  = this.props.userData
 
-    // this.getDates()
 
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()

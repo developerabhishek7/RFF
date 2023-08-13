@@ -228,7 +228,6 @@ export function getMultipleFlightSchedule(flightScheduleData) {
 
 export function getFlightSchedule(flightScheduleData) {
 
-  // console.log("yes check here get flight scheudle  -  - - - - ",flightScheduleData)
   let url = ""
   if(flightScheduleData.bronzeMember){
     url = null
@@ -236,7 +235,6 @@ export function getFlightSchedule(flightScheduleData) {
   else{
     url = `params=schedule&from=fc`
   }
-
 
   return async (dispatch, getState) => {
     try {
@@ -283,9 +281,6 @@ export function getCabinClass(data) {
         `${URL}`,
         authToken
       );
-
-      // console.log("on the cabin class action screen #######  ",res)
-
      if (res) {   
         await dispatch({
           type: GET_CABIN_CLASS_SUCCESS,
