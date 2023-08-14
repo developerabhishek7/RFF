@@ -130,6 +130,19 @@ const ListFooterWithNoAlerts = () => (
 );
 
 function getAirways(airlineName) {
+  if(airlineName == "premium_economy"){
+    return (
+      airlineName.charAt(0).toUpperCase() +
+      makeUpperCaseAfterSpace("Prem Econ").slice(1)
+    );
+  }
+  else{
+    return (
+      airlineName.charAt(0).toUpperCase() +
+      makeUpperCaseAfterSpace(airlineName).slice(1)
+    );
+  }
+
   airlineName = airlineName.replace(/_/g, " ");
   return (
     airlineName.charAt(0).toUpperCase() +
@@ -1271,9 +1284,7 @@ class AlertsScreen extends React.Component {
                     source: searchData.sourceCode,
                     destination: searchData.destinationCode,
                   }                  
-                
                   let auditData = await this.getAuditData(searchData);   
-                
                   this.props.getAirlinesAvailabilityAction(searchData);
                   this.props.sendAuditDataAction(auditData);
                   this.props.getPointsAvailabilityAction(searchData)
@@ -1305,7 +1316,6 @@ class AlertsScreen extends React.Component {
                       AlertId:item.id
                     })
                 }}
-             
                 getLocationName={(source) => {
                   let locationsArray = this.props.locations;
                   return getLocationName(source, locationsArray).city_name;
