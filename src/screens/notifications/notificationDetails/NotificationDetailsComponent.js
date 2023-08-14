@@ -486,9 +486,11 @@ class NotificationDetailComponent extends Component {
 
    classView(travelClasses) {
     const classArray = travelClasses.split(",");
+    let PremClass = "Prem Econ"
     return ( 
       <View style={styles.classView}>
         {classArray.map((cabinClass) => {
+          console.log("yes check here cabin class -=  - - - - -",cabinClass)
           return (
             <View style={styles.travelClassInnerView}>
               <Octicons
@@ -498,7 +500,10 @@ class NotificationDetailComponent extends Component {
                 style={{ marginRight: scale(5),margin:scale(6) }}
               />
               <Text style={styles.cabinClasstext}>
-                {getClassesDisplayName(cabinClass)}
+                {cabinClass == "premium_economy" ?
+                 PremClass
+                : getClassesDisplayName(cabinClass) 
+              }
               </Text>
             </View>
           );
@@ -511,8 +516,6 @@ class NotificationDetailComponent extends Component {
     const { availableClassArray } = this.state;
     let sourceCode = alert.source_code
     let destinationCode = alert.destination_code
-
-
     return (
       <View
         style={[
@@ -520,9 +523,7 @@ class NotificationDetailComponent extends Component {
           { marginBottom: availableClassArray !== "" ? verticalScale(30) : 0 },
         ]}
       >
-        
         <View style={styles.alertHeadingView}>
-
           <View style={{flexDirection:"row",justifyContent:"center",alignItems:'center'}}>
           <View style={styles.iconContainer}>
             <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />

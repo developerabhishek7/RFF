@@ -321,7 +321,7 @@ export default class CalenderComponent extends Component {
 
   componentDidMount = async () => {
 
-    this.checkOnloaderFalse()
+    // this.checkOnloaderFalse()
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
     const today = moment();
@@ -338,6 +338,7 @@ export default class CalenderComponent extends Component {
     this.setState({
       deviecBrand, deviceName, isTablet, isEmulator
     })
+    this.renderCabinClass()
     let data1 = ["economy", "premium", "business", "first"]
 
     this.setState({
@@ -374,12 +375,13 @@ export default class CalenderComponent extends Component {
         classData.push(false);
       }
     }
+
+
+    
     setTimeout(() => {
       this.setState({ isRenderAll: true, })
-      this.renderCabinClass()
+      this.setState({ isLoader: false })   
     }, 1000);
-
-
 
     // for (const item in data) {
     //   console.log("check item on the did mount #######    ",data)
@@ -2428,8 +2430,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 "plateform": "Mobile",
               }
             }
-            // this.postHogAnalytics(guestUserPostHog)
-            // this.props.guestUserPostHogFunc(guestUserPostHog)
           }
           this.setState({
             departStartDate: "",
@@ -2792,12 +2792,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isFirstSelected = this.state.classTypeArray[3].isSelected
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
-    let showClassModal = true
-
     return (
       <View>
         {
-          shwClassModal ?
           <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
           {
             this.state.classTypeArray.map((item, index) => { 
@@ -2918,8 +2915,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       <Text
                         style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
                       >
-                        {item.class == "First" ? "First Class " : item.class}
-                        {/* {item.class} */}
+                        {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
+                        {/* {item.class == "First" ? "First Class " : item.class} */}
                       </Text>
                       </View>
                     </TouchableOpacity>
@@ -2932,14 +2929,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             })
           }
           </View>
-          : 
-          null
         }
       </View>
     );
   }
-
-
 
   renderBottomButton(buttonText, onButtonPress) {
     return (
@@ -2951,6 +2944,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         onPress={() => {
           onButtonPress();
         }}
+        activeOpacity={.6}
       >
         <Image source={IMAGE_CONST.BELL_IMAGE} style={styles.bellIconStyle} />
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
@@ -2979,20 +2973,17 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           styles.headerContainer
         }
         onPress={() => { this.props.navigation.goBack() }}
-     
       >
         <TouchableOpacity
           onPress={() => { this.props.navigation.goBack() }}
-       
         >
-          <Icon name="ios-arrow-back" size={scale(30)} color="#22395d" />
+           {IMAGE_CONST.IOS_BACK_ARROW}
         </TouchableOpacity>
-
         <View style={{}}>
           <View style={styles.locationView}>
             {
               this.state.searchData ?
-                <View>
+                <View style={{margin:scale(10)}}>
                   <Text style={styles.locationText}>
                     {this.state.searchData.selectedSource.city_name} to{" "}
                     {this.state.searchData.selectedDestination.city_name}
@@ -3057,12 +3048,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if (first) {
       classSelectedArray.push(first)
     }
-
-
-    console.log("yes check here search data - - - - - - ",searchData.classSelected)
-
-   
-
+  
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
 
@@ -3482,12 +3468,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             });
           }
            }
-
-
         else if ((!availableDateKey)  && (scheduleDateKey)) {
-
-          console.log("gettin on first one yes ---------------------------")
-
           this.Show_Custom_Alert2()
           data = this.state.airLinesDetailsObject.outbound_availability;
          let seatsAvailabilityData = data[day.dateString]
@@ -3558,8 +3539,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           this.setState({ noFlightScheduleAlertTxt: "No Flight Schedule", showTicketDetailModal: false, })
         }
         else if (!availableDateKey && scheduleDateKey) {
-
-          console.log("gettin on second one yes ---------------------------")
           this.Show_Custom_Alert2()
           // Alert.alert("Alert", "No Seats Available!")
           data = this.state.airLinesDetailsObject.outbound_availability;
@@ -3655,13 +3634,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   }
 
 
-
-
-
   checkOnloaderFalse = () => {
     const { airLinesDetailsObject } = this.state
+    
     let availableOutBoundDate = airLinesDetailsObject.outbound_availability;
-    console.log("yes chcke on airlinedeatils obje - - - - - - ",airLinesDetailsObject)
     if (availableOutBoundDate) {
       this.setState({ isLoader: false })
     }
@@ -4070,7 +4046,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             onVisibleMonthsChange={(months) => {
               let firstDay = moment().startOf('month')
               let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
-
               if (months[0].dateString >= nextThreeMonth && !this.props.isLoggedIn) {
                 this.setState({ showLoginCnfmPopup: true }, () => {
                   this.renderLoginPopup()

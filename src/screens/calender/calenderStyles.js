@@ -15,20 +15,18 @@ export default StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
-    backgroundColor: "#FFF",
     alignItems: "center",
+    backgroundColor:"#03B2D8",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
-    // overflow:"hidden",
     height:scale(90),
-    borderBottomColor:"#FFFFFF",
+    borderBottomColor:"#03B2D8",
     borderBottomWidth:3,
-    // borderWidth:1,
     zIndex:30,
     elevation:0.1,
-    
     paddingTop:scale(10),
-    paddingBottom:scale(-25)
+    paddingBottom:scale(-25),
+    borderBottomLeftRadius:scale(20),borderBottomRightRadius:scale(20)
   },
   cellContainer: {
 
@@ -417,12 +415,12 @@ export default StyleSheet.create({
   ticketDetailText: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     fontSize: scale(13),
-    color: "#22395d",
+    color: "#FFF",
   },
   locationText: {
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: "#22395d",
+    color: "#FFF",
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(17),
     fontWeight: "bold",

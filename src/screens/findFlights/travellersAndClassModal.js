@@ -323,16 +323,11 @@ export default class TravellersAndClassModal extends Component {
                         resizeMode="contain"
                         style={{height:scale(40),width:scale(40),alignSelf:"center",justifyContent:"center",alignItems:"center"}}
                       >
-
-
                       </ImageBackground>
-
-
                       <Text
                         style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
                       >
-                        {item.class == "First" ? "First Class " : item.class}
-                        {/* {item.class} */}
+                        {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
                       </Text>
                       </View>
                     </TouchableOpacity>

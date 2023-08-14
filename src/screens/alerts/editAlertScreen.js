@@ -357,7 +357,6 @@ class EditAlertComponent extends Component {
         >
           {STRING_CONST.RETURN_DATE_RANGE}
         </Text>
-
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.CREATE_ALERT_SCREEN, {
@@ -486,7 +485,7 @@ class EditAlertComponent extends Component {
               this.getIcon(STRING_CONST.CHECK_EMPTY_CIRCLE, colours.yellow):
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.yellow)
             }
-            <Text style={styles.classTextStyle}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
+            <Text style={styles.classTextStyle}>{"Prem Econ"}</Text>
           </TouchableOpacity>
         );
       }
