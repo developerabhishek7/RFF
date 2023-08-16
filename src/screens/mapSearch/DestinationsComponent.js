@@ -10,7 +10,7 @@ import { colours } from '../../constants/ColorConst';
 const KEYS_TO_FILTERS = ['city_name', 'country_name', 'code', 'Hewanorra', 'SLU', 'UVF'];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
+import * as IMAGE_CONST from "../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
 
 export default class DestinationsComponent extends Component {
@@ -95,13 +95,12 @@ export default class DestinationsComponent extends Component {
 
   renderHeader() {
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-50) :scale(-20) }}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20) }}>
         <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(45),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
-              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(20),width:scale(20),margin:scale(10)}} />
-            </TouchableOpacity>
-  
+                  {IMAGE_CONST.IOS_BACK_ARROW}
+        </TouchableOpacity>
             <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Available Routes</Text>
   
             <Text>          </Text>

@@ -54,6 +54,7 @@ class DestinationsComponent extends Component {
       returnDateMonth: "",
       WhereFrom: "",
       peakKey:"",
+      staticDateArray:[],
       // economyClass: false,
       // premiumClass: false,
       // businessClass: false,
@@ -122,6 +123,7 @@ checkIfPeakOffPeakDataMonth = () => {
           tripType:tripType,
           newSearchData:searchData,
           focusedDate: null,
+          staticDateArray:this.state.staticDateArray
         });
       }
     }
@@ -135,6 +137,8 @@ checkIfPeakOffPeakDataMonth = () => {
 
     let auditData = JSON.parse(this.props.route.params.auditData)
     let WhereFrom = this.props.route.params.WhereFrom
+    let data1 = JSON.parse(this.props.route.params.singleMap)
+
     this.setState({ WhereFrom })
 
     this.checkIfPeakOffPeakDataMonth()
@@ -147,7 +151,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
     const data = {
       "source": auditData.search_data.source,
-     "destination": auditData.search_data.destination
+     "destination": data1.code
     }
 
     console.log("yes chekc here before api send..........",data)
@@ -182,6 +186,33 @@ checkIfPeakOffPeakDataMonth = () => {
     }
   };
 
+  getDates = () => {
+
+    var dateArray = [];
+    let today = new Date()
+
+    let d = moment().year() + 1
+    let month = moment().month() + 2
+
+    let endDateKey = `${d}-${month}-01`
+    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
+
+    let endDay = new Date(exactEndDate)
+    var currentDate = moment(today);
+    var stopDate = moment(endDay);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
+      currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    this.setState({
+      staticDateArray: dateArray
+    })
+
+   
+    return dateArray;
+  }
+
   renderHeader() {
     let data = JSON.parse(this.props.route.params.singleMap)
     return (
@@ -193,9 +224,7 @@ checkIfPeakOffPeakDataMonth = () => {
               peak:""
             })
             this.props.navigation.goBack() }}>
-            <Image source={require("../../assets/findFlight/back.png")}
-              resizeMode="contain"
-            style={[styles.infoIcon1]} />
+           {IMAGE_CONST.IOS_BACK_ARROW}
           </TouchableOpacity>
 
          <View style={{flexDirection:"row"}}>
@@ -239,11 +268,8 @@ checkIfPeakOffPeakDataMonth = () => {
             </ImageBackground>
             <Text style={styles.peakFairTxt}>Peak Fare</Text>
           </View>
-
-
           <View style={[styles.peakFairSubHeaderView,{
             backgroundColor: peak && actualDate ? "#FFFFFF" : !peak && actualDate ? colours.skyBlueColor : "#FFF",
-         
             // borderBottomColor: peak  && actualDate ? "gray"  : "#FFF",
             // borderBottomWidth:0.3,
             

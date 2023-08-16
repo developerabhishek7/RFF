@@ -78,9 +78,8 @@ export function createAlert(body) {
 }
 
 export function getAirlinesAvailability(propsData,type) {
-
-  let NEW_URL = `${API_CONST.BASE_NODE_URL}/calendar-availability/${propsData.airline}?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}&from=executive`   
-  console.log("NEW URL ‹‹‹‹‹‹‹‹ ",NEW_URL)
+  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}`   
+  console.log("NEW URL   ‹‹‹‹‹‹‹‹ ",NEW_URL)
     return async (dispatch, getState) => {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader 

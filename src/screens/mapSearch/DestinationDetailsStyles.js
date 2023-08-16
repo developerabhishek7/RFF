@@ -45,14 +45,14 @@ export default StyleSheet.create({
     },
     headerView: {
         backgroundColor:"#3ab2d8",height:scale(120),width:scale(380),
-        marginTop:Platform.OS == "ios" ? scale(-50) :scale(-20),
+        marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20),
         borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)
     },
     headerCity: { fontSize: scale(20), paddingStart: scale(15), fontFamily: appFonts.INTER_BOLD, textAlign: 'center', color: "#FFF",fontWeight:"600" },
     headerCountry: { fontSize: scale(14), padding: scale(1), paddingTop: scale(6), fontFamily: appFonts.INTER_REGULAR, paddingStart: scale(10), textAlign: 'center', color: "#FFF",fontWeight:"700" },
     airportName: { fontSize: scale(15), padding: scale(2),paddingStart:scale(1), marginTop:scale(4), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(46), textAlign: 'left', color: "#FFF",fontWeight:"700"},
     peakFairMainView: { 
-      marginBottom:scale(0),width:scale(370),alignSelf:"center",borderWidth:0,
+      marginBottom:scale(0),width:scale(364),alignSelf:"center",borderWidth:0,
       flexDirection: "row", justifyContent: "space-around", alignItems: 'center',
     backgroundColor:"#FFF"
   },

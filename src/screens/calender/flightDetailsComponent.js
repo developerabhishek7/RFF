@@ -168,7 +168,7 @@ class FlightDetailsCompoent extends Component {
   renderHeader() {
     let data = this.state.searchData
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-50),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
      
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
@@ -177,8 +177,8 @@ class FlightDetailsCompoent extends Component {
             this.props.navigation.goBack()
           }}
         >
-          <Icon name="ios-arrow-back" size={scale(30)} color={colours.white} />
-        </TouchableOpacity>
+            {IMAGE_CONST.IOS_BACK_ARROW}
+          </TouchableOpacity>
         <View style={styles.locationView}>
           <View>
             <Text style={styles.locationText}>
@@ -234,7 +234,7 @@ class FlightDetailsCompoent extends Component {
                 />
               </TouchableOpacity>
               <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
-                } (${this.state.isOffPeakValue
+                } (${!this.state.isOffPeakValue
                   ? STRING_CONST.OFF_PEAK_FARE
                   : STRING_CONST.PEAK_FARE
                 })`}</Text>

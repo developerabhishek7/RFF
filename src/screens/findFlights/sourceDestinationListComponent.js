@@ -343,13 +343,15 @@ renderHeader() {
   const {screenType} = this.state
   return (
    <View style={{backgroundColor:"#03B2D8",height:scale(190),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
-      marginTop:Platform.OS=="ios"?scale(-50):scale(-15)
+      marginTop:Platform.OS=="ios"?scale(-60):scale(-15)
    }}>
       <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(40)}}>
       <TouchableOpacity onPress={() => {
             this.props.navigation.goBack() }}>
-            <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(18),width:scale(18),margin:scale(10)}} />
-          </TouchableOpacity>
+
+{IMAGE_CONST.IOS_BACK_ARROW}
+
+      </TouchableOpacity>
           <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
           <Text>       </Text>
          </View>

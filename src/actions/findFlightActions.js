@@ -271,8 +271,10 @@ export function getFlightSchedule(flightScheduleData) {
 
 
 export function getCabinClass(data) {  
-  let URL = `${BASE_NODE_URL}/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}`
+  let URL = `${BASE_NODE_URL}/cabin-classes/ba?source_code=${data.source}&destination_code=${data.destination}&from=v2`
 
+
+  
   return async (dispatch, getState) => {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader

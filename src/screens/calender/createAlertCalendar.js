@@ -18,7 +18,7 @@ import moment from "moment";
 import { getCalendarLocals } from "../../utils/commonMethods";
 import * as STRING_CONST from "../../constants/StringConst";
 import FastImage from 'react-native-fast-image'
-
+import * as IMAGE_CONST from "../../constants/ImageConst";
 export default class CalenderComponent extends Component {
   constructor(props) {
     super(props);
@@ -152,34 +152,24 @@ export default class CalenderComponent extends Component {
     const headingText = this.props.route.params.headingText;
 
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(50),borderBottomRightRadius:scale(50),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-50) }}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(50),borderBottomRightRadius:scale(50),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
         <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(43)}}>
-        <TouchableOpacity onPress={() => {
-              this.props.navigation.goBack() }}>
-              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+        <TouchableOpacity style={{paddingStart:scale(20)}} onPress={() => {
+              this.props.navigation.goBack()}}>
+                {IMAGE_CONST.IOS_BACK_ARROW}
             </TouchableOpacity>
-            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headingText}</Text>
-  
-            <Text>     </Text>
+            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),paddingStart:scale(-10),color:"#FFF"}}>{headingText}</Text>
+                <Text>     </Text>
            </View>
-  
-  
            {/* <View style={{marginTop:scale(20),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
               <TextInput 
                  onChangeText={(searchText) => {
                   this.onSearch(searchText)
                 }}
               style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
-  
-  
-           
               <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
               <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
-            
-  
               </TouchableOpacity>
-  
-  
            </View> */}
   
   
@@ -224,6 +214,7 @@ export default class CalenderComponent extends Component {
             alert(STRING_CONST.CHOOSE_DATE);
           }
         }}
+        activeOpacity={.6}
       >
         <Text style={styles.buttonTextStyle}>{STRING_CONST.SELECT_TEXT}</Text>
       </TouchableOpacity>

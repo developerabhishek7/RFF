@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
@@ -19,13 +19,13 @@ export default StyleSheet.create({
     backgroundColor:"#03B2D8",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
-    height:scale(90),
+    height:scale(110),
     borderBottomColor:"#03B2D8",
     borderBottomWidth:3,
     zIndex:30,
+    marginTop:Platform.OS == "ios" ? scale(-60) : scale(20),
     elevation:0.1,
-    paddingTop:scale(10),
-    paddingBottom:scale(-25),
+    paddingTop:scale(30),
     borderBottomLeftRadius:scale(20),borderBottomRightRadius:scale(20)
   },
   cellContainer: {
@@ -429,6 +429,7 @@ export default StyleSheet.create({
     marginLeft: scale(10),
     flexDirection: "row",
     marginHorizontal: scale(10),
+    marginTop:scale(10)
   },
   ticketClassView: {
     flexDirection: "row",
