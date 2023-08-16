@@ -201,10 +201,8 @@ export default class FindFlightComponent extends Component {
     let trackData = {}
     let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
     if(this.props.isLoggedIn){
-      // this.logCrashlytics()
+      // this.logCrashlytics()          
     }
-
-
     if(userData && Object.keys(userData).length !== 0 && isNewSignUp){
        trackData = {
         planName: "Bronze Trial Plan",

@@ -380,7 +380,7 @@ export default class CalenderComponent extends Component {
     
     setTimeout(() => {
       this.setState({ isRenderAll: true, })
-      this.setState({ isLoader: false })   
+      // this.setState({ isLoader: false })   
     }, 1000);
 
     // for (const item in data) {
@@ -2956,6 +2956,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     return (
       <TouchableOpacity
         style={[styles.submitAlertView]}
+        activeOpacity={.6}
         onPress={() => {
           onButtonPress();
         }}
@@ -3841,7 +3842,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           backgroundColor: 'rgba(52, 52, 52, 0.8)',
           alignItems: 'center',
           width: width + 4, height: height,
-          marginStart: Platform.OS == "ios" ? -scale(20) : scale(-40),
+          marginStart: Platform.OS == "ios" ? -scale(20) : scale(-30),
           marginEnd: -scale(27),
           marginTop: -scale(20),
           marginBottom: -scale(20),
@@ -4293,7 +4294,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         <SafeAreaView style={[styles.container]}>
            {this.renderHeader()}
           <View style={{ backgroundColor: "#FFF", flex: 1}}>
-            {this.renderLoader()}
+            {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
             {
               isLoggedIn   ?

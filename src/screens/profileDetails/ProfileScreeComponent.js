@@ -1353,10 +1353,10 @@ isAlert = () => {
         <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(40),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
-              <FastImage source={require("../../assets/findFlight/back.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+           {IMAGE_CONST.IOS_BACK_ARROW}
             </TouchableOpacity>
   
-            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),marginStart:scale(30),color:"#FFF"}}>Profile</Text>
+            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),marginStart:scale(40),marginTop:scale(1),color:"#FFF"}}>Profile</Text>
   
             <Text></Text>
           

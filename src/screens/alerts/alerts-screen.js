@@ -909,8 +909,8 @@ class AlertsScreen extends React.Component {
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:
-      Platform.OS == "ios"? scale(-50) :
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(120),width:"100%",marginTop:
+      Platform.OS == "ios"? scale(-60) :
       scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
         <View style={{marginTop:scale(40)}}>
         <ScreenHeader
