@@ -58,23 +58,30 @@ export default StyleSheet.create({
     fontSize:scale(16),
     fontWeight: "bold",
   },
-
   tabViewStyle: {
-    width: width / 2 - 40,
+    width: width / 2 - 60,
     height:scale(40),
     borderRadius:scale(9),
     justifyContent:"center",
     alignItems:"center",
-    marginStart:scale(5),marginEnd:scale(6),
-    backgroundColor:"#FFF"
+    marginStart:scale(10),
+    marginEnd:scale(10),
+    backgroundColor:"#ffffff"
     // borderBottomWidth: 1,
   },
 
   tabViewStyle1: {
-    width: width / 2 - 40,
-    alignItems: "center",
-    height:scale(30),
-    justifyContent:'center',
+    // width: width / 2 - 40,
+    // alignItems: "center",
+    // height:scale(30),
+    // justifyContent:'center',
+    width: width / 2 - 60,
+    height:scale(40),
+    borderRadius:scale(9),
+    justifyContent:"center",
+    alignItems:"center",
+    marginStart:scale(10),
+    marginEnd:scale(10),
     // marginStart:scale(5),marginEnd:scale(6),
     // backgroundColor:colours.darkBlueTheme
     // borderBottomWidth: 1,

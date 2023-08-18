@@ -211,7 +211,7 @@ export default class CalenderComponent extends Component {
   }
 
   getPointsText(points) {
-    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(2)) + 'k' : Math.sign(points)*Math.abs(points)
   }
 
   componentDidUpdate(prevProps) {
@@ -445,15 +445,8 @@ export default class CalenderComponent extends Component {
 
   seatAvailabilityModal(day, isOffPeakValue1) {
 
-
-
-
     const firstDay = moment().startOf('month')
-
-
     const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
- 
-    
 
     let clickDate
     var requiredKey = false
@@ -465,11 +458,8 @@ export default class CalenderComponent extends Component {
       let date1 = moment(date).format('DD-MM-YYYY')
       let date2 = moment(nextThreeMonth).format('DD-MM-YYYY')
 
-
       const dt1 = moment(date, 'DD-MM-YYYY').valueOf()
       const dt2 = moment(date2, 'DD-MM-YYYY').valueOf()
-
- 
       if (dt1 == dt2) {
         requiredKey = false
       }
@@ -481,11 +471,7 @@ export default class CalenderComponent extends Component {
       }
     }
 
-
-
-    const { searchData, offPeakKey,showModelDropdownForBA,showModelDropdownForSS, airLinesDetailsObject,cabinClassData } = this.state;
-   
-
+    const { searchData, offPeakKey,showModelDropdownForBA,showModelDropdownForSS, airLinesDetailsObject, } = this.state;
    
     let airline = searchData.airline
     let destination = searchData.destinationCode
@@ -523,7 +509,6 @@ export default class CalenderComponent extends Component {
     let availavleClassesData = this.state.airLinesDetailsObject.availability
 
     let data = this.state.seatsAvailabilityData;
-
 
     let economy = availavleClassesData.economy
     let premium = availavleClassesData.premium
@@ -619,8 +604,10 @@ export default class CalenderComponent extends Component {
     }
     let date = moment(clickDate).format("YYYY-MM-DD")
     obj.map((singleMap) => {
+
+    
       if (this.state.clickDate == singleMap[0]) {
-        if (singleMap[1].economy) {
+      if (singleMap[1].economy) {
           if (singleMap[1].economy.seats) {
             economySeats = singleMap[1].economy.seats
           }
@@ -655,7 +642,6 @@ export default class CalenderComponent extends Component {
       }
     })
   }
-
     let economySS 
     let premiumSS
     let businessSS
@@ -876,7 +862,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let firstClass
 
     let travelData = []
-    if(cabinClassData ){
+
+    let cabinClassData = this.props.cabinClassData
+
+    if(cabinClassData){
       if(cabinClassData.economy){
         economyClass = cabinClassData.economy && "Economy" 
       }
@@ -906,7 +895,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if(firstClass){
       travelData[3] = firstClass
     }
-   
+
     let trip_type =  this.state.searchData.isReturn ? "return" : "one_way"
 
     let economy2 = this.state.classSelected[0]
@@ -945,9 +934,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               <TouchableOpacity onPress={() => { }}>
                 {/* {IMAGE_CONST.DARK_CROSS} */}
               </TouchableOpacity>
-              <Text style={styles.titleText}>{searchData.selectedSource.city_name} - {searchData.selectedDestination.city_name}</Text>
+              <Text style={[styles.titleText,{
+                paddingStart:scale(20)
+              }]}>{searchData.selectedSource.city_name} - {searchData.selectedDestination.city_name}</Text>
+            
               {/* (${!data.peak ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
                 }) */}
+
               <TouchableOpacity
                 style={{
                   alignSelf: "flex-end",
@@ -1222,9 +1215,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     if(trip_type == "one_way"){
                       this.setState({
                         showModelDropdownForBA:true,
-                        showModelDropdownForSS:false
+                        // showModelDropdownForSS:false
                       })
                     }
+
                     else{
                         this.props.navigation.navigate("priceDetails",{
                         cabinClassData:this.state.cabinClassData,
@@ -1252,6 +1246,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     showModelDropdownForBA && 
                     <View style={{height:classSelectedArray.length > 2 ? scale(135) : scale(80),borderRadius:scale(3),marginTop:scale(-9),width:scale(334),marginBottom:scale(20),alignSelf:"center",}}>
                     {travelData.map((singleMap)=>{
+                      console.log("inside the ba model  - - - - - - - - -",singleMap)
                           return( 
                             <TouchableOpacity  
                               onPress={()=>{
@@ -2817,7 +2812,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       "#d7a1f0" : item.class == "First" ? 
                       "#f9b9d4" : null,
                       
-                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120) }}
+                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120),height:scale(110) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
@@ -2877,14 +2872,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           }
                         }}
                       >
-                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",margin:scale(7),marginStart:scale(70)}}>
-
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(6),marginStart:scale(80)}}>
                         <MaterialIcon
                           name={
-                            item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
+                            item.isSelected ? "checkbox-marked-circle" : "radiobox-blank"
                           }
                           size={verticalScale(22)}
-                        
                           color={
                             item.class == "Economy" ?
                             item.isSelected ? "#2044ff" : colours.lightGreyish :
@@ -2996,7 +2989,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           </View>
         </View>
       </TouchableOpacity>
-      // </View>
     );
   }
 
@@ -3035,7 +3027,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let business = classSelected[2]
     let first = classSelected[3]
 
-    let classSelectedArray = []
+   let classSelectedArray = []
 
     if (economy) {
       classSelectedArray.push(economy)
@@ -3049,6 +3041,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if (first) {
       classSelectedArray.push(first)
     }
+
   
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
@@ -3079,7 +3072,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         classSelected:newClassArray
                       });
                     } else {
-                      alert(`${this.state.searchData.passengerCount} ${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                   })
                   }
@@ -3125,7 +3118,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         classSelected: newClassArray
                       });
                     } else {
-                      alert(`${this.state.searchData.passengerCount} ${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                   })
                   }
@@ -3147,9 +3140,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     ? colours.yellow
                     : colours.gray
               )}
-
             <Text style={styles.classTextStyle}>
-              {STRING_CONST.PREMIUM_ECONOMY}
+              {/* {STRING_CONST.PREMIUM_ECONOMY} */}
+              {"Prem Econ"}
             </Text>
           </TouchableOpacity>
         )}
@@ -3173,7 +3166,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           classSelected:newClassArray,
                         });
                     } else {
-                      alert(`${this.state.searchData.passengerCount} ${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                   })
                   }
@@ -3222,7 +3215,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         newClassSliderArray:newClassArray
                       });
                     } else {
-                      alert(`${this.state.searchData.passengerCount} ${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                   })
                 }
@@ -3255,6 +3248,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       <TouchableOpacity style={styles.singleTabView}>
         <Image
           style={styles.takeOffIcon}
+          resizeMode="contain"
           source={
             this.state.selectedIndex == 0
               ? IMG_CONST.CALENDAR_ACTIVE_TAKEOFF
@@ -3293,6 +3287,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         >
           <Image
             style={styles.takeOffIcon}
+            resizeMode="contain"
             source={
               this.state.selectedIndex == 0
                 ? IMG_CONST.CALENDAR_ACTIVE_TAKEOFF
@@ -3330,6 +3325,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         >
           <Image
             style={styles.takeOffIcon}
+            resizeMode="contain"
             source={
               this.state.selectedIndex == 1
                 ? IMG_CONST.RETURN_ACTIVE
@@ -3439,7 +3435,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         let scheduleDateKey = scheduleDate[actualDay]
         let availableDateKey = availableDate[actualDay]
 
-       
         availableDateKey ? this.setState({
           offPeakKey: availableDateKey.peak
         }) : this.setState({ offPeakKey: "" })
@@ -3447,7 +3442,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
          if ((!scheduleDateKey) && (!availableDateKey) ) {
           this.Show_Custom_Alert2()
-          this.setState({ noFlightScheduleDate: actualDay, showTicketDetailModal: false, })
+          this.setState({ noFlightScheduleDate: actualDay, clickDate:actualDay, showTicketDetailModal: false, })
           availableDateKey ? this.setState({
             offPeakKey: availableDateKey.peak
           }) : this.setState({ offPeakKey: true })
@@ -3484,7 +3479,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           let flightDate = day.dateString
           this.setState({isNoflightScheudlePopup:true})
           this.renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day)
-          this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false,})
+          this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false,
+            clickDate:actualDay
+          })
           this.setState({ noFlightScheduleAlertTxt: "No Seat Available in any Cabin Class" })
 
         }
@@ -3514,7 +3511,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
      
          if (!scheduleDateKey && !availableDateKey) {
           this.Show_Custom_Alert2()
-          this.setState({ noFlightScheduleDate: actualDay })
+          this.setState({ noFlightScheduleDate: actualDay, clickDate:actualDay })
           this.setState({ noFlightScheduleAlertTxt: "No Flight Available", showTicketDetailModal: false,})
 
         }
@@ -3533,7 +3530,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             });
           }
           this.Show_Custom_Alert2()
-          this.setState({ noFlightScheduleDate: actualDay })
+          this.setState({ noFlightScheduleDate: actualDay, clickDate:actualDay })
           availableDateKey ? this.setState({
             offPeakKey: availableDateKey.peak
           }) : this.setState({ offPeakKey: true })
@@ -3560,7 +3557,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             flightDate,
             isOffPeakValue1,
             day)
-           this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false, })
+           this.setState({ noFlightScheduleDate: actualDay, clickDate:actualDay,selectedDate:selectedDate, showTicketDetailModal: false, })
            this.setState({ noFlightScheduleAlertTxt: "No Seats Available in any Cabin Classes" })
          
         }
@@ -3748,6 +3745,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     var premiumClass = classSelected[1]
     var businessClass = classSelected[2]
     var firstClass = classSelected[3]
+
 
     let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
        
@@ -4093,9 +4091,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               textMonthFontWeight: "`bold`",
               textDayHeaderFontWeight: "300",
               dayTextColor: '#2d4150',
-              textDayFontSize: scale(12),
-              textMonthFontSize: scale(12),
-              textDayHeaderFontSize: scale(12),
+              textDayFontSize: scale(11),
+              textMonthFontSize: scale(11),
+              textDayHeaderFontSize: scale(11),
               backgroundColor: '#ffffff',
               "stylesheet.calendar.header": {
                 header: styles.header,
@@ -4163,7 +4161,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     alignSelf: "flex-end",
                     marginTop:scale(10)
                   }}
-                      onPress={() => { this.Hide_Custom_Alert2()
+                    onPress={() => { this.Hide_Custom_Alert2()
                   }}
                 >
                   <Entypo
@@ -4188,6 +4186,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   checkFlightCount > 1 ?
                   <TouchableOpacity
                     onPress={()=>{
+                        economySeats=0
+                        premiumSeats=0
+                        businessSeats=0
+                        firstSeats=0
                       if(this.state.selectedIndex == 0) {
                         data = this.state.airLinesDetailsObject.outbound_availability;
                         let onDayPressedDate = onPressDate.dateString

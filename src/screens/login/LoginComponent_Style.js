@@ -108,7 +108,7 @@ export default StyleSheet.create({
     borderRadius: scale(15),
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colours.lightBlueTheme,
+ 
   },
 
   skipButton1: {

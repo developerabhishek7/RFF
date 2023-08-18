@@ -227,10 +227,7 @@ class EditAlertComponent extends Component {
             }
           }}
         >
-         
             {IMG_CONST.MINUS_ICON}
-           
-        
         </TouchableOpacity>
         <Text style={[{ marginHorizontal: scale(12), fontSize:scale(14) }]}>
           {this.state.passengerCount}
@@ -297,6 +294,10 @@ class EditAlertComponent extends Component {
     const { departStartDate,departEndDate } = this.state
     return (
       <View style={{ marginTop: verticalScale(18) }}>
+
+        <View style={{flexDirection:"row"}}>
+        <Image source={IMG_CONST.DEPT_ICON1} resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
+      
         <Text
           style={[
             styles.headingTextStyle,
@@ -307,6 +308,7 @@ class EditAlertComponent extends Component {
         >
           {STRING_CONST.DEPARTURE_DATE_RANGE}
         </Text>
+         </View>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.CREATE_ALERT_SCREEN, {
@@ -347,6 +349,9 @@ class EditAlertComponent extends Component {
     let date = moment().format("YYYY-MM-DD")
     return (
       <View style={{ marginTop: verticalScale(18) }}>
+        <View style={{flexDirection:"row"}}>
+        <Image source={IMG_CONST.RETURN_ICON1} resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
+      
         <Text
           style={[
             styles.headingTextStyle,
@@ -357,6 +362,7 @@ class EditAlertComponent extends Component {
         >
           {STRING_CONST.RETURN_DATE_RANGE}
         </Text>
+        </View>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.CREATE_ALERT_SCREEN, {
@@ -540,8 +546,7 @@ class EditAlertComponent extends Component {
               }
             }}
           >
-            
-            { !this.state.classSelectedArray[3] ?
+            {!this.state.classSelectedArray[3] ?
               this.getIcon(STRING_CONST.CHECK_EMPTY_CIRCLE, colours.pink):
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.pink)
             }
@@ -584,7 +589,7 @@ class EditAlertComponent extends Component {
           justifyContent: 'center',          
         }}>
           <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <FastImage source={IMG_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            <Image source={IMG_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
         </View>
@@ -637,7 +642,7 @@ class EditAlertComponent extends Component {
 
     return (
       <View style={{ marginTop: verticalScale(20) }}>
-        <Text style={[styles.headingTextStyle]}>{"Cabin Type"}</Text>
+        <Text style={[styles.headingTextStyle]}>{"Cabin Class"}</Text>
        { travelData.length> 0 ? <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop:verticalScale(5) }}>
           {travelData.map((classType, index) => {
             if(travelData.includes(classType))
@@ -701,6 +706,9 @@ class EditAlertComponent extends Component {
           }}
         >
           <View style={styles.headingContainerStyle}>
+           
+           <View style={{flexDirection:"row",marginTop:scale(4),marginBottom:scale(4)}}>
+            <Image source={IMG_CONST.DEPARTURE_ICON}  resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
             <Text
               style={[
                 styles.headingTextStyle,
@@ -711,6 +719,7 @@ class EditAlertComponent extends Component {
             >
               {STRING_CONST.FLIGHT_TYPE}
             </Text>
+            </View>
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 style={{ flexDirection: "row", alignItems: "center" }}
@@ -719,7 +728,7 @@ class EditAlertComponent extends Component {
                 }}
               >
                 {this.state.selectedIndex == 0 ? (
-                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
+                  <Image source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -742,7 +751,7 @@ class EditAlertComponent extends Component {
                 }}
               >
                 {this.state.selectedIndex == 1 ? (
-                  <FastImage source={IMG_CONST.RADIO_BUTTON} 
+                  <Image source={IMG_CONST.RADIO_BUTTON} 
                   style={styles.radioButton}/>
                 ) : (
                   <Ionicons
@@ -760,7 +769,10 @@ class EditAlertComponent extends Component {
               styles.headingContainerStyle,
               { paddingBottom: verticalScale(13) },
             ]}
-          >
+          >  
+            <View style={{flexDirection:"row",marginTop:scale(3),marginBottom:scale(6)}}>          
+           <Image source={IMG_CONST.USER_ICON1} style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
+
             <Text
               style={[
                 styles.headingTextStyle,
@@ -773,6 +785,7 @@ class EditAlertComponent extends Component {
               {/* {STRING_CONST.PASSENGER_COUNT} */}
          
             </Text>
+            </View>
             {this.getTravellersCountView()}
           </View>
         </View>

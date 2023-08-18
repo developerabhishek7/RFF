@@ -655,6 +655,7 @@ class AlertsScreen extends React.Component {
     isLoader:false,
     showMenu:false,
     AlertId:0,
+    staticDateArray:[]
   };
 
 
@@ -668,6 +669,8 @@ class AlertsScreen extends React.Component {
 
     this.checkIfPeakOffPeakDataMonth()
     // this.props.getAlertsAction();
+
+    this.getDates()
 
     setTimeout(() => {
       this.props.getAlertsAction();
@@ -714,6 +717,33 @@ class AlertsScreen extends React.Component {
     );
   }
 
+  getDates = () => {
+
+    var dateArray = [];
+    let today = new Date()
+
+    let d = moment().year() + 1
+    let month = moment().month() + 2
+
+    let endDateKey = `${d}-${month}-01`
+    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
+
+    let endDay = new Date(exactEndDate)
+    var currentDate = moment(today);
+    var stopDate = moment(endDay);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
+      currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    this.setState({
+      staticDateArray: dateArray
+    })
+
+   
+    return dateArray;
+  }
+
   async componentWillReceiveProps(nextProps) {
     const { navigation } = this.props;
 
@@ -754,7 +784,9 @@ class AlertsScreen extends React.Component {
         this.props.navigation.navigate(STR_CONST.CALENDAR_SCREEN, {
           searchData: this.state.searchData,
           focusedDate: this.state.searchData.endDate,
-          monthKey:monthKey
+          monthKey:monthKey,
+          peakOffpeakData: this.props.peakOffpeakData,
+          staticDateArray:this.state.staticDateArray
         })
       })
     }
@@ -1362,9 +1394,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { alerts, common, notification, calendar, findFlight } = state;
-
-  
-  return {
+   return {
     alertsArray: alerts.alertsArray,
     alertsArrayError: alerts.getAlertError,
     alertCancelSuccess: alerts.alertCancelSuccess,
@@ -1377,7 +1407,8 @@ const mapStateToProps = (state) => {
     screenType: calendar.screenType,
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,
-    cabinClassData:findFlight.cabinClassData
+    cabinClassData:findFlight.cabinClassData,
+    peakOffpeakData: calendar.peakOffpeakData,
 
   };
 };

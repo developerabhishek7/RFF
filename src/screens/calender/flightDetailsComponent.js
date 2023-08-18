@@ -107,14 +107,6 @@ class FlightDetailsCompoent extends Component {
   formatPrice = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
   componentDidMount() {
-
-    // let flightScheduleData = this.props.route.params.flightScheduleData
-    // this.props.getMultipleScheduleData(flightScheduleData)
-
-    // this.renderDestinationList()
-
-    console.log("yes check here inside did mount #######     ", this.state.classDataArray)
-
     const { flightSchedule, isOutBounded, date, } = this.props;
     let flightData = [];
     if (isOutBounded) {
@@ -169,12 +161,10 @@ class FlightDetailsCompoent extends Component {
     let data = this.state.searchData
     return (
       <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-     
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => {
-            // this.props.navigation.dispatch(NavigationActions.back())
-            this.props.navigation.goBack()
+              this.props.navigation.goBack()
           }}
         >
             {IMAGE_CONST.IOS_BACK_ARROW}
@@ -192,7 +182,7 @@ class FlightDetailsCompoent extends Component {
   }
 
   getPointsText(points) {
-    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(2)) + 'k' : Math.sign(points)*Math.abs(points)
     // if (points % 1000 == 0) {
     //   return `${points / 1000}k`;
     // } else {
@@ -228,7 +218,7 @@ class FlightDetailsCompoent extends Component {
           >
             <View style={[styles.titleView]}>
               <TouchableOpacity onPress={() => { }}>
-                <FastImage
+                <Image
                   source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
                   style={{ marginRight: scale(10) }}
                 />
@@ -564,12 +554,16 @@ class FlightDetailsCompoent extends Component {
             economy ?
               <View>
                 <View style={{ alignItems: "center", marginTop: verticalScale(20) }}>
-                  <View style={{ alignItems: "center" }}>
+                  <View style={{ alignItems: "center", }}>
+                 
+                    <View style={{paddingStart:scale(15)}}>
                     <Ionicons
                       name="ios-radio-button-on"
                       size={scale(8)}
                       color={colours.economySeatColor}
                     />
+                    </View>
+                   
                     <Text
                       style={[styles.classText, { color: colours.economySeatColor }]}
                     >
@@ -594,11 +588,14 @@ class FlightDetailsCompoent extends Component {
               <View>
                 <View style={{ alignItems: "center", marginTop: verticalScale(20) }}>
                   <View style={{ alignItems: "center" }}>
-                    <Ionicons
+                  <View style={{paddingStart:scale(15)}}>
+                  <Ionicons
                       name="ios-radio-button-on"
                       size={scale(8)}
                       color={colours.yellow}
                     />
+                    </View>
+                  
                     <Text
                       style={[
                         styles.classText,
@@ -630,11 +627,14 @@ class FlightDetailsCompoent extends Component {
               <View>
                 <View style={{ alignItems: "center", marginTop: verticalScale(20) }}>
                   <View style={{ alignItems: "center" }}>
-                    <Ionicons
+                  <View style={{paddingStart:scale(15)}}>
+                  <Ionicons
                       name="ios-radio-button-on"
                       size={scale(8)}
                       color={colours.purple}
                     />
+                    </View>
+                   
                     <Text
                       style={[
                         styles.classText,
@@ -665,11 +665,13 @@ class FlightDetailsCompoent extends Component {
               <View>
                 <View style={{ alignItems: "center", marginTop: verticalScale(20) }}>
                   <View style={{ alignItems: "center" }}>
+                  <View style={{paddingStart:scale(15)}}>
                     <Ionicons
-                      name="ios-radio-button-on"
-                      size={scale(8)}
-                      color={colours.firstSeatColor}
-                    />
+                        name="ios-radio-button-on"
+                        size={scale(8)}
+                        color={colours.firstSeatColor}
+                      />
+                    </View>
                     <Text
                       style={[
                         styles.classText,
@@ -995,6 +997,14 @@ class FlightDetailsCompoent extends Component {
 
     const userData = this.props.userData
     let bronzeMember = userData.bronze_member
+
+
+    console.log("yes check here datestring - - -  - -- -",this.state.dateString)
+    console.log("yes check here selectedDate day - - -  - -- -",this.state.selectedDate.day)
+    console.log("yes check here classSelected date - - -  -",this.state.classSelected)
+    console.log("yes check here isOffPeakValue date - - -  -",this.state.isOffPeakValue)
+
+
   
     return (
       <SafeAreaView style={styles.container}>
@@ -1003,7 +1013,7 @@ class FlightDetailsCompoent extends Component {
           {/* {this.addUserAge()} */}
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              <View style={{ marginVertical: verticalScale(15) }}>
+              {/* <View style={{ marginVertical: verticalScale(15) }}>
                 <CalendarDate
                   selectedDate={this.state.dateString}
                   classSelected={this.state.classSelected}
@@ -1012,7 +1022,7 @@ class FlightDetailsCompoent extends Component {
                   availabilityData={this.state.seatsAvailabilityData}
                   isOffPeakValue={this.state.isOffPeakValue}
                 />
-              </View>
+              </View> */}
               <View style={styles.innerContainer}>
                 <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
                   } (${!this.state.isOffPeakValue
@@ -1032,7 +1042,10 @@ class FlightDetailsCompoent extends Component {
                 {
                   this.state.noflightschedule ?
                     <View style={{ justifyContent: "center", alignItems: 'center', marginTop: scale(20) }}>
-                      <FastImage source={require('../../assets/sad_imogi.png')} style={{ height: scale(80), width: scale(80), margin: scale(10) }} resizeMode="contain" />
+                      {/* <FastImage source={require('../../assets/sad_imogi.png')} style={{ height: scale(80), width: scale(80), margin: scale(10) }} resizeMode="contain" /> */}
+                    
+                      <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(80), width: scale(80),margin:scale(6)  }} resizeMode="contain" />
+         
                       <Text
                         style={[
                           styles.subTitleText2,
@@ -1087,14 +1100,14 @@ class FlightDetailsCompoent extends Component {
                     }
                   }}
                 >
-                  <FastImage source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
+                  <Image source={IMAGE_CONST.BRITISH_AIRWAYS_TRANPARENT_LOGO} />
                   <Text style={styles.bookOnBAText}>
                     {STRING_CONST.BOOK_ON_BA}
                   </Text>
                 </TouchableOpacity>
                 {
                   showModelDropdownForBA &&
-                  <View style={{ height: classDataArray.length > 2 ? scale(124) : scale(70), backgroundColor: "#D9F3F9", borderColor: "grey", alignSelf: "center", width: scale(270), marginTop: scale(-6), marginBottom: scale(10) }}>
+                  <View style={{ height: classDataArray.length > 2 ? scale(124) : scale(70), borderColor: "grey", alignSelf: "center", width: scale(270), marginTop: scale(-6), marginBottom: scale(10) }}>
                     {travelData.map((singleMap) => {
                       return (
                         <TouchableOpacity

@@ -1075,6 +1075,23 @@ componentDidMount(){
  
     const {headerTxt,departStartDate,selectedDate,returnStartDate,selectedSource,selectedDestination,prevSelectedSource,prevSelectedDestination,selectedIndex} = this.state
     
+
+    let isButtonShown = false
+    if((selectedIndex == false || selectedIndex == 1) && returnStartDate){
+      isButtonShown = true 
+    }else if((selectedIndex == true || selectedIndex == 1) || (selectedDate || departStartDate)){
+      isButtonShown = true
+    }
+    else{
+      isButtonShown = false
+    }
+
+
+
+    console.log("yes update the data accordingly -------",isButtonShown)
+
+
+    
     return ( 
       <View style={styles.buttonViewContainer}>
        {
@@ -1156,13 +1173,11 @@ componentDidMount(){
         <ModalDropdown        
           showsVerticalScrollIndicator={true}          
           onDropdownWillShow={() => {
-
             this.setState({
               showBorder: 1,
               colours:"red"
             });
           }}
-          
           onDropdownWillHide={() => {
             this.setState({
               showBorder: 0,
@@ -1211,7 +1226,6 @@ componentDidMount(){
             ) : (
               <Text style={styles.countryText}>
                 {STRING_CONST.AGE_BAND}
-                {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
 
@@ -1222,7 +1236,6 @@ componentDidMount(){
     );
   }
   render() {
-    // let screenType =  this.props.route.params.screen;
     return (
       <SafeAreaView style={{ flex: 1}}>
         <View style={{ flex: 1,  }}>
@@ -1271,7 +1284,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   const { alerts, findFlight } = state;
-  // console.log("-------------------map state to props function ##############       ",findFlight.cabinClassData)
    return {
     alertCancelSuccess: alerts.alertCancelSuccess,
     alertCancelError: alerts.alertCancelError,

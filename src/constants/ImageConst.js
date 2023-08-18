@@ -9,6 +9,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/dist/Entypo";
 import  Feather  from "react-native-vector-icons/Feather";
 
+
+
 //Image constants
 // export const ON_BOARDING_RFF_LOGO = require('../assets/onboarding/onBoardingRFFLogo.png');
 // export const ON_BOARDING_FIND_FLIGHT = require('../assets/onboarding/onBoardingFindFlight.png');
@@ -77,6 +79,13 @@ export const ECONOMYC_SEAT = require('../assets/alerts/economy_seat.png');
 export const PREMIUM_SEAT = require('../assets/alerts/premium_seat.png');
 export const BUSINESS_SEAT = require('../assets/alerts/business_seat.png');
 export const FIRST_SEAT = require('../assets/alerts/first_seat.png');
+
+// edit alert icon
+
+export const RETURN_ICON1 = require('../assets/alerts/returnIcon.png');
+export const DEPARTURE_ICON = require('../assets/alerts/Departure.png');
+export const USER_ICON1 = require('../assets/alerts/usrIcon.png');
+export const DEPT_ICON1 = require('../assets/alerts/DEPT.png');
 
 
 
