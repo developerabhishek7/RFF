@@ -314,6 +314,7 @@ export default StyleSheet.create({
     color: colours.darkBlueTheme,
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(14),
+    marginStart:scale(-10)
   },
   subTitleText: {
     color: colours.lightGreyish,

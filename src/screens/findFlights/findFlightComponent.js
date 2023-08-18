@@ -590,7 +590,6 @@ export default class FindFlightComponent extends Component {
       classObject = this.state.classObject1;
       classSelected = this.state.classSelected;
     }
-
     let selectedClassCount = 0;
     let index = -1;
     for (i = 0; i < classSelected.length; i++) {
@@ -600,7 +599,10 @@ export default class FindFlightComponent extends Component {
       }
     }
     if (selectedClassCount == 1) {
-      return `${classObject[index].class}`;
+      if(classObject[index].class == "Premium Economy"){
+        return `Prem Econ`;
+      }
+       return `${classObject[index].class}`;
     } else if (selectedClassCount == 0) {
       return ` None`;
     } else {
@@ -638,6 +640,9 @@ export default class FindFlightComponent extends Component {
     }
   }
   getClassView() {
+
+    const {classObject} = this.state
+
     return (
       <TouchableOpacity
         style={styles.classViewContainer}
@@ -731,21 +736,8 @@ export default class FindFlightComponent extends Component {
       selectedIndex,
       classSelected1
     } = this.state;
-    // console.log("yes check airline selected ",airlineSelected)
-    // console.log("yes check here tier value ####### ",tierSelected)
-    const guestId = await getStoreData('guestId')
+     const guestId = await getStoreData('guestId')
     const userId = await getUserId('userId')
-    // console.log("check here destination #######   ",selectedDestination)
-    // if(tierSelected == null){
-    //   console.log("yes check here tierSelcted ----------------------------                    ####### ",tierSelected)
-    //   tierSelected == "blue"
-    // }else if(tierSelected.value == "blue" || "gold" || "silver" || "bronze" ){
-    //   tierSelected = tierSelected.value
-    // }else{
-    //   tierSelected  = tierSelected
-    // }
-
-  
     if (selectedSource && selectedDestination) {
       let travel_classes
       if(bronzeMember){
@@ -754,8 +746,6 @@ export default class FindFlightComponent extends Component {
       else{
         travel_classes = getBAClassesString(classSelected)
       }
-      
-      
       // let airline = airlineSelected
       //   .replace("_", "-")
       //   .toLowerCase();
@@ -770,7 +760,7 @@ export default class FindFlightComponent extends Component {
         selectedDestination: selectedDestination,
         isReturn: selectedIndex == 1,
         classSelected: bronzeMember ? classSelected1 : classSelected,
-        // airways: airlineSelected,
+        // airways: airlineSelected,                                 
         airways:"british_airways"
       };
       user_action_audit = {}
@@ -796,12 +786,7 @@ export default class FindFlightComponent extends Component {
       // this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {searchData:searchData,focusedDate:null,
       //   peakOffpeakData:this.state.demoPeakOffPeakData
       // })
-      
       // ..........test posthog data here  -  - - - - - - - - - - 
-
-
-
-
       // if(!this.props.isLoggedIn){
       //   let uuid_Key = uuid.v4()
       //   let guestUserPostHog = {}
@@ -816,7 +801,6 @@ export default class FindFlightComponent extends Component {
       //       "searchFrom": "home"
       //   }
       //   this.props.updateGuestUserPostHog(guestUserPostHog)
-
       // }
       // else{
       //   let loggedInUserPostHog = {}
@@ -905,7 +889,7 @@ export default class FindFlightComponent extends Component {
         {/* { selectedSource && nearestAirports && currentLatitude &&
         <Text style = {styles.airportNameStyle}>{STRING_CONST.NEAREST_AIRPORT}: {this.getNearestAirport(nearestAirports)} </Text>} */}
         {this.getClassView()}
-        {/* {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{color:colours.redColor, alignSelf:'center',marginBottom:verticalScale(5), fontSize:scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>} */}
+        {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{color:colours.redColor, alignSelf:'center',marginBottom:verticalScale(5), fontSize:scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>}
         {this.renderBottomButton1("Search", colours.lightBlueTheme, () => {
           this.validateFindFlightData();
         })}

@@ -62,6 +62,7 @@ class NotificationDetailComponent extends Component {
       inBoundDateArray: [],
       outBoundDateArray: [],
       availableClassArray: [],
+      staticDateArray:[],
       isLoader: false,
     };
     this.circleRadius = scale(1.6);
@@ -69,6 +70,7 @@ class NotificationDetailComponent extends Component {
 
   componentDidMount() {
     this.checkIfPeakOffPeakDataMonth()
+    this.getDates()
     let id = this.props.route.params.notification_id;     
     this.props.getNotificationDetailAction(id);
     id = this.props.route.params.notification_id;
@@ -182,7 +184,9 @@ class NotificationDetailComponent extends Component {
           this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
             searchData:this.state.searchData,
             focusedDate: this.state.outBoundDateArray[0],
-            monthKey:monthKey
+            monthKey:monthKey,
+            peakOffpeakData: this.props.peakOffpeakData,
+            staticDateArray:this.state.staticDateArray
           })
         })
       }
@@ -876,7 +880,7 @@ class NotificationDetailComponent extends Component {
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-50),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
         <View style={{marginTop:scale(30)}}>
         <ScreenHeader
           {...this.props}
@@ -891,8 +895,32 @@ class NotificationDetailComponent extends Component {
       </View>
     )
   }
+  getDates = () => {
 
+    var dateArray = [];
+    let today = new Date()
 
+    let d = moment().year() + 1
+    let month = moment().month() + 2
+
+    let endDateKey = `${d}-${month}-01`
+    let exactEndDate = moment(endDateKey).format("YYYY-MM-DD")
+
+    let endDay = new Date(exactEndDate)
+    var currentDate = moment(today);
+    var stopDate = moment(endDay);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format('YYYY-MM-DD'))
+      currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    this.setState({
+      staticDateArray: dateArray
+    })
+
+   
+    return dateArray;
+  }
 
   render() {
     return (     
@@ -919,6 +947,7 @@ const mapStateToProps = (state) => {
     locations: findFlight.locations,
     airlinesDetail: calendar.airlinesDetail,
     screenType: calendar.screenType,
+    peakOffpeakData: calendar.peakOffpeakData,
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   View,
   Image,
@@ -673,15 +673,40 @@ class LoginComponent extends Component {
   }
 
   renderButtonContainer() {
-    return (
-      <TouchableOpacity
-        onPress={() => this.validation()}
-        style={styles.signInButton}
-        activeOpacity={1}
->
 
-        <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
-      </TouchableOpacity>
+    const {email,password} = this.state;
+
+    return (
+      <Fragment>
+        {
+          email && password ?
+
+          <TouchableOpacity
+          onPress={() => this.validation()}
+          style={[styles.signInButton,{
+            backgroundColor: colours.lightBlueTheme,
+          }]}
+          activeOpacity={1}
+  >
+  
+          <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
+        </TouchableOpacity>
+
+          : 
+
+          <TouchableOpacity
+          onPress={() => this.validation()}
+          style={[styles.signInButton,{
+            backgroundColor: colours.gray,
+          }]}
+          activeOpacity={1}
+  >
+  
+          <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
+        </TouchableOpacity>
+        }
+     
+      </Fragment>
     );
   }
 

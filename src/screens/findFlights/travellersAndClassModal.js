@@ -46,7 +46,7 @@ export default class TravellersAndClassModal extends Component {
   getTravellersCountView() {
     const {travellersCount} = this.state
     return (
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row", alignItems: "center", }}>
         <TouchableOpacity
            style={[styles.travellersCountButtonStyle,{
             backgroundColor:travellersCount > 1 ? colours.lightBlueTheme : colours.lightGreyish,
@@ -184,7 +184,7 @@ export default class TravellersAndClassModal extends Component {
                       "#d7a1f0" : item.class == "First" ? 
                       "#f9b9d4" : null,
                       
-                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120) }}
+                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120),height:scale(110) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
@@ -244,7 +244,7 @@ export default class TravellersAndClassModal extends Component {
                           }
                         }}
                       >
-                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",margin:scale(7),marginStart:scale(70)}}>
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(5),marginStart:scale(80)}}>
                        {/* {
                           item.class == "Economy" ?
                           <MaterialIcon
@@ -289,9 +289,9 @@ export default class TravellersAndClassModal extends Component {
                   : null
                 } */}
                         <MaterialIcon
-                          name={
-                            item.isSelected ? "checkbox-marked" : "checkbox-blank-outline"
-                          }
+                            name={
+                              item.isSelected ? "checkbox-marked-circle" : "radiobox-blank"
+                            }
                           size={verticalScale(22)}
                         
                           color={
@@ -425,7 +425,6 @@ export default class TravellersAndClassModal extends Component {
                 }
                  </View>
                 {this.getTravellersCountView()}
-               
               </View>
               <View
                 style={{

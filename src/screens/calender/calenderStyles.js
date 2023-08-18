@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor:"#03B2D8",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
-    height:scale(110),
+    height:Platform.OS == "ios" ? scale(110) : scale(95),
     borderBottomColor:"#03B2D8",
     borderBottomWidth:3,
     zIndex:30,
@@ -29,8 +29,6 @@ export default StyleSheet.create({
     borderBottomLeftRadius:scale(20),borderBottomRightRadius:scale(20)
   },
   cellContainer: {
-
-
     width:"90%",
     alignSelf:"center",
     marginVertical: verticalScale(10),
@@ -108,7 +106,8 @@ export default StyleSheet.create({
     paddingHorizontal: scale(5),
     paddingVertical: verticalScale(5),
     borderWidth:scale(0.3),
-    borderColor:"#03B2D8"
+    borderColor:"#03B2D8",
+    // marginStart:scale(10),marginEnd:scale(10)
   },
   classTextStyle: {
     fontSize: scale(10.4),
@@ -286,7 +285,6 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   titleText: {
-    color: "#41454b",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(15),
     fontWeight:"700",

@@ -126,7 +126,7 @@ import {Alert} from 'react-native'
        const authToken = API_CONST.AUTH0RIZATION_TOKEN;
        const data = await securePostForUser(`/v1/users/login`, authToken, body, true);  
        if (data.status === 200) {
-       let res = await data.json()
+        let res = await data.json()
         const authorizationHeader = res.accesstoken;
         var id  = res.user_id
          await AsyncStorage.setItem("authorizationHeader", authorizationHeader);
@@ -139,20 +139,25 @@ import {Alert} from 'react-native'
          dispatch(CommonActions.stopLoader()); // To stop Loader
        } 
        else {
-         dispatch(CommonActions.stopLoader()); // To stop Loader
-         await dispatch({
-           type: LOGIN_ERROR,
-           payload: { loginError: data.error},
-         });
+        dispatch(CommonActions.stopLoader())
+        if(data.error == "Invalid email or password."){
+          Alert.alert("Invalid email or password")
+        }
+        // ; // To stop Loader
+        //  await dispatch({
+        //    type: LOGIN_ERROR,
+        //    payload: { loginError: data.error},
+        //  });
+        
        }
      } catch (e) {
-       console.log("check on catch part ######## ",e)
+       console.log("check on catch part ########----------------------------- ",e)
        dispatch(CommonActions.stopLoader()); // To stop Loader
        if (e == NETWORK_ERROR) {
          await dispatch(CommonActions.stopLoader());
          await dispatch(CommonActions.setNetworkStatus("LOG_IN"));
        } else {
-         alert(e);
+         Alert.alert(e);
        }
      }
    };

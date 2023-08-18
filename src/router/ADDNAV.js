@@ -169,7 +169,7 @@ const drawerViewModel = (navigation) => {
           component={SplashComponent}
           options={{
             headerShown: false,
-            gestureEnabled: false }}
+            }}
           
         />
       <Stack.Screen
@@ -201,7 +201,8 @@ const drawerViewModel = (navigation) => {
           name="FindFlightContainerScreen"
           component={FindFlightContainer}
           options={{
-            headerShown: false
+            headerShown: false,
+            gestureEnabled:false
           }}
         />
         <Stack.Screen
@@ -220,7 +221,7 @@ const drawerViewModel = (navigation) => {
         />
 
 
-<Stack.Screen
+      <Stack.Screen
           name="calendarTest"
           component={calendarTest}
           options={{
@@ -229,7 +230,7 @@ const drawerViewModel = (navigation) => {
         />
 
 
-<Stack.Screen
+      <Stack.Screen
           name="FlightDetailsCompoent"
           component={FlightDetailsCompoent}
           options={{
@@ -280,8 +281,7 @@ const drawerViewModel = (navigation) => {
             headerShown: false
           }}
         />
-
- <Stack.Screen
+        <Stack.Screen
           name="NotificationSettingsScreen"
           component={NotificationSettingsContainer}
           options={{
@@ -306,7 +306,8 @@ const drawerViewModel = (navigation) => {
           name="CalenderContainerScreen"
           component={CalenderContainer}
           options={{
-            headerShown: false
+            headerShown: false,
+            gestureEnabled:true
           }}
         />
         <Stack.Screen
@@ -348,7 +349,7 @@ const drawerViewModel = (navigation) => {
           name="ProfileDetailsScreen"
           component={ProfileDetailsScreenContainer}
           options={{
-            headerShown: false
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -419,6 +420,7 @@ function MainStack() {
     return (
       <NavigationContainer
           ref={navigationRef}
+          
       >
          <Drawer.Navigator drawerContent={drawerViewModel}
                 screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false,

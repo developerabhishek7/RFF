@@ -315,7 +315,7 @@ checkIfPeakOffPeakDataMonth = () => {
     //   return points;
     // }
 
-    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(1)) + 'k' : Math.sign(points)*Math.abs(points)
+    return Math.abs(points) > 999 ? Math.sign(points)*((Math.abs(points)/1000).toFixed(2)) + 'k' : Math.sign(points)*Math.abs(points)
 
 
   }
@@ -662,7 +662,7 @@ checkIfPeakOffPeakDataMonth = () => {
               
                     <Text style={{color:"#FEA41D",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
                 
-                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
               </View>
             </View>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
@@ -670,7 +670,7 @@ checkIfPeakOffPeakDataMonth = () => {
               
                     <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
                 
-                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
               </View>
             </View>
         }

@@ -267,7 +267,7 @@ export default class ProfileScreenComponent extends Component {
       this.props.resendOTPSuccess &&
       this.props.resendOTPSuccess !== prevProps.resendOTPSuccess
     ) {
-      alert(STR_CONST.VERIFICATION_OTP_SENT);
+      Alert.alert(STR_CONST.VERIFICATION_OTP_SENT);
       this.setState({
         showSendOTPButton: false,
         timer: STR_CONST.TIMER_LIMIT,
