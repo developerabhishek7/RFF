@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor:"#03B2D8",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
-    height:Platform.OS == "ios" ? scale(110) : scale(95),
+    height:Platform.OS == "ios" ? scale(110) : scale(90),
     borderBottomColor:"#03B2D8",
     borderBottomWidth:3,
     zIndex:30,
@@ -288,6 +288,12 @@ export default StyleSheet.create({
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(15),
     fontWeight:"700",
+  },
+  titleText1: {
+    fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
+    fontSize: scale(15),
+    fontWeight:"700",
+    color:"#FFF"
   },
   classText: {
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,

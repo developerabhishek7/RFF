@@ -359,7 +359,7 @@ export default class ProfileScreenComponent extends Component {
 
   renderHeader() {
     return (
-      <View style={{ marginHorizontal: scale(15),marginTop:scale(40) }}>
+      <View style={{ marginHorizontal: scale(15),marginTop:scale(50) }}>
         <ScreenHeader
           {...this.props}
           left
@@ -428,10 +428,7 @@ uploadImage = async (imageData) => {
         type: imageData.type
       }
       );
-
       let url = `${USER_API_URL}/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-     
-
       var config = {
         method: 'put',
         url: url,

@@ -1480,8 +1480,8 @@ export default class FindFlightComponent extends Component {
             {this.renderHeader()}
 
             {this.showEmailVerify()}
-
-            <ScrollView keyboardShouldPersistTaps="always">
+                  
+            {/* <ScrollView keyboardShouldPersistTaps="always"> */}
               {this.informationView()}
               {
                 // userData.buildVersion == 0 ? 
@@ -1577,7 +1577,7 @@ export default class FindFlightComponent extends Component {
                   </View>
                 </Modal>
               )}
-            </ScrollView>
+            {/* </ScrollView> */}
           </View>
           </SafeAreaView>
           </ImageBackground>

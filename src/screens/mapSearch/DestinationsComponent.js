@@ -96,7 +96,7 @@ export default class DestinationsComponent extends Component {
   renderHeader() {
     return (
      <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20) }}>
-        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(45),alignSelf:"center"}}>
+        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(50),alignSelf:"center"}}>
         <TouchableOpacity onPress={() => {
               this.props.navigation.goBack()}}>
                   {IMAGE_CONST.IOS_BACK_ARROW}
@@ -126,7 +126,7 @@ export default class DestinationsComponent extends Component {
 
   renderClasses() {
     return (
-      <View style={{ flexDirection: "row", justifyContent: "space-between", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
         <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ padding: scale(5), borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <AntDesign name="checkcircle" size={scale(12)} color="#2044FF" />
@@ -186,6 +186,8 @@ export default class DestinationsComponent extends Component {
         backgroundColor:"#FFF"
       }]}>
         {this.renderHeader()}
+
+        {this.renderClasses()}
         <ScrollView style={styles.container}>
           {/* <SearchInput
             onChangeText={(term) => { this.searchUpdated(term) }}
@@ -193,7 +195,7 @@ export default class DestinationsComponent extends Component {
             placeholder="Search Available Routes"
             placeholderTextColor="#97ADB6"
           /> */}
-          {this.renderClasses()}
+         
           {
             sortedArray.map((singleMap, index) => {
               // console.log("yes chec k on destination list commponent  ####### ",singleMap)
@@ -345,7 +347,7 @@ export default class DestinationsComponent extends Component {
                         })
                       }}>
                         {
-                              <FastImage resizeMode='contain' source={require("../../assets/common/rightArrow.png")} style={{ height: scale(20), width: scale(20), padding: scale(4), marginStart: scale(7) }} />
+                              <FastImage resizeMode='contain' source={require("../../assets/common/rightArrow.png")} style={{ height: scale(17), width: scale(17), padding: scale(4), marginStart: scale(5),marginEnd:scale(5) }} />
                         }
                           </TouchableOpacity>
                     </View>

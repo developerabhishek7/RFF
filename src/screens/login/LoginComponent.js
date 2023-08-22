@@ -680,26 +680,22 @@ class LoginComponent extends Component {
       <Fragment>
         {
           email && password ?
-
           <TouchableOpacity
           onPress={() => this.validation()}
           style={[styles.signInButton,{
             backgroundColor: colours.lightBlueTheme,
           }]}
-          activeOpacity={1}
+          activeOpacity={0.7}
   >
-  
           <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
         </TouchableOpacity>
-
           : 
-
           <TouchableOpacity
-          onPress={() => this.validation()}
+          // onPress={() => this.validation()}
           style={[styles.signInButton,{
-            backgroundColor: colours.gray,
+            backgroundColor:!email && !password ? colours.gray :colours.lightBlueTheme,
           }]}
-          activeOpacity={1}
+          activeOpacity={0.7}
   >
   
           <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>

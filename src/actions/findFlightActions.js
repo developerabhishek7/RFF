@@ -283,6 +283,9 @@ export function getCabinClass(data) {
         `${URL}`,
         authToken
       );
+
+      console.log("yes check cabin class resonse . . . .. 00,",res)
+
      if (res) {   
         await dispatch({
           type: GET_CABIN_CLASS_SUCCESS,

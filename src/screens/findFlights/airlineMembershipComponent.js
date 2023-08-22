@@ -84,7 +84,6 @@ export default class AirlineMembershipComponent extends Component {
   //       <View>
   //         <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 10 }}> Airline Membership Tier </Text>
   //       </View>
-       
   //     </View>
   //   );
   // }
@@ -92,7 +91,7 @@ export default class AirlineMembershipComponent extends Component {
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
         <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
@@ -228,9 +227,9 @@ export default class AirlineMembershipComponent extends Component {
               : null} 
               {
                 isOpenDialog  ?
-                <FastImage resizeMode="contain" source={require("../../assets/up1.png")} style={{width:scale(13),height:scale(13),marginStart:scale(20)}} />
+                <FastImage resizeMode="contain" source={require("../../assets/up1.png")} style={{width:scale(13),height:scale(13),marginStart:Platform.OS == "android" ? scale(20) : scale(5)}} />
                 :
-                <FastImage resizeMode="contain" source={require("../../assets/down1.png")} style={{width:scale(13),height:scale(13),marginStart:scale(20)}} />
+                <FastImage resizeMode="contain" source={require("../../assets/down1.png")} style={{width:scale(13),height:scale(13),marginStart:Platform.OS == "android" ? scale(20) : scale(5)}} />
               }
               </View>
                 {

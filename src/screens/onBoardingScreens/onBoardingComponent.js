@@ -204,9 +204,9 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{ flex: 1 }}>
+      {/* <SafeAreaView style={{ flex: 1 }}> */}
       <ScrollView
-          style={{ flex: 1 }}
+          style={{ flex: 1,paddingTop:scale(10)}}
           horizontal={true}
           // scrollEventThrottle={16}
           scrollEventThrottle={160}
@@ -277,7 +277,7 @@ const App = () => {
             {renderButtonContainer()}
             </View>
         </View>
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </>
   );
 };

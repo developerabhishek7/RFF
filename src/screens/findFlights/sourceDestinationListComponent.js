@@ -345,7 +345,7 @@ renderHeader() {
    <View style={{backgroundColor:"#03B2D8",height:scale(190),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
       marginTop:Platform.OS=="ios"?scale(-60):scale(-15)
    }}>
-      <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(40)}}>
+      <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(50)}}>
       <TouchableOpacity onPress={() => {
             this.props.navigation.goBack() }}>
 

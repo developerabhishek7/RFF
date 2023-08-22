@@ -10,7 +10,7 @@ module.exports = StyleSheet.create({
     flexDirection: STRING_CONST.ROW,
     justifyContent: STRING_CONST.SPACE_BETWEEN,
     alignItems: STRING_CONST.CENTER,
-    height: scale(isTablet ? 45 : 55),
+    height: scale(isTablet ? 45 : 50),
     // borderWidth:1,borderColor:"green",
     marginTop:isNotched ? scale(7):scale(3)
     ,width:scale(340)
