@@ -1217,7 +1217,7 @@ export default class FindFlightComponent extends Component {
         <MyStatusBar  />
         <SafeAreaView style={styles.container}>
           {this.renderHeader()}
-          <ScrollView>
+          {/* <ScrollView> */}
             {this.informationView()}
             <Text style={styles.wheretoGoTextStyle}>
               {STRING_CONST.I_KNOW_WHERE_TO_GO}
@@ -1381,7 +1381,7 @@ export default class FindFlightComponent extends Component {
               </Modal>
             </View>
             )}
-        </ScrollView>
+        {/* </ScrollView> */}
       </SafeAreaView>
       </ImageBackground>
     );

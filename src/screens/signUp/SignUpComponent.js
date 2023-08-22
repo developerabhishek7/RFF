@@ -1108,20 +1108,20 @@ class SignUpComponent extends Component {
           firstName && lastName && email && password && confirmPassword ?
           <TouchableOpacity
           onPress={() => this.validation()}
+          activeOpacity={0.7}
           style={[styles.signUpButton,{
             backgroundColor: colours.lightBlueTheme,
           }]}
         >
           <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
         </TouchableOpacity>
-
           :
-
           <TouchableOpacity
-          onPress={() => this.validation()}
+          // onPress={() => this.validation()}
           style={[styles.signUpButton,{
             backgroundColor:"gray"
           }]}
+          activeOpacity={0.7}
         >
           <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
         </TouchableOpacity>
@@ -1170,7 +1170,6 @@ class SignUpComponent extends Component {
       <View style={styles.googleFBContainer}>
         <Text style={styles.orSignInText}>{"Or sign-up with"}</Text>
         <View style={styles.buttonContainer}>
-        
           <TouchableOpacity
             onPress={() => this.onPressGoogleSocialLogin()}
             style={styles.googleFb}
@@ -1190,10 +1189,7 @@ class SignUpComponent extends Component {
             <Text
             style={styles.iconTxt}
           > Facebook</Text>
-          
-         
           </TouchableOpacity> */}
-        
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}

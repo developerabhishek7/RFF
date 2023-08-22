@@ -152,8 +152,8 @@ export default class CalenderComponent extends Component {
     const headingText = this.props.route.params.headingText;
 
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(50),borderBottomRightRadius:scale(50),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
-        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(43)}}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(110),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
+        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(50)}}>
         <TouchableOpacity style={{paddingStart:scale(20)}} onPress={() => {
               this.props.navigation.goBack()}}>
                 {IMAGE_CONST.IOS_BACK_ARROW}

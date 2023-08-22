@@ -48,7 +48,8 @@ import {
   getLocations,
   getNearestAirport,
   sendAuditData,
-  getFlightSchedule
+  getFlightSchedule,
+  getCabinClass
 } from "../../../actions/findFlightActions";
 import NavigationService from "../../../utils/NavigationService";
 
@@ -69,6 +70,10 @@ class NotificationDetailComponent extends Component {
   }
 
   componentDidMount() {
+
+
+
+
     this.checkIfPeakOffPeakDataMonth()
     this.getDates()
     let id = this.props.route.params.notification_id;     
@@ -77,6 +82,17 @@ class NotificationDetailComponent extends Component {
     if (id !== 0) {
       this.props.markNotificationAsRead(id);
     }
+
+    setTimeout(() => {
+      const {notificationDetails} = this.state;
+       const data = {
+      "source":notificationDetails.alert.source_code,
+     "destination": notificationDetails.alert.destination_code
+    }
+      this.props.getCabinClassAction(data)
+    }, 1000);
+
+
 
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
@@ -881,7 +897,7 @@ class NotificationDetailComponent extends Component {
   renderHeader(){
     return(
       <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(30)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -917,8 +933,6 @@ class NotificationDetailComponent extends Component {
     this.setState({
       staticDateArray: dateArray
     })
-
-   
     return dateArray;
   }
 
@@ -927,7 +941,6 @@ class NotificationDetailComponent extends Component {
       <SafeAreaView style={styles.container}>
          {this.renderHeader()}
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-         
           {this.renderLoader()}
           {this.state.notificationDetails && this.renderDetails()}
         </ScrollView>
@@ -953,14 +966,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   markNotificationAsRead: (notifID) =>
-    dispatch(markNotificationAsRead(notifID)),
+  dispatch(markNotificationAsRead(notifID)),
   getNotificationDetailAction: (alertId) =>
-    dispatch(getNotificationDetail(alertId)),
+  dispatch(getNotificationDetail(alertId)),
+  getCabinClassAction:(data)=> dispatch(getCabinClass(data)),
   resetNotificationDetailsAction: () => dispatch(resetNotificationDetails()),
   getAirlinesAvailabilityAction: (searchData) =>
-    dispatch(getAirlinesAvailability(searchData, STRING_CONST.NOTIFICATION)),
-    getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
-    getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
+  dispatch(getAirlinesAvailability(searchData, STRING_CONST.NOTIFICATION)),
+  getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
+  getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
 });
 
 export default connect(

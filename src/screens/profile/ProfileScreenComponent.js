@@ -110,7 +110,7 @@ export default class ProfileScreenComponent extends Component {
     renderHeader(){
     return(
       <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(200),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(50)}}>
+        <View style={{marginTop:scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -192,7 +192,7 @@ renderListItem(itemObject, index) {
         style={{
           flex: 1,
           paddingHorizontal: scale(20),
-          marginTop: verticalScale(20),
+          marginTop: verticalScale(0),
         }}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         keyboardShouldPersistTaps="always"

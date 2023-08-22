@@ -1618,9 +1618,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     )
   }
 
-
-
-
   flightDetailsModal() {
     let checkFlightCount = 0
     let scheduleData = {}
@@ -1668,7 +1665,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         style={{ marginRight: scale(10) }}
                       />
                     </TouchableOpacity>
-                    <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
+                    <Text style={styles.titleText1}>{`${STRING_CONST.SEAT_AVAILABILITY
                       } (${this.state.isOffPeakValue
                         ? STRING_CONST.OFF_PEAK_FARE
                         : STRING_CONST.PEAK_FARE
