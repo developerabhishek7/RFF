@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* RewardFlightFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RewardFlightFinderTests.m */; };
-		01DD4D332A4EB782005D0D28 /* Pods_RewardFlightFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14ACA8529166E8CAF3FD32BB /* Pods_RewardFlightFinder.framework */; };
+		01DD4D332A4EB782005D0D28 /* Pods_RewardFlightFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14ACA8529166E8CAF3FD32BB /* Pods_RewardFlightFinder.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		01F61D582A4C4C2A008AE218 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01F61D572A4C4C2A008AE218 /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -516,6 +516,7 @@
 				INFOPLIST_FILE = RewardFlightFinder/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RewardFlightFinder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -545,6 +546,7 @@
 				INFOPLIST_FILE = RewardFlightFinder/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RewardFlightFinder;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

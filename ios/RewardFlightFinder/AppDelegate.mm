@@ -3,10 +3,14 @@
 #import <Firebase.h>
 #import <RNBranch/RNBranch.h>
 #import <React/RCTLinkingManager.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+ // add this line using the api key obtained from Google Console
+  [GMSServices provideAPIKey:@"AIzaSyBYRcO3WTvSbNLhK4nCqlJI1o-0coavH6k"];
+
    [FIRApp configure];
   self.moduleName = @"RewardFlightFinder";
   // You can add your custom initial props in the dictionary below.
