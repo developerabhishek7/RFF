@@ -1,6 +1,4 @@
 # Resolve react_native_pods.rb with node to allow for hoisting
-# $RNMapboxMapsImpl = 'mapbox-gl'
-# $RNMapboxMapsVersion = '~> 5.9.0' 
 $FirebaseSDKVersion = '10.11.0'
 
 
@@ -42,8 +40,6 @@ target 'RewardFlightFinder' do
   # use_frameworks!
 
   pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
-  pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
-
   pod 'Google-Maps-iOS-Utils', :git => 'https://github.com/Simon-TechForm/google-maps-ios-utils.git', :branch => 'feat/support-apple-silicon'
 
   rn_maps_path = '../node_modules/react-native-maps'
@@ -57,15 +53,6 @@ target 'RewardFlightFinder' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
-
-  # $RNMapboxMapsSwiftPackageManager = {
-  #   url: "https://github.com/maplibre/maplibre-gl-native-distribution",
-  #   requirement: {
-  #     kind: "upToNextMajorVersion",
-  #     minimumVersion: "5.12.1"
-  #   },
-  #   product_name: "Mapbox"
-  # }
 
   use_react_native!(
     :path => config[:reactNativePath],

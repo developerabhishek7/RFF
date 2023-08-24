@@ -172,11 +172,12 @@ export default StyleSheet.create({
     backgroundColor: colours.white,
     borderTopLeftRadius: scale(30),
     borderTopRightRadius: scale(30),
+  
     // borderTopColor:"#304668",
     // borderTopWidth:scale(1),
 
     borderWidth:1,
-    elevation:1,borderColor:"#304668",
+    elevation:1,borderColor:"#EFEFEF",
     // width:scale(340),
     shadowOffset: {width: -2, height: 4},  
     shadowColor: '#171717',  

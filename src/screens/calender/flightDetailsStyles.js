@@ -439,7 +439,7 @@ export default StyleSheet.create({
 
 
     borderWidth:0.6,
-    elevation:0.8,borderColor:"#304668",
+    elevation:0.8,borderColor:"#EFEFEF",
     // width:scale(340),
     shadowOffset: {width: -2, height: 2},  
     shadowColor: '#171717',  

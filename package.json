@@ -16,7 +16,6 @@
     "@react-native-firebase/app": "^18.1.0",
     "@react-native-firebase/messaging": "^18.1.0",
     "@react-native-google-signin/google-signin": "^10.0.1",
-    "@react-native-mapbox-gl/maps": "github:PriyankaSystango/maps",
     "@react-native-masked-view/masked-view": "^0.2.9",
     "@react-navigation/compat": "^5.3.20",
     "@react-navigation/drawer": "^6.6.3",

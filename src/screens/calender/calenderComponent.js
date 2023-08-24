@@ -3018,7 +3018,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     const {searchData} = this.state
   
     let classSelected = searchData.classSelected
-
+    
     let economy = classSelected[0]
     let premium = classSelected[1]
     let business = classSelected[2]
@@ -3038,8 +3038,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if (first) {
       classSelectedArray.push(first)
     }
-
-  
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
 
@@ -4024,7 +4022,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
       return(
         <View style={[styles.calendarContainer,{
-          marginTop: isLoggedIn ? verticalScale(100) : verticalScale(1),
+          // marginTop: isLoggedIn ? verticalScale(100) : verticalScale(1),
         }]}>
         <StrictMode>
           {/* <ScrollView ref="_scrollView" showsHorizontalScrollIndicator={false}> */}
@@ -4275,18 +4273,18 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let height1
 
     if(isLoggedIn){
-       height1 = scale(100)
+       height1 = scale(10)
     }
     else{
        height1 = scale(1)
     }
    
-    const scrollY = new Animated.Value(0)
-    const diffClamp = Animated.diffClamp(scrollY, 0,height1)
-    const translateY = diffClamp.interpolate({
-      inputRange:[0,height1],
-      outputRange:[0,-height1]
-    })
+    // const scrollY = new Animated.Value(0)
+    // const diffClamp = Animated.diffClamp(scrollY, 0,height1)
+    // const translateY = diffClamp.interpolate({
+    //   inputRange:[0,height1],
+    //   outputRange:[0,-height1]
+    // })
 
 
      return (
@@ -4295,14 +4293,14 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           <View style={{ backgroundColor: "#FFF", flex: 1}}>
             {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
-            {
+            {/* {
               isLoggedIn   ?
               <Animated.View
               style={{
               transform:[
                 {translateY:translateY}
               ],
-              zIndex:10,
+              zIndex:0,
               elevation:0,
               backgroundColor:"#FFFFFF",
               borderTopColor:"#FFFFFF",borderTopWidth:1,
@@ -4316,8 +4314,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}
             </Animated.View>
-            :
-            <View>
+            : */}
+            <View style={{borderWidth:0}}>
              {this.state.airLinesDetailsObject ? this.ticketClass() : null}
 
                 {this.fareView()}
@@ -4325,27 +4323,21 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}      
             </View>
-            }
-          {
+            {/* } */}
+          {/* {
             isLoggedIn ?
             <ScrollView
-            style={{
-              flex:1,position:"absolute",top:scale(60),left:0,right:0,bottom:0,
-            }}
-               onScroll={(e)=>{
-                scrollY.setValue(e.nativeEvent.contentOffset.y)    
-            }}
-            scrollEventThrottle={16} 
+            showsVerticalScrollIndicator={false}
         >
-          <View style={{  flex: 1, marginTop:Platform.OS =="android"?scale(50):scale(0)}}>
+          <View style={{  flex: 1}}>
            {this.renderCalendarList()}
            </View>
           </ScrollView>
-            : 
-            <View style={{  flex: 1,}}>
+            :  */}
+            <ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}>
             {this.renderCalendarList()}
-           </View>
-          }
+           </ScrollView>
+          {/* } */}
             {showTicketDetailModal && this.seatAvailabilityModal()}
             {showCreateAlertModal || showTicketDetailModal
               ? null

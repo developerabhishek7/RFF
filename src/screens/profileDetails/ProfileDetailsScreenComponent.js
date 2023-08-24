@@ -1369,12 +1369,13 @@ isAlert = () => {
           {/* <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always"> */}
           {this.renderLoader()}
           {this.profileImage()}
-          <KeyboardAwareScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always" extraHeight={120} extraScrollHeight={120}
+          <KeyboardAwareScrollView style={{ flex: 1,marginTop:scale(10) }} keyboardShouldPersistTaps="always" extraHeight={120} extraScrollHeight={120}
             showsVerticalScrollIndicator={false}
+            
           >
           <View style={{ flex:1,borderWidth:0,width:scale(330),justifyContent:"center",alignItems:"center",}}>
             <View
-              style={{ marginTop: verticalScale(32) }}
+              style={{ marginTop: verticalScale(37) }}
             >
               <Text style={styles.textInputHeading}>
                 {STRING_CONST.FIRST_NAME}
