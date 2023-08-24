@@ -52,16 +52,16 @@ export default StyleSheet.create({
     headerCountry: { fontSize: scale(14), padding: scale(1), paddingTop: scale(6), fontFamily: appFonts.INTER_REGULAR, paddingStart: scale(10), textAlign: 'center', color: "#FFF",fontWeight:"700" },
     airportName: { fontSize: scale(15), padding: scale(2),paddingStart:scale(1), marginTop:scale(4), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(46), textAlign: 'left', color: "#FFF",fontWeight:"700"},
     peakFairMainView: { 
-      marginBottom:scale(0),width:scale(364),alignSelf:"center",borderWidth:0,
+      marginBottom:scale(0),width:scale(388),alignSelf:"center",borderWidth:0,
       flexDirection: "row", justifyContent: "space-around", alignItems: 'center',
     backgroundColor:"#FFF"
   },
-    peakFairSubHeaderView: { flexDirection: "row", justifyContent: 'center', alignItems: 'center',padding:scale(1),paddingStart:scale(25),paddingEnd:scale(25),
+    peakFairSubHeaderView: { flexDirection: "row", justifyContent: 'center', alignItems: 'center',padding:scale(1),paddingStart:scale(5),paddingEnd:scale(5),
     borderWidth:0,
     backgroundColor:"#FFF"
   },
-    peakFairImg: { height: scale(27), width: scale(27), margin: scale(7), justifyContent: 'center', alignItems: 'center' },
-    peakFairTxt: { fontSize: scale(15), padding: scale(1), paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },
+    peakFairImg: { height: scale(60), width: scale(60), margin: scale(1), justifyContent: 'center', alignItems: 'center' },
+    peakFairTxt: { fontSize: scale(15), padding: scale(1), marginRight:scale(7),paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },
     showClassDataView: { flexDirection: "row", justifyContent: "space-around", width: "96%", marginStart: scale(10), marginEnd: scale(10), marginTop: scale(10), marginBottom: -scale(7) },
     outboundMainView: { flexDirection: "column", },
     outboundbgImg: { height: scale(50), width: scale(60), justifyContent: 'center', alignItems: 'center',padding:scale(2), },

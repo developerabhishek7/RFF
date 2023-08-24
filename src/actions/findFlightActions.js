@@ -284,7 +284,6 @@ export function getCabinClass(data) {
         authToken
       );
 
-      console.log("yes check cabin class resonse . . . .. 00,",res)
 
      if (res) {   
         await dispatch({

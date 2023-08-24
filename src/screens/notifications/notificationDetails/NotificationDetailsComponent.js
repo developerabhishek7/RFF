@@ -70,10 +70,6 @@ class NotificationDetailComponent extends Component {
   }
 
   componentDidMount() {
-
-
-
-
     this.checkIfPeakOffPeakDataMonth()
     this.getDates()
     let id = this.props.route.params.notification_id;     

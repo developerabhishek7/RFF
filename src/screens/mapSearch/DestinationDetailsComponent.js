@@ -143,31 +143,21 @@ checkIfPeakOffPeakDataMonth = () => {
 
     this.checkIfPeakOffPeakDataMonth()
     this.props.getPeakOffPeakDataAction()
-    
-
-    // console.log("yes check here  search data - - -  - - - -",auditData.search_data.source)
-    // console.log("yes check here  search data - - -  - - - -",auditData.search_data.destination)
-  
-
+   
     const data = {
       "source": auditData.search_data.source,
      "destination": data1.code
     }
 
-    console.log("yes chekc here before api send..........",data)
-
     setTimeout(() => {
+      this.getDates()
       this.props.getCabinClassAction(data)
     }, 1000);
   
-
-
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
   }
-
-
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
@@ -352,8 +342,6 @@ checkIfPeakOffPeakDataMonth = () => {
       //   }
        
       // })
-
-
       // if(this.state.peak == false){
       //   pointsData.map((singleMap)=>{
       //     if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false ){
@@ -618,10 +606,6 @@ checkIfPeakOffPeakDataMonth = () => {
       this.setState({ actualDate })
     }
 
-    // console.log("yes chec here peak value  ",dateForPoints)
-
-
-   
     return (
       <View style={{ 
       backgroundColor:this.state.actualDate ? colours.skyBlueColor:"#FFF",
@@ -642,7 +626,7 @@ checkIfPeakOffPeakDataMonth = () => {
             <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF",height:scale(30), justifyContent: 'center', alignItems: 'center', borderRadius: scale(6)}}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
              
-                    <Text style={{color:"#2044FF",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"#2044FF",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
             
                  <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
               </View>
@@ -650,7 +634,7 @@ checkIfPeakOffPeakDataMonth = () => {
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             
-                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
                  <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
               </View>
             </View>
@@ -660,7 +644,7 @@ checkIfPeakOffPeakDataMonth = () => {
             <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               
-                    <Text style={{color:"#FEA41D",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"#FEA41D",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
                 
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
               </View>
@@ -668,7 +652,7 @@ checkIfPeakOffPeakDataMonth = () => {
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               
-                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
                 
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
               </View>
@@ -679,7 +663,7 @@ checkIfPeakOffPeakDataMonth = () => {
             <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
              
-                    <Text style={{color:"#A905F6",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"#A905F6",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
              
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
               </View>
@@ -688,7 +672,7 @@ checkIfPeakOffPeakDataMonth = () => {
            
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             
-                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
               
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
               </View>
@@ -698,13 +682,13 @@ checkIfPeakOffPeakDataMonth = () => {
           firstClass ?
             <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{color:"#EB186F",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"#EB186F",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(3), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}   </Text>
               </View>
             </View>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(8) :scale(13)}}>{'\u2B24'}</Text>
+                    <Text style={{color:"gray",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(3), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}    </Text>
               </View>
             </View>
@@ -723,7 +707,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       economyValue ?
                         <View style={{ width: "22%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(7) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
+                          <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center',  paddingRight: scale(15) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
                         </View>
                         :
                         <Fragment>
@@ -740,8 +724,8 @@ checkIfPeakOffPeakDataMonth = () => {
                     }
                     {
                       premiumValue ?
-                        <View style={{ width: "30%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "green", borderWidth: 0 }}>
-                          <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
+                        <View style={{ width: "30%", marginLeft: scale(1), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "green", borderWidth: 0 }}>
+                          <Text style={{ fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
                         </View>
 
                         :
@@ -760,8 +744,8 @@ checkIfPeakOffPeakDataMonth = () => {
                     }
                     {
                       businessValue ?
-                        <View style={{ width: "24%", marginLeft: scale(10), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(13), marginLeft: scale(12) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
+                        <View style={{ width: "24%", marginLeft: scale(0), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
+                          <Text style={{ fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
                         </View>
 
                         :
@@ -781,7 +765,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       firstValue ?
                         <View style={{ width: "20%", alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(6) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
+                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
                         </View>
 
                         :
@@ -805,7 +789,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       economyValue ?
                         <View style={{ width: "22%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "red" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 1 }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
+                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingRight: scale(15) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
                         </View>
                         :
                         <Fragment>
@@ -823,16 +807,15 @@ checkIfPeakOffPeakDataMonth = () => {
                     }
                     {
                       premiumValue ?
-                        <View style={{ width: "30%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "red", borderWidth: 0 }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(6) }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
-                        </View>
-
+                      <View style={{ width: "30%", marginLeft: scale(1), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "green", borderWidth: 0 }}>
+                           <Text style={{ fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
+                      </View>
                         :
                         <Fragment>
                           {
                             premiumClass ?
                               <View style={{ width: "30%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "red", borderWidth: 0 }}>
-                                <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(6) }} numberOfLines={1}> - </Text>
+                                <Text style={{ fontSize: scale(12),paddingEnd:scale(9),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(6) }} numberOfLines={1}> - </Text>
                               </View>
                               :
                               <View style={{ width: "30%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "red", borderWidth: 0 }}>
@@ -843,9 +826,10 @@ checkIfPeakOffPeakDataMonth = () => {
                     }
                     {
                       businessValue ?
-                        <View style={{ width: "24%", marginLeft: scale(10), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "red" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(10), marginLeft: scale(9) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
-                        </View>
+                      <View style={{ width: "24%", marginLeft: scale(0), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
+                      <Text style={{ fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
+                    </View>
+
                         :
                         <Fragment>
                           {
@@ -863,7 +847,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       firstValue ?
                         <View style={{ width: "20%", alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "red" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(6) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
+                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
                         </View>
                         :
                         <Fragment>

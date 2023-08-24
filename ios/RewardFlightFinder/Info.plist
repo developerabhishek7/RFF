@@ -59,10 +59,6 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
-	<string>YES</string>
-	<key>Mapbox</key>
-	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
