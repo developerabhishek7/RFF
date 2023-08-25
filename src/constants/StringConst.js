@@ -113,7 +113,7 @@ export const DISABLE_NOTIFICATION_ERROR = `We couldn't disable notifications. Pl
 //Find Flight Screen Constants
 
 export const DONT_KNOW_WHERE_TO_GO = `Don't know where you want to go?`;
-export const I_KNOW_WHERE_TO_GO = `I know where i want to go`;
+export const I_KNOW_WHERE_TO_GO = `I know where I want to go`;
 export const WHERE_ARE_YOU_FLYING_FROM = `Where are you flying from?`;
 export const WHERE_ARE_YOU_FLYING_TO = `Where are you flying to?`;
 export const LOCATION_NOT_AVAILABLE = `This location is not available.`;

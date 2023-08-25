@@ -3015,10 +3015,17 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
   ticketClass = () => {
 
-    const {searchData} = this.state
-  
-    let classSelected = searchData.classSelected
-    
+    const {airLinesDetailsObject} = this.state
+    let classSelected = this.state.classSelected
+    let availability = airLinesDetailsObject.availability;
+
+
+
+    console.log("yes check here availability  - - - - - - -",classSelected.length)
+
+
+    console.log("yes check here -------0-",availability)
+
     let economy = classSelected[0]
     let premium = classSelected[1]
     let business = classSelected[2]
@@ -3043,16 +3050,15 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
     return (
       <View style={[styles.ticketClassView, {
-        justifyContent: classSelectedArray.length > 2 ? "space-evenly" : "center",
+        justifyContent: classSelected.length > 2 ? "center" : "center",
       }]}>
-        {economy && (
+        {availability.economy && (
           <TouchableOpacity
             style={[
               styles.classButton]}
             onPress={() => {
               if(!bronzeMember){
                 if (premium || business || first) {
-                  this.setState({isSliderRunDone:false},()=>{
                     if (
                       (this.state.selectedIndex == 0 &&
                         this.state.outBoundVisibleArray.includes("economy")) ||
@@ -3062,17 +3068,14 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       let newClassArray = this.state.classSelected;
                       let arr = this.state.classSelected
                       newClassArray[0] = !newClassArray[0];
-                      // slideClassArray[0] = slideClassArray[0]
                       this.setState({
                         classSelected:newClassArray
                       });
                     } else {
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
-                  })
                   }
               }
-            
             }}
           >
             {!this.state.classSelected[0]
@@ -3093,13 +3096,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text>
           </TouchableOpacity>
         )}
-        {premium && (
+        {availability.premium && (
           <TouchableOpacity
             style={[styles.classButton]}
             onPress={() => {
               if(!bronzeMember){
                 if (economy || business || first) {
-                  this.setState({isSliderRunDone:false},()=>{
                     if (
                       (this.state.selectedIndex == 0 &&
                         this.state.outBoundVisibleArray.includes("premium")) ||
@@ -3107,7 +3109,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         this.state.inBoundVisibleArray.includes("premium"))
                     ) {
                       let newClassArray = this.state.classSelected;
-                      let arr = this.state.classSelected
                       newClassArray[1] = !newClassArray[1];
                       this.setState({
                         classSelected: newClassArray
@@ -3115,7 +3116,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     } else {
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
-                  })
                   }
               }
             }}
@@ -3141,13 +3141,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             </Text>
           </TouchableOpacity>
         )}
-        {business && (
+        {availability.business && (
           <TouchableOpacity
             style={[styles.classButton]}
             onPress={() => {
               if(!bronzeMember){
                 if (economy || premium || first) {
-                  this.setState({isSliderRunDone:false},()=>{
                     if (
                       (this.state.selectedIndex == 0 &&
                         this.state.outBoundVisibleArray.includes("business")) ||
@@ -3156,15 +3155,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     ) {
                       let newClassArray = this.state.classSelected;
                       newClassArray[2] = !newClassArray[2];
-                      let arr =  this.state.classSelected
                       this.setState({
                           classSelected:newClassArray,
                         });
                     } else {
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
-                  })
-                  }
+                }
               }             
             }}
           >
@@ -3186,7 +3183,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text>
           </TouchableOpacity>
         )}
-        {first && (
+        {availability.first && (
           <TouchableOpacity
             style={[
               styles.classButton,
@@ -3194,7 +3191,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             onPress={() => {
               if(!bronzeMember){
                 if (economy || premium || business) {
-                  this.setState({isSliderRunDone:false},()=>{
                     if (
                       (this.state.selectedIndex == 0 &&
                         this.state.outBoundVisibleArray.includes("first")) ||
@@ -3202,17 +3198,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         this.state.inBoundVisibleArray.includes("first"))
                     ){
                       let newClassArray = this.state.classSelected;
-                      let arr = this.state.classSelected
                       newClassArray[3] = !newClassArray[3];
-                      let slideClassArray = this.state.newClassSliderArray
                       this.setState({
                         classSelected:newClassArray,
-                        newClassSliderArray:newClassArray
                       });
                     } else {
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
-                  })
                 }
               }
             }}

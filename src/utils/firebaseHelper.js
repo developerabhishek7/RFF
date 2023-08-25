@@ -84,7 +84,6 @@ class FcmService {
       permissionStatus === firebase.messaging.AuthorizationStatus.NOT_DETERMINED
     ) {
       console.log("firebase.messaging.AuthorizationStatus.NOT_DETERMINED");
-
       try {
         const newStatus = await messaging().requestPermission();
         switch (newStatus) {
@@ -97,7 +96,6 @@ class FcmService {
               console.log(
                 "firebase.messaging.AuthorizationStatus.NOT_DETERMINED"
               );
-
               result = true;
             }
             break;

@@ -1518,7 +1518,7 @@ isAlert = () => {
             padding:scale(0),
             paddingStart:scale(15),
             color:"#adb1b1", 
-          }}>Do you want to travel abroad in </Text>
+          }}>Do you plan to travel abroad in </Text>
 
 <Text style={  {textAlign:"left",  fontSize: scale(14),
             fontWeight: "bold",
