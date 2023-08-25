@@ -665,7 +665,7 @@ componentDidMount(){
             }
             <Text style={[styles.classTextStyle,{
         color:"#FEA41D"
-      }]}>{STRING_CONST.PREMIUM_ECONOMY}</Text>
+      }]}>{"Prem Econ"}</Text>
           </TouchableOpacity>
         );
       }
@@ -1085,12 +1085,6 @@ componentDidMount(){
     else{
       isButtonShown = false
     }
-
-
-
-    console.log("yes update the data accordingly -------",isButtonShown)
-
-
     
     return ( 
       <View style={styles.buttonViewContainer}>

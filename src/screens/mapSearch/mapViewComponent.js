@@ -69,7 +69,7 @@ class MapComponent extends Component {
       const accesstoken = await getAccessToken();
        setTimeout(() => {
         this.setState({isLoader:false,})
-      }, 1000);
+      }, 2000);
 
       let MAP_TOKEN = await AsyncStorage.getItem("MAP_TOKEN")
     

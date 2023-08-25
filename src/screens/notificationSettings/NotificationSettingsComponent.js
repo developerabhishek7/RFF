@@ -279,7 +279,7 @@ export default class NotificationSettingsComponent extends Component {
         <View style={styles.availabilityAlertInnerView}>
         <Image source={IMG_CONST.MSG}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(-15)}}
+              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
             />
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
             {STR_CONST.SMS_ALERT_NOTIFICATION}
@@ -369,7 +369,7 @@ export default class NotificationSettingsComponent extends Component {
         <View style={styles.availabilityAlertInnerView}>
         <Image source={IMG_CONST.EMAIL}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(-15)}}
+              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
                />
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
             {STR_CONST.EMAIL_ALERT_NOTIFICATION}
@@ -440,7 +440,7 @@ export default class NotificationSettingsComponent extends Component {
          
         <Image source={IMG_CONST.LOGO}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(-15)}}
+              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
               />
          
           <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>

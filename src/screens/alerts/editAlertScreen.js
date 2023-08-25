@@ -416,7 +416,6 @@ class EditAlertComponent extends Component {
 
     let bronzeMember = userInfo.bronze_member
 
-
     let isEconomySelected = this.state.classSelectedArray[0]
 
     let isPremiumSelected = this.state.classSelectedArray[1]

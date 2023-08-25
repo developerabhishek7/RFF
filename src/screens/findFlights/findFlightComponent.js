@@ -1377,7 +1377,7 @@ export default class FindFlightComponent extends Component {
               >
                 <FastImage
                   source={getAirlinesLogo(STRING_CONST.BRITISH_AIRWAYS)}
-                  style={{ marginRight: scale(10) }}
+                  style={{ marginRight: scale(10),marginBottom:scale(7) }}
                 />
                 <Text style={styles.membershipListTextStyle}>
                   {itemObject.airline}
@@ -1415,9 +1415,7 @@ export default class FindFlightComponent extends Component {
                     });
                   }}
                   onDonePressed={(data, array, travellersCount) => {
-               
-               console.log("yes check both data and array - -  - - - -",data,          array)
-                    this.setState({
+                                   this.setState({
                       classObject: data,
                       classSelected: array,
                       travellersCount: travellersCount,

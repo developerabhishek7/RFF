@@ -519,7 +519,8 @@ const AlertCard = (props) => {
             <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
           </View>
           <Text style={styles.rightValueText}>
-            {getAirways(airlineName)}
+            {/* {getAirways(airlineName)} */}
+            {"British Airways"}
             {/* <Text
               style={{
                 fontStyle: "italic",
@@ -669,9 +670,7 @@ class AlertsScreen extends React.Component {
 
     this.checkIfPeakOffPeakDataMonth()
     // this.props.getAlertsAction();
-
     this.getDates()
-
     setTimeout(() => {
       this.props.getAlertsAction();
      }, 1000);
