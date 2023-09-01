@@ -24,13 +24,12 @@ import { isAndroid } from "../../utils/commonMethods";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 import FontAwesome from "react-native-vector-icons/Feather";
 import FastImage from 'react-native-fast-image'
-
 import {
   getGoldFeatures,
   getSilverFeatures,
   getBronzeFeatures,
 } from "../../utils/commonMethods";
-import { URL,APP_LINK } from "../../../env.json";
+import {APP_LINK} from '../../helpers/config'
 import moment from "moment";
 import RNRestart from 'react-native-restart'; 
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
@@ -250,9 +249,6 @@ class MembershipComponent extends Component{
     }
     let silver_member = userData.silver_member
     let gold_member = userData.gold_member
-
-    console.log("yes check here membership text details  - - - - -",this.state.member)
-
     const {member} = this.state;
 
     return(
@@ -332,7 +328,7 @@ class MembershipComponent extends Component{
                 this.reloaderApp()
                 const accesstoken = await getAccessToken();
                 const userId = await getUserId()
-                let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
+                let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
                 Linking.openURL(
                   url
                 );
@@ -474,7 +470,7 @@ class MembershipComponent extends Component{
             const accesstoken = await getAccessToken();
             const userId = await getUserId()
             this.reloaderApp()
-            let url = `${URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
+            let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
             Linking.openURL(
               url
             );

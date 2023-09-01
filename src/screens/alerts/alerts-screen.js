@@ -1271,6 +1271,15 @@ class AlertsScreen extends React.Component {
     
     )
   }
+  alertCountFunc(){
+    const {alerts} = this.state
+    let alertCountValue  = alerts.length
+    return(
+      <View style={{width:scale(200),height:scale(30)}}>
+        <Text style={{fontSize:scale(16),fontWeight:"700",padding:scale(10),marginStart:scale(6),color:"#03B2D8"}}> ({alertCountValue}) Alerts</Text>
+      </View>
+    )
+  }
 
   render() {
     const { showMenu,alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
@@ -1281,6 +1290,7 @@ class AlertsScreen extends React.Component {
         {this.renderHeader(alertLength)}
 
         {this.renderLoader()}
+        {alerts && alerts.length !== 0 && this.alertCountFunc()}
         {errorMessage ? (
           <View>
             {errorMessage ? (

@@ -36,7 +36,7 @@ import PopUpComponent from "../../shared/popUpComponent";
 import * as Config from "../../helpers/config";
 import moment from "moment";
 import { getStoreData, getUserId ,getAccessToken} from "../../constants/DataConst";
-// import PostHog from 'posthog-react-native';
+import PostHog from 'posthog-react-native';
 const classes1 = ["Economy","Premium Economy","Businness", "First"]
 import { Platform } from "react-native";
 var uuid = require("react-native-uuid");
@@ -249,6 +249,8 @@ export default class FindFlightComponent extends Component {
         onPress={() => {
           onButtonPress();
         }}
+        activeOpacity={.6}
+
       >
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
       </TouchableOpacity>
@@ -659,7 +661,7 @@ export default class FindFlightComponent extends Component {
               destinationCountry: WhereFrom && selectedSource.country_name ? selectedSource.country_name : 'N/A',
               journeyType: selectedIndex == 1 ? "return" : "one_way",
               numberOfPassengers: travellersCount,
-              cabinClasses: classSelected1,
+              cabinClasses: this.renderClassValues(),
               searchOriginatedFrom: 'Map Page',
               outboundStartDate: departStartDate ? departStartDate : 'N/A',
               outboundEndDate: departEndDate ? departEndDate : 'N/A',
@@ -667,12 +669,33 @@ export default class FindFlightComponent extends Component {
               inboundEndDate: returnEndDate ? returnEndDate : 'N/A'
             },
           }
-          // PostHog.capture('Search', trackData);
+          PostHog.capture('Search', trackData);
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }
       }
     }
   }
+
+
+
+
+  renderClassValues(){
+    const { classSelected } = this.state;
+
+    let classSelected1 = "";
+    for (i = 0; i < classSelected.length; i++) {
+      if (classSelected[i]) {
+        if (isEmptyString(classSelected1)) {
+          classSelected1 = classSelected1.concat(`${classes1[i]}`);
+        } else {
+          classSelected1 = classSelected1.concat(`,${classes1[i]}`);
+        }
+      }
+    }  
+
+    return classSelected1;
+  }
+
   getDate() {
     const {
       isSearchClicked,
@@ -1311,7 +1334,7 @@ export default class FindFlightComponent extends Component {
               //     this.setState({
               //       showLoginPopup: false,
               //     });
-              //     this.props.navigation.navigate("Anonymous");
+              //     this.props.navigation.navigate("SignIn");
               //   }}
               // />
 

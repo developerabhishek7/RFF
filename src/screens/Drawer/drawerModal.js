@@ -171,8 +171,10 @@ class DrawerComponentComponent extends Component {
               />
             ) : isLoggedIn ? (
               userData.first_name ? 
-              <View style={{backgroundColor:"#cdf0f7",borderRadius:scale(80),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",}}>
-              <Text style={styles.nameInitialsStyle}
+              <View style={{backgroundColor:"#cdf0f7",borderRadius:scale(80),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",borderWidth:0,  }}>
+              <Text style={[styles.nameInitialsStyle,{
+              }]}
+                  numberOfLines={1}
               >
                 {this.state.userData.first_name &&
                   this.state.userData.first_name[0].toUpperCase()}
@@ -194,7 +196,9 @@ class DrawerComponentComponent extends Component {
           {/* <Text style={styles.nameStyle}>
             {isLoggedIn ? STR_CONST.HELLO : STR_CONST.RFF}
           </Text> */}
-          <Text style={styles.nameStyle}>
+          <Text numberOfLines={1} style={[styles.nameStyle,{
+            width:scale(140)
+          }]}>
             { `${this.getCapitalName(userData.first_name)} ${this.getCapitalName(userData.last_name)}`}
           </Text>
           {
