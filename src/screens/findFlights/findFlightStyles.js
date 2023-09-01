@@ -88,8 +88,8 @@ export default StyleSheet.create({
     // marginBottom: verticalScale(10),
   },
   tickMark: {
-    height: scale(15),
-    width: scale(18),
+    height: scale(18),
+    width: scale(20),
     marginRight: scale(8)
   },
   classViewContainer: {

@@ -2456,6 +2456,8 @@ checkIfPeakOffPeakDataMonth = () => {
         onPress={() => {
           onButtonPress();
         }}
+        activeOpacity={.6}
+
       >
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
       </TouchableOpacity>

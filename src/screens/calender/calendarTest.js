@@ -706,6 +706,7 @@ export default class CalenderComponent extends Component {
           styles.submitAlertView,
           { position: "absolute", bottom: scale(20) },
         ]}
+        activeOpacity={.6}
         onPress={() => {
           onButtonPress();
         }}
@@ -1267,7 +1268,7 @@ export default class CalenderComponent extends Component {
                 this.setState({
                   showLoginPopup: false,
                 });
-                this.props.navigation.navigate("Anonymous");
+                this.props.navigation.navigate("SignIn");
               }}
             />
           )}

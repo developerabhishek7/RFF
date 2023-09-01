@@ -15,7 +15,7 @@ import { NativeBaseProvider } from 'native-base';
 LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs()
 // import crashlytics from "@react-native-firebase/crashlytics";
-// import PostHog from 'posthog-react-native'
+import PostHog from 'posthog-react-native'
 import { colours } from "./src/constants/ColorConst";
 
 import DropdownAlert from "react-native-dropdownalert";
@@ -39,24 +39,20 @@ class App extends React.Component {
     // this.logCrashlytics()
     Orientation.lockToPortrait();
     fcm.setStore(this.state.store);
-  
-  
-    // await PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
-    //   // app.posthog.com
-    //   captureApplicationLifecycleEvents: true,
-    //   ios:{
-    //     captureInAppPurchases:true,
-    //     capturePushNotifications:true
 
-    //   },
-    //   host:'https://d29t15mip7grca.cloudfront.net',
-    //   captureDeepLinks: true,
-    //   recordScreenViews: true,
-    //   flushInterval: 5,
-    //   flushAt: 1,
-    // });
-
-
+    await PostHog.setup('phc_eux7zbMA88bDwvpdyQ76VMcoyVPahlnIPlYclrTekKv', {
+      // app.posthog.com
+      captureApplicationLifecycleEvents: true,
+      ios:{
+        captureInAppPurchases:true,
+        capturePushNotifications:true
+      },
+      host:'https://d29t15mip7grca.cloudfront.net',
+      captureDeepLinks: true,
+      recordScreenViews: true,
+      flushInterval: 5,
+      flushAt: 1,
+    });
   }
 
   //  logCrashlytics = async () => {

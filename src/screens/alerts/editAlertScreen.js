@@ -13,8 +13,8 @@ import { getformattedDate, isEmptyString, getLocationNameWithCode } from "../../
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import moment from "moment";
 import FastImage from 'react-native-fast-image'
-import PosthogComponent from '../posthog/index'
-// import PostHog from 'posthog-react-native';
+// import PosthogComponent from '../posthog/index'
+import PostHog from 'posthog-react-native';
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 const { height, width } = Dimensions.get("window");
 import styles from "./editAlertStyle";
@@ -1105,7 +1105,7 @@ class EditAlertComponent extends Component {
             }
           }
         
-          // PostHog.capture('Alert',trackData);
+          PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
@@ -1183,7 +1183,7 @@ class EditAlertComponent extends Component {
             }
           }
 
-          // PostHog.capture('Alert',trackData);
+          PostHog.capture('Alert',trackData);
          
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
@@ -1380,7 +1380,7 @@ class EditAlertComponent extends Component {
                   }
                 }
                 
-                // PostHog.capture('Alert',trackData);
+                PostHog.capture('Alert',trackData);
          
                 this.props.cancelAlertAction(this.state.id,screenType)
                 // this.props.route.params.props.cancelAlertAction(

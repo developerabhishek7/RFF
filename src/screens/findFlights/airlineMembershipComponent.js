@@ -176,7 +176,7 @@ export default class AirlineMembershipComponent extends Component {
             <Text style={styles.membershipSubListTextStyle}>(Choose if Unsure)</Text>
             {
                item.value == tierSelected ?
-               <FastImage
+               <Image
                source={require('../../assets/common/rightCheck.png')}
                style={styles.tickMark}
                resizeMode="contain"

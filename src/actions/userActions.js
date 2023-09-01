@@ -306,8 +306,7 @@ export function getUserInfo() {
         authToken
       );
       if (res) {
-
-     
+        // console.log("yes check reposne- - - - - - -",res)
         await dispatch({
           type: SET_BADGE_COUNT,
           badgeCount: res.data.unread_notifications_count,

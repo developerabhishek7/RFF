@@ -27,9 +27,7 @@ import * as IMG_CONST from "../../constants/ImageConst";
 import * as KEY_CONST from "../../helpers/config";
 import 'react-native-get-random-values'
 import FastImage from 'react-native-fast-image'
-
 import { v4 as uuid } from 'uuid'
-
 // import { trackEventDetails } from "../../helpers/segmentMethods";
 // import { CheckoutCart, CBCheckoutParams, CBCheckoutProps } from "@chargebee/react-native-chargebee";
 import {

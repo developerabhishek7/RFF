@@ -51,7 +51,7 @@ import {
   getTimeFromMins,
 } from "../../utils/commonMethods";
 import PopUpComponent from "../../shared/popUpComponent";
-
+import PostHog from 'posthog-react-native'
 let economyPoints = "";
 let premiumPoints = "";
 let businessPoints = "";
@@ -2224,7 +2224,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               inboundEndDate: 'N/A',
             }
           }
-          // PostHog.capture('Alert', trackData);
+          PostHog.capture('Alert', trackData);
           this.props.onSubmitAlertPress(body);
           this.setState({
             departStartDate: "",
@@ -2354,7 +2354,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             }
           }
     
-          // PostHog.capture('Alert', trackData);
+          PostHog.capture('Alert', trackData);
 
           this.props.onSubmitAlertPress(body);
           this.setState({

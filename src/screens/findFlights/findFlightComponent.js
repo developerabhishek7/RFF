@@ -17,7 +17,7 @@ import {
 import FastImage from 'react-native-fast-image'
 // import crashlytics from "@react-native-firebase/crashlytics";
 import MyStatusBar from '../../components/statusbar/index'
-
+import PostHog from 'posthog-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from "./findFlightStyles";
 import TravellersAndClassModal from "./travellersAndClassModal";
@@ -26,18 +26,13 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import ScreenHeader from "../../components/header/Header";
-import { getGeoDistance, getBAClassesString, getAirlinesLogo } from "../../utils/commonMethods";
+import { getGeoDistance, getBAClassesString, getAirlinesLogo,isEmptyString } from "../../utils/commonMethods";
 import moment from "moment";
 import { getStoreData, getUserId } from "../../constants/DataConst";
 import Modal from "react-native-modal";
 var uuid = require('react-native-uuid');
-import { getUserInfo } from "../../actions/userActions";
-
-// import PostHog from 'posthog-react-native';
-
 import DeviceInfo from "react-native-device-info";
 import * as RootNavigation from '../../router/RouteNavigation';
-
 export default class FindFlightComponent extends Component {
   constructor(props) {
     super(props);
@@ -218,24 +213,24 @@ export default class FindFlightComponent extends Component {
     }
 
 
-    // setTimeout(() => {
-    //     if(this.props.isLoggedIn){
-    //       PostHog.identify(this.props.userData.email, {
-    //         email: this.props.userData.email,
-    //         deviceName: deviceName,
-    //         deviecBrand:deviecBrand,
-    //         isTablet:isTablet,
-    //         isEmulator:isEmulator,
-    //         Plateform:"Mobile",
-    //         userType:"Logged-in user"
-    //       });
-    //     }
-    // }, 2000);
+    setTimeout(() => {
+        if(this.props.isLoggedIn){
+          PostHog.identify(this.props.userData.email, {
+            email: this.props.userData.email,
+            deviceName: deviceName,
+            deviecBrand:deviecBrand,
+            isTablet:isTablet,
+            isEmulator:isEmulator,
+            Plateform:"Mobile",
+            userType:"Logged-in user"
+          });
+        }
+    }, 2000);
 
  
     setTimeout(() => {
       if(isNewSignUp){
-        // posthog.capture('New Sign Up', trackData);
+        PostHog.capture('New Sign Up', trackData);
       }
     }, 1000);
 
@@ -244,8 +239,6 @@ export default class FindFlightComponent extends Component {
         await AsyncStorage.removeItem("isNewSignUp")
       }
     }, 2000);
-
-
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -411,6 +404,7 @@ export default class FindFlightComponent extends Component {
 
       <TouchableOpacity
         style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
+        activeOpacity={.6}
         onPress={() => { onButtonPress() }}>
         <Image source={require("../../assets/mapSearch/WorldMap.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),marginRight:scale(-5)}}  />
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
@@ -423,6 +417,7 @@ export default class FindFlightComponent extends Component {
 
       <TouchableOpacity
         style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
+        activeOpacity={.6}
         onPress={() => { onButtonPress() }}>
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
       </TouchableOpacity>
@@ -573,11 +568,7 @@ export default class FindFlightComponent extends Component {
   getClassText() {
     
     const {userData}  = this.props;
-
-    let goldMember = userData.gold_member
-    let silverMember = userData.silver_member
     let bronzeMember = userData.bronze_member
-
     let classObject
     let classSelected 
 
@@ -783,43 +774,61 @@ export default class FindFlightComponent extends Component {
         passenger_count: this.state.travellersCount,
         cabin_classes: travel_classes,//Array
       }
-      // this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {searchData:searchData,focusedDate:null,
-      //   peakOffpeakData:this.state.demoPeakOffPeakData
-      // })
-      // ..........test posthog data here  -  - - - - - - - - - - 
-      // if(!this.props.isLoggedIn){
-      //   let uuid_Key = uuid.v4()
-      //   let guestUserPostHog = {}
-      //     guestUserPostHog["sessionId"] = `${uuid_Key}`
-      //     guestUserPostHog["event_name"] = "Calendar page search"
-      //     guestUserPostHog["data"] = {
-      //       "arrival": "DEN",
-      //       "departure": "LON",
-      //       "journeyType": "returns",
-      //       "numberOfPassengers": 2,
-      //       "cabinClass": "economy,premium,first,business",
-      //       "searchFrom": "home"
-      //   }
-      //   this.props.updateGuestUserPostHog(guestUserPostHog)
-      // }
-      // else{
-      //   let loggedInUserPostHog = {}
-      //     loggedInUserPostHog["user"] = {
-      //       access_token:""
-      //     }
-      //     loggedInUserPostHog["event_name"] = "Calendar page search"
-      //     loggedInUserPostHog["data"] = {
-      //       "arrival": "DEN",
-      //       "departure": "LON",
-      //       "journeyType": "returns",
-      //       "numberOfPassengers": 2,
-      //       "cabinClass": "economy,premium,first,business",
-      //       "searchFrom": "home"
-      //   }
-      // }
-     
-       this.props.onSearchPressed(searchData, user_action_audit);
+
+          let classSelected1 = "";
+          for (i = 0; i < classSelected.length; i++) {
+            if (classSelected[i]) {
+              if (isEmptyString(classSelected1)) {
+                classSelected1 = classSelected1.concat(`${classes1[i]}`);
+              } else {
+                classSelected1 = classSelected1.concat(`,${classes1[i]}`);
+              }
+            }
+          }   
+          
+
+
+      const trackData = {
+        "Search Type": 'Calendar Page',
+        "Search Parameters": {   
+          airline:"British Airways",
+          originIATA: selectedSource.code,
+          destinationIATA: selectedDestination.code,
+          originCity: selectedSource.city_name ? selectedSource.city_name : 'N/A',
+          destinationCity: selectedDestination && selectedDestination.city_name  ? selectedDestination.city_name  : 'N/A',
+          originCountry: selectedSource &&  selectedSource.country_name ? selectedSource.country_name : 'N/A',
+          destinationCountry: selectedDestination && selectedDestination.country_name ? selectedDestination.country_name : 'N/A',
+          journeyType: selectedIndex == 1 ? "return" : "one_way",
+          numberOfPassengers: travellersCount,
+          cabinClasses: this.renderClassValues(),
+          searchOriginatedFrom: 'Home Page',
+          outboundStartDate: 'N/A since Calendar Page search',
+          outboundEndDate: 'N/A since Calendar Page search',
+          inboundStartDate: 'N/A since Calendar Page search',
+          inboundEndDate: 'N/A since Calendar Page search'
+        },
+      }
+      PostHog.capture('Search', trackData);
+      this.props.onSearchPressed(searchData, user_action_audit);
     }
+  }
+
+
+  renderClassValues(){
+    const { classSelected } = this.state;
+
+    let classSelected1 = "";
+    for (i = 0; i < classSelected.length; i++) {
+      if (classSelected[i]) {
+        if (isEmptyString(classSelected1)) {
+          classSelected1 = classSelected1.concat(`${classes1[i]}`);
+        } else {
+          classSelected1 = classSelected1.concat(`,${classes1[i]}`);
+        }
+      }
+    }  
+
+    return classSelected1;
   }
 
   getNearestAirport(airportList) {
@@ -1047,17 +1056,20 @@ export default class FindFlightComponent extends Component {
     );
   }
 
+
+
   getFullDestinationName(destinationObject) {
     let code = "";
     destinationObject.airports.map((item, index, arrayRef) => {
       if (arrayRef.length == 1) {
         code = code.concat(`${item.code}`)
+      }else if(index == (arrayRef.length - 1)){
+        code = code.concat(`${item.code}`)
       }
       else {
-        code = code.concat(`${item.code},`)
+        code = code.concat(`${item.code}, `)
       }
-      // code  = item.code      
-    });
+    })
     let fullName = `${destinationObject.city_name} (${code})`;
     return fullName;
   }
@@ -1178,8 +1190,8 @@ export default class FindFlightComponent extends Component {
                       },
                     ]}
                   >
-  {"Departure City"}                  
-  </Text>
+                  {"Departure City"}                  
+                  </Text>
                 }
               </Fragment>
           }
@@ -1463,11 +1475,6 @@ export default class FindFlightComponent extends Component {
 
   render() {
     const {userData}  = this.props;
-    let isLoggedIn = this.props.isLoggedIn
-
-    let goldMember = userData.gold_member
-    let silverMember = userData.silver_member
-    let bronzeMember = userData.bronze_member
 
        return (
           <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
