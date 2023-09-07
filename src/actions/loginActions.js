@@ -23,7 +23,7 @@ import {
  import { getAccessToken } from "../constants/DataConst";
  import { getUserInfo } from "./userActions";
 import {Alert} from 'react-native'
- 
+import * as RootNavigation from '../router/RouteNavigation';
  export function setLoginStatus(loginStatus) {
    return async (dispatch) => {
      await dispatch({
@@ -190,6 +190,7 @@ import {Alert} from 'react-native'
          await dispatch({
            type: USER_SIGN_OUT_SUCCESS,
          });
+         RootNavigation.navigationRef.navigate("SignIn")
          dispatch(CommonActions.stopLoader());
        } else {
          await dispatch({

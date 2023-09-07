@@ -9,8 +9,6 @@ const { height, width } = Dimensions.get("window");
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // borderWidth:7,
-    // borderColor:"green"
     backgroundColor: colours.white,
   },
   headerContainer: {
@@ -22,9 +20,7 @@ export default StyleSheet.create({
     height:Platform.OS == "ios" ? scale(110) : scale(90),
     borderBottomColor:"#03B2D8",
     borderBottomWidth:3,
-    zIndex:30,
     marginTop:Platform.OS == "ios" ? scale(-60) : scale(20),
-    elevation:0.1,
     paddingTop:scale(30),
     borderBottomLeftRadius:scale(20),borderBottomRightRadius:scale(20)
   },
@@ -122,11 +118,7 @@ export default StyleSheet.create({
     backgroundColor: colours.white,
   },
   calendarContainer: {
-    //  marginTop: scale(200),
-     
-     flex: 1, 
      alignItems: "center" 
-    
     },
   buttonTextStyle: {
     marginLeft: scale(10),
@@ -317,7 +309,7 @@ export default StyleSheet.create({
     color: colours.lightBlueTheme,
     fontWeight: "bold",
     fontSize: scale(14),
-    zIndex: 99,
+    // zIndex: 99,
     opacity: 1,
   },
   header: {
@@ -332,20 +324,17 @@ export default StyleSheet.create({
     marginRight: scale(-20),
   },
   calendarStyle: {
-    // position:"absolute",
     borderWidth: scale(1),
-    marginBottom: verticalScale(-10),
+    marginBottom: verticalScale(10),
     borderRadius: verticalScale(10),
-    // position:"relative",
-    // borderWidth:1,
     borderColor: colours.offWhite,
+    // height:scale(260),
   },
+
   calendarContainer: {
-   
-    flex: 1,
+    marginTop: verticalScale(10),
     paddingHorizontal: scale(16),
     backgroundColor: colours.offWhite,
-    // borderColor:"green",borderWidth:1
   },
   fareViewContainer: {
     flexDirection: "row",

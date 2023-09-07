@@ -77,13 +77,12 @@ import moment from "moment";
          onGetScheduleData={(flightScheduleData) => this.props.getFlightScheduleAction(flightScheduleData)}
          onAirlineSelected = {(data)=>this.props.updateAirlineTierAction(data)}
          peakOffpeakData={this.props.route.params.peakOffpeakData}
+         focusedDate={this.props.route.params.focusedDate}
          cabinClassData={this.props.cabinClassData}
          staticDateArray={this.props.route.params.staticDateArray}
          getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
-         guestUserPostHogFunc = {(guestUserPostHog)=>{this.props.updateGuestUserPostHogAction(guestUserPostHog)}}
-         loggedinUserPostHogFun = {(loggedInUserPostHog)=>{this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)}}
-         multipleFlightScheduleData={this.props.multipleFlightScheduleData}
-         
+         multipleFlightScheduleData={this.props.multipleFlightScheduleData}   
+               
        />
      );
    }

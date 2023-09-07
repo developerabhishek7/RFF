@@ -329,6 +329,7 @@ class MembershipComponent extends Component{
                 const accesstoken = await getAccessToken();
                 const userId = await getUserId()
                 let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
+               
                 Linking.openURL(
                   url
                 );
@@ -471,6 +472,7 @@ class MembershipComponent extends Component{
             const userId = await getUserId()
             this.reloaderApp()
             let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
+     
             Linking.openURL(
               url
             );

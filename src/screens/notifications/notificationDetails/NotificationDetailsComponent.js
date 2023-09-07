@@ -78,15 +78,19 @@ class NotificationDetailComponent extends Component {
     if (id !== 0) {
       this.props.markNotificationAsRead(id);
     }
+    let data = {}
 
     setTimeout(() => {
       const {notificationDetails} = this.state;
-       const data = {
-      "source":notificationDetails.alert.source_code,
-     "destination": notificationDetails.alert.destination_code
-    }
-      this.props.getCabinClassAction(data)
+      data = {
+        "source":notificationDetails.alert.source_code,
+       "destination": notificationDetails.alert.destination_code
+      }
     }, 1000);
+
+    setTimeout(() => {
+      this.props.getCabinClassAction(data)
+    }, 2000);
 
 
 
@@ -551,12 +555,12 @@ class NotificationDetailComponent extends Component {
               getLocationName(alert.destination_code, this.props.locations)
                 .city_name
             }`}
-              {/* {getLocationName(sourceCode)}{ ` (${sourceCode})`} {"to"} {getLocationName(destinationCode)}{ ` (${destinationCode})`}  */}
+              {/* {getLocationName(sourceCode)}{`(${sourceCode})`} {"to"} {getLocationName(destinationCode)}{ ` (${destinationCode})`}  */}
           </Text>
           </View>
-       
+  
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <FastImage
+            <Image
               source={IMAGE_CONST.WHITE_USER}
               style={{ marginRight: scale(6) }}
             />

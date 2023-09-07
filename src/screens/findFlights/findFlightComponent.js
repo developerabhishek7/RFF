@@ -33,6 +33,7 @@ import Modal from "react-native-modal";
 var uuid = require('react-native-uuid');
 import DeviceInfo from "react-native-device-info";
 import * as RootNavigation from '../../router/RouteNavigation';
+const classes1 = ["Economy","Premium Economy","Business", "First"]
 export default class FindFlightComponent extends Component {
   constructor(props) {
     super(props);
@@ -188,6 +189,7 @@ export default class FindFlightComponent extends Component {
 
     const userData  = this.props.userData
 
+   
 
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
@@ -195,9 +197,12 @@ export default class FindFlightComponent extends Component {
     let isEmulator = await DeviceInfo.isEmulator()
     let trackData = {}
     let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
-    if(this.props.isLoggedIn){
+
+    // if(this.props.isLoggedIn){
       // this.logCrashlytics()          
-    }
+    // }
+
+
     if(userData && Object.keys(userData).length !== 0 && isNewSignUp){
        trackData = {
         planName: "Bronze Trial Plan",
@@ -214,7 +219,7 @@ export default class FindFlightComponent extends Component {
 
 
     setTimeout(() => {
-        if(this.props.isLoggedIn){
+        if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
           PostHog.identify(this.props.userData.email, {
             email: this.props.userData.email,
             deviceName: deviceName,
@@ -225,20 +230,21 @@ export default class FindFlightComponent extends Component {
             userType:"Logged-in user"
           });
         }
-    }, 2000);
+    }, 100);
 
  
-    setTimeout(() => {
+    setTimeout(async() => {
       if(isNewSignUp){
         PostHog.capture('New Sign Up', trackData);
       }
-    }, 1000);
-
+    }, 1200);
+    
     setTimeout(async() => {
       if(isNewSignUp){
-        await AsyncStorage.removeItem("isNewSignUp")
+       await AsyncStorage.removeItem('isNewSignUp')
       }
     }, 2000);
+
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -729,11 +735,13 @@ export default class FindFlightComponent extends Component {
     } = this.state;
      const guestId = await getStoreData('guestId')
     const userId = await getUserId('userId')
+
+
     if (selectedSource && selectedDestination) {
       let travel_classes
       if(bronzeMember){
          travel_classes = getBAClassesString(classSelected1)
-      } 
+         } 
       else{
         travel_classes = getBAClassesString(classSelected)
       }
@@ -775,16 +783,16 @@ export default class FindFlightComponent extends Component {
         cabin_classes: travel_classes,//Array
       }
 
-          let classSelected1 = "";
-          for (i = 0; i < classSelected.length; i++) {
-            if (classSelected[i]) {
-              if (isEmptyString(classSelected1)) {
-                classSelected1 = classSelected1.concat(`${classes1[i]}`);
-              } else {
-                classSelected1 = classSelected1.concat(`,${classes1[i]}`);
-              }
-            }
-          }   
+          // let classSelected1 = "";
+          // for (i = 0; i < classSelected.length; i++) {
+          //   if (classSelected[i]) {
+          //     if (isEmptyString(classSelected1)) {
+          //       classSelected1 = classSelected1.concat(`${classes1[i]}`);
+          //     } else {
+          //       classSelected1 = classSelected1.concat(`,${classes1[i]}`);
+          //     }
+          //   }
+          // }   
           
 
 
@@ -815,7 +823,7 @@ export default class FindFlightComponent extends Component {
 
 
   renderClassValues(){
-    const { classSelected } = this.state;
+    const { classSelected, } = this.state;
 
     let classSelected1 = "";
     for (i = 0; i < classSelected.length; i++) {

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
-
+import PostHog from 'posthog-react-native';
 import { connect } from "react-redux";
 import styles from "./drawerMenuStyles";
 import {isPad} from '../../utils/commonMethods'
@@ -29,7 +29,7 @@ const { width } = Dimensions.get("window");
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
 import * as Config from "../../helpers/config";
 import { getUserConfigDetails } from "../../actions/userActions";
-
+import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
 let buildVersion = 0
 
@@ -242,17 +242,15 @@ class DrawerComponentComponent extends Component {
   }
 
   bindLogoutAndSocialLogin = () => {
-    // let key = ['socialLogin']
-
-    let allKeys = ['guestId','socialLogin','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
-          
-    AsyncStorage.multiRemove(allKeys) 
-    // AsyncStorage.multiRemove(key)
-    this.props.logoutUserAction()
+    let allKeys = ['guestId','socialLogin','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin','isNewSignUp']
+    setTimeout(async() => {
+      PostHog.reset()     
+      this.props.logoutUserAction()     
+      await AsyncStorage.multiRemove(allKeys) 
+    }, 300);
   }
 
   confirmSignOut = () => {
-   
     Alert.alert(
       STR_CONST.LOGOUT_MSG,
       null,
@@ -412,10 +410,10 @@ class DrawerComponentComponent extends Component {
             const result = await AsyncStorage.multiGet(keys);
             
             if (isLoggedIn) {
-              
               this.confirmSignOut();
             } else {
-              this.props.navigation.navigation.navigate("SignIn");
+              RootNavigation.navigationRef.navigate("SignIn")  
+              // this.props.navigation.navigate("SignIn");
             }
           }}
         >

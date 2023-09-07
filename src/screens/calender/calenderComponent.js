@@ -37,7 +37,7 @@ import Entypo from "react-native-vector-icons/dist/Entypo";
 var uuid = require('react-native-uuid');
 import DeviceInfo from "react-native-device-info";
 const {width,height} = Dimensions.get("window")  
-classes1 = ["Economy","Premium Economy","Businness", "First"]
+classes1 = ["Economy","Premium Economy","Business", "First"]
 import {
   getCalendarLocals,
   isAndroid,
@@ -415,8 +415,13 @@ export default class CalenderComponent extends Component {
     //   }
     // }
 
-
-
+    // let lastDate = this.state.peakOffpeakData.slice(-1)[0] 
+    //   if(lastDate){
+    //     setTimeout(() => {
+    //       this._refCalendarList.scrollToDay(lastDate);
+    //     });
+    //   }
+      
     var data2 = [true,false,false,false]
     
     this.setState({
@@ -1246,7 +1251,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     showModelDropdownForBA && 
                     <View style={{height:classSelectedArray.length > 2 ? scale(135) : scale(80),borderRadius:scale(3),marginTop:scale(-9),width:scale(334),marginBottom:scale(20),alignSelf:"center",}}>
                     {travelData.map((singleMap)=>{
-                      console.log("inside the ba model  - - - - - - - - -",singleMap)
                           return( 
                             <TouchableOpacity  
                               onPress={()=>{
@@ -1965,7 +1969,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
       return classSelected1;
     }
-
+    getBAClassesStringForAlert(classSelected) {
+      let classArray = ["Economy", "Premium Economy", "Business", "First"];
+      let travel_classes = "";
+      for (i = 0; i < classSelected.length; i++) {
+        if (classSelected[i]) {
+          if (travel_classes !== "")
+            travel_classes = `${travel_classes},${classArray[i]}`;
+          else {
+            travel_classes = `${classArray[i]}`;
+          }
+        }
+      }
+      return travel_classes;
+    }
 
   // ALERT VERIFY AND SUBMIT CODE .    . . . . . . .. . .. . . . 
   async onSubmitAlertPress() {
@@ -2114,6 +2131,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
       let travel_classes = getBAClassesString(newArray);
 
+      let classForAlert = this.getBAClassesStringForAlert(newArray)
+
+
       let availableclasses = this.state.airLinesDetailsObject.availability;
       let availableClassString = "";
       for (const item in availableclasses) {
@@ -2149,9 +2169,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         first: classData[2],
         business: classData[3],
         start_date: moment(searchData.startDate).format("YYYY-MM-DD") || null,
-        // airlineSelected: `${airline}_${membership}`,
-        airlineMembership: membership,
-        // membership: membership,       
+        airlineMembership: membership,    
         start_date: moment(searchData.startDate).format("YYYY-MM-DD") || null,
       };
       var body = {
@@ -2190,11 +2208,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
               originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
               destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.selectedSource : 'N/A',
+              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:this.state.searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses: this.renderClassValues() ? this.renderClassValues() : 'N/A',
+              cabinClasses: classForAlert ? classForAlert : 'N/A',
               onlyAlertOffPeakAvailable:  'No',
               outboundStartDate: moment(this.state.departStartDate).format("DD-MM-YYYY") ? moment(this.state.departStartDate).format("DD-MM-YYYY") : 'N/A',
               outboundEndDate: moment(this.state.departEndDate).format("DD-MM-YYYY") ? moment(this.state.departEndDate).format("DD-MM-YYYY") : 'N/A',
@@ -2319,11 +2337,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
               originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
               destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.selectedSource ? searchData.selectedSource.selectedSource : 'N/A',
+              originCountry: searchData.selectedSource.selectedSource ? searchData.selectedSource.country_name : 'N/A',
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:this.state.searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses: this.renderClassValues() ? this.renderClassValues() : 'N/A',
+              cabinClasses: classForAlert ? classForAlert : 'N/A',
               onlyAlertOffPeakAvailable:  'No',
               outboundStartDate: moment(this.state.departStartDate).format("DD-MM-YYYY") ? moment(this.state.departStartDate).format("DD-MM-YYYY") : 'N/A',
               outboundEndDate: moment(this.state.departEndDate).format("DD-MM-YYYY") ? moment(this.state.departEndDate).format("DD-MM-YYYY") : 'N/A',
@@ -3020,11 +3038,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let availability = airLinesDetailsObject.availability;
 
 
+    console.log("yes check here availability details - - - - -",availability)
 
-    console.log("yes check here availability  - - - - - - -",classSelected.length)
-
-
-    console.log("yes check here -------0-",availability)
 
     let economy = classSelected[0]
     let premium = classSelected[1]
@@ -4013,11 +4028,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isLoggedIn = this.props.isLoggedIn
 
       return(
-        <View style={[styles.calendarContainer,{
-          // marginTop: isLoggedIn ? verticalScale(100) : verticalScale(1),
-        }]}>
-        <StrictMode>
-          {/* <ScrollView ref="_scrollView" showsHorizontalScrollIndicator={false}> */}
+        <View style={styles.calendarContainer}>
+           <StrictMode>
           <CalendarList
             ref={(ref) => {
               this._refCalendarList = ref;
@@ -4092,7 +4104,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             }}
           />
           </StrictMode>
-          {/* </ScrollView> */}
         </View>
       )
   }
@@ -4262,51 +4273,15 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let userInfo  =  this.props.userInfo
     let isLoggedIn = this.props.isLoggedIn
     let classData = searchData.classSelected
-    let height1
-
-    if(isLoggedIn){
-       height1 = scale(10)
-    }
-    else{
-       height1 = scale(1)
-    }
-   
-    // const scrollY = new Animated.Value(0)
-    // const diffClamp = Animated.diffClamp(scrollY, 0,height1)
-    // const translateY = diffClamp.interpolate({
-    //   inputRange:[0,height1],
-    //   outputRange:[0,-height1]
-    // })
 
 
      return (
-        <SafeAreaView style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}  >
            {this.renderHeader()}
           <View style={{ backgroundColor: "#FFF", flex: 1}}>
             {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
-            {/* {
-              isLoggedIn   ?
-              <Animated.View
-              style={{
-              transform:[
-                {translateY:translateY}
-              ],
-              zIndex:0,
-              elevation:0,
-              backgroundColor:"#FFFFFF",
-              borderTopColor:"#FFFFFF",borderTopWidth:1,
-              borderWidth:1,borderColor:"#FFFFFF",  
-            }}
-            >
-             {this.state.airLinesDetailsObject ? this.ticketClass() : null}
-                             
-                {this.fareView()}
-                {this.state.searchData.isReturn
-                  ? this.tabView()
-                  : this.singleTabView()}
-            </Animated.View>
-            : */}
+           
             <View style={{borderWidth:0}}>
              {this.state.airLinesDetailsObject ? this.ticketClass() : null}
 
@@ -4315,21 +4290,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}      
             </View>
-            {/* } */}
-          {/* {
-            isLoggedIn ?
-            <ScrollView
-            showsVerticalScrollIndicator={false}
-        >
-          <View style={{  flex: 1}}>
-           {this.renderCalendarList()}
-           </View>
-          </ScrollView>
-            :  */}
             <ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}>
-            {this.renderCalendarList()}
+              {this.renderCalendarList()}
            </ScrollView>
-          {/* } */}
             {showTicketDetailModal && this.seatAvailabilityModal()}
             {showCreateAlertModal || showTicketDetailModal
               ? null
@@ -4349,7 +4312,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       "plateform": "Mobile",
                     }
                   }
-                  // this.postHogAnalytics(loggedInUserPostHog)
                   this.setState({
                     showCreateAlertModal: true,
                   });
@@ -4409,7 +4371,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   this.setState({
                     showLoginPopup: false,
                   });
-                  this.props.navigation.navigate("Anonymous");
+                  this.props.navigation.navigate("SignIn");
                 }}
               />
             )}

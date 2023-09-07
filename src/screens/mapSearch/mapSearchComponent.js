@@ -37,7 +37,7 @@ import * as Config from "../../helpers/config";
 import moment from "moment";
 import { getStoreData, getUserId ,getAccessToken} from "../../constants/DataConst";
 import PostHog from 'posthog-react-native';
-const classes1 = ["Economy","Premium Economy","Businness", "First"]
+const classes1 = ["Economy","Premium Economy","Business", "First"]
 import { Platform } from "react-native";
 var uuid = require("react-native-uuid");
 const { height, width } = Dimensions.get("window");
@@ -663,10 +663,10 @@ export default class FindFlightComponent extends Component {
               numberOfPassengers: travellersCount,
               cabinClasses: this.renderClassValues(),
               searchOriginatedFrom: 'Map Page',
-              outboundStartDate: departStartDate ? departStartDate : 'N/A',
-              outboundEndDate: departEndDate ? departEndDate : 'N/A',
-              inboundStartDate: returnStartDate ? returnStartDate : 'N/A',
-              inboundEndDate: returnEndDate ? returnEndDate : 'N/A'
+              outboundStartDate: departStartDate ? moment(departStartDate).format("DD-MM-YYYY")  : 'N/A',
+              outboundEndDate: departEndDate ? moment(departEndDate).format("DD-MM-YYYY")  : 'N/A',
+              inboundStartDate: returnStartDate ? moment(returnStartDate).format("DD-MM-YYYY")  : 'N/A',
+              inboundEndDate: returnEndDate ? moment(returnEndDate).format("DD-MM-YYYY")  : 'N/A'
             },
           }
           PostHog.capture('Search', trackData);

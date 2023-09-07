@@ -127,8 +127,8 @@ class MapSearchContainer extends Component {
           });
           this.props.getAirlinesAvailabilityAction(mapSearchData);
         }}
-        guestUserPostHogFunc = {(guestUserPostHog)=>{this.props.updateGuestUserPostHogAction(guestUserPostHog)}}
-        loggedinUserPostHogFun = {(loggedInUserPostHog)=>{this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)}}
+        // guestUserPostHogFunc = {(guestUserPostHog)=>{this.props.updateGuestUserPostHogAction(guestUserPostHog)}}
+        // loggedinUserPostHogFun = {(loggedInUserPostHog)=>{this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)}}
         isLoggedIn={this.props.isLoggedIn}
       />
     );
@@ -153,8 +153,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getAvailableDestinationsAction: (searchData) =>
       dispatch(getAvailableDestinations(searchData)),
-      updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
-      updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
+      // updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
+      // updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
       getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
       getAirlinesAvailabilityAction: (mapSearchData) =>
       dispatch(getAirlinesAvailability(mapSearchData, "MAP")),
