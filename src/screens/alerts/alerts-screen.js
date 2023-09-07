@@ -156,15 +156,12 @@ function makeUpperCaseAfterSpace(str) {
 }
 
 function travelClassView(travelClass) {
-
-
   return (
     <View style={[styles.travelClassView,
       {
         width:travelClass.length > 1 ? scale(340) : scale(190),
     }]}>
       {travelClass.map((cabinClass) => {
-
         return (
           <View
             style={
@@ -192,7 +189,6 @@ function travelClassView(travelClass) {
               style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
               /> : null
             } */}
-
             {/* {
              cabinClass == "premium_economy" || "premium" ?
               <Image source={IMG_CONST.PREMIUM_SEAT} 
@@ -200,7 +196,6 @@ function travelClassView(travelClass) {
               style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
               /> : null
             } */}
-
             {
              cabinClass == "economy" ?
               <Image source={IMG_CONST.ECONOMYC_SEAT} 
@@ -208,8 +203,7 @@ function travelClassView(travelClass) {
               style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
               /> : null
             }
-
-{
+            {
              cabinClass == "premium" || cabinClass == "premium_economy" ?
               <Image source={IMG_CONST.PREMIUM_SEAT} 
               resizeMode="contain"
@@ -463,8 +457,6 @@ const AlertCard = (props) => {
                    </Fragment>
                   : null
                 } */}
-              
-             
           </View>
         
 
@@ -1275,7 +1267,7 @@ class AlertsScreen extends React.Component {
     const {alerts} = this.state
     let alertCountValue  = alerts.length
     return(
-      <View style={{width:scale(200),height:scale(30)}}>
+      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(30) : scale(55),}}>
         <Text style={{fontSize:scale(16),fontWeight:"700",padding:scale(10),marginStart:scale(6),color:"#03B2D8"}}> ({alertCountValue}) Alerts</Text>
       </View>
     )

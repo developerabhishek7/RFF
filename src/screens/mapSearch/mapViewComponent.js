@@ -77,6 +77,7 @@ class MapComponent extends Component {
       let deviecBrand = await DeviceInfo.getBrand()
       let isTablet = await DeviceInfo.isTablet()
       let isEmulator = await DeviceInfo.isEmulator()
+      
 
       this.setState({
         deviecBrand,deviceName,isTablet,isEmulator
@@ -666,7 +667,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getAirlinesAvailabilityAction: (mapSearchData) =>
     dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
-    updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
+    // updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
     updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),

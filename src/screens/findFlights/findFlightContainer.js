@@ -52,7 +52,7 @@ import {trackEventDetails } from "../../helpers/segmentMethods";
 var uuid = require('react-native-uuid');
 import moment from 'moment'
 import DeviceInfo from "react-native-device-info";
-const classes1 = ["Economy","Premium Economy","Businness", "First"]
+const classes1 = ["Economy","Premium Economy","Business", "First"]
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 let monthKey = 12

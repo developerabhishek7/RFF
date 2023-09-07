@@ -28,7 +28,7 @@ import {
 } from "../../actions/alertActions";
 
 const classes = ["economy", "premium_economy", "business", "first"];
-const classes1 = ["Economy","Premium Economy","Businness", "First"]
+const classes1 = ["Economy","Premium Economy","Business", "First"]
 class EditAlertComponent extends Component {
   constructor(props) {
     super(props);
@@ -140,7 +140,6 @@ class EditAlertComponent extends Component {
   componentDidMount = () => {
       data = this.props.route.params.alertData;
       let searchData = this.props.route.params.data;
-
 
 
 
@@ -847,7 +846,7 @@ class EditAlertComponent extends Component {
       .join("&");
 
   validateData() {
-    const { returnStartDate, classSelectedArray, selectedIndex } = this.state;
+    const { returnStartDate, classSelectedArray, selectedIndex,} = this.state;
 
     const {userInfo} = this.state
 
@@ -882,18 +881,14 @@ class EditAlertComponent extends Component {
     let returnExpireDate = ""
     let days = 0
 
-
     let d1 = moment().format("YYYY-MM-DD")
     let d2 = this.state.departStartDate
 
     let d3 = this.state.returnStartDate
 
-
     let date1 = new Date(d1).getTime()
     let date2 = new Date(d2).getTime()
-
     let date3 = new Date(d3).getTime()
-
 
     if(date1 > date2) {
       Alert.alert("Date should be greater than today!")
@@ -908,7 +903,6 @@ class EditAlertComponent extends Component {
     if (goldMember) {
       expireDate = new Date(goldExpireDate).getTime()
       departureEndDate = new Date(alertDate).getTime()
-
       returnEndDate = new Date(rtnEndDate).getTime()
       returnExpireDate = new Date(goldExpirertnDate)
 
@@ -1055,32 +1049,39 @@ class EditAlertComponent extends Component {
 
 
 
+         const str = searchData.availableClasses;
+
+        //split the above string into an array of strings 
+        //whenever a blank space is encountered
+
+        const arr = str.split(" ");
+
+        //loop through each element of the array and capitalize the first letter.
+
+
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+
+        }
+
+        //Join all the elements of the array back into a string 
+        //using a blankspace as a separator 
+        const str2 = arr.join(" ");
+        
+        console.log("yes check here   - - - - - - -",str2)
+
+
+
+
+
+
+
+  
+
       if (this.state.selectedIndex == 1) {
         if (isAlertExpireDays && isAlertExpireDays2) {
           const trackData = {
             "Alert Type": "Edited",
-            "Old Alert Parameters": { 
-              airline: "British Airways",
-              originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
-              destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
-              originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
-              destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
-              destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
-              journeyType:searchData.isReturn ? "return" : "one_way",
-              numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses: classSelected1 ? classSelected1 : 'N/A',
-              onlyAlertOffPeakAvailable:  'No',
-              outboundStartDate: moment(searchData.startDate).format("DD-MM-YYYY") ? moment(searchData.departStartDate).format("DD-MM-YYYY") : 'N/A',
-              outboundEndDate: moment(searchData.endDate).format("DD-MM-YYYY") ? moment(searchData.departEndDate).format("DD-MM-YYYY") : 'N/A',
-              inboundStartDate: 
-              searchData.isReturn
-                ? moment(searchData.arrivalStartDate).format("DD-MM-YYYY")
-                : 'N/A',
-              inboundEndDate: searchData.isReturn
-              ? moment(searchData.arrivalEndDate).format("DD-MM-YYYY")
-              : 'N/A',
-            },
             "Alert Parameters": {   
               airline: "British Airways",
               originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
@@ -1102,9 +1103,30 @@ class EditAlertComponent extends Component {
               inboundEndDate: this.state.returnEndDate
               ? moment(this.state.returnEndDate).format("DD-MM-YYYY")
               : 'N/A',
+            },
+            "Old Alert Parameters": { 
+              airline: "British Airways",
+              originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
+              destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
+              originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
+              destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
+              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
+              destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
+              journeyType:searchData.isReturn ? "return" : "one_way",
+              numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
+              cabinClasses:  str2 ?  str2 : 'N/A',
+              onlyAlertOffPeakAvailable:  'No',
+              outboundStartDate: searchData.startDate ? moment(searchData.startDate).format("DD-MM-YYYY") : 'N/A',
+              outboundEndDate:searchData.endDate ? moment(searchData.endDate).format("DD-MM-YYYY") : 'N/A',
+              inboundStartDate: 
+              searchData.isReturn
+                ? moment(searchData.arrivalStartDate).format("DD-MM-YYYY")
+                : 'N/A',
+              inboundEndDate: searchData.isReturn
+              ? moment(searchData.arrivalEndDate).format("DD-MM-YYYY")
+              : 'N/A',
             }
           }
-        
           PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
@@ -1137,28 +1159,6 @@ class EditAlertComponent extends Component {
         if (isAlertExpireDays) {
           const trackData = {
             "Alert Type": "Edited",
-            "Old Alert Parameters": { 
-              airline: "British Airways",
-              originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
-              destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
-              originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
-              destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
-              destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
-              journeyType:searchData.isReturn ? "return" : "one_way",
-              numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses: classSelected1 ? classSelected1 : 'N/A',
-              onlyAlertOffPeakAvailable:  'No',
-              outboundStartDate: moment(searchData.startDate).format("DD-MM-YYYY") ? moment(searchData.departStartDate).format("DD-MM-YYYY") : 'N/A',
-              outboundEndDate: moment(searchData.endDate).format("DD-MM-YYYY") ? moment(searchData.departEndDate).format("DD-MM-YYYY") : 'N/A',
-              inboundStartDate: 
-              searchData.isReturn
-                ? moment(searchData.arrivalStartDate).format("DD-MM-YYYY")
-                : 'N/A',
-              inboundEndDate: searchData.isReturn
-              ? moment(searchData.arrivalEndDate).format("DD-MM-YYYY")
-              : 'N/A',
-            },
             "Alert Parameters": {   
               airline: "British Airways",
               originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
@@ -1180,11 +1180,32 @@ class EditAlertComponent extends Component {
               inboundEndDate: this.state.returnEndDate
               ? moment(this.state.returnEndDate).format("DD-MM-YYYY")
               : 'N/A',
+            },
+            "Old Alert Parameters": { 
+              airline: "British Airways",
+              originIATA: searchData.sourceCode ? searchData.sourceCode : 'N/A',
+              destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
+              originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
+              destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
+              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
+              destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
+              journeyType:searchData.isReturn ? "return" : "one_way",
+              numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
+              cabinClasses:  str2 ?  str2 : 'N/A',
+              onlyAlertOffPeakAvailable:  'No',
+              outboundStartDate: searchData.startDate ? moment(searchData.startDate).format("DD-MM-YYYY") : 'N/A',
+              outboundEndDate:searchData.endDate ? moment(searchData.endDate).format("DD-MM-YYYY") : 'N/A',
+              inboundStartDate: 
+              searchData.isReturn
+                ? moment(searchData.arrivalStartDate).format("DD-MM-YYYY")
+                : 'N/A',
+              inboundEndDate: searchData.isReturn
+              ? moment(searchData.arrivalEndDate).format("DD-MM-YYYY")
+              : 'N/A',
             }
           }
 
           PostHog.capture('Alert',trackData);
-         
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({
           //   departStartDate: "",
