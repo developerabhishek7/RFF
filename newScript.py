@@ -2,6 +2,7 @@ import pyautogui
 import math
 import time
 import random
+import sys
 
 a = ["""   
 
@@ -259,7 +260,7 @@ while True:
     pyautogui.click()
     a_splitted = random.choice(a).split(" ")
     for a in a_splitted:
-    	pyautogui.write(a+" ", interval=0.5)
-    	time.sleep(random.randint(0, 20))
+    	pyautogui.write(a+" ", interval=0.5) 
+    time.sleep(random.randint(0, 20))
     time.sleep(30)
-
+    sys.exit()

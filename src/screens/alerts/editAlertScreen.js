@@ -112,8 +112,6 @@ class EditAlertComponent extends Component {
     let data = this.state.cabinClassData
 
 
-    console.log("insdie cabin class function - - - - - -",data)
-
     if(data.economy == true){
        newArray.push("economy")
     }
@@ -140,10 +138,8 @@ class EditAlertComponent extends Component {
   componentDidMount = () => {
       data = this.props.route.params.alertData;
       let searchData = this.props.route.params.data;
-
-
-
-    
+ 
+      
       this.setState({
         passengerCount: searchData.passengerCount,
         selectedIndex: searchData.isReturn ? 1 : 0,
@@ -406,10 +402,6 @@ class EditAlertComponent extends Component {
   }
   
   renderTravelClass(classType, index) {
-
-
-    // console.log("yes chekc here classType - - - - - - ",classType)
-
     let marginStyle = {};
     const {userInfo} = this.state
 
@@ -602,10 +594,6 @@ class EditAlertComponent extends Component {
 
   travelClassView() {
     const { availableClasses, classSelectedArray, } = this.state;
-
-
-    // console.log("yes check here availableClasses $$$$$$$$ ",availableClasses)
-    // console.log("yes check here classSelectedArray $$$$$$$$ ",classSelectedArray)
 
     const {userInfo} = this.state
 
@@ -806,8 +794,6 @@ class EditAlertComponent extends Component {
   }
   getTravelClasses() {
     const { classSelectedArray } = this.state;
-
-    console.log("before computation  - - - - - - -",classSelectedArray)
     let classSelected = "";
     for (i = 0; i < classSelectedArray.length; i++) {
       if (classSelectedArray[i]) {
@@ -850,8 +836,6 @@ class EditAlertComponent extends Component {
 
     const {userInfo} = this.state
 
-    console.log("yes check validate data calling  - - - - ",)
-
     let goldMember = userInfo.gold_member
     let silverMember = userInfo.silver_member
     let bronzeMember = userInfo.bronze_member
@@ -870,10 +854,6 @@ class EditAlertComponent extends Component {
     let txtForPopup = ""
     let alertDate = moment(this.state.departEndDate).format("YYYY-MM-DD")
     let rtnEndDate = moment(this.state.returnEndDate).format("YYYY-MM-DD")
-
-
-
-
 
     let expireDate = ""
     let departureEndDate = ""
@@ -1031,8 +1011,6 @@ class EditAlertComponent extends Component {
         )}`; 
       }
 
-
-
       let  classSelected = searchData.classSelected
       let classSelected1 = "";
       for (i = 0; i < classSelected.length; i++) {
@@ -1044,39 +1022,18 @@ class EditAlertComponent extends Component {
           }
         }
       }   
-  
-
-
-
-
-         const str = searchData.availableClasses;
-
-        //split the above string into an array of strings 
-        //whenever a blank space is encountered
-
-        const arr = str.split(" ");
-
-        //loop through each element of the array and capitalize the first letter.
-
-
+      // return false
+      let str = this.props.route.params.travelClass;
+        const arr = str.split(",");
         for (var i = 0; i < arr.length; i++) {
-            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-
+          if(arr[i] == "premium_economy"){
+            arr[i] = arr[i].split("_").join(" ") 
+          }else{
+            arr[i] = arr[i]
+          }
         }
-
-        //Join all the elements of the array back into a string 
-        //using a blankspace as a separator 
-        const str2 = arr.join(" ");
-        
-        console.log("yes check here   - - - - - - -",str2)
-
-
-
-
-
-
-
-  
+      const str2 = arr.join(" ");
+      var txt = str2.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
 
       if (this.state.selectedIndex == 1) {
         if (isAlertExpireDays && isAlertExpireDays2) {
@@ -1114,7 +1071,7 @@ class EditAlertComponent extends Component {
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses:  str2 ?  str2 : 'N/A',
+              cabinClasses:  txt ?  txt : 'N/A',
               onlyAlertOffPeakAvailable:  'No',
               outboundStartDate: searchData.startDate ? moment(searchData.startDate).format("DD-MM-YYYY") : 'N/A',
               outboundEndDate:searchData.endDate ? moment(searchData.endDate).format("DD-MM-YYYY") : 'N/A',
@@ -1191,7 +1148,7 @@ class EditAlertComponent extends Component {
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
-              cabinClasses:  str2 ?  str2 : 'N/A',
+              cabinClasses:  txt ?  txt : 'N/A',
               onlyAlertOffPeakAvailable:  'No',
               outboundStartDate: searchData.startDate ? moment(searchData.startDate).format("DD-MM-YYYY") : 'N/A',
               outboundEndDate:searchData.endDate ? moment(searchData.endDate).format("DD-MM-YYYY") : 'N/A',
@@ -1204,7 +1161,6 @@ class EditAlertComponent extends Component {
               : 'N/A',
             }
           }
-
           PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
           // this.setState({

@@ -325,10 +325,11 @@ export default StyleSheet.create({
   },
   calendarStyle: {
     borderWidth: scale(1),
-    marginBottom: verticalScale(10),
+    marginBottom: verticalScale(-60),
     borderRadius: verticalScale(10),
     borderColor: colours.offWhite,
-    // height:scale(260),
+    // borderColor:"green",
+  
   },
 
   calendarContainer: {

@@ -786,7 +786,6 @@ class LoginComponent extends Component {
 
   render() {
     return (
-
         <FastImage source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",}}
           imageStyle={{marginTop:scale(30)}}
         >

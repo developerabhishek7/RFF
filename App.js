@@ -108,9 +108,9 @@ class App extends React.Component {
       <View style={{ flex:1}}>    
       <StatusBar />  
       <Provider store={this.state.store}>
-            <Appcontainer />
-               <TransLoader />
-               <DropdownAlert
+          <Appcontainer />
+          <TransLoader />
+          <DropdownAlert
           inactiveStatusBarStyle="dark-content"
           inactiveStatusBarBackgroundColor={colours.white}
           translucent={false}
@@ -123,7 +123,6 @@ class App extends React.Component {
         </Provider>
       </View>
       </NativeBaseProvider>
-
     );
   }
 }

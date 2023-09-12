@@ -433,8 +433,7 @@ class FindFlightContainer extends Component {
 
 const mapStateToProps = (state) => {
   const { findFlight, calendar, common, notification, userInfo, logIn } = state;
- 
- 
+
   return {
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,

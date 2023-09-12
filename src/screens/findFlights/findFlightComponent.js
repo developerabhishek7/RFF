@@ -238,7 +238,7 @@ export default class FindFlightComponent extends Component {
         PostHog.capture('New Sign Up', trackData);
       }
     }, 1200);
-    
+     
     setTimeout(async() => {
       if(isNewSignUp){
        await AsyncStorage.removeItem('isNewSignUp')
