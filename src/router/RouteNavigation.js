@@ -1,5 +1,4 @@
 // RootNavigation.js
-
 import { createNavigationContainerRef } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 export const navigationRef = createNavigationContainerRef()

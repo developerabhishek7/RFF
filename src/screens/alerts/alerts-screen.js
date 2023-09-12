@@ -356,9 +356,6 @@ const AlertCard = (props) => {
     AlertId
   } = props;
   let travel_classes = props.travelClass.split(",");
-
-
-
   return (  
     //   <ImageBackground
     //   resizeMode={"contain"}
@@ -1306,6 +1303,7 @@ class AlertsScreen extends React.Component {
             style={{ marginTop: verticalScale(20) }}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
+              // console.log("yes print here item - - - - -  -",item),
               <AlertCard
                 cancelAlert={this.confirmCancelAlert}
                 {...item}
@@ -1340,7 +1338,8 @@ class AlertsScreen extends React.Component {
                       alertData: item,
                       props: this.props,
                       data: data,
-                      cabinClassData:this.props.cabinClassData
+                      cabinClassData:this.props.cabinClassData,
+                      travelClass:item.travelClass
                     });
                 }}
                 onMenuPress={()=>{

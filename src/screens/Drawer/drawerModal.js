@@ -32,7 +32,7 @@ import { getUserConfigDetails } from "../../actions/userActions";
 import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
 let buildVersion = 0
-
+import DeviceInfo from "react-native-device-info";
 class DrawerComponentComponent extends Component {
   constructor(props) {
     super(props);
@@ -71,8 +71,25 @@ class DrawerComponentComponent extends Component {
     setTimeout(() => {
         this.getBuildVersionData()
     }, 2000);
+    let userData = this.props.userData
 
-
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+    setTimeout(() => {
+      if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
+        PostHog.identify(this.props.userData.email, {
+          email: this.props.userData.email,
+          deviceName: deviceName,
+          deviecBrand:deviecBrand,
+          isTablet:isTablet,
+          isEmulator:isEmulator,
+          Plateform:"Mobile",
+          userType:"Logged-in user"
+        });
+      }
+  }, 1000);
    
   }
 
@@ -329,7 +346,7 @@ class DrawerComponentComponent extends Component {
             </TouchableOpacity>
           )}
 
-    {isLoggedIn && <View  style={styles.lineStyle} /> }
+           {isLoggedIn && <View  style={styles.lineStyle} /> }
 
 
           {isLoggedIn && (
@@ -347,7 +364,7 @@ class DrawerComponentComponent extends Component {
             </TouchableOpacity>
           )}
 
-{isLoggedIn && <View  style={styles.lineStyle} /> }
+          {isLoggedIn && <View  style={styles.lineStyle} /> }
 
 
           {isLoggedIn && (
@@ -408,7 +425,6 @@ class DrawerComponentComponent extends Component {
           onPress={async() => {
             const keys = await AsyncStorage.getAllKeys();
             const result = await AsyncStorage.multiGet(keys);
-            
             if (isLoggedIn) {
               this.confirmSignOut();
             } else {
@@ -443,7 +459,6 @@ class DrawerComponentComponent extends Component {
               // const keys = await AsyncStorage.getAllKeys();
               // const result = await AsyncStorage.multiGet(keys);
               // let allKeys = ['guestId','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
-              
               // if (isLoggedIn) {
               //   AsyncStorage.multiRemove(allKeys) 
               //   this.confirmSignOut();
@@ -463,7 +478,6 @@ class DrawerComponentComponent extends Component {
           </TouchableOpacity>
             : null
           }
-        
         </View>
         </ScrollView>       
       </View>

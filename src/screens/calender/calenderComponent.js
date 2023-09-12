@@ -2208,7 +2208,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
               originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
               destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.country_name ? searchData.selectedSource.country_name : 'N/A',
+              originCountry: selectedSource ? selectedSource.country_name : 'N/A',
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:this.state.searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
@@ -2337,7 +2337,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               destinationIATA: searchData.destinationCode ?searchData.destinationCode : 'N/A',
               originCity: searchData.selectedSource.city_name ? searchData.selectedSource.city_name : 'N/A',
               destinationCity: searchData.selectedDestination.city_name ? searchData.selectedDestination.city_name : 'N/A',
-              originCountry: searchData.selectedSource.selectedSource ? searchData.selectedSource.country_name : 'N/A',
+              originCountry: selectedSource ? selectedSource.country_name : 'N/A',
               destinationCountry: searchData.selectedDestination.country_name ? searchData.selectedDestination.country_name : 'N/A',
               journeyType:this.state.searchData.isReturn ? "return" : "one_way",
               numberOfPassengers: searchData.passengerCount ? searchData.passengerCount : 'N/A',
@@ -4006,7 +4006,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
   renderCalendarList(){
-
     const {
       showTicketDetailModal,
       showCreateAlertModal,
@@ -4028,8 +4027,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isLoggedIn = this.props.isLoggedIn
 
       return(
-        <View style={styles.calendarContainer}>
-           <StrictMode>
+        <View style={styles.calendarContainer} onStartShouldSetResponder={() => true}>
           <CalendarList
             ref={(ref) => {
               this._refCalendarList = ref;
@@ -4037,7 +4035,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             calendarStyle={styles.calendarStyle}
             style={{
               backgroundColor: colours.offWhite,
-              marginTop:scale(20),
             }}
             firstDay={1}
             showScrollIndicator={false}
@@ -4063,7 +4060,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             }}
             pastScrollRange={0}
             minDate={today}
-            calendarHeight={350}
             futureScrollRange={ isLoggedIn ? 12 : 3}
             scrollEnabled={true}
             calendarWidth={scale(343)}
@@ -4103,7 +4099,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               return <View style={{ height: verticalScale(70) }} />;
             }}
           />
-          </StrictMode>
         </View>
       )
   }
@@ -4290,9 +4285,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}      
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}>
+            <Animated.ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}>
               {this.renderCalendarList()}
-           </ScrollView>
+           </Animated.ScrollView>
             {showTicketDetailModal && this.seatAvailabilityModal()}
             {showCreateAlertModal || showTicketDetailModal
               ? null
