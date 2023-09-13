@@ -342,7 +342,8 @@ export default class ProfileScreenComponent extends Component {
           {STR_CONST.ADD_MOBILE_NO}
         </Text>
         <Text style={{ color: "#132C52", fontSize: scale(12), padding: 1, paddingTop: 7, fontFamily: STR_CONST.appFonts.INTER_REGULAR }}>
-          Add mobile number to receive SMS availability alerts
+          {/* Add mobile number to receive SMS availability alerts */}
+          Add mobile number to receive SMS alerts
         </Text>
 
         {this.contactNumberView()}
@@ -1063,11 +1064,9 @@ export default class ProfileScreenComponent extends Component {
         "isTablet":this.state.isTablet,
         "plateform": "Mobile",
       }
-      console.log("yes check here meta data inside compomnent",metaData)
-      this.props.addContactAction(userInfo,metaData)
-
-    
-      // this.props.updateUserDataAction(userInfo);
+      console.log("yes check here meta data inside compomnent",metaData)        
+      this.props.addContactAction(userInfo,metaData)                     
+      // this.props.updateUserDataAction(userInfo);          
     }
   }
 
@@ -1080,7 +1079,7 @@ export default class ProfileScreenComponent extends Component {
       showSendOTPButton,
     } = this.state;
     return (
-      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
+      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS == "android" ? "" : "padding"}

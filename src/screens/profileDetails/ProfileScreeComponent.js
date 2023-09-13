@@ -1492,13 +1492,13 @@ isAlert = () => {
             padding:scale(0),
             paddingStart:scale(15),
             color:"#adb1b1", 
-          }}>Average number of return flight </Text>
+          }}>Average number of return fights</Text>
 
 <Text style={  {textAlign:"left",  fontSize: scale(14),
             fontWeight: "bold",
             padding:scale(0),
             paddingStart:scale(15),
-            color:"#adb1b1",}}>take in a year</Text>
+            color:"#adb1b1",}}>taken annually</Text>
       </View>
 </View>
 

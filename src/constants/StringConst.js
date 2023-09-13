@@ -244,11 +244,11 @@ export const POST_CODE = `Postal/Zip Code`;
 export const PREFFERED_DEPARTURE = `My Closest Airport`;
 export const AGE_BAND = `Age Band`;
 export const GENDER = `Gender`;
-export const APPROX_FLIGHT_NUMBER = `Average number of return flights \ntaken a year`;
+export const APPROX_FLIGHT_NUMBER = `Average number of return flights \ntaken annually`;
 export const HOW_LIKELY_TO_TRAVEL_ABROAD = `Do you plan to travel abroad in the next 12 months?`;
-export const EMAIL_NOTIFICATION_DETAILS = `Keep set to always "on" to make sure you don't miss out on any reward flight notifications`;
+export const EMAIL_NOTIFICATION_DETAILS = `Keep set to always ‘on’ to ensure you don’t miss any reward flight notifications.`;
 export const SMS_NOTIFICATION_DETAILS = `Always get alerts, even with limited access to mobile data & wifi`;
-export const PUSH_NOTIFICATION_DETAILS = `Always get alerts notification on app`;
+export const PUSH_NOTIFICATION_DETAILS = `Always get alert notifications on the app`;
 export const SAVE_CHANGES = "Save Changes"
 // Manage Contact Detail Screen
 export const ADD_MOBILE_NO = "Add mobile number";
