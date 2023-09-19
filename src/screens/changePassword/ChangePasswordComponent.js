@@ -156,7 +156,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <FastImage
+                <Image
                   style={
                     this.state.oldPswdEye
                       ? styles.inVisibleEye
@@ -220,7 +220,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <FastImage
+                <Image
                   style={
                     this.state.newPswdEye
                       ? styles.inVisibleEye
@@ -287,7 +287,7 @@ export default class ChangePasswordComponent extends Component {
                 }
                 style={styles.eyeContainer}
               >
-                <FastImage
+                <Image
                   style={
                     this.state.cnfmPswdEye
                       ? styles.inVisibleEye
@@ -404,19 +404,18 @@ export default class ChangePasswordComponent extends Component {
       // <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
         <SafeAreaView style={{ flex: 1 }}>
            {this.renderHeader()}
+           <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
            <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{height:scale(250),marginTop:scale(-30),alignSelf:"center",width:scale(200),justifyContent:"center",alignItems:"center"}} />
-           {/* <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={10} extraScrollHeight={10} showsVerticalScrollIndicator={false}> */}
-        
-           <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-
-        {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
+         
+           {/* <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"> */}
+            {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
        
           <View style={{ flex: 1, borderWidth: 0, borderColor: "green", justifyContent: "center", alignItems: 'center' }}>
             {this.editPasswordView()}
           </View>
  
-        </ScrollView>
-        {/* </KeyboardAwareScrollView> */}
+        {/* </ScrollView> */}
+        </KeyboardAwareScrollView>
         
       </SafeAreaView>
       // </FastImage>

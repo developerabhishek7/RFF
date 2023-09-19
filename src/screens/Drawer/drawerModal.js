@@ -56,40 +56,73 @@ class DrawerComponentComponent extends Component {
   }
 
 
-  async componentDidMount(){
+  renderIdentifierForPosthog = async()=> {
+
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+
+
+    let userData = this.state.userData
+    setTimeout(async() => {
+      // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
+      // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
+        if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
+         await PostHog.identify(this.props.userData.email, {
+            email: this.props.userData.email,
+            deviceName: deviceName,
+            deviecBrand:deviecBrand,
+            isTablet:isTablet,
+            isEmulator:isEmulator,
+            Plateform:"Mobile",
+            userType:"Logged-in user"
+          });
+        }
+    }, 1500);
+  }
+
+
+   componentDidMount = async() => {
 
 
     // console.log("yes insdie the did mount ######     ",this.state.userConfigDetails)
-
+   
     const accesstoken = await getAccessToken();
     const userId = await getUserId()
     this.props.getUserConfigDetailsAction()
 
+    let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
+
+
+  // setTimeout(async() => {
+    //   if(isNewSignUp){
+    //    await AsyncStorage.removeItem('isNewSignUp')
+    //   }
+    // }, 2000);
+
     this.setState({
       accesstoken,userId,
     })
-    setTimeout(() => {
-        this.getBuildVersionData()
-    }, 2000);
+  
     let userData = this.props.userData
 
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
+
+
     setTimeout(() => {
-      if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
-        PostHog.identify(this.props.userData.email, {
-          email: this.props.userData.email,
-          deviceName: deviceName,
-          deviecBrand:deviecBrand,
-          isTablet:isTablet,
-          isEmulator:isEmulator,
-          Plateform:"Mobile",
-          userType:"Logged-in user"
-        });
-      }
-  }, 1000);
+      this.renderIdentifierForPosthog()
+    }, 1500);
+
+  setTimeout(async() => {
+    if(isNewSignUp){
+         await AsyncStorage.removeItem('isNewSignUp')
+        }
+      this.getBuildVersionData()
+  }, 2000);
    
   }
 

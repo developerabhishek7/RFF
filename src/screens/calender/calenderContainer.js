@@ -82,7 +82,7 @@ import moment from "moment";
          staticDateArray={this.props.route.params.staticDateArray}
          getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
          multipleFlightScheduleData={this.props.multipleFlightScheduleData}   
-               
+         alertsArray={this.props.alertsArray} 
        />
      );
    }
@@ -90,9 +90,10 @@ import moment from "moment";
 
  
  const mapStateToProps = (state) => {
-   const { calendar,userInfo,logIn, findFlight } = state; 
+   const { calendar,userInfo,logIn, findFlight,alerts } = state; 
    return {
      userInfo: userInfo.userData,
+     alertsArray: alerts.alertsArray,
      createAlertSuccess: calendar.createAlertSuccess,
      createAlertError: calendar.createAlertError,
      airlinesDetails: calendar.airlinesDetail,

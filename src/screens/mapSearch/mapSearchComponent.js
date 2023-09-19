@@ -126,13 +126,38 @@ export default class FindFlightComponent extends Component {
     };
   }
 
+
+
+  renderIdentifierForPosthog = async()=> {
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+    let userData = this.state.userData
+      console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
+      // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
+        if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
+          PostHog.identify(this.props.userData.email, {
+            email: this.props.userData.email,
+            deviceName: deviceName,
+            deviecBrand:deviecBrand,
+            isTablet:isTablet,
+            isEmulator:isEmulator,
+            Plateform:"Mobile",
+            userType:"Logged-in user"
+          });
+        }
+  }
+
+
+
   componentDidMount = async () => {
     let userId = await AsyncStorage.getItem("userId");
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
-
+    
     const accesstoken = await getAccessToken();
 
     this.setState({
@@ -155,6 +180,7 @@ export default class FindFlightComponent extends Component {
    
     setTimeout(() => {
         this.getBuildVersionData()
+        this.renderIdentifierForPosthog()
     }, 2000);
   
 
@@ -669,6 +695,7 @@ export default class FindFlightComponent extends Component {
               inboundEndDate: returnEndDate ? moment(returnEndDate).format("DD-MM-YYYY")  : 'N/A'
             },
           }
+          this.renderIdentifierForPosthog()
           PostHog.capture('Search', trackData);
           this.props.onSearchPressed(searchData, user_action_audit, WhereFrom);
         }

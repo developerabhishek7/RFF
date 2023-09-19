@@ -1,6 +1,5 @@
 /* Running Code.....*/
 
- 
 import React, { Component, Fragment, PureComponent, StrictMode } from "react";
 import {
   View,
@@ -19,6 +18,8 @@ import {
   ScrollView,
   ImageBackground
 } from "react-native";
+
+import * as RootNavigation from '../../router/RouteNavigation';
 import {BA_EXE_URL,SKY_SCANNER_URL} from '../../helpers/config'
 import styles from "./calenderStyles";
 import * as STRING_CONST from "../../constants/StringConst";
@@ -1966,7 +1967,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           }
         }
       }  
-
       return classSelected1;
     }
     getBAClassesStringForAlert(classSelected) {
@@ -2840,6 +2840,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                               this.onClassTypeSelected(item, index);
                             }
                           }
+                          else{
+                            this.setState({ showCreateAlertModal: false })
+                            this.showAlert1()
+                          }
                         }
                         else if(item.class == "Business"){
                           if(!bronzeMember){
@@ -2847,12 +2851,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                               this.onClassTypeSelected(item, index);
                             }
                           }
+                          else{
+                            this.setState({ showCreateAlertModal: false })
+                            this.showAlert1()
+                          }
                         }
                         else if(item.class == "First"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
                               this.onClassTypeSelected(item, index);
                             }
+                          }else{
+                            this.setState({ showCreateAlertModal: false })
+                            this.showAlert1()
                           }
                         }
                       }}
@@ -2869,6 +2880,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                               if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
                                 this.onClassTypeSelected(item, index);
                               }
+                            }else{
+                              this.setState({ showCreateAlertModal: false })
+                              this.showAlert1()
                             }
                           }
                           else if(item.class == "Business"){
@@ -2877,12 +2891,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                                 this.onClassTypeSelected(item, index);
                               }
                             }
+                            else{
+                              this.setState({ showCreateAlertModal: false })
+                              this.showAlert1()
+                            }
                           }
                           else if(item.class == "First"){
                             if(!bronzeMember){
                               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
                                 this.onClassTypeSelected(item, index);
                               }
+                            }else{
+                              
+                              this.showAlert1()
                             }
                           }
                         }}
@@ -2981,10 +3002,16 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         style={
           styles.headerContainer
         }
-        onPress={() => { this.props.navigation.goBack() }}
+        onPress={() => { 
+          RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
+          // this.props.navigation.goBack() 
+        }}
       >
         <TouchableOpacity
-          onPress={() => { this.props.navigation.goBack() }}
+          onPress={() => { 
+            // this.props.navigation.goBack() 
+            RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
+          }}
         >
            {IMAGE_CONST.IOS_BACK_ARROW}
         </TouchableOpacity>
@@ -3030,6 +3057,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   getIcon(icon, color) {
     return <MaterialIcon name={icon} size={scale(16)} color={color} />;
   }
+  showAlert1() {  
+    Alert.alert(  
+        '',  
+        'Upgrade Membership to see availability for all cabin classes',  
+        [  
+            {  
+                text: 'Cancel',  
+                onPress: () => console.log('Cancel Pressed'),  
+                style: 'Cancel',  
+            },  
+            {text: 'OK', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
+        ]  
+    );  
+}  
 
   ticketClass = () => {
 
@@ -3038,13 +3079,29 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let availability = airLinesDetailsObject.availability;
 
 
-    console.log("yes check here availability details - - - - -",availability)
-
+    // if (!availability.economy) {
+    //   classSelected[0] = availability.economy
+    // }
+    // if (!availability.premium) {
+    //   classSelected[1] = availability.premium
+    // }
+    // if (!availability.business) {
+    //   classSelected[2] = availability.business
+    // }
+    // if (!availability.first) {
+    //   classSelected[3] = availability.first
+    // }
 
     let economy = classSelected[0]
     let premium = classSelected[1]
     let business = classSelected[2]
     let first = classSelected[3]
+
+
+    // let economy = classSelected[0] && availability.economy
+    // let premium = classSelected[1] && availability.premium
+    // let business = classSelected[2] && availability.business
+    // let first = classSelected[3] && availability.first
 
    let classSelectedArray = []
 
@@ -3091,6 +3148,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     }
                   }
               }
+              else{
+                this.showAlert1()
+              }
             }}
           >
             {!this.state.classSelected[0]
@@ -3132,6 +3192,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                   }
+              }
+              else{
+                this.showAlert1()
               }
             }}
           >
@@ -3177,7 +3240,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                 }
-              }             
+              }
+              else{
+                this.showAlert1()
+              }        
             }}
           >
             {!this.state.classSelected[2]
@@ -3221,6 +3287,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
                     }
                 }
+              }
+              else{
+                this.showAlert1()
               }
             }}
           >
@@ -3922,7 +3991,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
   renderLoginPopup = () => {
-    const { showLoginCnfmPopup, haveCrossIcon } = this.state
+    const { showLoginCnfmPopup, haveCrossIcon } = this.state;
+    // console.log("print  showLogin popup confirm value - - - - - ",showLoginCnfmPopup)
+
     return (
       <Modal
         transparent={true}
@@ -3943,7 +4014,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               ]}
             >
               <Text style={styles.titleTextStyle}>{"    "}</Text>
-              <Text style={styles.titleTextStyle}>{"Login"}</Text>
+              <Text style={styles.titleTextStyle}>{"SignIn"}</Text>
               <TouchableOpacity
                 onPress={() => {
                   this.setState({ showLoginCnfmPopup: false, haveCrossIcon: false });
@@ -3971,7 +4042,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               <Text style={styles.rightButtonTextStyle}>
-                {"Login"}
+                {"SignIn"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -4027,11 +4098,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isLoggedIn = this.props.isLoggedIn
 
       return(
-        <View style={styles.calendarContainer} onStartShouldSetResponder={() => true}>
+        <View style={styles.calendarContainer} 
+        onStartShouldSetResponder={() => true}
+        >
           <CalendarList
-            ref={(ref) => {
-              this._refCalendarList = ref;
-            }}
+            // ref={(ref) => {
+            //   this._refCalendarList = ref;
+            // }}
             calendarStyle={styles.calendarStyle}
             style={{
               backgroundColor: colours.offWhite,
@@ -4039,9 +4112,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             firstDay={1}
             showScrollIndicator={false}
             onVisibleMonthsChange={(months) => {
+              console.log("yes print here month value -  - - -- - ",months)
               let firstDay = moment().startOf('month')
               let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
               if (months[0].dateString >= nextThreeMonth && !this.props.isLoggedIn) {
+                console.log("getting condition is satisfying or not  -  - --  - - - -",months)
                 this.setState({ showLoginCnfmPopup: true }, () => {
                   this.renderLoginPopup()
                 })
@@ -4199,9 +4274,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         this.seatAvailabilityModal(day, isOffPeakValue1)
                       }
                       else{
-                      
-
-                        data = this.state.airLinesDetailsObject.inbound_availability;
+                      data = this.state.airLinesDetailsObject.inbound_availability;
                          let  dateString = getformattedDate(onDayPressedDate);
                           this.setState({
                             noflightschedule: true,
@@ -4213,8 +4286,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         this.Hide_Custom_Alert2()
                         this.seatAvailabilityModal(day, isOffPeakValue1)
                       }
-
-                     
                     }}
                   >
                   <View style={{marginTop:scale(5),marginBottom:scale(25)}}>
@@ -4242,14 +4313,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                <View style={{height:scale(70)}}>
                {this._renderFlightList()}
                </View>
-            
                </TouchableOpacity>
                    }
             </Fragment>
             : 
             <Text style={{ fontSize: scale(14), color: colours.gray, padding: scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,marginBottom:scale(20) }}>{"There is no available flight for this date."}</Text>
           }
-        
         </View>
       </View>
     </Modal>
@@ -4268,8 +4337,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let userInfo  =  this.props.userInfo
     let isLoggedIn = this.props.isLoggedIn
     let classData = searchData.classSelected
-
-
      return (
         <SafeAreaView style={[styles.container]}  >
            {this.renderHeader()}
@@ -4285,8 +4352,95 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}      
             </View>
-            <Animated.ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}>
-              {this.renderCalendarList()}
+            <Animated.ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}
+              onMomentumScrollEnd={()=>{
+                if(!isLoggedIn){
+                  this.setState({ showLoginCnfmPopup: true }, () => {
+                    this.renderLoginPopup()
+                  })
+                }
+              }}
+            >
+              {/* {this.renderCalendarList()} */}
+
+              <View style={styles.calendarContainer} 
+                 onStartShouldSetResponder={() => true}
+              >
+          <CalendarList
+            ref={(ref) => {
+              this._refCalendarList = ref;
+            }}
+            calendarStyle={styles.calendarStyle}
+            style={{
+              backgroundColor: colours.offWhite,
+            }}
+            firstDay={1}
+            showScrollIndicator={false}
+            onVisibleMonthsChange={(months) => {
+              // console.log("yes print here month value -  - - -- - ",months[0])
+              let firstDay = moment().startOf('month')
+              let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
+              console.log("print 3 month popup add - - - - - -  -",nextThreeMonth)
+              if (months[0].dateString >= nextThreeMonth && !this.props.isLoggedIn) {
+                console.log("getting condition is satisfying or not  -  - --  - - - -",months)
+                this.setState({ showLoginCnfmPopup: true }, () => {
+                  this.renderLoginPopup()
+                })
+              }
+            }
+            }
+            onDayPress={(day) => {
+              let onPressDate = day
+              let scheuldeDateKey = day
+              let clickDate = day.dateString
+              let isOffPeakValue1 = this.state.isOffPeakValue
+              this.onDayPressed(day, isOffPeakValue1);
+              this.setState({ onDayPressedDate: day.dateString, clickDate: clickDate ,scheuldeDateKey:scheuldeDateKey,onPressDate:onPressDate})
+              this._toggleSubview();
+              this.seatAvailabilityModal(day, isOffPeakValue1)
+            }}
+            pastScrollRange={0}
+            minDate={today}
+            futureScrollRange={ isLoggedIn ? 12 : 3}
+            scrollEnabled={true}
+            calendarWidth={scale(343)}
+            horizontal={false}
+            isOutBounded={this.state.selectedIndex == 0}
+            classSelected={this.state.classSelected}
+            selectedDate={this.state.selectedDate}
+            passengerCount={this.state.searchData.passengerCount}
+            isOffPeakValue={this.state.isOffPeakValue}
+            theme={{
+              isOutBounded: this.state.selectedIndex == 0,
+              classSelected: this.state.classSelected,
+              availabilityData:this.getLocations(),
+              width: scale(20),
+              selectedDayBackgroundColor: "gray",
+              calendarBackground: colours.white,
+              textSectionTitleColor: colours.lightGreyish,
+              selectedDayTextColor: colours.white,
+              todayTextColor: colours.lightBlueTheme,
+              textDisabledColor: colours.lightGreyish,
+              selectedDotColor: colours.white,
+              monthTextColor: colours.lightBlueTheme,
+              textDayFontWeight: "300",
+              textMonthFontWeight: "`bold`",
+              textDayHeaderFontWeight: "300",
+              dayTextColor: '#2d4150',
+              textDayFontSize: scale(11),
+              textMonthFontSize: scale(11),
+              textDayHeaderFontSize: scale(11),
+              backgroundColor: '#ffffff',
+              "stylesheet.calendar.header": {
+                header: styles.header,
+                monthText: styles.monthText,
+              },
+            }}
+            listFooterComponent={() => {
+              return <View style={{ height: verticalScale(70) }} />;
+            }}
+          />
+        </View>
            </Animated.ScrollView>
             {showTicketDetailModal && this.seatAvailabilityModal()}
             {showCreateAlertModal || showTicketDetailModal
@@ -4370,12 +4524,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 }}
               />
             )}
-           
           </View>
           {this.state.isNoflightScheudlePopup &&  this.renderNoFlight()}
           {this.state.showDetailsModal && this.flightDetailsModal()}
         </SafeAreaView>
-      
     );
   }
 }

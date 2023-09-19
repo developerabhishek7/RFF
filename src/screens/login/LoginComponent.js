@@ -570,6 +570,7 @@ class LoginComponent extends Component {
             onSubmitEditing={() => {
               this.secondTextInput.focus();
             }}
+            maxLength={25}
             blurOnSubmit={false}
             returnKeyType="next"
             underlineColorAndroid={'#FFFFFF'}

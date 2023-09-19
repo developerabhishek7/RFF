@@ -83,6 +83,23 @@ class FindFlightContainer extends Component {
 
 
    componentDidMount = async () =>  {
+
+   
+
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+    let trackData = {}
+    let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
+
+
+
+
+
+
+
+
     const accesstoken = await getAccessToken();
     this.setState({
       accesstoken
@@ -101,14 +118,7 @@ class FindFlightContainer extends Component {
     }
 
     this.getDates()
-    // let deviceName = await DeviceInfo.getDeviceName()
-    // let deviecBrand = await DeviceInfo.getBrand()
-    // let isTablet = await DeviceInfo.isTablet()
-    // let isEmulator = await DeviceInfo.isEmulator()
-
-    // this.setState({
-    //   deviecBrand,deviceName,isTablet,isEmulator
-    // })
+    
 
     const Device_Token = await AsyncStorage.getItem("Device_Token");
     if (isLoggedIn) {
@@ -201,6 +211,10 @@ class FindFlightContainer extends Component {
           await AsyncStorage.setItem("searchDetails", JSON.stringify({searchCount:1,sourceCode:searchData.sourceCode, destinationCode:searchData.destinationCode}));
         }
         if(searchDetails && Object.keys(searchDetails).length !== 0){
+
+          console.log("yes check here search details  - - - - - - -",searchDetails)
+
+
           if(searchDetails && searchDetails.searchCount < 3 || !this.props.userInfo.bronze_member){
             this.setState({ isLoader: false }, () => {
               this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
@@ -273,11 +287,21 @@ class FindFlightContainer extends Component {
     this.props.navigation.navigate("MembershipContainerScreen")
   }
 
+
   isAlert = () => {
     Alert.alert(
-      'Message',
+      '',
       'Upgrade your membership to make more searches!',
-      [{text: 'OK',onPress: ()=>{ }}],
+      [
+        {  
+          text: 'Cancel',  
+          onPress: () =>  this.setState({isLoader:false}),  
+          style: 'Cancel',  
+      }, 
+        {text: 'OK',onPress: ()=>{ 
+        this.gotoMembershipScreen()
+      }}
+    ],
       {cancelable: false},
     );
   }
@@ -433,7 +457,6 @@ class FindFlightContainer extends Component {
 
 const mapStateToProps = (state) => {
   const { findFlight, calendar, common, notification, userInfo, logIn } = state;
-
   return {
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,
