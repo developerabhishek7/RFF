@@ -119,6 +119,8 @@ export default class FindFlightComponent extends Component {
   }
 
   componentWillUnmount() {
+      this.renderIdentifierForPosthog()
+
     BackHandler.removeEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -185,42 +187,24 @@ export default class FindFlightComponent extends Component {
 
 
 
-  componentDidMount = async () => {
 
-    const userData  = this.props.userData
+   renderIdentifierForPosthog = async()=> {
 
-   
+
+
 
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
-    let trackData = {}
-    let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
-
-    // if(this.props.isLoggedIn){
-      // this.logCrashlytics()          
-    // }
 
 
-    if(userData && Object.keys(userData).length !== 0 && isNewSignUp){
-       trackData = {
-        planName: "Bronze Trial Plan",
-        chargeBeePlanId: "bronze-trial-plan",
-        billingFrequency: userData.current_plan.period_unit === 'year' ? 'Annual' : 'Monthly',
-        onTrial: userData.current_plan.on_trial ? 'Yes' : 'No',
-        trialLength: 150,
-        trialUnit:  'Months',
-        reffered:  'No',
-        affiliateId:  'N/A',
-        affiliateProgram:  'N/A'
-      }
-    }
-
-
-    setTimeout(() => {
+    let userData = this.props.userData
+    setTimeout(async() => {
+      // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
+      // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
         if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
-          PostHog.identify(this.props.userData.email, {
+         await PostHog.identify(this.props.userData.email, {
             email: this.props.userData.email,
             deviceName: deviceName,
             deviecBrand:deviecBrand,
@@ -230,20 +214,64 @@ export default class FindFlightComponent extends Component {
             userType:"Logged-in user"
           });
         }
-    }, 100);
+    }, 1000);
+  }
 
- 
+
+
+
+
+
+
+  componentDidMount = async () => {
+
+
+    this.renderIdentifierForPosthog()
+    let userData = this.props.userData
+
+
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+    let trackData = {}
+    let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
+
+    setTimeout(() => {
+      if(userData && Object.keys(userData).length !== 0 && isNewSignUp){
+
+        console.log("yes check on newSignup screen - - - - - -",userData.admin)
+        console.log("yes check on newSignup screen - - - - - -",isNewSignUp)
+
+
+        trackData = {
+         planName: "Bronze",
+         chargeBeePlanId: "bronze-trial-plan",
+         billingFrequency: userData.current_plan.period_unit === 'year' ? 'Annual' : 'Monthly',
+         onTrial: userData.current_plan.on_trial ? 'Yes' : 'No',
+         trialLength: 150,
+         trialUnit:  'Months',
+         reffered:  'No',
+         affiliateId:  'N/A',
+         affiliateProgram:  'N/A'
+       }
+     }
+    }, 1500);
+    
+
     setTimeout(async() => {
       if(isNewSignUp){
         PostHog.capture('New Sign Up', trackData);
-      }
-    }, 1200);
-     
-    setTimeout(async() => {
-      if(isNewSignUp){
-       await AsyncStorage.removeItem('isNewSignUp')
+      }else{
+        this.renderIdentifierForPosthog()
       }
     }, 2000);
+     
+    // setTimeout(async() => {
+    //   if(isNewSignUp){
+    //    await AsyncStorage.removeItem('isNewSignUp')
+    //   }
+    // }, 2000);
 
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -577,6 +605,7 @@ export default class FindFlightComponent extends Component {
     let bronzeMember = userData.bronze_member
     let classObject
     let classSelected 
+   
 
     if(bronzeMember){
       classObject = this.state.classObject1;
@@ -808,7 +837,7 @@ export default class FindFlightComponent extends Component {
           destinationCountry: selectedDestination && selectedDestination.country_name ? selectedDestination.country_name : 'N/A',
           journeyType: selectedIndex == 1 ? "return" : "one_way",
           numberOfPassengers: travellersCount,
-          cabinClasses: this.renderClassValues(),
+          cabinClasses: bronzeMember ? "Economy" : this.renderClassValues(),
           searchOriginatedFrom: 'Home Page',
           outboundStartDate: 'N/A since Calendar Page search',
           outboundEndDate: 'N/A since Calendar Page search',
@@ -816,7 +845,11 @@ export default class FindFlightComponent extends Component {
           inboundEndDate: 'N/A since Calendar Page search'
         },
       }
-      PostHog.capture('Search', trackData);
+
+
+      console.log("yes check search param here  - - - - - -",trackData)
+      this.renderIdentifierForPosthog()
+      PostHog.capture('Search', trackData);    
       this.props.onSearchPressed(searchData, user_action_audit);
     }
   }
@@ -824,27 +857,24 @@ export default class FindFlightComponent extends Component {
 
   renderClassValues(){
     const { classSelected, } = this.state;
-
     let classSelected1 = "";
     for (i = 0; i < classSelected.length; i++) {
       if (classSelected[i]) {
-        if (isEmptyString(classSelected1)) {
+        if (isEmptyString(classSelected)) {
           classSelected1 = classSelected1.concat(`${classes1[i]}`);
         } else {
           classSelected1 = classSelected1.concat(`,${classes1[i]}`);
         }
       }
     }  
-
     return classSelected1;
   }
+
 
   getNearestAirport(airportList) {
     const { currentLatitude, currentLongitude } = this.props
     let distanceArray = []
-
     airportList.map((item, index) => {
-
       let distance = getGeoDistance(currentLatitude, currentLongitude, item.latitudeAirport, item.longitudeAirport, "K")
       if (distance) {
         distanceArray.push(distance)
@@ -927,11 +957,6 @@ export default class FindFlightComponent extends Component {
   getLocation111() {
     const { isSearchClicked, selectedSource, selectedDestination, airlinesPossileRoutesList,locationsObject } = this.state
   
-
-
-    // console.log("yes check here selected source  - - - - - - ",locationsObject)
-
-
     return (
       <View
         style={styles.getLocationContainer}
@@ -990,7 +1015,6 @@ export default class FindFlightComponent extends Component {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log("check what is happending here ####### ",)
 
             if (selectedSource && selectedDestination) {
               let selectedSourceObject = selectedSource;
@@ -1252,9 +1276,6 @@ export default class FindFlightComponent extends Component {
             style={[styles.returnIcon]} />
         </TouchableOpacity>
 
-
-
-
       <TouchableOpacity
         style={[
           styles.airlineMembershipButton,
@@ -1419,6 +1440,7 @@ export default class FindFlightComponent extends Component {
       </View>
     );
   }
+
   showTravelClassModel(){
     const {userData}  = this.props;
     let isLoggedIn = this.props.isLoggedIn
@@ -1445,7 +1467,7 @@ export default class FindFlightComponent extends Component {
                   travellersCount={this.state.travellersCount}
                   selectedClassObject={bronzeMember ? this.state.classObject1 : this.state.classObject}
                   userData={this.props.userData}
-                />
+         />
     )
   }
 
@@ -1453,7 +1475,6 @@ export default class FindFlightComponent extends Component {
   showEmailVerify(){
     const {userData,isLoggedIn}  = this.props;
     // let isLoggedIn = this.props.isLoggedIn
-
     return(
       <View>
       {
@@ -1502,9 +1523,7 @@ export default class FindFlightComponent extends Component {
                    <Text style={styles.wheretoGoTextStyle}>
                     {STRING_CONST.DONT_KNOW_WHERE_TO_GO}
                   </Text>
-             
                 {this.renderBottomButton(STRING_CONST.MAP_SEARCH_TITLE, colours.darkBlueTheme, () => {
-            
             this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
                     airLinesMembershipDetailsObject: this.props
                       .airlinesMembershipDetails,
@@ -1518,7 +1537,6 @@ export default class FindFlightComponent extends Component {
               //      <Text style={styles.wheretoGoTextStyle}>
               //       {STRING_CONST.DONT_KNOW_WHERE_TO_GO}
               //     </Text>
-             
               //   {this.renderBottomButton(STRING_CONST.MAP_SEARCH_TITLE, colours.darkBlueTheme, () => {
               //     this.props.navigation.navigate(STRING_CONST.MAP_SEARCH_SCREEN, {
               //       airLinesMembershipDetailsObject: this.props
@@ -1529,9 +1547,6 @@ export default class FindFlightComponent extends Component {
               //   })}
               // </Fragment> 
               } 
-             
-
-
               {this.state.showClassModal &&
                 <Fragment>
                   {this.showTravelClassModel()}

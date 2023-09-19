@@ -18,6 +18,7 @@ import PostHog from 'posthog-react-native';
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 const { height, width } = Dimensions.get("window");
 import styles from "./editAlertStyle";
+import * as RootNavigation from '../../router/RouteNavigation';
 import PopUpComponent from "../../shared/popUpComponent";
 import {
   cancelAlerts,
@@ -438,6 +439,7 @@ class EditAlertComponent extends Component {
                   // });
               }
               else{
+                this.showAlert1()
                 newClassArray[0] = !newClassArray[0];
                 this.setState({
                   classSelectedArray: newClassArray,
@@ -474,6 +476,9 @@ class EditAlertComponent extends Component {
                   classSelectedArray: newClassArray,
                 });
               }
+              else{
+                this.showAlert1()
+              }
             }
             }}
           >
@@ -498,11 +503,15 @@ class EditAlertComponent extends Component {
                         
               let newClassArray = this.state.classSelectedArray;
 
-              if(!bronzeMember){
+              if(!bronzeMember)
+              {
                 newClassArray[2] = !newClassArray[2];
                 this.setState({
                   classSelectedArray: newClassArray,
                 });
+              }
+              else{
+                this.showAlert1()
               }
 
             }
@@ -532,6 +541,9 @@ class EditAlertComponent extends Component {
                 this.setState({
                   classSelectedArray: newClassArray,
                 });
+               }
+               else{
+                this.showAlert1()
                }
               }
             }}
@@ -806,7 +818,20 @@ class EditAlertComponent extends Component {
     }   
     return classSelected;
   }
-
+  showAlert1() {  
+    Alert.alert(  
+        '',  
+        'Upgrade Membership to see availability for all cabin classes',  
+        [  
+            {  
+                text: 'Cancel',  
+                onPress: () => console.log('Cancel Pressed'),  
+                style: 'Cancel',  
+            },  
+            {text: 'OK', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
+        ]  
+    );  
+}  
   getTravelClassesForTrack(){
     const { classSelectedArray } = this.state;
 

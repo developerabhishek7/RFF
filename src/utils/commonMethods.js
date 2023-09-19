@@ -260,12 +260,12 @@ getTimeFromMins(mins){
     dateString = `${resData[2]} ${monthArray[n]} ${resData[0]}`;
     return dateString;
   },
-
   getMapSearchData() {
     const locationData = [
       {
         name: "Manchester",
         code: "MAN",
+        country_code: "GB",
         type: "airport",
         airports: [{ name: "Manchester", code: "MAN" }],
         country_name: "United Kingdom",
@@ -277,6 +277,7 @@ getTimeFromMins(mins){
       {
         name: "London",
         code: "LON",
+        country_code: "GB",
         type: "city",
         country_name: "United Kingdom",
         city_name: "London",
@@ -295,6 +296,7 @@ getTimeFromMins(mins){
       {
         name: "Edinburgh",
         code: "EDI",
+        country_code: "GB",
         type: "airport",
         airports: [{ name: "Edinburgh", code: "EDI" }],
         country_name: "United Kingdom",
@@ -306,6 +308,7 @@ getTimeFromMins(mins){
       {
         name: "Cape Town Intl",
         code: "CPT",
+        country_code: "ZA",
         type: "airport",
         airports: [{ name: "Cape Town Intl", code: "CPT" }],
         country_name: "South Africa",
@@ -317,6 +320,7 @@ getTimeFromMins(mins){
       {
         name: "Durban Intl",
         code: "DUR",
+        country_code: "ZA",
         type: "airport",
         airports: [{ name: "Durban Intl", code: "DUR" }],
         country_name: "South Africa",
@@ -329,6 +333,7 @@ getTimeFromMins(mins){
         name: "Johannesburg Intl",
         code: "JNB",
         type: "airport",
+        country_code: "ZA",
         airports: [{ name: "Johannesburg Intl", code: "JNB" }],
         country_name: "South Africa",
         city_name: "Johannesburg",
@@ -339,6 +344,7 @@ getTimeFromMins(mins){
       {
         name: "Port Elizabeth Intl",
         code: "PLZ",
+        country_code: "ZA",
         type: "airport",
         airports: [{ name: "Port Elizabeth Intl", code: "PLZ" }],
         country_name: "South Africa",
@@ -349,6 +355,7 @@ getTimeFromMins(mins){
       {
         name: "Southampton",
         code: "SOU",
+        country_code: "GB",
         type: "airport",
         airports: [{ name: "Southampton", code: "SOU" }],
         country_name: "United Kingdom",

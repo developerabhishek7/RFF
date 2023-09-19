@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, Image, ImageBackground,Alert } from "react-native";
 import styles from "./findFlightStyles";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import scale, { verticalScale } from "../../helpers/scale";
@@ -10,6 +10,7 @@ import * as STRING_CONST from "../../constants/StringConst";
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import CustomButton from "../../components/customComponents/CustomButton";
 import FastImage from 'react-native-fast-image'
+import * as RootNavigation from '../../router/RouteNavigation';
 
 export default class TravellersAndClassModal extends Component {
   constructor(props) {
@@ -136,7 +137,35 @@ export default class TravellersAndClassModal extends Component {
       </TouchableOpacity>
     );
   }
+  // this.props.navigation.navigate("MembershipContainerScreen")}
+  redirectToMembershipFunction() {
+    Alert.alert(
+      'Upgrade Membership to see availability for all cabin classes',
+      [{text: 'OKAY',onPress: ()=>{console.log("yes printing -  - -  - ")}}],
+      {cancelable: false},
+    );
+  }
 
+navigateToMembership(){
+  this.props.onCrossPressed();
+  RootNavigation.navigationRef.navigate("MembershipContainerScreen")
+}
+
+
+  showAlert1() {  
+    Alert.alert(  
+        '',  
+        'Upgrade Membership to see availability for all cabin classes',  
+        [  
+            {  
+                text: 'Cancel',  
+                onPress: () => console.log('Cancel Pressed'),  
+                style: 'Cancel',  
+            },  
+            {text: 'OK', onPress: () => this.navigateToMembership() },  
+        ]  
+    );  
+}  
   getClassType() {
 
     let economy = this.state.classTypeArray[0].class
@@ -151,12 +180,7 @@ export default class TravellersAndClassModal extends Component {
     let first = this.state.classTypeArray[3].class
     let isFirstSelected = this.state.classTypeArray[3].isSelected
 
-
-    console.log("yes check the classSelected Array - - - - - - -",this.state.classTypeArray)
     // console.log("yes check the classSelected Array - - - - - - -",this.state.classTypeArray)
-
-
-
     const {userData,showClassModal}  = this.props;
 
     let goldMember = userData.gold_member
@@ -197,6 +221,9 @@ export default class TravellersAndClassModal extends Component {
                               this.onClassTypeSelected(item, index);
                             }
                           }
+                          else{
+                           this.showAlert1()
+                          }
                         }
                         else if(item.class == "Business"){
                           if(!bronzeMember){
@@ -204,12 +231,18 @@ export default class TravellersAndClassModal extends Component {
                               this.onClassTypeSelected(item, index);
                             }
                           }
+                          else{
+                           this.showAlert1()
+                          }
                         }
                         else if(item.class == "First"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
                               this.onClassTypeSelected(item, index);
                             }
+                          }
+                          else{
+                           this.showAlert1()
                           }
                         }
                       }}
@@ -227,6 +260,9 @@ export default class TravellersAndClassModal extends Component {
                                 this.onClassTypeSelected(item, index);
                               }
                             }
+                            else{
+                             this.showAlert1()
+                            }
                           }
                           else if(item.class == "Business"){
                             if(!bronzeMember){
@@ -234,12 +270,18 @@ export default class TravellersAndClassModal extends Component {
                                 this.onClassTypeSelected(item, index);
                               }
                             }
+                            else{
+                             this.showAlert1()
+                            }
                           }
                           else if(item.class == "First"){
                             if(!bronzeMember){
                               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
                                 this.onClassTypeSelected(item, index);
                               }
+                            }
+                            else{
+                             this.showAlert1()
                             }
                           }
                         }}
@@ -304,8 +346,6 @@ export default class TravellersAndClassModal extends Component {
                             item.class == "First" ? 
                             item.isSelected ? "#eb186f" : colours.lightGreyish :
                              null
-
-                          
                           }
                         />
                         </View>

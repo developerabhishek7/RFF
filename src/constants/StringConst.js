@@ -81,8 +81,8 @@ export const TERMS_OF_USE = "Terms of use";
 export const PASSWORD_INSTRUCTION = "Password must contain the following:";
 
 // Social Login Constants
-export const FACEBOOK_LOGIN_CANCELLED = `Facebook login cancelled!`;
-export const GOOGLE_LOGIN_CANCELLED = `Google login cancelled!`;
+export const FACEBOOK_LOGIN_CANCELLED = `Facebook signin cancelled!`;
+export const GOOGLE_LOGIN_CANCELLED = `Google signin cancelled!`;
 
 // Alert Screen
 export const WANT_YOUR_ALERT = `Want your alert on your `;
@@ -459,9 +459,9 @@ export const UPGRADE_PLAN_TEXT = "Upgrade Plan";
 export const OK = "Ok";
 export const CANCEL = "cancel";
 export const CANCEL_TEXT = "Cancel";
-export const LOGIN = "Login";
-export const LOGIN_SIGNUP = "Login/Signup"
-export const LOGIN_TEXT = "Please login/signup to use this feature";
+export const LOGIN = "SignIn";
+export const LOGIN_SIGNUP = "SignIn/Signup"
+export const LOGIN_TEXT = "Please signin/signup to use this feature";
 export const ONE_WAY = "One Way";
 export const RETURN = "Return";
 export const RETURN_DATE = "Return Date(s)";

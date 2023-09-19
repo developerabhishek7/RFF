@@ -69,6 +69,7 @@ export function getLocations() {
         authToken
       );
       if (res) {
+        // console.log("yes check here res - - - - - - - ",res)
         await dispatch({
           type: GET_LOCATIONS_SUCCESS,
           payload: { locations: res },

@@ -155,18 +155,13 @@ export default class SourceDestinationListComponent extends Component {
         {itemObject.airports &&
         <Fragment>
           <View style={{flexDirection:"row",borderBottomWidth:0.9,borderBottomColor:"#DDDDDD"}} >
-            {
-              this.state.screenType ?
-              <View style={{marginTop:scale(16),margin:scale(4)}}> 
+            <View style={{marginTop:scale(16),margin:scale(4)}}> 
               <SvgUri
                width={scale(20)}
                height={scale(20)}
                source={{uri:`${SVG_URL}${itemObject.country_code}.svg`}}
              /> 
-          </View> 
-              : null
-            }
-            
+            </View> 
           <TouchableHighlight onPress={() => {
             Keyboard.dismiss();
             this.props.route.params.onSourceSelected(itemObject)
@@ -224,7 +219,6 @@ export default class SourceDestinationListComponent extends Component {
               {LOCATION_NOT_AVAILABLE}
             </Text>
           </View>
-
         }
       </View>
     );
@@ -322,7 +316,6 @@ multipleCitiesTxt (){
               alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
             }}
           >CIties with multiple airports</Text>
-
     </View>
   )
 }
@@ -341,20 +334,17 @@ singleCityTxt () {
 
 renderHeader() {
   const {screenType} = this.state
-
   return (
    <View style={{backgroundColor:"#03B2D8",height:screenType ? scale(170) : scale(200),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
       marginTop:Platform.OS=="ios"?scale(-60):scale(-15)
    }}>
       <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(50)}}>
       <TouchableOpacity onPress={() => {
-            this.props.navigation.goBack() }}>
-
-{IMAGE_CONST.IOS_BACK_ARROW}
-
+            this.props.navigation.goBack()}}>
+        {IMAGE_CONST.IOS_BACK_ARROW}
       </TouchableOpacity>
           <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
-          <Text>       </Text>
+          <Text>    </Text>
          </View>
          <View style={{marginTop:scale(5),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
          <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
