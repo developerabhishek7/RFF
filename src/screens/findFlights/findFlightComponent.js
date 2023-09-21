@@ -1505,7 +1505,9 @@ export default class FindFlightComponent extends Component {
   render() {
     const {userData}  = this.props;
 
-       return (
+    // console.log("yes check here airline membership insdie render method - - - - - - -",this.state.airlinesMembershipDetails)
+
+    return (
           <ImageBackground source={IMAGE_CONST.FindFlight_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
            
           <SafeAreaView >

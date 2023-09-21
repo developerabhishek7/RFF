@@ -430,24 +430,26 @@ class EditAlertComponent extends Component {
             }]}
             onPress={() => {
               if(isPremiumSelected || isBusinessSelected || isFirstSelected) {  
-
                 let newClassArray = this.state.classSelectedArray;
-                if(bronzeMember){
+                if(!bronzeMember){ 
                   newClassArray[0] = !newClassArray[0];
-                  // this.setState({
-                  //   classSelectedArray: newClassArray,
-                  // });
+                  this.setState({
+                    classSelectedArray: newClassArray,
+                  });
+                }else{
+                  this.showAlert1()
+                }
+              //   if(bronzeMember){
+              //     newClassArray[0] = !newClassArray[0];
+              //     // this.setState({
+              //     //   classSelectedArray: newClassArray,
+              //     // });
+              // }
+              // else{
+              
+              
+              // }
               }
-              else{
-                this.showAlert1()
-                newClassArray[0] = !newClassArray[0];
-                this.setState({
-                  classSelectedArray: newClassArray,
-                });
-              }
-
-              }
-            
             }}
           >
             { !this.state.classSelectedArray[0] ?

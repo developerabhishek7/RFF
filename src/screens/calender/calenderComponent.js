@@ -3079,23 +3079,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let availability = airLinesDetailsObject.availability;
 
 
-    // if (!availability.economy) {
-    //   classSelected[0] = availability.economy
-    // }
-    // if (!availability.premium) {
-    //   classSelected[1] = availability.premium
-    // }
-    // if (!availability.business) {
-    //   classSelected[2] = availability.business
-    // }
-    // if (!availability.first) {
-    //   classSelected[3] = availability.first
-    // }
-
     let economy = classSelected[0]
     let premium = classSelected[1]
     let business = classSelected[2]
     let first = classSelected[3]
+
 
 
     // let economy = classSelected[0] && availability.economy
@@ -3714,9 +3702,237 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
 
+
+  // getLocations(isLoader) {
+
+  //   const { isOffPeakValue, isPeakValue, airLinesDetailsObject, staticDateArray, peakOffpeakData
+  //     , sliderEconomyMax, sliderEconomyMin,
+  //     sliderPremiumMax, sliderPremiumMin,
+  //     sliderBusinessMax, sliderBusinessMin,
+  //     sliderFirstMax, sliderFirstMin,
+  //     sliderPoints, isSliderRun,
+  //     classSelected
+  //   } = this.state;
+
+  //   let flightSchedule = this.props.flightSchedule;
+  //   let outboundData = {};
+  //   let inboundData = {};
+  //   let scheduleOutBoundDate = {}
+  //   let availableOutBoundDate = {}
+  //   let scheduleInboundData = {}
+  //   let availableInBoundDate = {}
+  //   if (flightSchedule) {
+  //     scheduleOutBoundDate = flightSchedule.outbound_availability
+  //     availableOutBoundDate = airLinesDetailsObject.outbound_availability;
+  //     scheduleInboundData = flightSchedule.inbound_availability
+  //     availableInBoundDate = airLinesDetailsObject.inbound_availability;
+  //     if (scheduleOutBoundDate && availableOutBoundDate) {
+  //       for (let i of Object.keys(scheduleOutBoundDate)) {
+  //         if (availableOutBoundDate[i]) {
+  //           outboundData[i] = availableOutBoundDate[i]
+  //         }
+  //       }
+  //     }
+
+  //     if (scheduleInboundData && availableInBoundDate) {
+  //       for (let i of Object.keys(scheduleInboundData)) {
+  //         if (availableInBoundDate[i]) {
+  //           inboundData[i] = availableInBoundDate[i];
+  //         }
+  //       }
+  //     }
+  //     // if (outboundData && outboundData !== null && outboundData !== undefined && isLoader) {
+  //     //   this.setState({ isLoader: false })
+  //     // }
+  //   }
+
+  //   let userData = this.props.userInfo
+  //   var originalOutBoundObj = {}
+  //   var orignalInboundObj = {}
+  //   var originalGuestOutBoundObj = {}
+  //   var orignalGuestInboundObj = {}
+  //   let Obj = {}
+  //   if (peakOffpeakData) {
+  //     let dateArray = this.state.staticDateArray.filter(val => !peakOffpeakData.includes(val));
+
+  //     for (let data of dateArray) {
+  //       Obj[data] = { "peak": false }
+  //     }
+
+  //     if (this.props.isLoggedIn) {
+  //       originalOutBoundObj = {
+  //         ...Obj,
+  //         ...availableOutBoundDate
+  //       }
+  //       orignalInboundObj = {
+  //         ...Obj,
+  //         ...availableInBoundDate
+  //       }
+  //     }
+  //   }
+
+  //   if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
+  //     if (this.state.selectedIndex == 0) {
+  //       let mainObj = this.state.airLinesDetailsObject.outbound_availability
+  //       let data = { ...mainObj }
+  //       Object.keys(data).forEach((key) => {
+  //         Object.keys(data[key]).forEach((innerKey) => {
+  //           const firstDay = moment().startOf('month')
+  //           const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
+  //           const isMonthExceed = moment(key).isSameOrAfter(nextThreeMonth)
+  //           if (isMonthExceed && data[key][innerKey] && data[key][innerKey].seats) {
+  //             return data[key] = { peak: true, economy: { seats: 2, points: 1100 }, first: { seats: 2, points: 1100 }, isDummyData: true }
+  //           }
+  //         })
+  //       })
+  //       originalGuestOutBoundObj = {
+  //         ...Obj,
+  //         ...data
+  //       }
+  //     }
+  //     else {
+  //       let mainObj = this.state.airLinesDetailsObject.inbound_availability
+  //       let data = { ...mainObj }
+  //       Object.keys(data).forEach((key) => {
+  //         Object.keys(data[key]).forEach((innerKey) => {
+  //           const firstDay = moment().startOf('month')
+  //           const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
+  //           const isMonthExceed = moment(key).isSameOrAfter(nextThreeMonth)
+  //           if (isMonthExceed && data[key][innerKey] && data[key][innerKey].seats) {
+  //             return data[key] = { peak: true, economy: { seats: 2, points: 1100 }, first: { seats: 2, points: 1100 }, isDummyData: true }
+  //           }
+  //         })
+  //       })
+  //       orignalGuestInboundObj = {
+  //         ...Obj,
+  //         ...data
+  //       }
+  //     }
+  //   }
+
+
+  // //   if (sliderPoints && isSliderRun) {
+  // //     if(sliderEconomyMin == 0){
+  // //       sliderEconomy = false
+  // //    }
+  // //    else if(sliderEconomyMin == sliderPoints || sliderEconomyMin < sliderPoints){
+  // //       sliderEconomy = true
+  // //    }
+   
+  // //   if(sliderPremiumMin == 0){
+  // //       sliderPremium = false
+  // //    }
+  // //    else if(sliderPremiumMin == sliderPoints || sliderPremiumMin < sliderPoints){
+  // //       sliderPremium = true
+  // //    }
+   
+  // //  if(sliderBusinessMin == 0){
+  // //       sliderBusiness = false
+  // //    }
+  // //    else if(sliderBusinessMin == sliderPoints || sliderBusinessMin < sliderPoints){
+  // //       sliderBusiness = true
+  // //    }
+   
+  // //  if(sliderFirstMin == 0){
+  // //       sliderFirst = false
+  // //    }
+  // //    else if(sliderFirstMin == sliderPoints || sliderFirstMin < sliderPoints){
+  // //       sliderFirst = true
+  // //    }
+  // //   }
+
+  //   let availability = airLinesDetailsObject.availability;
+  //   var economyClass = false
+  //   var premiumClass = false
+  //   var businessClass = false
+  //   var firstClass = false
+
+
+  //       if(availability && Object.keys(availability).length !==0 ) {
+  //         economyClass = availability.economy
+  //         premiumClass = availability.premium
+  //         businessClass = availability.business
+  //         firstClass = availability.first   
+  //       }
+
+        
+
+  // // if(availability && Object.keys(availability).length !==0 ) {
+  // //   economyClass = availability.economy
+  // //   premiumClass = availability.premium
+  // //   businessClass = availability.business
+  // //   firstClass = availability.first   
+  // //  }
+ 
+
+  //     let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
+  //       // code for outbound obj - -  - - - 
+  //       // for(let i of Object.keys(originalOutBoundObj)){ 
+  //       //   if(originalOutBoundObj[i]["economy"]){
+  //       //     originalOutBoundObj[i]["aeconomy"] = originalOutBoundObj[i]["economy"]
+  //       //     delete originalOutBoundObj[i]['economy']
+  //       //   }
+  //       //     if(originalOutBoundObj[i]["premium"]){
+  //       //     originalOutBoundObj[i]["bpremium"] = originalOutBoundObj[i]["premium"]
+  //       //     delete originalOutBoundObj[i]['premium']
+  //       //   }
+  //       //   if(originalOutBoundObj[i]["business"]){
+  //       //     originalOutBoundObj[i]["cbusiness"] = originalOutBoundObj[i]["business"]
+  //       //     delete originalOutBoundObj[i]['business']
+  //       //   }
+
+  //       //   if(originalOutBoundObj[i]["first"]){
+  //       //     originalOutBoundObj[i]["dfirst"] = originalOutBoundObj[i]["first"]
+  //       //     delete originalOutBoundObj[i]['first']
+  //       //   }              
+  //       // }
+       
+  //       // code for inbound ---------- - - - 
+  //       // for(let i of Object.keys(orignalInboundObj)){ 
+  //       //   if(orignalInboundObj[i]["economy"]){
+  //       //     orignalInboundObj[i]["aeconomy"] = orignalInboundObj[i]["economy"]
+  //       //     delete orignalInboundObj[i]['economy']
+  //       //   }
+  //       //     if(orignalInboundObj[i]["premium"]){
+  //       //     orignalInboundObj[i]["bpremium"] = orignalInboundObj[i]["premium"]
+  //       //     delete orignalInboundObj[i]['premium']
+  //       //   }
+  //       //   if(orignalInboundObj[i]["business"]){
+  //       //     orignalInboundObj[i]["cbusiness"] = orignalInboundObj[i]["business"]
+  //       //     delete orignalInboundObj[i]['business']
+  //       //   }
+  //       //   if(orignalInboundObj[i]["first"]){
+  //       //     orignalInboundObj[i]["dfirst"] = orignalInboundObj[i]["first"]
+  //       //     delete orignalInboundObj[i]['first']
+  //       //   }
+  //       // }
+
+  //   let finalData = {}
+  //   if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
+  //     finalData = {
+  //       outbound_availability: peakOffpeakData ? originalGuestOutBoundObj : availableOutBoundDate,
+  //       inbound_availability: peakOffpeakData ? orignalGuestInboundObj : availableInBoundDate,
+  //       availability: availability_data,
+  //       source: airLinesDetailsObject.source,
+  //       destination: airLinesDetailsObject.destination,
+  //     }
+  //   }
+  //   else {
+  //     finalData = {
+  //       outbound_availability: peakOffpeakData ? originalOutBoundObj : availableOutBoundDate,
+  //       inbound_availability: peakOffpeakData ? orignalInboundObj : availableInBoundDate,
+  //       availability: availability_data,
+  //       source: airLinesDetailsObject.source,
+  //       destination: airLinesDetailsObject.destination,
+  //     }
+  //   }
+  //   return finalData;
+  // }
+
+
   getLocations = () => {
-    const {  airLinesDetailsObject, peakOffpeakData,searchData,staticDateArray } = this.state;
-    let classSelected =  searchData.classSelected
+    const { airLinesDetailsObject, peakOffpeakData, searchData, staticDateArray } = this.state;
+    let classSelected = searchData.classSelected
     let flightSchedule = this.props.flightSchedule;
     let outboundData = {};
     let inboundData = {};
@@ -3812,14 +4028,22 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     }
 
     let availability = airLinesDetailsObject.availability;
-    var economyClass = classSelected[0]
-    var premiumClass = classSelected[1]
-    var businessClass = classSelected[2]
-    var firstClass = classSelected[3]
+    var economyClass = false
+    var premiumClass = false
+    var businessClass = false
+    var firstClass = false
 
 
-    let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
-       
+    if(availability && Object.keys(availability).length !==0 ) {
+      economyClass = availability.economy
+      premiumClass = availability.premium
+      businessClass = availability.business
+      firstClass = availability.first   
+    }
+
+
+    let availability_data = { 'economy': availability.economy, 'premium': availability.premium, 'business': availability.business, 'first': availability }
+
     let finalData = {}
     if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
       finalData = {
@@ -3838,9 +4062,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         source: airLinesDetailsObject.source,
         destination: airLinesDetailsObject.destination,
       }
-    }  
+    }
     return finalData;
   }
+
 
   getDummyData = () => {
     let key = "outbound_availability"
@@ -4343,10 +4568,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           <View style={{ backgroundColor: "#FFF", flex: 1}}>
             {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
-           
             <View style={{borderWidth:0}}>
              {this.state.airLinesDetailsObject ? this.ticketClass() : null}
-
                 {this.fareView()}
                 {this.state.searchData.isReturn
                   ? this.tabView()
@@ -4362,7 +4585,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               {/* {this.renderCalendarList()} */}
-
               <View style={styles.calendarContainer} 
                  onStartShouldSetResponder={() => true}
               >
@@ -4377,7 +4599,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             firstDay={1}
             showScrollIndicator={false}
             onVisibleMonthsChange={(months) => {
-              // console.log("yes print here month value -  - - -- - ",months[0])
               let firstDay = moment().startOf('month')
               let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
               console.log("print 3 month popup add - - - - - -  -",nextThreeMonth)
