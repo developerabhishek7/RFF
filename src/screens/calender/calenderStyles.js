@@ -325,7 +325,7 @@ export default StyleSheet.create({
   },
   calendarStyle: {
     borderWidth: scale(1),
-    marginBottom: verticalScale(-60),
+    marginBottom: verticalScale(-40),
     borderRadius: verticalScale(10),
     borderColor: colours.offWhite,
     // borderColor:"green",
@@ -333,9 +333,13 @@ export default StyleSheet.create({
   },
 
   calendarContainer: {
+    flex: 1, 
+    alignItems: "center" ,
     marginTop: verticalScale(10),
     paddingHorizontal: scale(16),
     backgroundColor: colours.offWhite,
+    paddingBottom:scale(20),
+    // borderWidth:1
   },
   fareViewContainer: {
     flexDirection: "row",

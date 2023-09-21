@@ -137,6 +137,7 @@ export function getAirlinesMembership() {
         API_CONST.GET_MEMBERSHIP_NODE_URL,
         authToken
       );
+      console.log("yes check here response - - - - - - - -",res)
       if (res) {
         await dispatch({
           type: GET_AIRLINES_MEMBERSHIP_SUCCESS,
@@ -151,7 +152,6 @@ export function getAirlinesMembership() {
         dispatch(CommonActions.stopLoader()); // To stop Loader
       }
     } catch (e) {
-
       console.log("yes on the membersio error ####### ",e)
         await dispatch({
             type: GET_AIRLINES_MEMBERSHIP_ERROR,

@@ -98,6 +98,9 @@ class MembershipComponent extends Component{
 
     let featureArray = [];
     let member = "";
+    console.log("yes check here - - - - - ",userData.gold_member)
+
+
     if (userData.gold_member) {
       featureArray = getGoldFeatures();
       // member = STRING_CONST.GOLD_MEMBER;
@@ -209,7 +212,7 @@ class MembershipComponent extends Component{
 
 
 
-  membershipViewList(){
+  membershipViewList = () => {
     const {userData} = this.props
     let currentPlan = ""
     let userId = ""
@@ -220,6 +223,8 @@ class MembershipComponent extends Component{
     let gold_to_silver_downgrade = "" 
     let current_plan =  ""
     let txt = ""
+    let PeriodUnit = ""
+    console.log("yes check here future plan ((   " , userData.future_plan)
 
      if(userData && Object.keys(userData).length !== 0){
        currentPlan = userData.current_plan;
@@ -231,9 +236,30 @@ class MembershipComponent extends Component{
        current_plan = userData.current_plan.on_trial
        cancelled_subscription = userData.cancelled_subscription
        gold_to_silver_downgrade = userData.gold_to_silver_downgrade
+      //  PeriodUnit = userData.future_plan && userData.future_plan.plan.period_unit
+     
+    }
+    if(userData && Object.keys(userData.future_plan).length !== 0){
+      PeriodUnit = userData.future_plan && userData.future_plan.plan.period_unit
      
     }
 
+    // console.log("yes check here userData - - -  -- ",userData)
+
+    //  const planType = {
+    //   'bronze-trial-plan': { PLAN_NAME: 'Bronze' , VALUE: 'bronze', PLAN_TYPE: 'Bronze Trial' },
+    //   'bronze-plan': { PLAN_NAME: 'Bronze' , VALUE: 'bronze', PLAN_TYPE: 'Bronze Active' },
+    //   'elite-plan-pound-monthly': { PLAN_NAME: 'Silver' , VALUE: 'silver' },
+    //   'elite-plan-pound-yearly': { PLAN_NAME: 'Silver' , VALUE: 'silver' },
+    //   'gold-plan-gbp-monthly-launch': { PLAN_NAME: 'Gold' , VALUE: 'gold' },
+    //   'gold-plan-gbp-yearly': { PLAN_NAME: 'Gold' , VALUE: 'gold' },
+    //   'free-elite-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Active' },
+    //   'free-elite-trial-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Trial' }
+    // }
+    let silver_member = userData.silver_member
+    let gold_member = userData.gold_member
+
+    const {member} = this.state;
     const today = moment().format('DD-MM-YYYY')
     const todaysdate = moment(today, 'DD-MM-YYYY')
     const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
@@ -245,11 +271,10 @@ class MembershipComponent extends Component{
       txt = `${daysLeft} days left of free trial`
     }
     if(cancelled_subscription && current_subscription_expiry) {
-       txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
+      //  txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" : null }  `
+        txt = ` Scheduled  ${gold_member ?  "Gold" : silver_member ? "Silver" : userData.bronze_member ? "Bronze" : null} ${PeriodUnit && PeriodUnit == "month" ? "Monthly":"Yerly"} Downgrade on ${expireTime} `
     }
-    let silver_member = userData.silver_member
-    let gold_member = userData.gold_member
-    const {member} = this.state;
+  
 
     return(
       <View>

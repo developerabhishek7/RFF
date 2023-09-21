@@ -376,7 +376,7 @@ export function updatePassword(passwordInfo) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(e)
+       Alert.alert(e)
       }
       await dispatch({
         type: UPDATE_PASSWORD_ERROR,

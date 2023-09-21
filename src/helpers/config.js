@@ -43,3 +43,5 @@ export const MAPBOX_TOKEN = "pk.eyJ1IjoicmZmYWRtaW4iLCJhIjoiY2tiY2llOXIwMDI2dzJ5
 // export const MAPBOX_TOKEN = "pk.eyJ1IjoiZmxpZ2h0bWFwcHJvamVjdCIsImEiOiJjbDFkd2VtajIwZzRrM2NueGlkNjMwaXloIn0.79HzZ8IKZFzUgiH1i_RJfQ"
 export const FORGET_PASSWORD_URL = `${WEB_BASE_URL}/forgot-password`;
 export const BA_URL = `https://www.britishairways.com/travel/home/public/en_in/`;
+
+export const BLOGS_URL = `${WEB_BASE_URL}/news-and-advice`;

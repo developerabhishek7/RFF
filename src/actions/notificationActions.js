@@ -79,7 +79,7 @@
  
  export function sendFCMToken(fcmToken) {
 
-  console.log("yes checking the fcm is sending or not - - - - - ",fcmToken)
+  // console.log("yes checking the fcm is sending or not - - - - - ",fcmToken)
 
 
    return async (dispatch, getState) => {

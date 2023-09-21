@@ -179,6 +179,10 @@ getTimeFromMins(mins){
         title: "Disclaimer",
         link: CONFIG.DISCLAIMER_URL,
       },
+      {
+        title: "Articles & News",
+        link: CONFIG.BLOGS_URL,
+      },
     ];
     return policyArray;
   },
