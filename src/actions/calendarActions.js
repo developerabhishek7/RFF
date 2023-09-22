@@ -155,6 +155,7 @@ export function getPointsAvailability(searchData) {
            type: SESSION_EXPIRED,	
            payload: { sessionExpired: true},	
          });}else if(e == NETWORK_ERROR){
+          dispatch(CommonActions.stopLoader());
            await dispatch(CommonActions.setNetworkStatus(''));}else{
           alert(e)
         }

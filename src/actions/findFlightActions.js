@@ -178,11 +178,13 @@ export function sendAuditData(auditData) {
       }
     } catch (e) {
       console.log("yes check here audit data error   ####### ",e)
+      dispatch(CommonActions.stopLoader());
       if(e.status == 401)	
       { await dispatch({	
          type: SESSION_EXPIRED,	
          payload: { sessionExpired: true},	
        });}else if(e == NETWORK_ERROR){
+        dispatch(CommonActions.stopLoader());
         await dispatch(CommonActions.setNetworkStatus(''));
         }else{
         alert(e)

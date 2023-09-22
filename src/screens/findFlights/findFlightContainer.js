@@ -39,7 +39,6 @@ import {
 import { resetNetworkStatus, resetSession } from "../../actions/commonActions";
 import NetInfo from "@react-native-community/netinfo";
 import {  Alert, Platform,Modal, Linking, Image, View, Dimensions } from "react-native";
-import PopUpComponent from "../../shared/popUpComponent";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as STRING_CONST from "../../constants/StringConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
@@ -241,6 +240,9 @@ class FindFlightContainer extends Component {
       }
       if(this.props.isNetworkFailed !== prevProps.isNetworkFailed && this.props.isNetworkFailed ){
         this.setState({
+          isLoader:false
+        })
+        this.setState({
           showNetworkPopUp:true
         })
       }
@@ -434,22 +436,6 @@ class FindFlightContainer extends Component {
           userConfigDetails={this.props.userConfigDetails}
           onAirlineSelected={(data) => this.props.updateAirlineTierAction(data)}
         />
-
-        {this.state.showNetworkPopUp && (
-          <PopUpComponent
-            isSingleButton={true}
-            title={STRING_CONST.NO_NETWORK}
-            message={STRING_CONST.NO_NETWORK_MSG}
-            image={IMAGE_CONST.NO_NETWORK}
-            rightButtonText={STRING_CONST.OK}
-            onRightButtonPress={() => {
-              this.setState({
-                showNetworkPopUp: false,
-              });
-              this.props.resetNetworkStatusAction();
-            }}
-          />
-        )}
       </View>
     );
   }

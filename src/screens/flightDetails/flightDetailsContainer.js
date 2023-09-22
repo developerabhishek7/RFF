@@ -23,8 +23,6 @@ import { resetNetworkStatus, resetSession } from "../../actions/commonActions";
 import NetInfo from "@react-native-community/netinfo";
 import { Alert, Linking, View} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-import PopUpComponent from "../../shared/popUpComponent";
 import * as STRING_CONST from "../../constants/StringConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import { getNotificationSettings } from "../../actions/notificationActions";
@@ -196,22 +194,6 @@ class FlightDetailsContainer extends Component {
           dateString= {this.props.route.params.dateString}
           isOutBounded = {this.props.route.params.isOutBounded}
         />
-
-        {this.state.showNetworkPopUp && (
-          <PopUpComponent
-            isSingleButton={true}
-            title={STRING_CONST.NO_NETWORK}
-            message={STRING_CONST.NO_NETWORK_MSG}
-            image={IMAGE_CONST.NO_NETWORK}
-            rightButtonText={STRING_CONST.OK}
-            onRightButtonPress={() => {
-              this.setState({
-                showNetworkPopUp: false,
-              });
-              this.props.resetNetworkStatusAction();
-            }}
-          />
-        )}
       </View>
     );
   }
