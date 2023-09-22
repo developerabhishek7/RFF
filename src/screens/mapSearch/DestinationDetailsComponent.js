@@ -10,7 +10,8 @@ import { colours } from "../../constants/ColorConst";
 import { connect } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import scale, { verticalScale } from "../../helpers/scale";
-import PostHog from 'posthog-react-native';
+import * as CONST from "../../constants/StringConst";
+
 import { getAirlinesAvailability, getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
 import {
   getAirlinesMembership,
@@ -28,7 +29,6 @@ import {
   getClassesColor,
   getDateFormate,
   getLocationName,
-  isEmptyString,
 } from "../../utils/commonMethods";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -40,7 +40,6 @@ let economyValue = ""
 let premiumValue =  ""
 let businessValue = ""
 let firstValue = ""
-const classes1 = ["Economy","Premium Economy","Business", "First"]
 // let peak = ""
 class DestinationsComponent extends Component {
   constructor(props) {
@@ -1706,12 +1705,35 @@ checkIfPeakOffPeakDataMonth = () => {
       }
     }
 
-    let actualDate = Object.entries(dates.availability.inbound)
+    let outBoundDates = Object.entries(dates.availability.outbound)
+    console.log('Dates Availability Inbound ', dates.availability.inbound);
+
+    let firstOutboundObject; 
+    let firstOutboundDate; 
+    
+    for(const key in outBoundDates){
+      console.log('Key in loop ', key);
+      if(outBoundDates.hasOwnProperty(key)){
+        firstOutboundObject = outBoundDates[key];
+        break;
+      }
+    }
+    
+    firstOutboundDate = new Date(Object.values(firstOutboundObject)[0]);
+    console.log('firstOutboundDate ', firstOutboundDate);
+
+    let actualDate = Object.entries(dates.availability.inbound).filter(([key, value])=>{
+      //const item = dates.availability.inbound[key];
+      console.log('key ', key);
+      console.log('value ', value);
+      let itemDate = new Date(key);
+      return itemDate>=firstOutboundDate;
+    });
 
     return (
       <View style={{ flexDirection: "row", flex: 1,marginStart:scale(20),marginEnd:scale(20) }}>
         {
-          actualDate.map((singleMap, index) => {
+          actualDate.length!=0 ? actualDate.map((singleMap, index) => {
 
            let  peakKey =  singleMap[1].peak
              dateForPoints = singleMap[0]
@@ -2442,7 +2464,13 @@ checkIfPeakOffPeakDataMonth = () => {
               
               </Fragment>
             )
-          })
+          }) : 
+          <Text
+          style={{textAlign: CONST.CENTER,}}
+          >
+            Selected cabin class is unavailable for your search parameters
+          </Text>
+        
         }
       </View>
     )
@@ -2458,8 +2486,6 @@ checkIfPeakOffPeakDataMonth = () => {
         onPress={() => {
           onButtonPress();
         }}
-        activeOpacity={.6}
-
       >
         <Text style={styles.buttonTextStyle}>{buttonText}</Text>
       </TouchableOpacity>
@@ -2473,8 +2499,7 @@ checkIfPeakOffPeakDataMonth = () => {
     var destinations = availableDestinations.length > 0 ? availableDestinations : []
     let data = JSON.parse(this.props.route.params.searchData);
     let auditData = JSON.parse(this.props.route.params.auditData)
-
-
+   
 
     let mapSearchData = {
       airline: data.airline,
@@ -2494,11 +2519,9 @@ checkIfPeakOffPeakDataMonth = () => {
       airways: data.airways,
       selectedStartDate: data.selectedStartDate
     };
-    
     this.setState({
       mapSearchData: mapSearchData
     })
-
 
     auditData['search_data']['destination'] = availableDestinations.code
     let flightScheduleData = {
@@ -2506,50 +2529,12 @@ checkIfPeakOffPeakDataMonth = () => {
       source: mapSearchData.sourceCode,
       destination: mapSearchData.destinationCode
     }
-    const trackData = {
-      "Search Type": 'View in Calendar',
-      "Search Parameters": {   
-        airline:"British Airways",
-        originIATA: data.sourceCode && data.sourceCode.code ? data.sourceCode.code : "N/A",
-        destinationIATA: availableDestinations && availableDestinations.code ? availableDestinations.code : "N/A",
-        originCity: data.sourceCode && data.sourceCode.city_name ?  data.sourceCode.city_name : 'N/A',
-        destinationCity:availableDestinations && availableDestinations.city_name ? availableDestinations.city_name : "N/A",
-        originCountry: data.sourceCode && data.sourceCode.country_name ?  data.sourceCode.country_name : 'N/A',
-        destinationCountry:availableDestinations && availableDestinations.country_name ? availableDestinations.country_name : "N/A",
-        journeyType: data.tripType,
-        numberOfPassengers: data.passengerCount,
-        cabinClasses: this.renderClassValues(),
-        searchOriginatedFrom: 'Map Page',
-        outboundStartDate: auditData.search_data &&  auditData.search_data.departure_date_from ? moment(auditData.search_data.departure_date_from).format("DD-MM-YYYY")  : 'N/A',
-        outboundEndDate:  auditData.search_data && auditData.search_data.departure_date_to ? moment(auditData.search_data.departure_date_to).format("DD-MM-YYYY")  : 'N/A',
-        inboundStartDate:  auditData.search_data && auditData.search_data.arrival_date_from ? moment(auditData.search_data.arrival_date_from).format("DD-MM-YYYY")  : 'N/A',
-        inboundEndDate:  auditData.search_data && auditData.search_data.arrival_date_to ? moment(auditData.search_data.arrival_date_to).format("DD-MM-YYYY")  : 'N/A'
-      },
-    }
-    PostHog.capture('Search', trackData);
     
     this.props.getFlightScheduleAction(flightScheduleData)
     this.props.sendAuditDataAction(auditData);
     this.props.getAirlinesAvailabilityAction(mapSearchData);
     this.props.getPointsAvailabilityAction(mapSearchData)
 
-  }
-
-  renderClassValues(){
-    let data = JSON.parse(this.props.route.params.searchData);
-    let classSelected =  data.classesSelected
-    let classSelected1 = "";
-    for (i = 0; i < classSelected.length; i++) {
-      if (classSelected[i]) {
-        if (isEmptyString(classSelected1)) {
-          classSelected1 = classSelected1.concat(`${classes1[i]}`);
-        } else {
-          classSelected1 = classSelected1.concat(`,${classes1[i]}`);
-        }
-      }
-    }  
-
-    return classSelected1;
   }
 
   renderLoader () {

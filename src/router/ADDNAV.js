@@ -45,6 +45,7 @@ import DrawerView from '../screens/Drawer/drawerModal'
 import * as IMAGE_CONST from "../constants/ImageConst";
 import FlightDetailsCompoent from '../screens/calender/flightDetailsContainer'
 import SplashComponent from '../screens/splash/SplashComponent'
+import NoNetWorkComponent from '../screens/noNetwork/NoNetworkComponent'
 import { connect } from "react-redux";
 import scale, { verticalScale } from '../helpers/scale'
 import FindFlightComponent from '../screens/findFlights/findFlightComponent';
@@ -195,6 +196,13 @@ const drawerViewModel = (navigation) => {
             headerShown: false,
             gestureEnabled:false
       
+          }}
+        />
+        <Stack.Screen
+          name="NoNetworkScreen"
+          component={NoNetWorkComponent}
+          options={{
+            headerShown: false
           }}
         />
         <Stack.Screen

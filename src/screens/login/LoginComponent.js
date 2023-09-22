@@ -41,7 +41,6 @@ import { GoogleSignin,statusCodes } from "@react-native-google-signin/google-sig
 import { colours } from "../../constants/ColorConst";
 import * as Utils from "../../utils/commonMethods";
 import { resetNetworkStatus } from "../../actions/commonActions";
-import PopUpComponent from "../../shared/popUpComponent";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import jwt_decode from "jwt-decode";
 import { getCountryList } from "../../actions/userActions";
@@ -805,21 +804,6 @@ class LoginComponent extends Component {
           </View>
         {/* </KeyboardAwareScrollView> */}
         {/* <TransLoader isLoading={this.state.isLoading} /> */}
-        {this.state.showNetworkPopUp && (
-          <PopUpComponent
-            isSingleButton={true}
-            title={STR_CONST.NO_NETWORK}
-            message={STR_CONST.NO_NETWORK_MSG}
-            image={IMG_CONST.NO_NETWORK}
-            rightButtonText="Ok"
-            onRightButtonPress={() => {
-              this.setState({
-                showNetworkPopUp: false,
-              });
-              this.props.resetNetworkStatusAction();
-            }}
-          />
-        )}
         </View>
         </FastImage>
    

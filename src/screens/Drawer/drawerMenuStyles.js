@@ -90,7 +90,7 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     // borderWidth: scale(1),
     marginLeft:scale(20),
-    width:scale(230),marginTop:scale(50)
+    width:scale(210),marginTop:scale(50)
   },
   screenButtonStyle: {
     flexDirection: "row",

@@ -176,6 +176,7 @@ export const appFonts = {
 // Screen Name Constants
 export const ALERT_SCREEN = "Alerts";
 export const SETTING_SCREEN = "Settings";
+export const NO_NETWORK_SCREEN = "NoNetworkScreen";
 export const PROFILE_SCREEN = "ProfileScreen";
 export const NOTIFICATIONS_SCREEN = "NotificationsScreen";
 export const NOTIFICATION_DETAIL_SCREEN = "NotificationDetailScreen";
@@ -448,6 +449,8 @@ export const LOGOUT_MSG = "Are you sure you want to log out?";
 export const NO_NETWORK = "No Internet Connection";
 export const NO_NETWORK_MSG =
   "Please check your internet connection and try again.";
+  export const NO_INTERNET_MSG =
+    "Please check your internet connection and try again.";
 export const NETWORK_ERROR = "TypeError: Network request failed";
 export const SESSION_EXPIRED_MSG = `Session Expired. You need to login again`;
 export const UPGRADE_MEMBERSHIP_TEXT = `Upgrade Membership`;
