@@ -163,6 +163,7 @@ export default class NotificationsComponent extends Component {
         extraData={this.state}
         onRefresh={() => this.onRefresh()}
         refreshing={false}
+        showsVerticalScrollIndicator={false}
         onEndReached={this.handleLoadMore}
         onEndReachedThreshold={0.1}
         onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}

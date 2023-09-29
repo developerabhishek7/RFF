@@ -47,7 +47,7 @@ export default StyleSheet.create({
     padding: verticalScale(13),
     alignSelf: "center",
     justifyContent: "center",
-    height: verticalScale(60),
+    height: verticalScale(50),
   },
 
   buttonTextStyle: {

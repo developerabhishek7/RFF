@@ -13,7 +13,7 @@ import {
   Platform
 } from "react-native";
 import { CommonActions } from '@react-navigation/native';
-
+import * as RootNavigation from '../../router/RouteNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
 import MyStatusBar from '../../components/statusbar/index';
@@ -110,21 +110,36 @@ const ListFooterWithNoAlerts = () => (
     >
       <FastImage
         source={IMG_CONST.NO_ALERTS1}
-        style={{ height: scale(160), width: scale(150) }}
+        style={{ height: scale(190), width: scale(190) }}
+        resizeMode="contain"
       />
+      <Text style={{alignSelf:"center",fontSize:scale(20),fontWeight:"600",color:"#132C52",margin:scale(10),marginTop:scale(25)}}>No Alert Yet</Text>
       <ReactNativeText
         style={[
           sharedStyles.listFooter,
           
           {
             fontFamily: STR_CONST.appFonts.INTER_REGULAR,
-            fontSize: scale(14),
+            fontSize: scale(13),marginBottom:scale(10),fontWeight:"500",
             marginHorizontal: scale(50),
+            marginTop:scale(-10),
+            color:"#49566A"
           },
         ]}
       >
         {STR_CONST.CREATE_ALERT_MSG}
       </ReactNativeText>
+      <TouchableOpacity 
+        style={{ justifyContent:"center",alignItems:"center",backgroundColor:"#03B2D8",borderRadius:scale(10),width:scale(160),height:scale(45)}}
+        onPress={()=>{
+          // this.props.navigation.navigate("FindFlightContainerScreen")
+          RootNavigation.navigationRef.navigate(STR_CONST.FIND_FLIGHT_SCREEN)
+        }}
+    >
+        <Text style={{color:"#FFFFFF",textAlign:"center",fontSize:scale(14),fontWeight:"700",}}>
+            {"Create Alert"}
+        </Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   </View>
 );
@@ -159,7 +174,8 @@ function travelClassView(travelClass) {
   return (
     <View style={[styles.travelClassView,
       {
-        width:travelClass.length > 1 ? scale(340) : scale(190),
+        width:travelClass.length > 1 ? scale(335) : scale(190),
+        marginStart:scale(-3)
     }]}>
       {travelClass.map((cabinClass) => {
         return (
@@ -169,16 +185,12 @@ function travelClassView(travelClass) {
               {
                 backgroundColor: classToBGColor[cabinClass],
                 borderRadius: verticalScale(5),
-                borderColor:classToBGColorForBorder[cabinClass],
-                borderWidth:0.6,
                 marginLeft: scale(5),
                 marginTop: verticalScale(3),
                 marginBottom:verticalScale(3),
                 width:scale(140),
-                // justifyContent:"center",
                 flexDirection:"row",
                 justifyContent:"center",
-                // justifyContent:"space-around"
               })
             }
           >
@@ -375,15 +387,13 @@ const AlertCard = (props) => {
     //   }
     // >    
       <View style={{flex:1,backgroundColor:"#FFF",
-        borderWidth:scale(2),borderStyle:"dashed",borderColor: colours.lightBlueTheme,borderRadius:scale(20),
+        borderWidth:scale(1.3),borderStyle:"dashed",borderColor: "#45a7b5",borderRadius:scale(20),
         width:width*0.9,alignSelf:"center",margin:scale(10),alignSelf:"center",
     }}>
         <View style={styles.alertHeaderContainer}>
-          <TouchableOpacity style={styles.cellHeader}>
             <Text style={styles.cellHeaderText}>
               {getLocationName(source)}{ ` (${source})`} to {getLocationName(destination)}{ ` (${destination})`} 
             </Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.notificationIconButton}
             onPress={() => {
@@ -400,8 +410,8 @@ const AlertCard = (props) => {
               )}
             </View>
           </TouchableOpacity>
-          
-          <View style={{alignSelf:"flex-end",marginRight:scale(10),padding:scale(10),}}> 
+        
+          <View style={{alignSelf:"flex-end",marginRight:scale(10),padding:scale(1),}}> 
               <TouchableOpacity
                   onPress={() => {
                     props.onEditPress(props);
@@ -455,7 +465,6 @@ const AlertCard = (props) => {
                   : null
                 } */}
           </View>
-        
 
           {/* <Menu 
             visible={true}
@@ -927,9 +936,13 @@ class AlertsScreen extends React.Component {
 //   }
 
   renderHeader(alertLength){
-    const {alertCount} = this.state;
+    const {alerts} = this.state;
+
+    // console.log("yes check here alert count value - - - - - - ",alerts)
+
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",
+      height:alerts && alerts.length > 0 ? scale(280) : scale(100),width:"100%",marginTop:
       Platform.OS == "ios"? scale(-60) :
       scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
         <View style={{marginTop:scale(40)}}>
@@ -939,7 +952,7 @@ class AlertsScreen extends React.Component {
           setting
           title={`${STR_CONST.ALERT_SCREEN_TITLE} `}
           right
-          showSort={alertLength > 1 ? true : false}
+          showSort={true}
           notifCount={this.props.badgeCount}
           clickOnRight={() => this.goToNotifications()}
           clickOnSort={() => {
@@ -1264,8 +1277,8 @@ class AlertsScreen extends React.Component {
     const {alerts} = this.state
     let alertCountValue  = alerts.length
     return(
-      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(30) : scale(55),}}>
-        <Text style={{fontSize:scale(16),fontWeight:"700",padding:scale(10),marginStart:scale(6),color:"#03B2D8"}}> ({alertCountValue}) Alerts</Text>
+      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(25) : scale(45),marginTop:scale(-180),marginBottom:scale(-10)}}>
+        <Text style={{fontSize:scale(16),fontWeight:"700",padding:scale(1),marginStart:scale(20),color:"#FFFFFF"}}> {alertCountValue} Alerts</Text>
       </View>
     )
   }
@@ -1279,7 +1292,7 @@ class AlertsScreen extends React.Component {
         {this.renderHeader(alertLength)}
 
         {this.renderLoader()}
-        {alerts && alerts.length !== 0 && this.alertCountFunc()}
+        {alerts && alerts.length > 1 && this.alertCountFunc()}
         {errorMessage ? (
           <View>
             {errorMessage ? (
@@ -1301,6 +1314,7 @@ class AlertsScreen extends React.Component {
           <FlatList
             data={alerts}
             style={{ marginTop: verticalScale(20) }}
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               // console.log("yes print here item - - - - -  -",item),
@@ -1366,7 +1380,13 @@ class AlertsScreen extends React.Component {
         ) : (
           <ListFooterWithNoAlerts />
         )}
-        {this.createAlertButton()}
+          {alerts && alerts.length > 0
+            ?
+            <Fragment>
+            {this.createAlertButton()}
+            </Fragment>
+            : null
+          }
         {showSortModal && this.sortModal()}
       </SafeAreaView>
     );

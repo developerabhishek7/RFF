@@ -2546,9 +2546,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 <Text
                   style={{
                     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
-                    fontSize: scale(16),
+                    fontSize: scale(18),
                     color: colours.darkBlueTheme,
-                    fontWeight: "bold",
+                    fontWeight: "600",marginStart:scale(8)
                   }}
                 >
                   {STRING_CONST.CREATE_ALERT}
@@ -2557,6 +2557,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   onPress={() => {
                     this.setState({ showCreateAlertModal: false });
                   }}
+                  style={{height:scale(30),width:scale(30)}}
                 >
                   {IMAGE_CONST.GREY_CROSS}
                 </TouchableOpacity>
@@ -2599,16 +2600,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       );
                     }}
                   >
-                    <Text style={styles.dateTextHeading}>
+                     <Text style={[styles.dateTextHeading,{
+                      marginBottom:departStartDate? scale(5):scale(0),
+                      marginTop:departStartDate ? scale(10):scale(25)
+                    }]}>
                       {STRING_CONST.DEPARTURE_DATE_RANGE}
                     </Text>
                     <Text style={styles.dateText}>
                       {`${departStartDate
                         ? `${getformattedDate(departStartDate)}`
-                        : STRING_CONST.START_DATE
-                        } - ${departEndDate
+                        :""
+                        }  ${departEndDate
                           ? `${getformattedDate(departEndDate)}`
-                          : STRING_CONST.END_DATE
+                          :""
                         }`}
                     </Text>
                   </TouchableOpacity>
@@ -2667,7 +2671,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         }
                       }}
                     >
-                      <Text style={styles.dateTextHeading}>
+                        <Text style={[styles.dateTextHeading,{
+                      marginBottom:returnStartDate? scale(5):scale(0),
+                      marginTop:returnStartDate ? scale(10):scale(25)
+                    }]}>
                         {STRING_CONST.RETURN_DATE_RANGE}
                       </Text>
                       <Text
@@ -2682,10 +2689,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       >
                         {`${returnStartDate
                           ? `${getformattedDate(returnStartDate)}`
-                          : STRING_CONST.START_DATE
-                          } - ${returnEndDate
+                          : ""
+                          }  ${returnEndDate
                             ? `${getformattedDate(returnEndDate)}`
-                            : STRING_CONST.END_DATE
+                            : ""
                           }`}
                       </Text>
                     </TouchableOpacity>
@@ -2727,10 +2734,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 </Fragment>
               }
             <View>
-            <Text style={{fontSize:scale(14),fontWeight:"700",padding:scale(7),marginTop:scale(10)}}>Select Cabin Class</Text>
+            <Text style={{fontSize:scale(16),fontWeight:"600",padding:scale(7),marginTop:scale(10),color:"#132C52"}}>Select Cabin Class</Text>
                 {this.getClassType()}
             </View>
-              {this.renderSubmitAlertButton("Create Alert", () => {
+              {this.renderSubmitAlertButton1("Create Alert", () => {
                 // this.setState({
                 //   departStartDate:"",
                 //   departEndDate:"",
@@ -2821,13 +2828,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       "#fef8ed" : item.class == "Business" ?
                       "#f8ebfe" : item.class == "First" ? 
                       "#fde8f1" : null,
-                      borderColor:  item.class  == "Economy" ?
-                      "#bfc9ff" : item.class == "Premium Economy" ?
-                      "#fce1b3" : item.class == "Business" ?
-                      "#d7a1f0" : item.class == "First" ? 
-                      "#f9b9d4" : null,
-                      
-                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120),height:scale(110) }}
+                      // borderColor:  item.class  == "Economy" ?
+                      // "#bfc9ff" : item.class == "Premium Economy" ?
+                      // "#fce1b3" : item.class == "Business" ?
+                      // "#d7a1f0" : item.class == "First" ? 
+                      // "#f9b9d4" : null,
+
+                      borderRadius:scale(10),borderWidth:0,marginVertical: verticalScale(7),alignItems:"center",width:scale(153),height:scale(120) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
@@ -2968,7 +2975,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       <TouchableOpacity
         style={[
           styles.submitAlertView,
-          { position: "absolute", bottom: scale(20) },
+          { position: "absolute", bottom: scale(20),
+        backgroundColor:"#132C52",width:scale(180) },
         ]}
         onPress={() => {
           onButtonPress();
@@ -2985,6 +2993,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     return (
       <TouchableOpacity
         style={[styles.submitAlertView]}
+        activeOpacity={.6}
+        onPress={() => {
+          onButtonPress();
+        }}
+      >
+        <Image source={IMAGE_CONST.BELL_IMAGE} style={styles.bellIconStyle} />
+        <Text style={styles.buttonTextStyle}>{buttonText}</Text>
+      </TouchableOpacity>
+    );
+  }
+  renderSubmitAlertButton1(buttonText, onButtonPress) {
+    return (
+      <TouchableOpacity
+        style={[styles.submitAlertView1]}
         activeOpacity={.6}
         onPress={() => {
           onButtonPress();
@@ -3077,7 +3099,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     const {airLinesDetailsObject} = this.state
     let classSelected = this.state.classSelected
     let availability = airLinesDetailsObject.availability;
-
 
     let economy = classSelected[0]
     let premium = classSelected[1]
@@ -4448,7 +4469,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
       }}>
         <View  style={[styles.animatedView2]}>
-        <View style={{justifyContent:"center",alignItems:"center", height: height / 2.7, width: width*0.9 ,  borderTopLeftRadius: scale(20),borderTopRightRadius:scale(20),marginStart:scale(15) }}>
+        <View style={{justifyContent:"center",alignItems:"center", height:scale(260), width: width*0.9 ,  borderTopLeftRadius: scale(20),borderTopRightRadius:scale(20),marginStart:scale(15) }}>
         <TouchableOpacity
                   style={{
                     alignSelf: "flex-end",
@@ -4459,7 +4480,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 >
                   <Entypo
                     name="cross"
-                    size={scale(35)}
+                    size={scale(27)}
                     color="#97adb6"
                   />
                 </TouchableOpacity>
@@ -4469,8 +4490,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     : STRING_CONST.PEAK_FARE
                   })`}</Text>
         <Text style={{ fontSize: scale(14), color:"#41454b", padding: scale(7), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
-          <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(80), width: scale(80),margin:scale(6)  }} resizeMode="contain" />
-          <Text style={{ fontSize: scale(14), color:"#41454b", padding:scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
+          <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(64), width: scale(64),margin:scale(6)  }} resizeMode="contain" />
+          <Text style={{ fontSize: scale(14), fontWeight:"600",color:"#132C52", padding:scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
           
           {
             checkFlightCount ?
@@ -4585,7 +4606,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               {/* {this.renderCalendarList()} */}
-              <View style={styles.calendarContainer} 
+              <View style={[styles.calendarContainer,{
+                backgroundColor:"#E4E4E4"
+              }]} 
                  onStartShouldSetResponder={() => true}
               >
           <CalendarList
@@ -4594,7 +4617,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             }}
             calendarStyle={styles.calendarStyle}
             style={{
-              backgroundColor: colours.offWhite,
+              backgroundColor:"#E4E4E4",marginBottom:scale(35)
             }}
             firstDay={1}
             showScrollIndicator={false}
@@ -4624,7 +4647,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             minDate={today}
             futureScrollRange={ isLoggedIn ? 12 : 3}
             scrollEnabled={true}
-            calendarWidth={scale(343)}
+            calendarWidth={scale(330)}
             horizontal={false}
             isOutBounded={this.state.selectedIndex == 0}
             classSelected={this.state.classSelected}
@@ -4651,10 +4674,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               textDayFontSize: scale(11),
               textMonthFontSize: scale(11),
               textDayHeaderFontSize: scale(11),
-              backgroundColor: '#ffffff',
+              backgroundColor: '#E4E4E4',
               "stylesheet.calendar.header": {
                 header: styles.header,
                 monthText: styles.monthText,
+              margin:scale(10),borderColor:"red",borderWidth:1
               },
             }}
             listFooterComponent={() => {

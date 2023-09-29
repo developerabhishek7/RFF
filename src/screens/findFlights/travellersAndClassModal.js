@@ -47,7 +47,7 @@ export default class TravellersAndClassModal extends Component {
   getTravellersCountView() {
     const {travellersCount} = this.state
     return (
-      <View style={{ flexDirection: "row", alignItems: "center", }}>
+      <View style={{ flexDirection: "row", alignItems: "center",marginStart:scale(10) }}>
         <TouchableOpacity
            style={[styles.travellersCountButtonStyle,{
             backgroundColor:travellersCount > 1 ? colours.lightBlueTheme : colours.lightGreyish,
@@ -167,22 +167,15 @@ navigateToMembership(){
     );  
 }  
   getClassType() {
-
     let economy = this.state.classTypeArray[0].class
     let isEconomySelected = this.state.classTypeArray[0].isSelected
-
     let premium = this.state.classTypeArray[1].class
     let isPremiumSelected = this.state.classTypeArray[1].isSelected
-
     let business = this.state.classTypeArray[2].class
     let isBusinessSelected = this.state.classTypeArray[2].isSelected
-
     let first = this.state.classTypeArray[3].class
     let isFirstSelected = this.state.classTypeArray[3].isSelected
-
-    // console.log("yes check the classSelected Array - - - - - - -",this.state.classTypeArray)
     const {userData,showClassModal}  = this.props;
-
     let goldMember = userData.gold_member
     let silverMember = userData.silver_member
     let bronzeMember = userData.bronze_member
@@ -191,7 +184,7 @@ navigateToMembership(){
       <View>
         {
           showClassModal ?
-          <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
+          <View style={{flexDirection:"row",flexWrap:"wrap",alignSelf:"center",justifyContent:"space-around",borderWidth:0,width:scale(330)}}>
           {
             this.state.classTypeArray.map((item, index) => { 
                 return (
@@ -207,8 +200,7 @@ navigateToMembership(){
                       "#fce1b3" : item.class == "Business" ?
                       "#d7a1f0" : item.class == "First" ? 
                       "#f9b9d4" : null,
-                      
-                      borderRadius:scale(10),marginVertical: verticalScale(15),alignItems:"center",borderWidth:1,width:scale(120),height:scale(110) }}
+                      borderRadius:scale(10),marginVertical: verticalScale(5),alignItems:"center",borderWidth:0,width:scale(152),marginStart:scale(1),marginEnd:scale(1),height:scale(120) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
@@ -286,7 +278,7 @@ navigateToMembership(){
                           }
                         }}
                       >
-                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(5),marginStart:scale(80)}}>
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(5),marginStart:scale(90)}}>
                        {/* {
                           item.class == "Economy" ?
                           <MaterialIcon
@@ -350,8 +342,7 @@ navigateToMembership(){
                         />
                         </View>
                       </TouchableOpacity>
-
-                      <View style={{flexDirection:"column",margin:scale(4)}}>
+                      <View style={{flexDirection:"column",margin:scale(1)}}>
                       <ImageBackground
                         source={
                           item.class  == "Economy" ?
@@ -365,7 +356,7 @@ navigateToMembership(){
                       >
                       </ImageBackground>
                       <Text
-                        style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
+                        style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(10),marginBottom:scale(7) }]}
                       >
                         {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
                       </Text>
@@ -400,10 +391,11 @@ navigateToMembership(){
                   style={{
                     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
                     fontSize: scale(16),
-                    color: colours.darkBlueTheme,
-                    fontWeight: 'bold'
+                    marginStart:scale(13),
+                    color: "#132C52",
+                    fontWeight: '600'
                   }}
-                >{travellersCount > 1 ? "Passengers" : "Passenger " } 
+                >{travellersCount > 1 ? "Passengers " : "Passenger " } 
                 {
                       this.state.showClassModal  ?
                       <Fragment>
@@ -449,7 +441,7 @@ navigateToMembership(){
                     paddingStart:scale(9)
                     
                   }}
-                >{travellersCount > 1 ? "Passengers" : "Passenger"} 
+                >{travellersCount > 1 ? "Passengers " : "Passenger"} 
                 </Text>
                   :   <Text
                   style={{
@@ -460,28 +452,34 @@ navigateToMembership(){
                     paddingStart:scale(9)
                     
                   }}
-                >{travellersCount > 1 ? "Passengers" : "Passenger"} 
+                >{travellersCount > 1 ? "Passengers " : "Passenger"} 
                 </Text>
                 }
                  </View>
                 {this.getTravellersCountView()}
               </View>
-              <View
+              {/* <View
                 style={{
                   borderBottomWidth: 0.6,              
                   borderBottomColor: colours.borderBottomLineColor,
                   flexDirection:"row",
                 }}
-              />
+              /> */}
               {this.getClassType()}
-
-              <CustomButton
+              <TouchableOpacity 
+                  onPress={()=>{
+                    this.onDonePressed()
+                  }}
+                  style={styles.doneButton}>    
+                  <Text style={styles.doneTxt}> Done </Text>
+              </TouchableOpacity>
+              {/* <CustomButton
                 textSize={scale(18)}
                 buttonColor={colours.lightBlueTheme}
                 textColor={colours.white}
                 textOnButton={"Done"}
                 onButtonPress={() => this.onDonePressed()}
-              />
+              /> */}
             </View>
           </View>
         </Modal>

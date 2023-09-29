@@ -6,10 +6,12 @@ import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
 import * as COLOR_CONST from "../../constants/ColorConst";
 
+
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#FFF"
+    backgroundColor:"#FFF",
+
     // backgroundColor:"#ecfdfd"
   },
 
@@ -41,7 +43,7 @@ export default StyleSheet.create({
     marginBottom:scale(-25)
   },
   outerViewStyle: {
-    paddingHorizontal: verticalScale(16),
+    // paddingHorizontal: verticalScale(16),
     flex: 1,
     // backgroundColor: colours.white,
   },
@@ -230,9 +232,11 @@ export default StyleSheet.create({
 
   membershipSubListTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-    fontWeight: "bold",
-    fontSize: scale(12),
-    color: colours.darkBlueTheme,
+    fontSize: scale(15),
+    // fontWeight:"600",
+    textAlign:"left",
+    paddingStart:scale(7),
+    color: "#3D4859"
   },
 
   membershipListTextStyle: {
@@ -257,9 +261,10 @@ export default StyleSheet.create({
   travellersCountViewStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: scale(20),
-    marginVertical: verticalScale(20),
+    marginHorizontal: scale(11),
+    marginVertical: verticalScale(11),
     alignItems:'center',
+    // width:scale(330)
     
   },
   yearsTextStyle: {
@@ -271,7 +276,7 @@ export default StyleSheet.create({
   travellersCountButtonStyle: {
     height: verticalScale(25),
     width: scale(25),
-  
+    
     borderRadius: verticalScale(3),
     alignItems: "center",
     justifyContent: "center",
@@ -288,6 +293,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 0,
+    // marginStart:scale(22)
     
   },
 
@@ -393,4 +399,22 @@ export default StyleSheet.create({
     // backgroundColor:colours.darkBlueTheme
     // borderBottomWidth: 1,
   },
+  doneButton:{
+    marginTop: verticalScale(9),
+    height: scale(50),
+    alignSelf: STRING_CONST.CENTER,
+    width: scale(320),
+    backgroundColor: colours.lightBlueTheme,
+    alignItems: STRING_CONST.CENTER,
+    justifyContent: STRING_CONST.CENTER,
+    borderRadius: scale(10),
+    // borderWidth:1
+  },
+  doneTxt:{
+    fontWeight:"700",
+    color:"white",
+    alignSelf:"center",
+    fontSize:scale(15),
+    textAlign:"center"
+  }
 });

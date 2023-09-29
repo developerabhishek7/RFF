@@ -973,6 +973,7 @@ export default class FindFlightComponent extends Component {
                   : airlinesPossileRoutesList,
                 placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
                 allLocations: locationsObject,
+                reuturnType:this.state.selectedIndex,
                 sourceSelected: selectedDestination,
                 onSourceSelected: (selectedSource) => {
                   this.onSourceSelected(selectedSource);

@@ -92,10 +92,10 @@ export const TURN_ON_NOTIFICATIONS_BUTTON_DOT = `Turning On Notifications...`;
 export const CREATE_ALERT = "Create Alert";
 export const NO_NOTIFICATION_YET = "No Notifications Yet!";
 export const NO_NOTIFICATION_DESCI = `We’ll notify you when there is something new`;
-export const CANCEL_ALERT = `Are you sure you want to delete this alert?`;
+export const CANCEL_ALERT = `Are you sure you want to delete this Alert?`;
 export const CANCEL_ALERT_ERROR = `"We couldn't cancel your alert. Please make sure you're connected to the internet, and then try again."`;
 export const ALERT_CREATED = `Your Alert is now setup. Happy flying!`;
-export const CREATE_ALERT_MSG = `You don't have any Alerts set up right now. Don't forget to set them up so you don't miss out on reward seats`;
+export const CREATE_ALERT_MSG = `If your preferred date is not available, then set up a seat alert.`;
 export const CANCEL_ALERT_SUCCESS_MSG = `Your alert has been cancelled.`;
 export const CANCEL_ALERT_SUCCESS_SUBTEXT =
   "Feel free to set it up again if you change your mind.";

@@ -72,7 +72,7 @@ class DestinationsComponent extends Component {
   
 checkIfPeakOffPeakDataMonth = () => {
   let month =  new Date().getMonth()
-  console.log("yes check month key ====== month     ",typeof month)
+  // console.log("yes check month key ====== month     ",typeof month)
 
   if(month === 0){
     monthKey = 23
@@ -99,7 +99,7 @@ checkIfPeakOffPeakDataMonth = () => {
   } else if(month === 11){
     monthKey = 22
   }
-  console.log("yes on the the findflight container check month Key ######## ",monthKey)
+ 
 }
 
   componentDidUpdate(prevProps) {
@@ -208,7 +208,7 @@ checkIfPeakOffPeakDataMonth = () => {
     let data = JSON.parse(this.props.route.params.singleMap)
     return (
         <View style={styles.headerView}>
-          <View style={{ flexDirection:"row",alignItems:"center",marginTop:scale(50)  }}>
+          <View style={{ flexDirection:"row",alignItems:"center",marginTop:scale(50) ,marginStart:scale(6) }}>
           <TouchableOpacity onPress={() => {
             this.setState({
               peakKey:"",
@@ -616,7 +616,8 @@ checkIfPeakOffPeakDataMonth = () => {
       borderLeftWidth:this.state.actualDate ? 0.3 : 0,
       borderRightWidth:this.state.actualDate ? 0.3 : 0,
       borderRightColor:this.state.actualDate ? "gray" : "#FFF",
-      width: scale(357),             
+      width: scale(357),     
+      padding:scale(7),        
       alignSelf:"center"   
        }}>
       {
@@ -708,7 +709,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       economyValue ?
                         <View style={{ width: "22%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center',  paddingRight: scale(15) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
+                          <Text style={{color:"#132C52", fontSize: scale(12), padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center',  paddingRight: scale(15) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
                         </View>
                         :
                         <Fragment>
@@ -717,7 +718,7 @@ checkIfPeakOffPeakDataMonth = () => {
                               <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(7) }} numberOfLines={1}> - </Text>
                             </View> :
                               <View style={{ width: "22%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                                <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(7) }} numberOfLines={1}>   </Text>
+                                <Text style={{ fontSize: scale(12), padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: scale(7) }} numberOfLines={1}>   </Text>
                               </View>
                           }
                         </Fragment>
@@ -726,7 +727,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       premiumValue ?
                         <View style={{ width: "30%", marginLeft: scale(1), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "green", borderWidth: 0 }}>
-                          <Text style={{ fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
+                          <Text style={{color:"#132C52", fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
                         </View>
 
                         :
@@ -746,7 +747,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       businessValue ?
                         <View style={{ width: "24%", marginLeft: scale(0), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
+                          <Text style={{ color:"#132C52",fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
                         </View>
 
                         :
@@ -766,7 +767,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       firstValue ?
                         <View style={{ width: "20%", alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
+                          <Text style={{color:"#132C52", fontSize: scale(12),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
                         </View>
 
                         :
@@ -790,7 +791,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       economyValue ?
                         <View style={{ width: "22%", marginLeft: scale(7), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "red" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingRight: scale(15) }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
+                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingRight: scale(15),color:"#132C52" }} numberOfLines={1}>{this.getPointsText(economyValue)}</Text>
                         </View>
                         :
                         <Fragment>
@@ -809,7 +810,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       premiumValue ?
                       <View style={{ width: "30%", marginLeft: scale(1), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderColor: "green", borderWidth: 0 }}>
-                           <Text style={{ fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 }} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
+                           <Text style={{ fontSize: scale(12), marginRight:scale(10),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', paddingLeft: 0 ,color:"#132C52"}} numberOfLines={1}> {this.getPointsText(premiumValue)}</Text>
                       </View>
                         :
                         <Fragment>
@@ -828,7 +829,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       businessValue ?
                       <View style={{ width: "24%", marginLeft: scale(0), alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "green" }}>
-                      <Text style={{ fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1) }} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
+                      <Text style={{ fontSize: scale(12),marginRight:scale(10),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center', marginLeft: scale(1),color:"#132C52"}} numberOfLines={1}>{this.getPointsText(businessValue)}</Text>
                     </View>
 
                         :
@@ -848,7 +849,7 @@ checkIfPeakOffPeakDataMonth = () => {
                     {
                       firstValue ?
                         <View style={{ width: "20%", alignContent: 'center', justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderColor: "red" }}>
-                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"700", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20) }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
+                          <Text style={{ fontSize: scale(12),padding: scale(1),fontWeight:"400", fontFamily: appFonts.INTER_REGULAR, textAlign: 'right', paddingRight: 7, paddingLeft: scale(20),color:"#132C52" }} numberOfLines={1}>{this.getPointsText(firstValue)}</Text>
                         </View>
                         :
                         <Fragment>
@@ -951,7 +952,7 @@ checkIfPeakOffPeakDataMonth = () => {
     let actualDate = Object.entries(dates.availability.outbound)
     let count 
     return (
-      <View style={{ flex:1,flexDirection: "row",marginStart:scale(20),marginEnd:scale(20) }}>
+      <View style={{ flex:1,flexDirection: "row",alignSelf:"center",marginStart:scale(20),marginEnd:scale(20) }}>
         {
           actualDate.map((singleMap ,index) => {
 
@@ -1706,13 +1707,11 @@ checkIfPeakOffPeakDataMonth = () => {
     }
 
     let outBoundDates = Object.entries(dates.availability.outbound)
-    console.log('Dates Availability Inbound ', dates.availability.inbound);
 
     let firstOutboundObject; 
     let firstOutboundDate; 
     
     for(const key in outBoundDates){
-      console.log('Key in loop ', key);
       if(outBoundDates.hasOwnProperty(key)){
         firstOutboundObject = outBoundDates[key];
         break;
@@ -1720,18 +1719,15 @@ checkIfPeakOffPeakDataMonth = () => {
     }
     
     firstOutboundDate = new Date(Object.values(firstOutboundObject)[0]);
-    console.log('firstOutboundDate ', firstOutboundDate);
 
     let actualDate = Object.entries(dates.availability.inbound).filter(([key, value])=>{
       //const item = dates.availability.inbound[key];
-      console.log('key ', key);
-      console.log('value ', value);
       let itemDate = new Date(key);
       return itemDate>=firstOutboundDate;
     });
 
     return (
-      <View style={{ flexDirection: "row", flex: 1,marginStart:scale(20),marginEnd:scale(20) }}>
+      <View style={{ flexDirection: "row",borderWidth:0,alignSelf:"center", flex: 1,marginStart:scale(0),marginEnd:scale(0) }}>
         {
           actualDate.length!=0 ? actualDate.map((singleMap, index) => {
 
@@ -2603,6 +2599,8 @@ checkIfPeakOffPeakDataMonth = () => {
         {/* {this.renderClasses()} */}
        
         <ScrollView scrollEnabled={false}>
+
+      
           {
             isOutBoundTrue ?
               <Fragment>
@@ -2621,7 +2619,7 @@ checkIfPeakOffPeakDataMonth = () => {
                 {
                   departureCount ?
                     <TouchableOpacity onPress={() => { this.gotoCalender() }} style={{
-                      alignItems: "flex-end", alignSelf: "flex-end", justifyContent: "center", marginRight: 36, margin: 10
+                      alignItems: "flex-end", alignSelf: "flex-end", justifyContent: "center", marginRight: scale(30), margin: scale(10)
                       , marginTop: this.state.month ? scale(7) : scale(7),
 
                     }}>
@@ -2652,7 +2650,7 @@ checkIfPeakOffPeakDataMonth = () => {
                   returnCount ?
                     <TouchableOpacity onPress={() => { this.gotoCalender() }} style={{
                       alignItems: "flex-end", alignSelf: "flex-end",
-                      marginTop: this.state.returnDateMonth ? scale(7) : scale(7), justifyContent: "center", marginRight: 36, margin: 10, borderWidth: 0
+                      marginTop: this.state.returnDateMonth ? scale(7) : scale(7), justifyContent: "center", marginRight: scale(30), margin: scale(10), borderWidth: 0
                     }}>
                       <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnCount} More days</Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
@@ -2662,9 +2660,12 @@ checkIfPeakOffPeakDataMonth = () => {
               </Fragment>
               : null
           }
-           <View style={{ margin: scale(10), paddingStart: scale(0), justifyContent: "center", alignItems: "center", marginTop: scale(20), paddingBottom: scale(10), }}>
-            <Text style={{ fontSize: scale(12), padding: scale(3), color: "#132C52", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center' }}>Click on any date to see the price of cabin class</Text>
+
+
+          <View style={{ margin: scale(10), paddingStart: scale(0), justifyContent: "center", alignItems: "center", marginTop: scale(20), paddingBottom: scale(10), }}>
+            <Text style={{ fontSize: scale(14), padding: scale(3), color: "#132C52", fontFamily: appFonts.INTER_REGULAR, textAlign: 'center' }}>Click on any date to see the price of cabin class</Text>
           </View>
+         
          
         </ScrollView>
         {this.renderBottomButton(

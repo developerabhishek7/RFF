@@ -25,9 +25,10 @@ export default StyleSheet.create({
 
   titleTextStyle:{
     fontFamily: CONST.appFonts.INTER_BOLD,
-    fontSize: scale(16),
+    fontSize: scale(18),
     color: colours.darkBlueTheme,
-    fontWeight: "bold",
+    fontWeight: "600",
+    marginTop:scale(10),marginBottom:scale(-10)
   },
   titleTextStyle1:{
     fontFamily: CONST.appFonts.INTER_BOLD,

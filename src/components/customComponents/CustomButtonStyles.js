@@ -6,7 +6,7 @@ import { colours } from "../../constants/ColorConst";
 module.exports = StyleSheet.create({
   container: {
     marginTop: verticalScale(9),
-    height: scale(60),
+    height: scale(50),
     alignSelf: CONST.CENTER,
     width: scale(305),
     backgroundColor: colours.lightBlueTheme,

@@ -284,7 +284,9 @@ class MembershipComponent extends Component{
           <View>
 
             <View style={{flexDirection:"row"}}>
-          <Image     
+          {
+            gold_member || silver_member || bronze_member ?
+            <Image     
             source={
               gold_member ?
               IMAGE_CONST.GOLD_IMAGE : silver_member == "silver" ?
@@ -293,6 +295,12 @@ class MembershipComponent extends Component{
             }
             style={{height:scale(20),width:scale(20),margin:scale(5)}}
           />
+          :
+          <Image     
+          source={IMAGE_CONST.BRONZE_IMAGE}
+          style={{height:scale(20),width:scale(20),margin:scale(5)}}
+        />
+          }
           <Text style={styles.memberText}>
             {
               !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
@@ -313,6 +321,11 @@ class MembershipComponent extends Component{
           </View>
           : 
           <View>
+        <View style={{flexDirection:"row"}}>
+          <Image     
+            source={IMAGE_CONST.BRONZE_IMAGE}
+            style={{height:scale(20),width:scale(20),margin:scale(5)}}
+          />
           <Text style={styles.memberText}>
             {
               !bronze_member || bronze_member == false || bronze_member == undefined || bronze_member == null ?
@@ -326,13 +339,14 @@ class MembershipComponent extends Component{
             }
           </Text>
           </View>
+          </View>
         } 
           {              
             isAppReviewSuccess  == false|| buildVersion == 0 ?
-             <Fragment>
+          <View>
            <Menu 
             visible={true}
-            style={{ marginTop: verticalScale(25), width:scale(155) }}
+            style={{ marginTop: verticalScale(7),marginStart:scale(-25),width:scale(140) }}
             ref={this.setMenuRef}
             button={
               <TouchableOpacity
@@ -367,7 +381,7 @@ class MembershipComponent extends Component{
                 : STRING_CONST.CHANGE_PLAN}
             </MenuItem>
           </Menu>
-          </Fragment> : null
+          </View> : null
         }  
       </View> 
        <View style={styles.line}
@@ -449,11 +463,8 @@ class MembershipComponent extends Component{
     const eventdate = moment.utc(current_subscription_expiry * 1000).format('DD-MM-YYYY')
     const datediff = moment(eventdate, 'DD-MM-YYYY')
     const daysLeft = datediff.diff(todaysdate, 'days')
- 
 
     let expireTime =   moment.unix(current_subscription_expiry).format('MMMM Do, YYYY')
-      
-   
     if(current_subscription_expiry && current_plan){
       txt = `${daysLeft} days left of free trial`
     }
@@ -465,7 +476,6 @@ class MembershipComponent extends Component{
     return (
       <Fragment>
         {isAppReviewSuccess == false || buildVersion == 0 ?
-
         <Fragment>
         <View style={styles.upgradeView}>
         <FastImage
@@ -476,7 +486,7 @@ class MembershipComponent extends Component{
          <Text
           style={[
             styles.blueStripText,
-            { textAlign: "center",fontWeight:"700",padding:scale(10), fontSize: scale(16),color:"#000"},
+            { textAlign: "center",fontWeight:"600",padding:scale(10), fontSize: scale(16),color:"#000"},
           ]}
         >
           {STRING_CONST.UPGRADE_MEMBERSHIP_TEXT}                          
@@ -484,7 +494,7 @@ class MembershipComponent extends Component{
         <Text
           style={[
             styles.blueStripText,
-            { textAlign: "center", fontSize: scale(13)},
+            { textAlign: "center", fontSize: scale(13),alignSelf:'center',width:scale(310)},
           ]}
         >
           {STRING_CONST.UPGRADE_PLAN}                          

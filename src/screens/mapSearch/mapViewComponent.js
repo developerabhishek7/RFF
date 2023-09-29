@@ -222,11 +222,11 @@ class MapComponent extends Component {
         }}
         activeOpacity={.6}
       >
-        <Entypo name="location-pin" size={scale(20)} color="white" />
+        <Entypo name="location-pin" size={scale(24)} color="white"  />
         <Text style={{
-          marginLeft: scale(6),
+          marginLeft: scale(4),
           color: colours.white,
-          marginTop: -scale(3),
+          marginTop: scale(1),
           fontFamily: STRING_CONST.appFonts.INTER_BOLD,
           fontSize: scale(16),
           fontWeight: "bold",

@@ -28,6 +28,8 @@ export default StyleSheet.create({
     color: colours.lightBlueTheme,
     fontFamily: appFonts.INTER_REGULAR,
     paddingLeft: scale(4),
+    // borderWidth:1,
+    fontWeight:"700",
     width:scale(200),
   },
 
@@ -45,8 +47,9 @@ export default StyleSheet.create({
 
   blueStripText: {
     fontFamily: appFonts.INTER_REGULAR,
-    fontSize: scale(14),
+    fontSize: scale(12),
     color: colours.darkBlueTheme,
+  
   },
 
   subscriptionButtonStyle: {
@@ -72,7 +75,7 @@ export default StyleSheet.create({
   },
   menuStyle: {
     height: verticalScale(35),
-    maxWidth: scale(200),
+    maxWidth: scale(200),  
   },
   menuTextStyle: {
     color: colours.black,
@@ -88,7 +91,7 @@ export default StyleSheet.create({
   upgradeImage: {
     alignSelf: "center",
     marginLeft: scale(-10),
-    width: scale(228),
-    height: scale(120),
+    width: scale(240),
+    height: scale(180),
   },
 });

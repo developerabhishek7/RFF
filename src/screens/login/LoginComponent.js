@@ -509,7 +509,6 @@ class LoginComponent extends Component {
             {STR_CONST.EMAIL}
           </Text>
         {/* <View style={styles.emailContainer}>
-         
           <TextInput
             style={[
               styles.input,
@@ -535,7 +534,6 @@ class LoginComponent extends Component {
             underlineColorAndroid={'#FFFFFF'}
 
           />
-
           {isInvalidEmail && !Validators.validEmail(email) && (
             <Text style={styles.errorText}>
               {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
@@ -543,9 +541,7 @@ class LoginComponent extends Component {
           )}
         </View> */}
 
-
         <View style={styles.passContainer1}>
-          
           <TextInput
             ref={(input) => {
               this.secondTextInput = input;
