@@ -7,10 +7,11 @@ import {isPad} from '../../utils/commonMethods'
 
 export default StyleSheet.create({
   mainView: {
-      flex:1,
+    flex:1,
     backgroundColor: "#FFF",
     justifyContent:"center",alignItems:"center",
-
+    // borderWidth:1,
+    // borderTopRightRadius:scale(20),borderBottomRightRadius:scale(20)
   },
   innerView: {
     margin: scale(20),
@@ -26,11 +27,10 @@ export default StyleSheet.create({
   },
   screenTitle: {
     fontFamily: CONST.appFonts.INTER_REGULAR,
-    // fontWeight: "bold",
-    fontWeight:"600",
-    color:"gray",
-    fontSize: scale(13),
-    paddingBottom:scale(15),
+    fontWeight:"500",
+    color:"#4E5658",
+    fontSize: scale(14),
+    paddingBottom:scale(12),
     paddingTop:scale(5)
   },
 
@@ -70,10 +70,10 @@ export default StyleSheet.create({
     shadowRadius: 3, 
   },
   RFFImage: {
-    width: scale(70),
-    height: scale(70),
+    width: scale(80),
+    height: scale(80),
     backgroundColor: "#d3f1f8",
-    borderRadius: scale(57),
+    borderRadius: scale(80),
     alignSelf: "center",
     borderWidth:3,
     elevation:1,borderColor:"#d3f1f8",
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     // borderWidth: scale(1),
     marginLeft:scale(20),
-    width:scale(210),marginTop:scale(50)
+    width:scale(210),marginTop:scale(20)
   },
   screenButtonStyle: {
     flexDirection: "row",
@@ -129,20 +129,22 @@ export default StyleSheet.create({
   nameInitialsStyle: {
     fontSize: scale(30),
     fontFamily: CONST.appFonts.INTER_REGULAR,
-    color: colours.lightBlueTheme,
+    color: "#191F32",
     fontWeight: "bold",
-    marginTop:scale(3)
+    marginTop:scale(3),
+    // borderWidth:1
   },
   nameStyle: {
     fontFamily: CONST.appFonts.INTER_REGULAR,
-    fontSize: scale(16),
-    color: "#b5b6b8",
+    fontSize: scale(18),
+    color: "#191F32",
     fontWeight: "500",
-    marginTop:scale(-3)
+    marginTop:scale(-3),
+    // borderWidth:1
   },
   greetingsView: {
     alignItems: "flex-start",
-    marginStart:scale(10),
+    marginStart:scale(15),
     marginTop: verticalScale(10),
   },
   membershipText: {
@@ -152,8 +154,8 @@ export default StyleSheet.create({
 
     textAlign:"center",
     padding:scale(0),
-    paddingStart:scale(5),
-    paddingEnd:scale(5),
+    paddingStart:scale(10),
+    paddingEnd:scale(10),
     paddingBottom:scale(3),
     // borderRadius:scale(10),
     color:colours.lightBlueTheme, 
@@ -171,10 +173,10 @@ export default StyleSheet.create({
     textDecorationColor: colours.lightBlueTheme, 
   },
   lineStyle:{
-      borderWidth: scale(1),
+      borderWidth: scale(0.9),
       height:scale(1),
       width:"100%",
-      borderColor: "#ecf3f1",
+      borderColor: "#CCDFD9",
       margin:scale(3)
    
   }

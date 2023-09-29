@@ -289,7 +289,7 @@ class EditAlertComponent extends Component {
   departureDateView() {
     const { departStartDate,departEndDate } = this.state
     return (
-      <View style={{ marginTop: verticalScale(18) }}>
+      <View style={{ marginTop: verticalScale(25) }}>
 
         <View style={{flexDirection:"row"}}>
         <Image source={IMG_CONST.DEPT_ICON1} resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
@@ -1325,6 +1325,7 @@ class EditAlertComponent extends Component {
           {this.state.showPopUp && (
             <PopUpComponent
               isSingleButton={false}
+                // haveCrossIcon={true}
               title={STRING_CONST.DELETE_ALERT}
               message={STRING_CONST.CANCEL_ALERT}
               image={IMG_CONST.DELETE_ALERT}

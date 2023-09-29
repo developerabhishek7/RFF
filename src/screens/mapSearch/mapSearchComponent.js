@@ -1153,6 +1153,8 @@ export default class FindFlightComponent extends Component {
         onPress={() => {
           this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
             type: "source",
+            returnType:this.state.selectedIndex,
+            travelTo:this.state.travelTo,
             locationsObject: getMapSearchData(),
             placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
             allLocations: this.props.locationsObject,

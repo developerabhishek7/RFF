@@ -8,14 +8,9 @@ export default StyleSheet.create({
 
   buttonViewContainer: {
     flexDirection: "row",
-    width:scale(300),
-    alignItems:'center',
-    justifyContent:'center',
-    alignSelf:'center',
-    paddingTop: verticalScale(10),
-    paddingHorizontal:scale(20),
-    marginBottom:verticalScale(20)
-  
+    width:scale(340),
+    alignSelf:"center",
+    marginTop:scale(50)
   },
 
   deleteButtonStyle: {
@@ -87,8 +82,8 @@ export default StyleSheet.create({
   headingTextStyle1: {
     paddingBottom:scale(10),
     fontSize: scale(15),
-    color: colours.greyText,
-    fontWeight:"700",
+    color: "#96ACB6",
+    fontWeight:"400",
 
   },
 
@@ -104,23 +99,30 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: colours.offWhite,
     padding: scale(10),
-    width: scale(156),
+    width: scale(150),
     borderRadius: scale(5),
     marginBottom:verticalScale(5),
-    borderWidth:1
+    // borderWidth:1,
+    margin:scale(8)
   },
 
   classTextStyle: {
     marginLeft: scale(5),
     fontSize: scale(13),
     // color: colours.darkBlueTheme,
-    fontWeight: "500",
+    fontWeight: "400",
   },
-  orginDestinationStyle:{borderWidth:1,borderColor:"#000000",borderRadius:10,width:scale(336),height:scale(40),flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingStart:scale(10)},
+  orginDestinationStyle:{
+    width:scale(336),
+    height:scale(40),
+    paddingStart:scale(30),
+    // borderWidth:1,
+    marginTop:scale(-7),
+  },
   getLocationSubTextStyle:{
-    color:"#000000",
-    fontSize:scale(14),
-
+    color:"#132C52",
+    fontSize:scale(16),
+    fontWeight:"600"
   },
 
   tripTypeTextStyle: {
@@ -128,6 +130,7 @@ export default StyleSheet.create({
     fontSize: scale(16),
     marginLeft: scale(5),
     color: colours.darkBlueTheme,
+    fontWeight:"600"
   },
   checkOnAirlineButton: {
     backgroundColor: colours.lightBlueTheme,
@@ -144,23 +147,19 @@ export default StyleSheet.create({
   },
 
   saveButtonDisable:{
-    
     paddingVertical: verticalScale(15),
     borderRadius: verticalScale(11),
     borderWidth: scale(1),
     borderColor: colours.lightBlueCalendarBackground,
-    width:scale(270)
-    ,flexDirection:"row",
+    width:scale(340),
+    flexDirection:"row",
     justifyContent:"center",
     alignItems:"center",
-    backgroundColor:colours.lightBlueCalendarBackground,
-    padding:scale(15),
-    marginBottom:scale(30),
-    
+    backgroundColor:"#03B2D8",
+    padding:scale(5),
+    marginBottom:scale(20),
+    marginRight:scale(20)
   },
-
-
-  
 
   checkOnAirlineButton2: {
     backgroundColor: colours.lightBlueCalendarBackground,
@@ -182,8 +181,8 @@ export default StyleSheet.create({
   bookOnBAText:{
     color: colours.white,
     marginLeft: scale(10),
-    fontSize: scale(13),
-    fontWeight:"700"
+    fontSize: scale(16),
+    fontWeight:"600"
   }, 
    bookOnBAText2:{
     color: colours.darkBlueTheme,
@@ -217,9 +216,11 @@ export default StyleSheet.create({
 
   dateTextStyle:{
     fontFamily: CONST.appFonts.INTER_REGULAR,
-    fontSize: scale(14),
     color: colours.darkBlueTheme,
-    marginTop: verticalScale(5),
+    marginTop: verticalScale(0),
+    color:"#132C52",
+    fontSize:scale(16),
+    fontWeight:"600"
   },
 
   nextRowContainer: {

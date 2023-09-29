@@ -197,16 +197,9 @@ class DrawerComponentComponent extends Component {
     return (
       <View >
       <View style={styles.profileView}>
-          <View style={{flexDirection:"row",justifyContent:"flex-start",marginStart:scale(20)}}>
-        {/* <ImageBackground
-          source={IMAGE_CONST.PROFILE_IMAGE_RING}
-          style={styles.outerImageBackgroundStyle}
-        >
-          <ImageBackground
-            source={null}
-            style={[styles.profileImage, styles.imageBackgroundStyle]}
-          > */}
+          <View style={{flexDirection:"row",alignItems:"center",justifyContent:"flex-start",marginStart:scale(10)}}>
             {this.state.userData.image ? (
+              <View style={{borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100)}}>
               <FastImage
                 style={styles.innerProfileImage}
                 source={
@@ -219,12 +212,13 @@ class DrawerComponentComponent extends Component {
                     : IMAGE_CONST.PLANE_LOGO
                 }
               />
+               </View>
             ) : isLoggedIn ? (
               userData.first_name ? 
-              <View style={{backgroundColor:"#cdf0f7",borderRadius:scale(80),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",borderWidth:0,  }}>
+              <View style={{backgroundColor:"#cdf0f7",borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",  }}>
               <Text style={[styles.nameInitialsStyle,{
               }]}
-                  numberOfLines={1}
+                numberOfLines={1}
               >
                 {this.state.userData.first_name &&
                   this.state.userData.first_name[0].toUpperCase()}
@@ -240,14 +234,12 @@ class DrawerComponentComponent extends Component {
                 source={IMAGE_CONST.PLANE_LOGO}
               />
             )}
-          {/* </ImageBackground>
-        </ImageBackground> */}
         <View style={styles.greetingsView}>
           {/* <Text style={styles.nameStyle}>
             {isLoggedIn ? STR_CONST.HELLO : STR_CONST.RFF}
           </Text> */}
           <Text numberOfLines={1} style={[styles.nameStyle,{
-            width:scale(140)
+            width:verticalScale(110)
           }]}>
             { `${this.getCapitalName(userData.first_name)} ${this.getCapitalName(userData.last_name)}`}
           </Text>
@@ -268,7 +260,7 @@ class DrawerComponentComponent extends Component {
               {
               isLoggedIn ?
               <TouchableOpacity
-                style={{marginBottom:scale(0),marginTop:scale(30),marginLeft:scale(20),alignSelf:"center"}}
+                style={{marginBottom:scale(0),marginTop:isLoggedIn ? scale(20):scale(10),marginLeft:scale(20),alignSelf:"center"}}
                 onPress={async()=>{
                   const accesstoken = await getAccessToken();
                   const userId = await getUserId()
@@ -346,7 +338,7 @@ class DrawerComponentComponent extends Component {
           resizeMode="stretch"
         /> */}
         {this.profileImage()}
-        <ScrollView scrollEnabled={false} style={{ marginTop: verticalScale(230), marginLeft: scale(0),}}>
+        <ScrollView scrollEnabled={false} style={{ marginTop: isLoggedIn ? verticalScale(215) : verticalScale(200), marginLeft: scale(0),}}>
          
           <View  style={styles.lineStyle} />
           <TouchableOpacity
@@ -442,7 +434,7 @@ class DrawerComponentComponent extends Component {
             </Text>
           </TouchableOpacity>
           <View  style={styles.lineStyle} />
-          <View style={{alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
+          <View style={{ marginTop:scale(20),alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
             styles.logOutButton,
@@ -452,7 +444,7 @@ class DrawerComponentComponent extends Component {
                 : colours.lightBlueTheme,
               backgroundColor: isLoggedIn
                 ? "#cdf2f7"
-                : colours.lightBlueTheme,
+                : "#cdf0f7",
             },
           ]}
           onPress={async() => {
@@ -468,7 +460,7 @@ class DrawerComponentComponent extends Component {
         >
           <Text
             style={[ styles.rightButtonTextStyle,
-              {color: isLoggedIn ? "#49c4e1" : colours.white},
+              {color: isLoggedIn ? "#49c4e1" : "#4eb2d8"},
             ]}
           >
             {isLoggedIn ? STR_CONST.LOGOUT : STR_CONST.SIGN_IN}

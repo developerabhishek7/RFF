@@ -116,9 +116,11 @@ export default StyleSheet.create({
     paddingHorizontal: verticalScale(16),
     flex: 1,
     backgroundColor: colours.white,
+    // marginTop:scale(30)
   },
   calendarContainer: {
-     alignItems: "center" 
+     alignItems: "center" ,
+     
     },
   buttonTextStyle: {
     marginLeft: scale(10),
@@ -220,10 +222,10 @@ export default StyleSheet.create({
     borderTopRightRadius: scale(30),
     paddingTop:verticalScale(7),
     zIndex: 5,    
-
-    borderWidth:1,
-    elevation:1,borderColor:"#304668",
-    // width:scale(340),
+    // borderWidth:1,
+    borderWidth:scale(2),
+    elevation:1,
+    borderColor:"#EFEFEF",
     shadowOffset: {width: -2, height: 4},  
     shadowColor: '#171717',  
     shadowOpacity: 0.2,  
@@ -317,19 +319,27 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderTopLeftRadius: scale(7),
+    borderTopRightRadius: scale(7),
     height: verticalScale(39),
-    marginLeft: scale(-20),
-    marginRight: scale(-20),
+    marginLeft: scale(-12),
+    marginRight: scale(-12),
   },
   calendarStyle: {
-    borderWidth: scale(1),
-    marginBottom: verticalScale(-40),
-    borderRadius: verticalScale(10),
-    borderColor: colours.offWhite,
-    // borderColor:"green",
-  
+    // borderWidth: scale(1),
+    // // marginBottom: verticalScale(-40),
+    // borderRadius: verticalScale(10),
+    // borderColor: colours.greenColor,
+    // borderWidth:1,
+    // height:scale(200),
+    // // borderColor:"green",
+    // alignSelf:"center",
+    // // margin:scale(10),
+    backgroundColor:"#E4E4E4",
+ 
+    flex:1,
+    borderRadius:scale(10),
+    margin:scale(10),
   },
 
   calendarContainer: {
@@ -344,7 +354,8 @@ export default StyleSheet.create({
   fareViewContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: verticalScale(15),
+    marginBottom: verticalScale(10),
+    marginTop:scale(7),
     paddingHorizontal: verticalScale(16),
   },
   fareViewButton: {
@@ -408,7 +419,7 @@ export default StyleSheet.create({
   },
   ticketDetailView: {
     flexDirection: "row",
-    marginTop: verticalScale(0),
+    marginTop: verticalScale(5),
     marginLeft: scale(10),
   },
   ticketDetailText: {
@@ -434,7 +445,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(17),
     paddingHorizontal: scale(16),
-    // borderWidth:1,
+    borderWidth:1,
+    borderColor:"#FFF",
     margin:scale(10),
     // paddingTop:scale(-20)
   },
@@ -451,10 +463,24 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
 
+  submitAlertView1: {
+    flexDirection: "row",
+    marginTop: verticalScale(20),
+    backgroundColor: colours.lightBlueTheme,
+    width: scale(320),
+    borderRadius: verticalScale(10),
+    alignItems: "center",
+    padding: verticalScale(10),
+    paddingVertical: verticalScale(10),
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+
   dateTextHeading: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-    fontSize: scale(10),
-    color: colours.lightGreyish,
+    fontSize: scale(15),
+    color: "#919293",
+    // marginTop:scale(25)
   },
   dateContainer: {
     flexDirection: "row",
@@ -464,19 +490,23 @@ export default StyleSheet.create({
   dateText: {
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(14),
-    color: colours.darkBlueTheme,
-    marginTop: verticalScale(5),
-    fontWeight: "bold",
+    color: "#132C52",
+    marginTop: verticalScale(2),
+    marginBottom:scale(4),
+    fontWeight: "600",
   },
   errorView: {
     borderWidth: 0.5,
     borderColor: colours.borderBottomLineColor,
-    marginVertical: verticalScale(5),
-    marginHorizontal: scale(50),
+    // marginTop:scale(-6),
+    // marginVertical: verticalScale(5),
+    alignSelf:"center",marginStart:scale(10),
+    // marginHorizontal: scale(50),
+    width:scale(320)
   },
   createAlertInnerContainer: {
-    marginTop: verticalScale(20),
-    backgroundColor: colours.dimLightBlueBackgroundColor,
+    marginTop: verticalScale(-10),
+    // backgroundColor: colours.dimLightBlueBackgroundColor,
     paddingVertical: verticalScale(17),
     borderRadius: verticalScale(10),
   },
@@ -527,8 +557,8 @@ export default StyleSheet.create({
   },
   alertCalendarMonthText: {
     color: colours.lightBlueTheme,
-    fontWeight: "900",
-    fontSize: scale(14),
+    fontWeight: "600",
+    fontSize: scale(16),
     zIndex: 99,
     opacity: 1,
   },
@@ -538,8 +568,9 @@ export default StyleSheet.create({
     marginRight: scale(10),
   },
   pointSeatsText: {
-    color: colours.lightGreyish,
+    color: "#464748",
     fontSize: scale(13),
+    fontWeight:"500",
     fontFamily:STRING_CONST.appFonts.INTER_SEMI_BOLD
   },
   takeOffIcon: {
@@ -571,8 +602,8 @@ export default StyleSheet.create({
   },
   createAlertTakeOffIcon: {
     marginRight: scale(7),
-    height: scale(18),
-    width: scale(16),
+    height: scale(19),
+    width: scale(18),
   },
   checkOnAirlineView: {
     alignSelf: "center",
@@ -623,16 +654,18 @@ export default StyleSheet.create({
     textDecorationLine:"underline"
   },
   aviosText1: {
-    color: "#41454b",
+    color: "#464748",
     textAlign: "center",
     marginTop: verticalScale(10),
+    fontWeight:"500"
     // textDecorationLine:"underline"
   },
   aviosText2: {
-    color: "#41454b",
+    color: "#464748",
+    fontWeight:"500",
     textAlign: "center",
     marginTop: verticalScale(3),
-     textDecorationLine:"underline"
+    textDecorationLine:"underline"
   },
   airlineContainer:{
     flexDirection:'row', 
@@ -653,9 +686,10 @@ export default StyleSheet.create({
   },
   membershipSubListTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-    fontWeight: "bold",
+    fontWeight: "500",
+    marginTop:scale(15),
     fontSize: scale(14),
-    color: colours.darkBlueTheme,
+    color: "#383F4B",
   },
 
   airlineContainerView:{

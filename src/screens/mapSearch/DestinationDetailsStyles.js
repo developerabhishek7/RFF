@@ -39,9 +39,8 @@ export default StyleSheet.create({
     buttonTextStyle: {
         marginLeft: scale(10),
         color: colours.white,
-        // fontFamily: STRING_CONST.appFonts.INTER_BOLD,
         fontSize: scale(16),
-        fontWeight: "bold",
+        fontWeight: "600",
     },
     headerView: {
         backgroundColor:"#3ab2d8",height:scale(120),width:scale(380),
@@ -50,7 +49,7 @@ export default StyleSheet.create({
     },
     headerCity: { fontSize: scale(20), paddingStart: scale(15), fontFamily: appFonts.INTER_BOLD, textAlign: 'center', color: "#FFF",fontWeight:"600" },
     headerCountry: { fontSize: scale(14), padding: scale(1), paddingTop: scale(6), fontFamily: appFonts.INTER_REGULAR, paddingStart: scale(10), textAlign: 'center', color: "#FFF",fontWeight:"700" },
-    airportName: { fontSize: scale(15), padding: scale(2),paddingStart:scale(1), marginTop:scale(4), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(46), textAlign: 'left', color: "#FFF",fontWeight:"700"},
+    airportName: { fontSize: scale(15), padding: scale(2),paddingStart:scale(1), marginTop:scale(4), fontFamily: appFonts.INTER_REGULAR, marginStart: scale(56), textAlign: 'left', color: "#FFF",fontWeight:"500",marginTop:scale(-3),},
     peakFairMainView: { 
       marginBottom:scale(0),width:scale(388),alignSelf:"center",borderWidth:0,
       flexDirection: "row", justifyContent: "space-around", alignItems: 'center',
@@ -63,7 +62,7 @@ export default StyleSheet.create({
     peakFairImg: { height: scale(60), width: scale(60), margin: scale(1), justifyContent: 'center', alignItems: 'center' },
     peakFairTxt: { fontSize: scale(15), padding: scale(1), marginRight:scale(7),paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },
     showClassDataView: { flexDirection: "row", justifyContent: "space-around", width: "96%", marginStart: scale(10), marginEnd: scale(10), marginTop: scale(10), marginBottom: -scale(7) },
-    outboundMainView: { flexDirection: "column", },
+    outboundMainView: { flexDirection: "column",borderWidth:0,marginStart:scale(5),marginEnd:scale(5) },
     outboundbgImg: { height: scale(50), width: scale(60), justifyContent: 'center', alignItems: 'center',padding:scale(2), },
     outBoundTxt: { fontSize: scale(13), width: scale(21), height: scale(21), textAlign: 'center', color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, padding: scale(2),paddingRight:scale(3) },
     offpeakbg:{

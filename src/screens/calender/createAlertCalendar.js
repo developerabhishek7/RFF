@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   View,
   Text,
@@ -152,7 +152,7 @@ export default class CalenderComponent extends Component {
     const headingText = this.props.route.params.headingText;
 
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(110),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
+     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
         <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(50)}}>
         <TouchableOpacity style={{paddingStart:scale(20)}} onPress={() => {
               this.props.navigation.goBack()}}>
@@ -312,18 +312,22 @@ export default class CalenderComponent extends Component {
     return (
       <SafeAreaView style={styles.container}>
          {this.renderHeader()}
+         <View style={{backgroundColor:"#84D4E5",alignSelf:"center",height:scale(5),borderTopLeftRadius:scale(7),borderTopRightRadius:scale(7),width:scale(120),marginTop:scale(-7)}} />
         <View style={styles.createAlertContainer}>
-          <View style={{ flex: 1,borderWidth:0,borderColor:"green",backgroundColor:"#eafbfb" }}>
-           
+          <View style={{ flex: 1,}}>
             {/* {this.renderHeading()} */}
             <View
               style={[
                 styles.calendarContainer,
                 { paddingHorizontal: scale(0) },
               ]}
+              onStartShouldSetResponder={() => true}
             >
               <CalendarList
-                calendarStyle={{ alignSelf: "center" }}
+                  calendarStyle={[styles.calendarStyle,{
+                    borderWidth:1,
+                    borderColor:"#E4E4E4",
+                  }]}
                 markedDates={this.state.dateData}
                 markingType={"period"}
                 showDateRange={this.props.route.params.showDateRange}
@@ -344,8 +348,8 @@ export default class CalenderComponent extends Component {
                 pastScrollRange={0}
                 futureScrollRange={12}
                 scrollEnabled={true}
-                showScrollIndicator={true}
-                calendarWidth={width}
+                showScrollIndicator={false}
+                calendarWidth={scale(330)}
                 calendarHeight={verticalScale(350)}
                 horizontal={false}
                 theme={{
@@ -380,7 +384,13 @@ export default class CalenderComponent extends Component {
               />
             </View>
           </View>
-          {this.renderBottomButton()}
+          {
+            this.state.startDate && 
+            <Fragment>
+                  {this.renderBottomButton()}
+            </Fragment>
+          }
+          
         </View>
       </SafeAreaView>
     );

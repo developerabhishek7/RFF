@@ -24,6 +24,7 @@ export default class DestinationsComponent extends Component {
       sortType: 'asc',
       tripType: this.props.route.params.tripType,
       sourceCode: this.props.route.params.sourceCode,
+      isOnFocus:false
     }
   }
   searchUpdated(term) {
@@ -107,15 +108,20 @@ export default class DestinationsComponent extends Component {
            </View>
   
            <View style={{marginTop:scale(10),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
-           <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(0),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+           <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(5),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
+              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(18),width:scale(18),margin:scale(10),marginStart:scale(16)}} />
               </TouchableOpacity>
               <TextInput 
                 //  onChangeText={(searchText) => { 
                 //   this.onSearch(searchText) 
                 // }} 
                 placeholder='Search Available Routes'
-                placeholderTextColor="#FFF"
+                onFocus={()=>{
+                  this.setState({
+                      isOnFocus:!this.state.isOnFocus
+                  })
+                }}
+                placeholderTextColor={this.state.isOnFocus ? "gray" : "#FFF"}
                 onChangeText={(term) => { this.searchUpdated(term) }}
               style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
              
@@ -291,7 +297,7 @@ export default class DestinationsComponent extends Component {
                     destination:this.state.destination
 
                   })
-                }} style={{ borderWidth:scale(1.5),borderStyle:"dashed",borderColor:colours.lightBlueTheme,borderRadius: scale(10), margin: scale(7), alignSelf: 'center', justifyContent: 'center', width: '94%', backgroundColor: "#f1fbfd" }}>
+                }} style={{ borderWidth:scale(1.5),borderStyle:"dashed",borderColor:"#92C0CA",borderRadius: scale(10), margin: scale(7), alignSelf: 'center', justifyContent: 'center', width: '94%', backgroundColor: "#f1fbfd" }}>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
                
                     <View style={{ margin: scale(16) }}>

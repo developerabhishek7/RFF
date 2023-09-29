@@ -149,7 +149,7 @@ export const NO_ALERTS1 = require('../assets/alerts/NoAlert.png');
 
 export const NO_AVAILIBILTY = require('../assets/common/noAvailibility.png');
 export const UPGRADE_MEMBERSHIP = require('../assets/common/upgradeMembership.png');
-export const NO_LOCATION_AVAILABLE = require('../assets/common/locationNotAvailable.png');
+export const NO_LOCATION_AVAILABLE = require('../assets/mapSearch/NoLocation.png');
 export const NO_AIRLINE_AVAILABLE = require('../assets/common/noAirlineAvailable.png');
 export const LOCATION_PIN = require('../assets/mapSearch/locationPin.png');
 export const TAKEOFF = require('../assets/findFlight/take-off.png');
@@ -209,6 +209,11 @@ export const BA_BIG_LOGO = require('../assets/common/BABigLogo.png');
 export const BIG_TAKE_OFF = require('../assets/calendar/bigTakeOff.png');
 export const BIG_LANDING = require('../assets/calendar/bigLanding.png');
 export const WHITE_BACKGROUND_BA_LOGO = require('../assets/common/whiteBackgroundBALogo.png');
+export const BA_LOGO_CAL = require('../assets/calendar/BA.png');
+
+export const TIME_LOGO = require('../assets/calendar/time.png');
+export const AERO_LOGO = require('../assets/calendar/aero.png');
+
 
 export const USER_PROFILE_ICON = require('../assets/common/userProfileIcon.png');
 export const NOTIFICATION_SETTINGS_ICON = require('../assets/common/notificationSettingsIcon.png');

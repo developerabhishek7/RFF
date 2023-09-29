@@ -627,14 +627,13 @@ class NotificationDetailComponent extends Component {
             {
               backgroundColor: colours.lightBlueTheme,
               borderColor: colours.lightBlueTheme,
-              // width: scale(190),
+              // width: scale(190),                   
             },
           ]}
           onPress={() => {
             let data = this.getSearchData(alert);
             this.props.getAirlinesAvailabilityAction(data);
             this.props.getPointsAvailabilityAction(data)
-            
           }}
         >
           <Text

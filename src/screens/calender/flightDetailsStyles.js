@@ -311,10 +311,11 @@ export default StyleSheet.create({
     marginTop: verticalScale(50),
   },
   titleText: {
-    color: colours.darkBlueTheme,
+    color:"#132C52",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(14),
-    marginStart:scale(-10)
+    marginStart:scale(10),
+    fontWeight:"700"
   },
   subTitleText: {
     color: colours.lightGreyish,
@@ -326,15 +327,18 @@ export default StyleSheet.create({
   noflight: {alignSelf:'center',fontWeight:"600",fontSize:scale(12),color:"#696969",marginTop:scale(2),padding:scale(2)},
 
   subTitleText2: {
-    color: colours.lightBlueTheme,
-    fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
-    fontSize: scale(13),
-  },
-  subTitleText1: {
-    color: colours.lightGreyish,
+    color: "#132C52",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(12),
-    width:scale(270)
+    fontWeight:"700",marginStart:scale(10)
+  },
+  subTitleText1: {
+    color: "#8F9EA0",
+    fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
+    fontSize: scale(13),
+    textAlign:"center",
+    width:scale(270),alignSelf:"center",
+    // borderWidth:1
   },
   availabiltyView: {
     flexDirection: "row",
@@ -345,10 +349,11 @@ export default StyleSheet.create({
     paddingHorizontal: verticalScale(20)
   },
   seatNumberText: {
-    color: colours.darkBlueTheme,
+    color: "#132C52",
     marginTop: verticalScale(18),
     fontSize: scale(12),
     paddingLeft:scale(10),
+    fontWeight:"600",
     fontFamily:STRING_CONST.appFonts.INTER_SEMI_BOLD
   },
   classText: {
@@ -358,14 +363,16 @@ export default StyleSheet.create({
     paddingStart:scale(16)
   },
   pointSeatsText: {
-    color: colours.lightGreyish,
+    color: "#132C52",
     fontSize: scale(13),
-    paddingTop:scale(15)
+    paddingTop:scale(15),
+    fontWeight:"300"
   },
   pointSeatsText1: {
-    color: colours.lightGreyish,
+    color: "#132C52",
     fontSize: scale(13),
-    paddingTop:scale(4)
+    paddingTop:scale(4),
+    fontWeight:"400"
   },
 
   cellContainer: {
@@ -384,9 +391,10 @@ export default StyleSheet.create({
     alignItems:'center'
   },
   flightDetailText: {
-    color: colours.darkBlueTheme,
+    color: "#132C52",
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(14),
+    fontWeight:"600"
   },
   checkOnAirlineButton: {
     backgroundColor: colours.lightBlueTheme,
@@ -457,28 +465,30 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "space-between",
     alignItems: "center",
+
   },
   detailLocationText:{
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: "#7d8ba0",
+    color: "#132C52",
 
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
-    fontSize: scale(18),
-    fontWeight: "bold",
-    marginTop: scale(20),
+    fontSize: scale(16),
+    fontWeight: "600",
+    marginTop: scale(5),
   },
   timingContainer: {
     marginRight: scale(10),
     marginVertical: verticalScale(10),
     borderRadius:scale(4),
-    paddingHorizontal:scale(15),
-    paddingVertical:verticalScale(10),
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
     alignSelf:"flex-start",
-    marginHorizontal:scale(15),
+    marginStart:scale(25),
+    margin:scale(6),
+    marginTop:scale(10)
+    // borderWidth:1
   },
   classTxt:{padding:scale(0),fontSize:scale(14),fontWeight:"700",alignSelf:"center",alignItems:'center',
   paddingTop:scale(1),paddingBottom:scale(6)

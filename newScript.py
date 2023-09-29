@@ -55,7 +55,7 @@ class ScreenHeader extends Component {
       );
     }
 
-    componentDidMount = async () => {
+  componentDidMount = async () => {
 
       this.props.getUserInfoAction()
       Alert.alert("YES ON HEADER!")

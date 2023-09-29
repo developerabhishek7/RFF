@@ -104,7 +104,6 @@ export default StyleSheet.create({
     lineHeight: scale(17),
     color: colours.lightBlueTheme,
     marginLeft: scale(25),
-    marginTop: verticalScale(10),
     fontWeight: "bold",
     width:scale(260)
   },
@@ -117,14 +116,13 @@ export default StyleSheet.create({
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",   
-    marginTop: verticalScale(7),
+    marginTop: verticalScale(1),
     padding:verticalScale(1),
   },
 
   nextRowContainer: {
     flexDirection: "row",
-    marginTop: scale(5),
-    // borderWidth:1
+    marginTop: scale(9),
   },
 
   iconContainer: {
@@ -169,13 +167,12 @@ export default StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     // borderWidth:1,
-    width:scale(325),
-    // width: width - 100,  
-    // borderWidth:1,  
+    width:scale(335),
     alignSelf:"center",
     justifyContent:"center",
     alignItems:"center",
-    marginTop:Platform.OS === "android" ? -scale(2): -scale(0)
+    marginTop:Platform.OS === "android" ? -scale(2): -scale(0),
+
   },
   travelClassInnerView: {
     borderRadius: verticalScale(5),
@@ -190,9 +187,10 @@ export default StyleSheet.create({
   buttonViewContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width:"90%",alignSelf:'center',
+    width:"90%",
+    alignSelf:'center',
     paddingTop: verticalScale(3),
-    paddingHorizontal: scale(10),
+    paddingHorizontal: scale(9),
     borderWidth:0,
   },
   buttonStyle: {
@@ -227,6 +225,9 @@ export default StyleSheet.create({
     flexDirection:'row', 
     justifyContent:'space-between', 
     alignItems:'center',
+    marginTop:scale(5),
+    // borderWidth:1,borderColor:"red",
+    height:scale(35)
   },
   menuStyle: {
     height: verticalScale(35),

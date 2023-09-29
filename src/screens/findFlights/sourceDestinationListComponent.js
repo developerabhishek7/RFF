@@ -27,10 +27,12 @@ export default class SourceDestinationListComponent extends Component {
     let locationData = []
     let singleAirportArray = []
     let multipleAirportArray = []
-
-    const { locationsObject, type, sourceSelected, allLocations } = this.props.route.params
+    this.state={
+      isOnFocus:false
+    }
+    const { locationsObject, type, sourceSelected, allLocations,returnType,travelTo } = this.props.route.params
     
-    // console.log("yes check on source destination findflight screen locaiton Object ---------------- ",locationsObject)
+   // console.log("yes check on source destination findflight screen locaiton Object ---------------- ",locationsObject)
     // console.log("yes check on source destination findflight screen all Location ---------------- ",allLocations)
   
     if (locationsObject && allLocations ) {
@@ -154,13 +156,16 @@ export default class SourceDestinationListComponent extends Component {
       <View>
         {itemObject.airports &&
         <Fragment>
-          <View style={{flexDirection:"row",borderBottomWidth:0.9,borderBottomColor:"#DDDDDD"}} >
-            <View style={{marginTop:scale(16),margin:scale(4)}}> 
+          <View style={{flexDirection:"row",borderWidth:0,justifyContent:"center",height:scale(46),borderBottomWidth:0.9,borderBottomColor:"#DDDDDD",margin:scale(0)}} >
+            <View style={{justifyContent:"center",alignContent:"center",}}> 
+              <View style={{borderWidth:0,borderRadius:scale(40),flexWrap:"wrap"}}>
               <SvgUri
                width={scale(20)}
                height={scale(20)}
+               borderRadius={(scale(40))}
                source={{uri:`${SVG_URL}${itemObject.country_code}.svg`}}
              /> 
+             </View>
             </View> 
           <TouchableHighlight onPress={() => {
             Keyboard.dismiss();
@@ -169,10 +174,12 @@ export default class SourceDestinationListComponent extends Component {
           }}
             activeOpacity={1}
              underlayColor={colours.dimLightBlueBackgroundColor}
-            style={{ marginTop: verticalScale(10), borderRadius: scale(5), paddingHorizontal: scale(10),
+            style={{ borderRadius: scale(5),justifyContent:"center",
             width:scale(290),borderWidth:0, 
-            paddingVertical: verticalScale(10), backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
-               <Text style={styles.membershipSubListTextStyle}>{this.getLocationText(itemObject, countryName)} </Text>
+             backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
+               <Text style={styles.membershipSubListTextStyle}>
+                {this.getLocationText(itemObject, countryName)} 
+                </Text>
           </TouchableHighlight>
           </View>
           </Fragment>
@@ -191,25 +198,38 @@ export default class SourceDestinationListComponent extends Component {
 
   renderList = () => {
     return (
-      <View style={{ marginHorizontal: scale(10) }}>
+      <View style={{ marginHorizontal: scale(0),}}>
+
         {
-          this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
+          this.state.searchedList && this.state.searchedList.length !== 0 ?
+          <Fragment>
+              <Text
+              style={{
+                color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
+                alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
+              }}
+            >CIties with multiple airports</Text>
+          <FlatList
             keyboardShouldPersistTaps='always'
+            showVerticalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => { 
               if (item.code == "LON") {                          
                 return this.renderListItem(item, index);
               }
             }}
-          /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <FastImage
+          /> 
+          
+          </Fragment>: <View style={{ justifyContent: 'center', alignItems: 'center',  }}>
+          <Image
+              resizeMode="contain"
               style={{
-                justifyContent: "flex-end",
-                height: scale(94), width: scale(106)
+                marginTop:scale(150),
+                height: scale(220), width: scale(220)
               }}
               source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
             />
-            <Text style={{
+            {/* <Text style={{
               color: colours.lightGreyish,
               fontSize: scale(14),
               fontFamily: appFonts.INTER_REGULAR,
@@ -217,8 +237,13 @@ export default class SourceDestinationListComponent extends Component {
               marginTop: verticalScale(20)
             }}>
               {LOCATION_NOT_AVAILABLE}
-            </Text>
+            </Text> */}
+
+
+          
           </View>
+
+          
         }
       </View>
     );
@@ -228,34 +253,47 @@ export default class SourceDestinationListComponent extends Component {
 
   renderList1 = () => {
     return (
-      <View style={{ marginHorizontal: scale(10) }}>
+      <View style={{ marginHorizontal: scale(0) }}>
         {
-          this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
+          this.state.searchedList && this.state.searchedList.length !== 0 ? 
+          <Fragment>
+                <Text
+             style={{
+              color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
+              alignSelf: 'flex-start', marginTop: verticalScale(15), marginBottom: verticalScale(1),
+            }}
+          >Cities with one airport</Text>
+             <FlatList
             keyboardShouldPersistTaps='always'
+            showVerticalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => {
               if (item.code != "LON") {
                 return this.renderListItem(item, index);
               }
             }}
-          /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <FastImage
-              style={{
-                justifyContent: "flex-end",
-                height: scale(94), width: scale(106)
-              }}
-              source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
-            />
-            <Text style={{
-              color: colours.lightGreyish,
-              fontSize: scale(14),
-              fontFamily: appFonts.INTER_REGULAR,
-              fontWeight: '500',
-              marginTop: verticalScale(20)
-            }}>
-              {LOCATION_NOT_AVAILABLE}
-            </Text>
-          </View>
+          />
+          </Fragment>
+          
+          : null
+          // <View style={{ justifyContent: 'center',marginBottom:scale(100), alignItems: 'center',}}>
+          //   <Image
+          //     style={{
+          //       justifyContent: "flex-end",
+          //       height: scale(130), width: scale(130)
+          //     }}
+          //     source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
+          //   />
+          //   <Text style={{
+          //     color: colours.lightGreyish,
+          //     fontSize: scale(14),
+          //     fontFamily: appFonts.INTER_REGULAR,
+          //     fontWeight: '500',
+          //     marginTop: verticalScale(20)
+          //   }}>
+          //     {LOCATION_NOT_AVAILABLE}
+          //   </Text>
+          // </View>
         }
       </View>
     );
@@ -264,23 +302,26 @@ export default class SourceDestinationListComponent extends Component {
 
   renderListForFindFlight = () => {
     return (
-      <View style={{ marginHorizontal: scale(10) }}>
+      <View style={{ marginHorizontal: scale(0)}}>
         {
           this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
             keyboardShouldPersistTaps='always'
+            extraData={this.getSortedList()}
+            showVerticalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => {                                                
                 return this.renderListItem(item, index);
             }}
-          /> : <View style={{ justifyContent: 'center', alignItems: 'center', height: height - 200 }}>
-            <FastImage
+          /> : <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+            <Image
+              resizeMode="contain"
               style={{
-                justifyContent: "flex-end",
-                height: scale(94), width: scale(106)
+                marginTop:scale(200),
+                height: scale(220), width: scale(220)
               }}
               source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
             />
-            <Text style={{
+            {/* <Text style={{
               color: colours.lightGreyish,
               fontSize: scale(14),
               fontFamily: appFonts.INTER_REGULAR,
@@ -288,7 +329,7 @@ export default class SourceDestinationListComponent extends Component {
               marginTop: verticalScale(20)
             }}>
               {LOCATION_NOT_AVAILABLE}
-            </Text>
+            </Text> */}
           </View>
 
         }
@@ -297,43 +338,78 @@ export default class SourceDestinationListComponent extends Component {
   }
 
 multipleCitiesTxt (){
+  const {screenType,} = this.state
+  let travelTo  = this.props.route.params.travelTo
+  let returnType = this.props.route.params.returnType
+  console.log("yes check  inside the mutiple cities text - - - -   - - - - - - -",this.state.searchedList)
+  // console.log("yes check  inside the mutiple cities text - - - -   - - - - - - -",travelTo)
   return (
     <View style={{borderWidth:0,borderColor:"red"}}>
         <Text
             style={{
               color: colours.white,
-              fontSize: scale(13),width:width*0.9,
+              fontSize: scale(14),width:width*0.9,
               fontFamily: appFonts.INTER_REGULAR,
               marginStart:scale(24),
-              fontWeight: '500', alignSelf: 'center',
+             alignSelf: 'center',
+             fontWeight:"400",
               marginTop: verticalScale(10),
               marginBottom: verticalScale(30),
             }}
-          >We only let you choose hubs with flights to more than one place</Text>
-          <Text
-            style={{
-              color: colours.gray, fontSize: scale(13), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-              alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
-            }}
-          >CIties with multiple airports</Text>
+          >
+            {
+              returnType == 0 ?
+              <Fragment>
+              {"We only let you choose hubs with flights to more than one place"}
+              </Fragment>
+              :
+              <Fragment>
+              {`We only let you choose airports with BA operated flights ${travelTo ? "to" : "from"} more than one place`}
+              </Fragment>
+
+            }
+         
+            {/* We only let you choose airports with BA operated flights {} more than one place */}
+            </Text>
+            {/* {
+              this.state.searchedList ?
+              <Text
+              style={{
+                color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
+                alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
+              }}
+            >CIties with multiple airports</Text>
+              : 
+              null
+            } */}
+         
     </View>
   )
 }
 singleCityTxt () {
   return(
     <View>
-       <Text
-            style={{
-              color: colours.gray, fontSize: scale(13), marginStart: scale(15), fontFamily: appFonts.INTER_SEMI_BOLD, fontWeight: '500', alignSelf: 'flex-start',
-              marginTop: verticalScale(30), marginBottom: verticalScale(1),
+      {
+         this.state.searchedList ?
+         <Text
+             style={{
+              color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
+              alignSelf: 'flex-start', marginTop: verticalScale(15), marginBottom: verticalScale(1),
             }}
           >Cities with one airport</Text>
+
+         : null
+      }
+      
     </View>
   )
 }
 
 renderHeader() {
-  const {screenType} = this.state
+  const {screenType,searchText} = this.state
+
+
+  console.log("yes pring seatch text  --fv- - - -f-f -b- ",searchText)
   return (
    <View style={{backgroundColor:"#03B2D8",height:screenType ? scale(170) : scale(200),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
       marginTop:Platform.OS=="ios"?scale(-60):scale(-15)
@@ -348,16 +424,40 @@ renderHeader() {
          </View>
          <View style={{marginTop:scale(5),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
          <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(17),width:scale(17),margin:scale(10)}} />
             </TouchableOpacity>
             <TextInput 
                onChangeText={(searchText) => {
                 this.onSearch(searchText)
               }}
-              placeholder={this.props.route.params.placeholderTitle}              placeholderTextColor="#FFFFFF"
-              style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
+              value={this.state.searchText}
+              placeholder={this.props.route.params.placeholderTitle}              
+              onFocus={()=>{
+                this.setState({
+                    isOnFocus:!this.state.isOnFocus
+                })
+              }}
+              placeholderTextColor={this.state.isOnFocus ? "gray" : "#FFF"}
+              style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(210),borderRadius:scale(10),fontWeight:"500",fontSize:scale(14)}}  
+              />
+                {
+                  this.state.searchText ? 
+                  <TouchableOpacity
+                  onPress={()=>{
+                    this.setState({
+                      searchText:""
+                    })
+                    setTimeout(() => {
+                      this.renderList()
+                    }, 100);
+                  }}
+                 style={{borderWidth:0,borderColor:"red",marginStart:scale(-50),margin:scale(6),marginTop:scale(10)}}>
+                {/* <FastImage source={require("../../assets/mapSearch/close.png")} resizeMode="contain" style={{height:scale(17),width:scale(17),marginStart:scale(10)}} /> */}
+                </TouchableOpacity>
+                  : 
+                  null
+                }  
          </View>
-
          {
           !screenType ?
           <Fragment>
@@ -379,20 +479,18 @@ renderHeader() {
          {this.renderHeader()}
         <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps={'always'}>
           {/* {this.renderCrossIcon()} */}
-         
-
           {/* {this.renderSearchView()} */}
           {
             screenType ?
-            <Fragment>
+            <View >
               {this.renderListForFindFlight()}
-            </Fragment>
+            </View>
             : 
             <Fragment>
               <View style={{marginTop:scale(40)}}>
               {/* {this.multipleCitiesTxt()} */}
               {this.renderList()}
-              {this.singleCityTxt()}
+              {/* {this.singleCityTxt()} */}
               {this.renderList1()}
               </View>
             </Fragment>

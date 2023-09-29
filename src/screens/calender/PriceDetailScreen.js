@@ -277,17 +277,28 @@ componentDidMount(){
     // console.log("yes check here searh data selectedSource #######   ",selectedSource)
    
     return (
-      <View style={{ marginTop: verticalScale(18) }}>
+      <View style={{ marginTop: verticalScale(12) }}>
+       
+        <View style={{flexDirection:"row",alignItems:"center",marginTop:scale(10)}}>
+              <FastImage
+                    style={[styles.radioButton,{
+                      margin:scale(1),marginRight:scale(10),marginTop:scale(20)
+                    }]}
+                    source={IMG_CONST.TAKEOFF}
+                    resizeMode="contain"
+                  />
+      
         <Text
           style={[
             styles.headingTextStyle,
             {
-              marginBottom: verticalScale(8),
+            
             },
           ]}
         >
           {STRING_CONST.ORIGIN}
         </Text>
+        </View>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
@@ -325,7 +336,7 @@ componentDidMount(){
               :prevSelectedSource ? prevSelectedSource : "Select Origin"}
           </Text>
 
-          <TouchableOpacity onPress={()=>{
+          {/* <TouchableOpacity onPress={()=>{
             this.setState({
               selectedSource:null,
               prevSelectedSource:null
@@ -342,7 +353,7 @@ componentDidMount(){
               }}
               source={IMG_CONST.DARK_BLUE_CROSS_ICON}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -351,7 +362,17 @@ componentDidMount(){
   destinationView() {
     const { selectedSource,searchData,isSearchClicked,airlinesPossileRoutesList,locationsObject,selectedDestination,prevSelectedDestination} = this.state
     return (
-      <View style={{ marginTop: verticalScale(18) }}>
+      <View style={{ marginTop: verticalScale(12) }}>
+
+        <View style={{flexDirection:"row",alignItems:"center",marginTop:scale(1)}}>
+              <FastImage
+                    style={[styles.radioButton,{
+                      margin:scale(1),marginRight:scale(10),marginTop:scale(20)
+                    }]}
+                    source={IMG_CONST.TAKEOFF}
+                    resizeMode="contain"
+                  />
+      
         <Text
           style={[
             styles.headingTextStyle,
@@ -362,6 +383,7 @@ componentDidMount(){
         >
           {STRING_CONST.DESTINATION}
         </Text>
+      </View>
         <TouchableOpacity 
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
@@ -405,7 +427,7 @@ componentDidMount(){
               : prevSelectedDestination ? prevSelectedDestination : "Select Destination"}
           </Text>
 
-          <TouchableOpacity onPress={()=>{
+          {/* <TouchableOpacity onPress={()=>{
             this.setState({
               selectedDestination:null,
               prevSelectedDestination:null
@@ -422,7 +444,7 @@ componentDidMount(){
               }}
               source={IMG_CONST.DARK_BLUE_CROSS_ICON}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -442,7 +464,16 @@ componentDidMount(){
    let dat4 = (depDate.format('DD/MM/YYYY'))
 
     return (
-      <View style={{ marginTop: verticalScale(18) }}>
+      <View style={{ marginTop: verticalScale(12) }}>
+
+<View style={{flexDirection:"row",alignItems:"center",marginTop:scale(1)}}>
+              <FastImage
+                    style={[styles.radioButton,{
+                      margin:scale(1),marginRight:scale(10),marginTop:scale(20)
+                    }]}
+                    source={IMG_CONST.DEPARTURE}
+                    resizeMode="contain"
+                  />
         <Text
           style={[
             styles.headingTextStyle,
@@ -453,6 +484,7 @@ componentDidMount(){
         >
           {STRING_CONST.DEPARTURE_DATE}
         </Text>
+        </View>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.CREATE_ALERT_SCREEN, {
@@ -470,14 +502,10 @@ componentDidMount(){
             });
           }}
           style={styles.orginDestinationStyle}
-
         >
-
           {
             departStartDate || selectedDate ?
-
-
-<Fragment>
+            <Fragment>
             <Text style={styles.dateTextStyle}>
             {
               departStartDate ?
@@ -508,7 +536,7 @@ componentDidMount(){
             <Text>{"Select Departure Date"}</Text> 
           }
        
-          <TouchableOpacity onPress={()=>{
+          {/* <TouchableOpacity onPress={()=>{
             this.setState({
               departStartDate:"",
               selectedDate:""
@@ -524,7 +552,7 @@ componentDidMount(){
               }}
               source={IMG_CONST.DARK_BLUE_CROSS_ICON}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -537,7 +565,16 @@ componentDidMount(){
     let dat4 = (depDate.format('DD/MM/YYYY'))
    
     return (
-      <View style={{ marginTop: verticalScale(18) }}>
+      <View style={{ marginTop: verticalScale(13) }}>
+
+<View style={{flexDirection:"row",alignItems:"center",marginTop:scale(1)}}>
+              <FastImage
+                    style={[styles.radioButton,{
+                      margin:scale(1),marginRight:scale(10),marginTop:scale(20)
+                    }]}
+                    source={IMG_CONST.DEPARTURE}
+                    resizeMode="contain"
+                  />
         <Text
           style={[
             styles.headingTextStyle,
@@ -548,7 +585,7 @@ componentDidMount(){
         >
           {STRING_CONST.RETURN_DATE1}
         </Text>
-
+          </View>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate(STRING_CONST.CREATE_ALERT_SCREEN, {
@@ -574,7 +611,7 @@ componentDidMount(){
                 : "Select Return Date"
             }`}
           </Text>
-          <TouchableOpacity onPress={()=>{
+          {/* <TouchableOpacity onPress={()=>{
             this.setState({
               returnStartDate:""
             })
@@ -590,7 +627,7 @@ componentDidMount(){
               }}
               source={IMG_CONST.DARK_BLUE_CROSS_ICON}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -618,7 +655,8 @@ componentDidMount(){
         return (
           <TouchableOpacity
             style={[styles.classCheckboxContainer, marginStyle,{
-              borderColor:"#2044FF"
+              borderColor:"#2044FF",
+              backgroundColor:"#E6EFFD"
             }]}
             onPress={() => {
               this.setState({
@@ -636,7 +674,7 @@ componentDidMount(){
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.blue)
             }
       <Text style={[styles.classTextStyle,{
-        color:"#2044FF"
+        color:"#132C52"
       }]}>{STRING_CONST.ECONOMY}</Text>
           </TouchableOpacity>
         );
@@ -646,7 +684,9 @@ componentDidMount(){
         return (
           <TouchableOpacity
             style={[styles.classCheckboxContainer, marginStyle,{
-              borderColor:"#FEA41D"
+              borderColor:"#FEA41D",
+              backgroundColor:"#F6F4E9"
+
             }]}
             onPress={() => {
               this.setState({
@@ -664,7 +704,7 @@ componentDidMount(){
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.yellow)
             }
             <Text style={[styles.classTextStyle,{
-        color:"#FEA41D"
+        color:"#132C52"
       }]}>{"Prem Econ"}</Text>
           </TouchableOpacity>
         );
@@ -673,7 +713,8 @@ componentDidMount(){
         return (
           <TouchableOpacity
             style={[styles.classCheckboxContainer, marginStyle,{
-              borderColor:"#A400F1"
+              borderColor:"#A400F1",
+              backgroundColor:"#EFEAFC"
             }]}
             onPress={() => {
               this.setState({
@@ -692,7 +733,7 @@ componentDidMount(){
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.purple)
             }
              <Text style={[styles.classTextStyle,{
-        color:"#A400F1"
+        color:"#132C52"
       }]}>{STRING_CONST.BUSINESS}</Text>
           </TouchableOpacity>
         );
@@ -701,7 +742,8 @@ componentDidMount(){
         return (
           <TouchableOpacity
             style={[styles.classCheckboxContainer, marginStyle,{
-              borderColor:"#F31973"
+              borderColor:"#F31973",
+              backgroundColor:"#F5ECF3"
             }]}
             onPress={() => {
               this.setState({
@@ -720,7 +762,7 @@ componentDidMount(){
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.pink)
             }
            <Text style={[styles.classTextStyle,{
-        color:"#F31973"
+        color:"#132C52"
       }]}>{STRING_CONST.FIRST}</Text>
           </TouchableOpacity>
         );
@@ -782,9 +824,9 @@ componentDidMount(){
 
      
     return (
-      <View style={{ marginTop: verticalScale(20) }}>
+      <View style={{ marginTop: verticalScale(0) }}>
         <Text style={[styles.headingTextStyle1]}>{"Select Cabin Class"}</Text>
-       { travelData.length> 0 ? <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop:verticalScale(5) }}>
+       { travelData.length> 0 ? <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop:verticalScale(0),borderWidth:0,width:scale(355),alignSelf:"center" }}>
           {travelData.map((classType, index) => {
             if(travelData.includes(classType))
             return this.renderTravelClass(classType, index);
@@ -917,11 +959,20 @@ componentDidMount(){
     return (
       <View style={{ marginHorizontal: scale(20) }}>
         {this.travelClassView()}
+
+          <View style={{flexDirection:"row",alignItems:"center",marginTop:scale(18)}}>
+               <Image  source={IMAGE_CONST.TAKEOFF}
+                  style={[styles.radioButton,{
+                    margin:scale(3),marginRight:scale(10)
+                  }]}/>
+
+                  <Text style={{color:"#96ACB6",fontWeight:"400",fontSize:scale(14)}}>{"Flight Type"}</Text>
+          </View>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: verticalScale(20),
+              marginTop: verticalScale(10),
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -968,11 +1019,18 @@ componentDidMount(){
             </View>
         </View>
         {this.originView()}
+
+        <View style={{borderWidth:1,borderColor:"#D5DDE0",width:scale(335),alignSelf:"center"}} />
+                  
         {this.destinationView()}
+        <View style={{borderWidth:1,borderColor:"#D5DDE0",width:scale(335),alignSelf:"center"}} />
+
         {this.departureDateView()}
+        <View style={{borderWidth:1,borderColor:"#D5DDE0",width:scale(335),alignSelf:"center"}} />
 
         {this.state.selectedIndex == 1 ? this.returnDateView() : null}
-       
+        <View style={{borderWidth:1,borderColor:"#D5DDE0",width:scale(335),alignSelf:"center"}} />
+
         {this.state.isSavedPressed &&
         this.state.selectedIndex == 1 &&
         isEmptyString(this.state.returnStartDate) ? (
@@ -1091,7 +1149,7 @@ componentDidMount(){
        {
         (selectedIndex == 0 &&  selectedDate || departStartDate) || (selectedIndex == 1 && returnStartDate) && (selectedSource!= null || prevSelectedSource!=null) &&  (selectedDestination!=null || prevSelectedDestination !=null)  ?
         <TouchableOpacity
-        style={styles.checkOnAirlineButton}
+        style={styles.saveButtonDisable}
         onPress={() => {
           if(headerTxt == "Booking Details"){
             this.handleBaRedirection()

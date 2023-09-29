@@ -71,7 +71,13 @@ export default class PopUpComponent extends Component {
         >
           <View style={styles.mainView}>
             <View style={styles.innerView}>
-              <View
+             
+              <Image
+                source={this.state.image}
+                resizeMode="contain"
+                style={{ marginTop: verticalScale(20), width:scale(195), height:scale(165) }}
+              />
+               <View
                 style={[
                   styles.titleView,
                   {
@@ -92,12 +98,7 @@ export default class PopUpComponent extends Component {
                   )}
                 </TouchableOpacity>
               </View>
-              <FastImage
-                source={this.state.image}
-                resizeMode="contain"
-                style={{ marginTop: verticalScale(35), width:scale(106), height:scale(94) }}
-              />
-              <Text style={[styles.messageStyle,{fontWeight: "500",}]}>{this.state.message}</Text>
+              <Text style={[styles.messageStyle,{fontWeight: "400",fontSize:scale(13),color:"#49566A"}]}>{this.state.message}</Text>
               {this.state.isSingleButton
                 ? this.singleButtonView()
                 : this.doubleButtonView()}

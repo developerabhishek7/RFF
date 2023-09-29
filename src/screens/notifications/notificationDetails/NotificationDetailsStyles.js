@@ -19,14 +19,14 @@ module.exports = StyleSheet.create({
     fontSize: scale(16),
     lineHeight: scale(19),
     color: colours.darkBlueTheme,
-    fontWeight: CONST.BOLD,
+    fontWeight: "600",
     fontFamily: CONST.appFonts.INTER_SEMI_BOLD,
   },
   notifTitel: {
     fontSize: scale(16),
     lineHeight: scale(19),
     color: colours.darkBlueTheme,
-    fontWeight: CONST.BOLD,
+    fontWeight: "600",
     fontFamily: CONST.appFonts.INTER_SEMI_BOLD,
     padding:scale(2),
     marginTop:scale(10),marginBottom:scale(5)
@@ -182,6 +182,7 @@ module.exports = StyleSheet.create({
   availabilityNoticeHeading:{ 
     color: colours.lightBlueTheme, 
     fontSize: scale(14), 
+    fontWeight:"700",
     fontFamily:CONST.appFonts.INTER_SEMI_BOLD  
   },
   delayAlertText: {

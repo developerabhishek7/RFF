@@ -60,7 +60,8 @@ export default StyleSheet.create({
   travelCountContainer:{
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    // borderWidth:1,
   },
 
   countButtonStyle: {
@@ -74,7 +75,7 @@ export default StyleSheet.create({
 
   headingTextStyle: {
     fontFamily: appFonts.INTER_REGULAR,
-    fontSize: scale(13),
+    fontSize: scale(15),
     color: colours.lightGreyish,
   },
 
@@ -112,11 +113,12 @@ export default StyleSheet.create({
   headingContainerStyle: {
     borderBottomColor: colours.lightGreyish,
     borderBottomWidth: 0.5,
+
   },
 
   locationTextStyle: {
     fontFamily: appFonts.INTER_REGULAR,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: colours.lightBlueTheme,
     fontSize: scale(20),
   },
@@ -130,9 +132,11 @@ export default StyleSheet.create({
 
   dateTextStyle:{
     fontFamily: CONST.appFonts.INTER_REGULAR,
-    fontSize: scale(14),
+    fontSize: scale(15),
     color: colours.darkBlueTheme,
     marginTop: verticalScale(5),
+    // borderWidth:1,
+    fontWeight:"600"
   },
 
   nextRowContainer: {

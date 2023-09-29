@@ -219,18 +219,19 @@ class FlightDetailsCompoent extends Component {
             <View style={[styles.titleView]}>
               <TouchableOpacity onPress={() => { }}>
                 <Image
-                  source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
-                  style={{ marginRight: scale(10) }}
+                  source={IMAGE_CONST.BA_LOGO_CAL}
+                  style={{ marginRight: scale(10),height:scale(30),width:scale(70),margin:scale(5),marginBottom:scale(10) }}
                 />
               </TouchableOpacity>
-              <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
+              {/* <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
                 } (${!this.state.isOffPeakValue
                   ? STRING_CONST.OFF_PEAK_FARE
                   : STRING_CONST.PEAK_FARE
-                })`}</Text>
+                })`}</Text> */}
               <TouchableOpacity
                 style={{
                   alignSelf: "flex-end",
+                  marginBottom:scale(15)
                 }}
                 onPress={() => {
                   this.setState({
@@ -243,7 +244,7 @@ class FlightDetailsCompoent extends Component {
               >
                 <Entypo
                   name="cross"
-                  size={scale(35)}
+                  size={scale(25)}
                   color={colours.lightGreyish}
                 />
               </TouchableOpacity>
@@ -268,15 +269,15 @@ class FlightDetailsCompoent extends Component {
               activeOpacity={0.6}
               onPress={() => { }}
             >
-              <View style={{ flexDirection: "row", marginRight: scale(30) }}>
+              <View style={{ flexDirection: "row", marginRight: scale(20) }}>
                 <Image
                   source={IMAGE_CONST.BIG_TAKE_OFF}
-                  style={{ marginRight: scale(10) }}
+                  style={{ marginRight: scale(10),marginTop:scale(2), }}
                 />
                 <Text
                   style={[
                     styles.flightDetailText,
-                    { color:"#41454b", fontSize: scale(14) },
+                    { color:"#132C52", fontSize: scale(14),fontWeight:"600" },
                   ]}
                 >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
               </View>
@@ -288,11 +289,72 @@ class FlightDetailsCompoent extends Component {
                 <Text
                   style={[
                     styles.flightDetailText,
-                    { color: "#41454b", fontSize: scale(14) },
+                    { color: "#132C52", fontSize: scale(14),fontWeight:"600" },
                   ]}
                 >{`${selectedFlight.arrival_time} ${selectedFlight.destination_code}`}</Text>
               </View>
             </View>
+
+            <View style={{width:scale(340),flexDirection:"row",justifyContent:"space-between",alignItems:"center",alignSelf:"center",margin:scale(1),marginBottom:scale(20),marginRight:scale(10)}}>
+                  <View style={{backgroundColor:"#E9F8FB",margin:scale(10),justifyContent:"center",alignSelf:"center",alignItems:"center",borderWidth:scale(1),borderRadius:scale(10),borderColor:"#03B2D8",width:scale(155),height:scale(110)}}> 
+                      <Image source={IMAGE_CONST.AERO_LOGO} resizeMode="contain" style={{height:scale(30),width:scale(54)}} />
+                      <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#424448",
+                      fontWeight:"500",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${"Aircraft"}`}</Text>
+                  <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#727272",
+                      fontWeight:"400",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${selectedFlight.aircraft_details}`}</Text>
+                  </View>
+                  <View style={{backgroundColor:"#E9F8FB",justifyContent:"center",alignSelf:"center",alignItems:"center",borderWidth:scale(1),borderRadius:scale(10),borderColor:"#03B2D8",width:scale(155),height:scale(110)}}> 
+                      <Image source={IMAGE_CONST.TIME_LOGO}  resizeMode="contain" style={{height:scale(34),width:scale(34)}} />
+                      <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#424448",
+                      fontWeight:"500",
+                      fontSize: scale(14),
+                      paddingTop:scale(8),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${"Duration"}`}</Text>
+                  <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#727272",
+                      fontWeight:"400",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    
+                    },
+                  ]}
+                >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
+                  </View>
+
+
+
+                  </View>
             <View style={{ alignSelf: "stretch", flex: 1 }}>
               {/* <View
                 style={{
@@ -351,7 +413,7 @@ class FlightDetailsCompoent extends Component {
                   ]}
                 >{selectedFlight.flight}</Text>
               </View> */}
-              <View
+              {/* <View
                 style={{
                   flexDirection: "row",
                   // backgroundColor: "rgba(255,255,255,0.1)",
@@ -380,7 +442,7 @@ class FlightDetailsCompoent extends Component {
                     },
                   ]}
                 >{`${selectedFlight.aircraft_details}`}</Text>
-              </View>
+              </View> */}
               {/* <View
                 // style={{
                 //   flexDirection: "row",
@@ -450,7 +512,7 @@ class FlightDetailsCompoent extends Component {
                   "ddd, DD MMM YYYY, "
                 )}${selectedFlight.arrival_time}`}</Text>
               </View> */}
-              <View
+              {/* <View
                 style={{ flexDirection: "row", backgroundColor: "#e4f6fa", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
               >
                 <Text
@@ -475,7 +537,7 @@ class FlightDetailsCompoent extends Component {
                     },
                   ]}
                 >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
-              </View>
+              </View> */}
 
 
             </View>
@@ -533,7 +595,7 @@ class FlightDetailsCompoent extends Component {
           >
             <Text style={{ color: colours.lightGreyish }}></Text>
           </View>
-          <View style={{ marginTop: verticalScale(35) }}>
+          <View style={{ marginTop: verticalScale(40) }}>
             <Text style={styles.pointSeatsText}>{STRING_CONST.SEATS_TEXT}</Text>
           </View>
           <View style={{ marginTop: verticalScale(16) }}>
@@ -719,7 +781,7 @@ class FlightDetailsCompoent extends Component {
         <View style={{ flexDirection: "row" }}>
           <Image
             source={IMAGE_CONST.BIG_TAKE_OFF}
-            style={{ marginRight: scale(10) }}
+            style={{ marginRight: scale(10),marginTop:scale(2) }}
           />
           <Text
             style={styles.flightDetailText}
@@ -1035,7 +1097,7 @@ class FlightDetailsCompoent extends Component {
               </View>
               {this.availabilityTable()}
               <View style={styles.bookOnBAButton}>
-                <FastImage source={IMAGE_CONST.BA_BIG_LOGO} style={{ alignSelf: 'center', marginTop: scale(20) }} />
+                <Image source={IMAGE_CONST.BA_BIG_LOGO} style={{ alignSelf: 'center', marginTop: scale(20) }} />
                 <Text
                   style={[styles.titleText, { marginTop: verticalScale(10), alignSelf: 'center' }]}
                 >{`${STRING_CONST.BA_SCHEDULED_FLIGHTS}`}</Text>
