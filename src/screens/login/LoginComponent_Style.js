@@ -11,16 +11,16 @@ export default StyleSheet.create({
     alignItems:"center"
   },
   inputFieldContainer:{
-    marginTop:scale(130),
+    marginTop:scale(25),
   },
 
   logoContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 
   rffLogo: {
-    marginTop: verticalScale(75),
+    marginTop: verticalScale(40),
     width: scale(214),
     height: scale(102),
   },
@@ -34,28 +34,21 @@ export default StyleSheet.create({
   },
 
   passContainer: {
-    width:scale(300),
+    width:scale(320),
     height:scale(45),
     borderRadius:scale(10),
     backgroundColor:colours.white,
-    marginTop: verticalScale(33),
+    marginTop: verticalScale(30),
+    justifyContent:'center',
   },
 
   passContainer1: {
-    width:scale(300),
+    width:scale(320),
     height:scale(45),
     borderRadius:scale(10),
     backgroundColor:colours.white,
-    marginTop: verticalScale(3),
-  },
-
-  emailText: {
-    fontSize: scale(13),
-    margin:scale(7),
-    marginLeft:scale(6),
-    fontFamily:appFonts.INTER_SEMI_BOLD,
-    // lineHeight: scale(15),
-    color: colours.lightGreyish,
+    marginTop: verticalScale(30),
+    justifyContent:'center',
   },
 
   input: {
@@ -63,25 +56,26 @@ export default StyleSheet.create({
     alignItems: "center",
     // borderBottomColor: colours.borderBottomLineColor,
     fontSize: scale(16),
+    fontWeight:'400',
     color: colours.darkBlueTheme,
     fontFamily: appFonts.INTER_SEMI_BOLD,
-    fontWeight: "bold",
-    paddingLeft: scale(4),
     height: scale(41),
     textAlign:"left",
+    marginHorizontal: scale(12),
+  },
 
-    marginHorizontal: scale(7),
+  emailContainer: {
+    position: "absolute",
+    right: scale(18),
   },
 
   eyeContainer: {
     position: "absolute",
-    right: scale(15.12),
-    bottom: scale(6.75),
+    right: scale(18),
+    bottom: scale(12),
   },
 
   visibleEye: {
-    width: scale(36),
-    height: scale(36),
   },
 
   inVisibleEye: {
@@ -102,7 +96,7 @@ export default StyleSheet.create({
   
   signInButton: {
     alignSelf: "center",
-    width: scale(302),
+    width: scale(320),
     height: scale(50),
     marginTop: verticalScale(25),
     borderRadius: scale(15),
@@ -119,12 +113,11 @@ export default StyleSheet.create({
     borderRadius: scale(30),
     justifyContent: "center",
     alignItems: "center",
-    marginStart:scale(20),
     backgroundColor: "#d9f3f8",
    
   },
   rffLogo: {
-    marginTop: verticalScale(60),
+    marginTop: verticalScale(40),
     width: scale(60),
     height: scale(60),
     alignSelf:"flex-start",
@@ -213,9 +206,11 @@ export default StyleSheet.create({
     height: scale(46),
   },
   bottomContainer: {
+    flex:1,
     marginTop: verticalScale(20),
     alignSelf: "center",
     justifyContent:"center",
+    alignContent:'flex-start',
     marginBottom:verticalScale(10)
   },
   skipText: {

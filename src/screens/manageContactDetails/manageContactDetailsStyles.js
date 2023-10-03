@@ -8,7 +8,7 @@ const OPTION_CONTAINER_HEIGHT = scale(400);
 
 export default StyleSheet.create({
   infoTitle: {
-    fontSize: scale(14),
+    fontSize: scale(16),
     color: colours.lightBlueTheme,
     fontFamily: appFonts.INTER_REGULAR,
   },

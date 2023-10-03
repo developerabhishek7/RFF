@@ -199,6 +199,7 @@
           //  onAirlineSelected = {(data)=>this.props.updateUserDataAction(data)}
            date = {this.props.route.params.date}
            flightSchedule = {this.props.flightSchedule}
+           isLoggedIn={this.props.isLoggedIn}
           //  multipleFlightScheduleData={this.props.multipleFlightScheduleData}
            seatsAvailabilityData = {this.props.route.params.seatsAvailabilityData}
            dateString= {this.props.route.params.dateString}
@@ -239,7 +240,7 @@
  }
  
  const mapStateToProps = (state) => {
-   const { findFlight, calendar, common, notification, userInfo } = state;
+   const { findFlight, calendar,logIn, common, notification, userInfo } = state;
 
    return {
      airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
@@ -255,6 +256,7 @@
      userInfo: userInfo.userData,
      cabinClassData:findFlight.cabinClassData,
      locations: findFlight.locations,
+     isLoggedIn: logIn.isLoggedIn,
     //  multipleFlightScheduleData:findFlight.multipleFlightScheduleData
    };
  };

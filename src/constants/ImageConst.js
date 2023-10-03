@@ -27,9 +27,12 @@ export const SCREEN1 = require('../assets/onboarding/Screen-1.png');
 export const SCREEN2 = require('../assets/onboarding/Screen-2.png');
 export const SCREEN3 = require('../assets/onboarding/Screen-3.png');
 export const SCREEN4 = require('../assets/onboarding/Screen-4.png');
+export const ARROW_DOWN_SVG = require('../assets/common/arrow_down.svg');
+export const Login_img = require('../assets/login/bg2.png');
 
-
-
+export const EMAIL_LOGO_SVG = require('../assets/login/emaill.svg');
+export const PASSWORD_HIDDEN = require('../assets/login/password_hidden.svg');
+export const PASSWORD_SHOW = require('../assets/login/password_show.svg');
 // drawer screen images...
 export const SEARCH_FF = require('../assets/common/searchff.png');
 export const MY_ALERT = require('../assets/common/myalert.png');

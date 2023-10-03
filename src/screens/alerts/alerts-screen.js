@@ -937,15 +937,13 @@ class AlertsScreen extends React.Component {
 
   renderHeader(alertLength){
     const {alerts} = this.state;
-
     // console.log("yes check here alert count value - - - - - - ",alerts)
-
     return(
       <View style={{alignItems:"center",backgroundColor:"#03B2D8",
       height:alerts && alerts.length > 0 ? scale(280) : scale(100),width:"100%",marginTop:
       Platform.OS == "ios"? scale(-60) :
       scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
-        <View style={{marginTop:scale(40)}}>
+        <View style={{marginTop:scale(40),}}>
         <ScreenHeader
           {...this.props}
           left
@@ -1294,7 +1292,7 @@ class AlertsScreen extends React.Component {
         {this.renderLoader()}
         {alerts && alerts.length > 1 && this.alertCountFunc()}
         {errorMessage ? (
-          <View>
+          <View >
             {errorMessage ? (
               <Text
                 style={{
@@ -1313,7 +1311,7 @@ class AlertsScreen extends React.Component {
         {alerts && alerts.length !== 0 ? (
           <FlatList
             data={alerts}
-            style={{ marginTop: verticalScale(20) }}
+            style={{ marginTop:alerts.length == 1 ? scale(-160):scale(20),borderWidth:0 }}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (

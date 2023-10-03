@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import {
   ScrollView,
   View,
@@ -17,7 +17,7 @@ import { colours } from "../../constants/ColorConst";
 import styles from "./manageContactDetailsStyles";
 import * as STR_CONST from "../../constants/StringConst";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import  Octicons  from "react-native-vector-icons/Feather";
+import Octicons from "react-native-vector-icons/Feather";
 import CustomButton from "../../components/customComponents/CustomButton";
 import Validators from "../../helpers/Validator";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
@@ -49,7 +49,7 @@ export default class ProfileScreenComponent extends Component {
         ? userData.alternate_emails
         : [],
       isAddEmailPressed: false,
-      isFocuesOnEmail:false,
+      isFocuesOnEmail: false,
       isAddNumberPressed: false,
       isVerifyPressed: false,
       otpNumber: "",
@@ -64,13 +64,13 @@ export default class ProfileScreenComponent extends Component {
       modalRef: {},
       showModal: false,
       isValidNumber: null,
-      deviceName:"",
-      deviecBrand:"",
-      isEmulator:"",
-      isTablet:"",
+      deviceName: "",
+      deviecBrand: "",
+      isEmulator: "",
+      isTablet: "",
       countrySelectedIso: iso,
       countryList: [],
-      isFocused:false
+      isFocused: false
     };
     this.counter = null
   }
@@ -96,7 +96,7 @@ export default class ProfileScreenComponent extends Component {
   }
 
 
- async componentDidMount() {
+  async componentDidMount() {
     const { navigation } = this.props;
 
 
@@ -107,7 +107,7 @@ export default class ProfileScreenComponent extends Component {
 
 
     this.setState({
-      deviecBrand,deviceName,isTablet,isEmulator
+      deviecBrand, deviceName, isTablet, isEmulator
     })
 
     // this.refs.nameref.focus()
@@ -317,17 +317,17 @@ export default class ProfileScreenComponent extends Component {
   }
 
 
-  renderHeader(){
-    return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ?   scale(-20) :scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}> 
-        <ScreenHeader
-          {...this.props}
-          left
-          title={STR_CONST.MANAGE_CONTACT_DETAILS}
-          notifCount={2}
-          clickOnLeft={() => this.props.navigation.goBack()}
-        />
+  renderHeader() {
+    return (
+      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+        <View style={{ marginTop: scale(40) }}>
+          <ScreenHeader
+            {...this.props}
+            left
+            title={STR_CONST.MANAGE_CONTACT_DETAILS}
+            notifCount={2}
+            clickOnLeft={() => this.props.navigation.goBack()}
+          />
         </View>
       </View>
     )
@@ -337,11 +337,11 @@ export default class ProfileScreenComponent extends Component {
   addMobileNumberView() {
     const { isAddNumberPressed, mobileNumber } = this.state;
     return (
-      <View >
+      <View>
         <Text style={[styles.infoTitle, { fontWeight: "600" }]}>
           {STR_CONST.ADD_MOBILE_NO}
         </Text>
-        <Text style={{ color: "#132C52", fontSize: scale(12), padding: 1, paddingTop: 7, fontFamily: STR_CONST.appFonts.INTER_REGULAR }}>
+        <Text style={{ color: "#132C52", fontSize: scale(12), fontWeight: '400', padding: 1, paddingTop: 7, fontFamily: STR_CONST.appFonts.INTER_REGULAR }}>
           {/* Add mobile number to receive SMS availability alerts */}
           Add mobile number to receive SMS alerts
         </Text>
@@ -373,18 +373,18 @@ export default class ProfileScreenComponent extends Component {
   }
 
   singleEmailView(item, index) {
-    const {isFocused, isFocuesOnEmail} = this.state;
-    
+    const { isFocused, isFocuesOnEmail } = this.state;
+
     return (
       <Fragment >
         <View style={styles.emailIdsInnerView}>
           {
             index == 0 && isFocuesOnEmail == true ?
               <TextInput
-              underlineColorAndroid="transparent"
+                underlineColorAndroid="transparent"
                 style={
-                isFocused || this.state.primaryEmail != item.email ?
-                styles.singleEmailView1 : styles.singleEmailView2}
+                  isFocused || this.state.primaryEmail != item.email ?
+                    styles.singleEmailView1 : styles.singleEmailView2}
                 numberOfLines={1}
                 autoFocus={true}
                 value={this.state.primaryEmail}
@@ -404,7 +404,7 @@ export default class ProfileScreenComponent extends Component {
               </Text>
           }
 
-         {item.verified ? (
+          {item.verified ? (
             item.is_primary ? (
               <View
                 style={[
@@ -412,7 +412,7 @@ export default class ProfileScreenComponent extends Component {
                   { backgroundColor: colours.lightGreen },
                 ]}
               >
-                <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
+                <Text style={[styles.statuTextStyle, { paddingHorizontal: scale(4),fontWeight: "600" }]}>
                   {STR_CONST.PRIMARY_TEXT}
                 </Text>
               </View>
@@ -450,25 +450,22 @@ export default class ProfileScreenComponent extends Component {
               }
 
             </View>
-          )} 
-         
+          )}
+
           <Menu
-            style={{ marginTop: verticalScale(25) }}
+            style={{ marginHorizontal: scale(-30), marginTop: verticalScale(8) }}
             ref={(ref) => this.setMenuRef(ref, index)}
             button={
               <TouchableOpacity
-                disabled={item.is_primary && item.verified}
                 style={{ paddingHorizontal: scale(15), marginTop: 5 }}
                 onPress={() => {
                   this.showMenu(index);
                 }}
               >
                 <Octicons
-                name="more-vertical" 
+                  name="more-vertical"
                   color={
-                    item.is_primary && item.verified
-                      ? colours.white
-                      : this.state.activeIndex == index
+                      this.state.activeIndex == index
                         ? colours.lightBlueTheme
                         : colours.darkBlueTheme
                   }
@@ -482,6 +479,25 @@ export default class ProfileScreenComponent extends Component {
               });
             }}
           >
+             {
+               item.is_primary ? ( 
+
+                <MenuItem
+                onPress={() => {
+                  this.hideMenu(index);
+                  this.setState({
+                    isFocused: true,
+                    isFocuesOnEmail: true
+                  })
+                }}
+                style={{ height: verticalScale(50) }}
+                textStyle={{ color: colours.black, fontSize: scale(12) }}
+              >
+                Edit
+              </MenuItem>
+               ) : null 
+             }
+            {!item.is_primary ? (
             <MenuItem
               onPress={() => {
                 this.hideMenu(index);
@@ -509,7 +525,10 @@ export default class ProfileScreenComponent extends Component {
                 ? STR_CONST.SET_PRIMARY
                 : STR_CONST.RESEND_VERIFICATION_CODE}
             </MenuItem>
+             ) : null}
+             {!item.is_primary ? (
             <MenuDivider style={{ marginHorizontal: scale(30) }} />
+            ) : null}
             {!item.is_primary ? (
               <MenuItem
                 onPress={() => {
@@ -523,68 +542,69 @@ export default class ProfileScreenComponent extends Component {
                 {STR_CONST.DELETE_EMAIL}
               </MenuItem>
             ) : null}
-          
-          </Menu> 
+
+          </Menu>
         </View>
         {
           index == 0 ?
-          <View
-          style={[
-            styles.line,
-            {
-              backgroundColor:
-                this.state.activeIndex == index
-                  ? colours.lightBlueTheme
-                  : colours.borderBottomLineColor,
-            },
-          ]}
-        />
-          : null
-        } 
-        {
-            index == 0 ?
-              <View style={{flex:1, justifyContent: "flex-end", alignItems: 'center', borderWidth: 0, marginTop: scale(10) }}>
+            <View
+              style={[
+                styles.line,
                 {
-                  this.state.primaryEmail !== item.email ?
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.setState({
-                          isFocuesOnEmail:true,
-                          isFocused:true,
-                        })
-                        this.updatePrimaryEmail()
-                      }}
-                      style={{ backgroundColor: colours.lightBlueTheme, padding: scale(3), borderRadius: scale(10) }}>
-                      <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(17), paddingStart: scale(27), paddingEnd: scale(27), padding: scale(1) }}>Update</Text>
-                    </TouchableOpacity>
-                    
-                    : <TouchableOpacity 
-                      onPress={()=>{
-                        this.setState({isFocused:true,
-                          isFocuesOnEmail:true
-                        })
-                      }}
-                    style={{ backgroundColor: colours.lightBlueTheme, padding: scale(3), borderRadius: scale(10) }}>
-                      <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(17), paddingStart: scale(27), paddingEnd: scale(27), padding: scale(1) }}>Edit</Text>
-                    </TouchableOpacity>
-                }
-              </View>
-              : null
-        } 
+                  backgroundColor:
+                    this.state.activeIndex == index
+                      ? colours.lightBlueTheme
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+            />
+            : null
+        }
+        {
+          index == 0 ?
+            <View style={{ flex: 1, justifyContent: "flex-end", alignItems: 'center', borderWidth: 0, marginTop: scale(10) }}>
+              {
+                this.state.primaryEmail !== item.email ?
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({
+                        isFocuesOnEmail: true,
+                        isFocused: true,
+                      })
+                      this.updatePrimaryEmail()
+                    }}
+                    style={{ alignItems:'center', backgroundColor: colours.lightBlueTheme, width: scale(140), padding: scale(8), borderRadius: scale(10) }}>
+                    <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(16)}}>Update</Text>
+                  </TouchableOpacity>
+                  : null
+                  // : <TouchableOpacity
+                  //   onPress={() => {
+                  //     this.setState({
+                  //       isFocused: true,
+                  //       isFocuesOnEmail: true
+                  //     })
+                  //   }}
+                  //   style={{ backgroundColor: colours.lightBlueTheme, padding: scale(3), borderRadius: scale(10) }}>
+                  //   <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(17), paddingStart: scale(27), paddingEnd: scale(27), padding: scale(1) }}>Edit</Text>
+                  // </TouchableOpacity>
+              }
+            </View>
+            : null
+        }
         {
           index !== 0 ?
-           <View
-          style={[
-            styles.line,
-            {
-              backgroundColor:
-                this.state.activeIndex == index
-                  ? colours.lightBlueTheme
-                  : colours.borderBottomLineColor,
-            },
-          ]}
-        />
-          : null
+            <View
+              style={[
+                styles.line,
+                {
+                  backgroundColor:
+                    this.state.activeIndex == index
+                      ? colours.lightBlueTheme
+                      : colours.borderBottomLineColor,
+                },
+              ]}
+            />
+            : null
         }
         {item.is_primary && item.email.includes(STR_CONST.APPLE_EMAIL) && (
           <Text style={{ fontSize: scale(12), color: colours.lightBlueTheme }}>
@@ -592,7 +612,7 @@ export default class ProfileScreenComponent extends Component {
           </Text>
         )}
       </Fragment>
-      
+
     );
   }
 
@@ -631,7 +651,7 @@ export default class ProfileScreenComponent extends Component {
               })
             }
           }}
-          style={{borderWidth:0}}
+            style={{ borderWidth: 0 }}
           >
 
             <PhoneInput
@@ -677,11 +697,11 @@ export default class ProfileScreenComponent extends Component {
             />
           )}
           <TextInput
-          underlineColorAndroid="transparent"
+            underlineColorAndroid="transparent"
             editable={!userData.phone}
             style={[
               styles.input,
-              { width: scale(130), borderWidth: 0, paddingStart: scale(4), alignSelf: "flex-start" },
+              { width: scale(130), borderWidth: 0, paddingStart: scale(4), alignSelf: "flex-start", marginTop: scale(2) },
             ]}
             placeholder="Mobile number"
             autoCapitalize="none"
@@ -698,37 +718,37 @@ export default class ProfileScreenComponent extends Component {
               Keyboard.dismiss()
             }}
           />
-        
-        {
-          goldMember ?
-          <View
-            style={[
-              styles.statusStyle,
-              {
-                backgroundColor:
-                  this.props.userData.phone && !isNumberVerified
-                    ? colours.lightYellow
-                    : colours.white,
-              },
-            ]}
-          >
-            <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
-            {STR_CONST.UNVERIFIED_TEXT}
-            </Text>
-          </View>
-          :  
-          <View
-          style={[
-            styles.statusStyle1,
-          ]}
-        >
-          <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
-          </Text>
-        </View>
-        }
+
+          {
+            goldMember ?
+              <View
+                style={[
+                  styles.statusStyle,
+                  {
+                    backgroundColor:
+                      this.props.userData.phone && !isNumberVerified
+                        ? colours.lightYellow
+                        : colours.white,
+                  },
+                ]}
+              >
+                <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
+                  {STR_CONST.UNVERIFIED_TEXT}
+                </Text>
+              </View>
+              :
+              <View
+                style={[
+                  styles.statusStyle1,
+                ]}
+              >
+                <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
+                </Text>
+              </View>
+          }
           {this.props.userData.phone ? (
             <Menu
-              style={{ marginTop: verticalScale(20) }}
+              style={{ marginHorizontal: scale(-30), marginTop: verticalScale(2),}}
               ref={(ref) => this.setMenuRef(ref, 4)}
               button={
                 <TouchableOpacity
@@ -738,7 +758,7 @@ export default class ProfileScreenComponent extends Component {
                   }}
                 >
                   <Octicons
-                   name="more-vertical" 
+                    name="more-vertical"
                     color={
                       this.state.activeIndex == 4
                         ? colours.lightBlueTheme
@@ -754,6 +774,17 @@ export default class ProfileScreenComponent extends Component {
                 });
               }}
             >
+              <MenuItem
+                onPress={() => {
+                  this.hideMenu(4);
+                  this.props.sendOTPAction();
+                }}
+                style={{ height: verticalScale(35) }}
+                textStyle={{ color: "black", fontSize: scale(12) }}
+              >
+                {STR_CONST.SEND_OTP}
+              </MenuItem>
+              <MenuDivider style={{ marginHorizontal: scale(30) }} />
               <MenuItem
                 onPress={() => {
                   this.hideMenu(4);
@@ -834,7 +865,7 @@ export default class ProfileScreenComponent extends Component {
         </Text>
         <Text style={[styles.infoSubText]}>{STR_CONST.PRIMARY_EMAIL_INFO}</Text>
         <TextInput
-            underlineColorAndroid="transparent"
+          underlineColorAndroid="transparent"
           style={[
             styles.input,
             styles.addEmailViewTextInput,
@@ -855,9 +886,11 @@ export default class ProfileScreenComponent extends Component {
           }
           autoCapitalize="none"
           onChangeText={(email) => {
-            this.setState({ addEmail: email });
+            this.setState({
+              addEmail: email
+            });
           }}
-          
+
           keyboardType={"email-address"}
           value={addEmail}
           blurOnSubmit={false}
@@ -876,62 +909,97 @@ export default class ProfileScreenComponent extends Component {
           )}
 
 
-      {
-        bronzeMember ?
-          <Fragment>
+        {
+          bronzeMember ?
+            <Fragment>
               <TouchableOpacity
-                style={{backgroundColor:colours.lightGreyish, justifyContent:"center",borderRadius:scale(10),alignItems:"center",alignSelf:"center",margin:scale(20)}}
+                style={{ backgroundColor: colours.lightGreyish, justifyContent: "center", borderRadius: scale(10), alignItems: "center", alignSelf: "center", margin: scale(20) }}
               >
 
-                  <Text style={{color:colours.white,borderRadius:scale(10),fontSize:scale(14),marginStart:scale(30),marginEnd:scale(30),padding:scale(8),fontWeight:"700"}}>Add</Text>
+                <Text style={{ color: colours.white, borderRadius: scale(10), fontSize: scale(14), marginStart: scale(30), marginEnd: scale(30), padding: scale(8), fontWeight: "700" }}>Add</Text>
               </TouchableOpacity>
 
 
-          </Fragment>
-        : 
-          <Fragment>
-                  <CustomButton
-          textSize={scale(18)}
-          textOnButton={STR_CONST.ADD_TEXT}
-          onButtonPress={async () => {
-            const { addEmail } = this.state;
-            Keyboard.dismiss();
-            if (this.checkEmail(addEmail)) {
-              alert(STR_CONST.EMAIL_EXIST);
-            } else {
-              this.setState({
-                isAddEmailPressed: true,
-              });
-              if (Validators.validEmail(addEmail)) {
-                const accesstoken = await getAccessToken();
-                var body = {
-                  user: {
-                    access_token: accesstoken,
-                  },
-                  notification_email: { email: addEmail },
-                };
-                this.props.createAlternateEmailAction(body);
-                this.setState({
-                  addEmail: "",
-                  isAddEmailPressed: false,
-                });
-              }
-            }
-          }}
-          buttonColor={colours.lightBlueTheme}
-          buttonStyle={styles.addButtonStyle}
-          textColor={colours.white}
-        />
-          </Fragment>
-      }
+            </Fragment>
+            :
+            <Fragment>
+              {Validators.validEmail(this.state.addEmail) ? 
+              
+              <TouchableOpacity
+                    onPress={ async () => {
+                      const { addEmail } = this.state;
+                  Keyboard.dismiss();
+                  if (this.checkEmail(addEmail)) {
+                    alert(STR_CONST.EMAIL_EXIST);
+                  } else {
+                    this.setState({
+                      isAddEmailPressed: true,
+                    });
+                    if (Validators.validEmail(addEmail)) {
+                      const accesstoken = await getAccessToken();
+                      var body = {
+                        user: {
+                          access_token: accesstoken,
+                        },
+                        notification_email: { email: addEmail },
+                      };
+                      this.props.createAlternateEmailAction(body);
+                      this.setState({
+                        addEmail: "",
+                        isAddEmailPressed: false,
+                      });
+                    }
+                  }
+                    }}
+                    style={{
+                      alignSelf:'center',
+                      backgroundColor: colours.lightBlueTheme, marginTop: scale(10), width: scale(140), padding: scale(8),alignItems:'center', borderRadius: scale(10) }}>
+                    <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(16)}}>Add</Text>
+                  </TouchableOpacity>
+              
+              // <CustomButton
+              //   textSize={scale(18)}
+              //   textOnButton={STR_CONST.ADD_TEXT}
+              //   onButtonPress={async () => {
+              //     const { addEmail } = this.state;
+              //     Keyboard.dismiss();
+              //     if (this.checkEmail(addEmail)) {
+              //       alert(STR_CONST.EMAIL_EXIST);
+              //     } else {
+              //       this.setState({
+              //         isAddEmailPressed: true,
+              //       });
+              //       if (Validators.validEmail(addEmail)) {
+              //         const accesstoken = await getAccessToken();
+              //         var body = {
+              //           user: {
+              //             access_token: accesstoken,
+              //           },
+              //           notification_email: { email: addEmail },
+              //         };
+              //         this.props.createAlternateEmailAction(body);
+              //         this.setState({
+              //           addEmail: "",
+              //           isAddEmailPressed: false,
+              //         });
+              //       }
+              //     }
+              //   }}
+              //   buttonColor={colours.lightBlueTheme}
+              //   buttonStyle={styles.addButtonStyle}
+              //   textColor={colours.white}
+              // /> 
+              : null}
+            </Fragment>
+        }
         {
           bronzeMember ?
-          <View style={styles.upgradetxtView}>
-          <Text style={styles.upgradTxt}>
-            {" Upgrade to add secondary email addresses"}
-          </Text>
-          </View>
-          : null
+            <View style={styles.upgradetxtView}>
+              <Text style={styles.upgradTxt}>
+                {" Upgrade to add secondary email addresses"}
+              </Text>
+            </View>
+            : null
         }
       </View>
     );
@@ -955,7 +1023,7 @@ export default class ProfileScreenComponent extends Component {
             ]}
           >
             <TextInput
-            underlineColorAndroid="transparent"
+              underlineColorAndroid="transparent"
               style={[
                 styles.input,
                 {
@@ -1033,18 +1101,18 @@ export default class ProfileScreenComponent extends Component {
               isVerifyPressed: true,
             });
             if (!isEmptyString(otpNumber) && otpNumber.length == 4) {
-              let  metaData  = {
-                "deviecBrand":this.state.deviecBrand,
-                "deviceName":this.state.deviceName,
-                "isEmulator":this.state.isEmulator,
-                "isTablet":this.state.isTablet,
+              let metaData = {
+                "deviecBrand": this.state.deviecBrand,
+                "deviceName": this.state.deviceName,
+                "isEmulator": this.state.isEmulator,
+                "isTablet": this.state.isTablet,
                 "plateform": "Mobile",
               }
-              this.props.verifyOTPAction(otpNumber,metaData);
+              this.props.verifyOTPAction(otpNumber, metaData);
             }
           }}
           buttonColor={colours.lightBlueTheme}
-          buttonStyle={[styles.addButtonStyle1, ]}
+          buttonStyle={[styles.addButtonStyle1,]}
           textColor={colours.white}
         />
       </View>
@@ -1057,15 +1125,15 @@ export default class ProfileScreenComponent extends Component {
       userInfo["country_code"] = selectedCode.replace("+", "");
       userInfo["phone_number"] = mobileNumber;
       userInfo["iso_country_code"] = countrySelectedIso
-      let  metaData  = {
-        "deviecBrand":this.state.deviecBrand,
-        "deviceName":this.state.deviceName,
-        "isEmulator":this.state.isEmulator,
-        "isTablet":this.state.isTablet,
+      let metaData = {
+        "deviecBrand": this.state.deviecBrand,
+        "deviceName": this.state.deviceName,
+        "isEmulator": this.state.isEmulator,
+        "isTablet": this.state.isTablet,
         "plateform": "Mobile",
       }
-      console.log("yes check here meta data inside compomnent",metaData)        
-      this.props.addContactAction(userInfo,metaData)                     
+      console.log("yes check here meta data inside compomnent", metaData)
+      this.props.addContactAction(userInfo, metaData)
       // this.props.updateUserDataAction(userInfo);          
     }
   }
@@ -1079,32 +1147,33 @@ export default class ProfileScreenComponent extends Component {
       showSendOTPButton,
     } = this.state;
     return (
-      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS == "android" ? "" : "padding"}
         >
-             {this.renderHeader()}
+          {this.renderHeader()}
           <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-         
+
             <View style={styles.innerContainer}>
               {this.addMobileNumberView()}
               {!isNumberVerified ? (
                 showSendOTPView && userData.gold_member ? (
                   showSendOTPButton ? (
-                    <CustomButton
-                      textOnButton={"Send OTP"}
-                      textSize={scale(17)}
-                      onButtonPress={() => {
-                        this.props.sendOTPAction();
-                      }}
-                      buttonColor={colours.lightBlueTheme}
-                      buttonStyle={[
-                        styles.addButtonStyle,
-                        { width: scale(300) },
-                      ]}
-                      textColor={colours.white}
-                    />
+                    null
+                    // <CustomButton
+                    //   textOnButton={"Send OTP"}
+                    //   textSize={scale(17)}
+                    //   onButtonPress={() => {
+                    //     this.props.sendOTPAction();
+                    //   }}
+                    //   buttonColor={colours.lightBlueTheme}
+                    //   buttonStyle={[
+                    //     styles.addButtonStyle,
+                    //     { width: scale(300) },
+                    //   ]}
+                    //   textColor={colours.white}
+                    // />
                   ) : (
                     this.showSendOTPView()
                   )

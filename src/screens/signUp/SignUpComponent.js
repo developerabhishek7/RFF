@@ -40,7 +40,8 @@ import jwt_decode from "jwt-decode";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONFIG from "../../helpers/config";
 import { Platform } from "react-native";
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid';
+import SvgUri from 'react-native-svg-uri';
 
 const FIRST = 1;
 const LAST = 2;
@@ -70,6 +71,11 @@ class SignUpComponent extends Component {
       isHideConfirmPassword: true,
       isSignUpPressed: false,
       showNetworkPopUp: false,
+      isFocusName: false,
+      isFocusLastName: false,
+      isFocusEmail: false,
+      isFocusPassword: false,
+      isFocusConfirmPass: false,
     };
     this.validateArray = [];
   }
@@ -569,52 +575,13 @@ class SignUpComponent extends Component {
     } = this.state;
     return (
       <View style={styles.inputFieldContainer}>
-        <View style={styles.firstNameContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed && Utils.isEmptyString(firstName)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.FIRST_NAME}
-          </Text>
-          {/* <TextInput
-          underlineColorAndroid='rgba(0,0,0,0)'
-            style={[
-              styles.input,
-              {
-                borderBottomColor:
-                  isSignUpPressed && Utils.isEmptyString(firstName)
-                    ? colours.errorColor
-                    : colours.borderBottomLineColor,
-              },
-            ]}
-            placeholder=""
-            autoCapitalize={"words"}
-            onChangeText={(firstName) => {
-              this.setState({ firstName });
-            }}
-            value={firstName}
-            onSubmitEditing={() => {
-              this.secondTextInput.focus();
-            }}
-            blurOnSubmit={false}
-            maxLength={15}
-            returnKeyType="next"
-          /> */}
-        </View>
-
+        <View style={styles.firstNameContainer} />
 
         <View style={styles.passContainer1}>
           <TextInput
-            ref={(input) => {
-              this.secondTextInput = input;
-            }}
+            // ref={(input) => {
+            //   this.secondTextInput = input;
+            // }}
             style={[
               styles.input,
               {
@@ -625,7 +592,18 @@ class SignUpComponent extends Component {
               },
             ]}
             underlineColorAndroid={'#FFFFFF'}
-            placeholder=""
+            placeholder={STR_CONST.FIRST_NAME}
+            onFocus={() => {
+              this.setState({
+                isFocusName: true
+              })
+            }}
+            onBlur={() => {
+              this.setState({
+                isFocusName: false
+              })
+            }}
+            placeholderTextColor={this.state.isFocusName ? colours.lightGreyPlaceholder : null}
             autoCapitalize={"words"}
             onChangeText={(firstName) => {
               this.setState({ firstName });
@@ -688,19 +666,7 @@ class SignUpComponent extends Component {
           />
         </View>  */}
         <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed && Utils.isEmptyString(lastName)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.LAST_NAME}
-          </Text>
+
           <View style={styles.passContainer1}>
             <TextInput
               ref={(input) => {
@@ -715,7 +681,18 @@ class SignUpComponent extends Component {
                       : colours.borderBottomLineColor,
                 },
               ]}
-              placeholder=""
+              placeholder={STR_CONST.LAST_NAME}
+              onFocus={() => {
+                this.setState({
+                  isFocusLastName: true
+                })
+              }}
+              onBlur={() => {
+                this.setState({
+                  isFocusLastName: false
+                })
+              }}
+              placeholderTextColor={this.state.isFocusLastName ? colours.lightGreyPlaceholder : null}
               autoCapitalize={"words"}
               onChangeText={(lastName) => {
                 this.setState({ lastName });
@@ -737,30 +714,13 @@ class SignUpComponent extends Component {
           </Text>
         )}
 
-
-
-
         <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed && Utils.isEmptyString(email)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.EMAIL}
-          </Text>
 
           <View style={styles.passContainer1}>
 
-
             <TextInput
               ref={(input) => {
-                this.secondTextInput = input;
+                this.thirdTextInput = input;
               }}
               style={[
                 styles.input,
@@ -771,7 +731,18 @@ class SignUpComponent extends Component {
                       : colours.borderBottomLineColor,
                 },
               ]}
-              placeholder=""
+              placeholder={STR_CONST.EMAIL}
+              onFocus={() => {
+                this.setState({
+                  isFocusEmail: true
+                })
+              }}
+              onBlur={() => {
+                this.setState({
+                  isFocusEmail: false
+                })
+              }}
+              placeholderTextColor={this.state.isFocusEmail ? colours.lightGreyPlaceholder : null}
               autoCapitalize="none"
               onChangeText={(email) => {
                 this.setState({ email });
@@ -779,7 +750,7 @@ class SignUpComponent extends Component {
               keyboardType={"email-address"}
               value={this.state.email}
               onSubmitEditing={() => {
-                this.secondTextInput.focus();
+                this.fourthTextInput.focus();
               }}
               blurOnSubmit={false}
               returnKeyType="next"
@@ -789,16 +760,21 @@ class SignUpComponent extends Component {
               // onPress={() =>
               //   this.setState({ isHidePassword: !this.state.isHidePassword })
               // }
-              style={styles.eyeContainer}
+              style={styles.emailContainer}
             >
-              <FastImage
+              <SvgUri
+                width={scale(20)}
+                height={scale(20)}
+                source={IMG_CONST.EMAIL_LOGO_SVG}
+              />
+              {/* <FastImage
                 style={
                   { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
                 }
                 resizeMode="contain"
                 source={IMG_CONST.EMAIL_LOGO
                 }
-              />
+              /> */}
             </TouchableOpacity>
           </View>
         </View>
@@ -868,26 +844,12 @@ class SignUpComponent extends Component {
 
 
         <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed && Utils.isEmptyString(password)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.PASSWORD}
-          </Text>
-
 
           <View style={styles.passContainer1}>
 
             <TextInput
               ref={(input) => {
-                this.secondTextInput = input;
+                this.fourthTextInput = input;
               }}
               style={[
                 styles.input,
@@ -898,7 +860,18 @@ class SignUpComponent extends Component {
                       : colours.borderBottomLineColor,
                 },
               ]}
-              placeholder=""
+              placeholder={STR_CONST.PASSWORD}
+              onFocus={() => {
+                this.setState({
+                  isFocusPassword: true
+                })
+              }}
+              onBlur={() => {
+                this.setState({
+                  isFocusPassword: false
+                })
+              }}
+              placeholderTextColor={this.state.isFocusPassword ? colours.lightGreyPlaceholder : null}
               autoCapitalize="none"
               onChangeText={(password) => {
                 this.setState({ password });
@@ -906,12 +879,11 @@ class SignUpComponent extends Component {
               maxLength={20}
               secureTextEntry={this.state.isHidePassword}
               value={this.state.password}
-              returnKeyType="done"
               underlineColorAndroid={'#FFFFFF'}
-
+              returnKeyType="next"
               onSubmitEditing={() => {
-                this.validation();
-
+                // this.validation();
+                this.fivethTextInput.focus()
               }}
             />
             <TouchableOpacity
@@ -920,7 +892,16 @@ class SignUpComponent extends Component {
               }
               style={styles.eyeContainer}
             >
-              <FastImage
+              <SvgUri
+                width={scale(20)}
+                height={scale(20)}
+                source={
+                  this.state.isHidePassword
+                    ? IMG_CONST.PASSWORD_HIDDEN
+                    : IMG_CONST.PASSWORD_SHOW
+                }
+              />
+              {/* <FastImage
                 style={
                   this.state.isHidePassword
                     ? styles.inVisibleEye
@@ -931,7 +912,7 @@ class SignUpComponent extends Component {
                     ? IMG_CONST.EYE_INVISIBLE
                     : IMG_CONST.EYE_VISIBLE
                 }
-              />
+              /> */}
             </TouchableOpacity>
           </View>
 
@@ -1011,21 +992,7 @@ class SignUpComponent extends Component {
 
 
         <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed &&
-                    (Utils.isEmptyString(confirmPassword) ||
-                      this.verifyValidation(CONFIRM_PASSWORD))
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.CONFIRM_PASSWORD}
-          </Text>
+
           <View style={styles.passContainer1}>
             <TextInput
               underlineColorAndroid='rgba(0,0,0,0)'
@@ -1043,7 +1010,18 @@ class SignUpComponent extends Component {
                       : colours.borderBottomLineColor,
                 },
               ]}
-              placeholder=""
+              placeholder={STR_CONST.CONFIRM_PASSWORD}
+              onFocus={() => {
+                this.setState({
+                  isFocusConfirmPass: true
+                })
+              }}
+              onBlur={() => {
+                this.setState({
+                  isFocusConfirmPass: false
+                })
+              }}
+              placeholderTextColor={this.state.isFocusConfirmPass ? colours.lightGreyPlaceholder : null}
               autoCapitalize={"none"}
               onChangeText={(confirmPassword) => {
                 this.setState({ confirmPassword });
@@ -1057,33 +1035,37 @@ class SignUpComponent extends Component {
               }}
               returnKeyType="done"
             />
-          <TouchableOpacity
-            onPress={() =>
-              this.setState({
-                isHideConfirmPassword: !isHideConfirmPassword,
-              })
-            }
-            style={styles.eyeContainer}
-          >
-            <FastImage
-              style={
-                isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({
+                  isHideConfirmPassword: !isHideConfirmPassword,
+                })
               }
-              source={
-                isHideConfirmPassword
-                  ? IMG_CONST.EYE_INVISIBLE
-                  : IMG_CONST.EYE_VISIBLE
-              }
-            />
-          </TouchableOpacity>
+              style={styles.eyeContainer}
+            >
+              <SvgUri
+                width={scale(20)}
+                height={scale(20)}
+                source={
+                  this.state.isHideConfirmPassword
+                    ? IMG_CONST.PASSWORD_HIDDEN
+                    : IMG_CONST.PASSWORD_SHOW
+                }
+              />
+              {/* <FastImage
+                style={
+                  isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
+                }
+                source={
+                  isHideConfirmPassword
+                    ? IMG_CONST.EYE_INVISIBLE
+                    : IMG_CONST.EYE_VISIBLE
+                }
+              /> */}
+            </TouchableOpacity>
           </View>
 
         </View>
-
-
-
-
-
 
         {isSignUpPressed &&
           confirmPassword !== "" &&
@@ -1098,35 +1080,35 @@ class SignUpComponent extends Component {
 
   renderButtonContainer = () => {
 
-    const {firstName,lastName,email,password,confirmPassword} = this.state
+    const { firstName, lastName, email, password, confirmPassword } = this.state
 
 
     return (
       <Fragment>
         {
           firstName && lastName && email && password && confirmPassword ?
-          <TouchableOpacity
-          onPress={() => this.validation()}
-          activeOpacity={0.7}
-          style={[styles.signUpButton,{
-            backgroundColor: colours.lightBlueTheme,
-          }]}
-        >
-          <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
-        </TouchableOpacity>
-          :
-          <TouchableOpacity
-          // onPress={() => this.validation()}
-          style={[styles.signUpButton,{
-            backgroundColor:"gray"
-          }]}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.validation()}
+              activeOpacity={0.7}
+              style={[styles.signUpButton, {
+                backgroundColor: colours.lightBlueTheme,
+              }]}
+            >
+              <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity
+              // onPress={() => this.validation()}
+              style={[styles.signUpButton, {
+                backgroundColor: "gray"
+              }]}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
+            </TouchableOpacity>
 
         }
-    
+
       </Fragment>
     );
   }
@@ -1177,7 +1159,7 @@ class SignUpComponent extends Component {
             {/* <Text
             style={styles.iconTxt}
           > Google</Text> */}
-       
+
           </TouchableOpacity>
 
           {/* <TouchableOpacity
@@ -1240,24 +1222,24 @@ class SignUpComponent extends Component {
             style={[
               styles.orSignInText,
               {
+                width: scale(320),
                 color: colours.darkBlueTheme,
-                textAlign: "center",
+                textAlign: 'center',
                 marginTop: verticalScale(20),
-                marginHorizontal: verticalScale(20),
               },
             ]}
           >
             {STR_CONST.SIGNING_INFO}
             <Text
               onPress={() => Linking.openURL(CONFIG.PRIVACY_POLICY_URL)}
-              style={styles.signUpText}
+              style={styles.linkText}
             >
               {STR_CONST.PRIVACY_POLICY}
             </Text>{" "}
             <Text>{"& "}</Text>
             <Text
               onPress={() => Linking.openURL(CONFIG.TERMS_CONDITIONS_URL)}
-              style={styles.signUpText}
+              style={styles.linkText}
             >
               {STR_CONST.TERMS_OF_USE}
             </Text>

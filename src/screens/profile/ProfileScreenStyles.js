@@ -250,7 +250,8 @@ export default StyleSheet.create({
     justifyContent:"center",
     marginBottom: verticalScale(20),
     width: scale(160),
-    height:scale(150)
+    height:scale(150),
+    elevation: 5,
   },
   profileOptionText: {
     textAlign: "center",

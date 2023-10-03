@@ -27,7 +27,7 @@ export default StyleSheet.create({
     height:scale(45),
     borderRadius:scale(10),
     backgroundColor:colours.white,
-    marginTop: verticalScale(3),
+    marginTop: verticalScale(50),
   },
   rffLogo: {
     marginTop: verticalScale(40),
@@ -55,11 +55,12 @@ export default StyleSheet.create({
   },
 
   passContainer1: {
-    width:scale(300),
+    width:scale(320),
     height:scale(45),
     borderRadius:scale(10),
     backgroundColor:colours.white,
     marginTop: verticalScale(3),
+    justifyContent:'center',
   },
   input: {
     // borderBottomWidth: scale(1),
@@ -67,16 +68,23 @@ export default StyleSheet.create({
     // borderBottomColor: colours.borderBottomLineColor,
     fontSize: scale(16),
     color: colours.darkBlueTheme,
-    fontWeight: "500",
+    fontWeight: '400',
     paddingLeft: scale(4),
     height: scale(41),
-    marginHorizontal: scale(6),
+    marginHorizontal: scale(12),
+  },
+  emailContainer: {
+    position: "absolute",
+    right: scale(18),
+    marginBottom: scale(4),
+    marginRight: scale(5) 
   },
 
   eyeContainer: {
     position: "absolute",
-    right: scale(18.12),
-    bottom: scale(7.75),
+    right: scale(18),
+    bottom: scale(14),
+    marginRight: scale(5) 
   },
 
   visibleEye: {
@@ -100,13 +108,12 @@ export default StyleSheet.create({
 
   signUpButton: {
     alignSelf: "center",
-    width: scale(302),
-    height: scale(60),
+    width: scale(320),
+    height: scale(50),
     marginTop: verticalScale(30),
     borderRadius: scale(15),
     justifyContent: "center",
-    alignItems: "center",
-  
+    alignItems: "center",  
   },
 
   signInText: {
@@ -121,10 +128,16 @@ export default StyleSheet.create({
     fontSize: scale(14),
     fontFamily: appFonts.INTER_REGULAR,
     lineHeight: scale(22),
-
     color: colours.lightGreyish,
   },
-
+  linkText: {
+    fontSize: scale(15),
+    fontFamily: appFonts.INTER_REGULAR,
+    lineHeight: scale(22),
+    color: colours.lightBlueTheme,
+    textDecorationLine: 'underline',
+    // textDecorationLine : 'underline',
+  },
   signUpText: {
     fontSize: scale(15),
     fontFamily: appFonts.INTER_REGULAR,
@@ -136,7 +149,7 @@ export default StyleSheet.create({
   googleFBContainer: {
     alignSelf: "center",
     alignItems: "center",
-    marginTop: verticalScale(27),
+    marginTop: verticalScale(20),
   },
 
   buttonContainer: {
@@ -165,7 +178,7 @@ export default StyleSheet.create({
   },
 
   bottomContainer: {
-    marginTop: verticalScale(22),
+    marginTop: verticalScale(20),
     marginBottom: verticalScale(40),
     alignSelf: "center",
   },

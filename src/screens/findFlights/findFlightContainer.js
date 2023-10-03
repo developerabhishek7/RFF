@@ -293,14 +293,14 @@ class FindFlightContainer extends Component {
   isAlert = () => {
     Alert.alert(
       '',
-      'Upgrade your membership to make more searches!',
+      'Upgrade to Silver or Gold membership to make more searches',
       [
         {  
           text: 'Cancel',  
           onPress: () =>  this.setState({isLoader:false}),  
           style: 'Cancel',  
       }, 
-        {text: 'OK',onPress: ()=>{ 
+        {text: 'Upgrade',onPress: ()=>{ 
         this.gotoMembershipScreen()
       }}
     ],

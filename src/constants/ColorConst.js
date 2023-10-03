@@ -59,7 +59,8 @@ const colours = {
   featureListBorderColor:'rgba(19, 44, 82, 0.2)',
   darkGreyColor:'#565656',
   lightBlueColor:'rgba(3, 178, 216, 0.1)',
-  lightMilkyBlue:'#F0FAFD'
+  lightMilkyBlue:'#F0FAFD',
+  lightBlueBackground: '#E9FCFC',
 
 };
 

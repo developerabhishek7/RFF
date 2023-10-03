@@ -204,10 +204,7 @@ export default class AirlineMembershipComponent extends Component {
   }
 
   renderListItem(itemObject, index) {
-    const {tierSelected,isOpenDialog} = this.state;
-
-    console.log("yes check here - - - - - - ",tierSelected)
-    
+    const {tierSelected,isOpenDialog} = this.state;    
 
     return (
       <TouchableOpacity onPress={()=>{
@@ -251,7 +248,10 @@ export default class AirlineMembershipComponent extends Component {
 
   renderList() {
     return (
-      <View style={{ marginHorizontal: scale(20), flex: 1 }}>
+      <View style={{ flex: 1,
+       justifyContent:'center',
+       alignItems:'center',
+      }}>
         {
           this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
             keyboardShouldPersistTaps='always'
@@ -290,8 +290,9 @@ export default class AirlineMembershipComponent extends Component {
           <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps='always'>
             {/* {this.renderCrossIcon()} */}
             
-            <View style={{ justifyContent: 'center', alignItems: 'center', margin: scale(9), marginStart: scale(16), marginTop: scale(21), marginBottom: -scale(9), }}>
-              <Text style={{ color: "gray", fontFamily: appFonts.INTER_SEMI_BOLD, fontSize: scale(13), alignSelf: "flex-start", paddingStart: scale(4) }}>{"Select Your Airline Membership Tier"}</Text>
+            <View style={{ justifyContent: 'center', alignItems: 'center',
+            margin: scale(9), marginTop: scale(21), marginBottom: -scale(9), }}>
+              <Text style={{ color: "gray", fontFamily: appFonts.INTER_SEMI_BOLD, fontSize: scale(13), alignSelf: "flex-start", paddingStart: scale(42) }}>{"Select Your Airline Membership Tier"}</Text>
             </View>
             {/* {this.renderSearchView()} */}
             {this.renderList()}

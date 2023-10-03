@@ -10,21 +10,21 @@ import * as COLOR_CONST from "../../constants/ColorConst";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#FFF",
+    backgroundColor:"#FFF"
 
     // backgroundColor:"#ecfdfd"
   },
 
   infoIcon: {
-    height: scale(21),
-    width: scale(21),
-    marginStart:scale(20)
+    height: scale(22),
+    width: scale(22),
+    marginStart:scale(18)
   },
   inputTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
     fontSize:scale(14),
-    fontWeight: "bold",
+    fontWeight: "600",
     marginVertical: verticalScale(3),
     color: colours.darkBlueTheme,
     
@@ -56,7 +56,7 @@ export default StyleSheet.create({
     padding: verticalScale(13),
     alignSelf: "center",
     justifyContent: "center",
-    height: verticalScale(60),
+    height: verticalScale(50),
   },
 
   buttonTextStyle: {
@@ -83,10 +83,11 @@ export default StyleSheet.create({
   tabTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
-    fontSize:scale(14),
+    fontSize:scale(16),
     fontWeight: "bold",
     textAlign:'center',
     color:"#FFF"
+    
     // marginBottom: verticalScale(10),
   },
   tickMark: {
@@ -109,6 +110,7 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: colours.borderBottomLineColor,
     width: width / 2 - 40,
+    paddingBottom: scale(1),
   },
 
   classViewTextStyle: {
@@ -125,7 +127,7 @@ export default StyleSheet.create({
   informationContainer: {
     backgroundColor: "#f0fffd",
     paddingHorizontal: scale(15),
-    paddingVertical: verticalScale(20),
+    paddingVertical: verticalScale(15),
     borderRadius: verticalScale(15),
     marginTop:verticalScale(10),
     borderWidth:1,
@@ -140,8 +142,8 @@ export default StyleSheet.create({
   airlineMembershipTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     fontSize: scale(14),
-    fontWeight: "bold",
-    marginVertical: verticalScale(10),
+    fontWeight: "400",
+    marginVertical: verticalScale(6),
     color: colours.lightGreyish,
   },
 
@@ -233,7 +235,7 @@ export default StyleSheet.create({
   membershipSubListTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     fontSize: scale(15),
-    // fontWeight:"600",
+    fontWeight:"500",
     textAlign:"left",
     paddingStart:scale(7),
     color: "#3D4859"
@@ -384,10 +386,6 @@ export default StyleSheet.create({
   },
 
   tabViewStyle1: {
-    // width: width / 2 - 40,
-    // alignItems: "center",
-    // height:scale(30),
-    // justifyContent:'center',
     width: width / 2 - 60,
     height:scale(40),
     borderRadius:scale(9),
@@ -395,9 +393,6 @@ export default StyleSheet.create({
     alignItems:"center",
     marginStart:scale(10),
     marginEnd:scale(10),
-    // marginStart:scale(5),marginEnd:scale(6),
-    // backgroundColor:colours.darkBlueTheme
-    // borderBottomWidth: 1,
   },
   doneButton:{
     marginTop: verticalScale(9),
