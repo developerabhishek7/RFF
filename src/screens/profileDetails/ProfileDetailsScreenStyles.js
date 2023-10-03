@@ -27,10 +27,10 @@ export default StyleSheet.create({
 
   textInput: {
     alignItems: "center",
-    fontSize: scale(14),
+    fontSize: scale(15),
     color: colours.darkBlueTheme,
-    fontWeight: Platform.OS ==="ios" ? "500" : "900",
-    paddingLeft: scale(10),
+    fontWeight: Platform.OS ==="ios" ? "500" : "600",
+    paddingLeft: scale(5),
     height: scale(41),
     width: scale(250),
     borderWidth:0,
@@ -43,11 +43,11 @@ export default StyleSheet.create({
     alignSelf: "center",
   },
   innerProfileImage2: {
-    width: scale(50),
-    height: scale(50),
+    width: scale(40),
+    height: scale(40),
     alignSelf:"center",
     marginStart:scale(70),
-    marginTop:scale(-40),borderColor:"#FFF",borderRadius:scale(50),borderWidth:scale(3)
+    marginTop:scale(-40)
   },
 
   innerProfileImage1: {
@@ -71,7 +71,6 @@ export default StyleSheet.create({
     borderBottomWidth: scale(1),
     alignItems: "center",
     borderBottomColor: colours.borderBottomLineColor,
-    paddingRight: scale(10),
   },
   profileImage: {
     width: scale(115),
@@ -79,7 +78,7 @@ export default StyleSheet.create({
     backgroundColor: colours.imageShadowColor,
     borderRadius: scale(57),
     alignSelf: "center",
-    marginTop: scale(18),
+    marginTop:scale(1),
   },
   cameraImage: {
     position: "absolute",
@@ -134,25 +133,21 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     // backgroundColor: colours.white,
-    borderWidth: 0.5,
-    borderBottomWidth: 1,
-
-    borderTopWidth: 1,
     paddingBottom: 10,
   },
   countryText: {
     alignItems: "center",
-    fontSize: scale(16),
+    fontSize: scale(15),
     color: colours.lightGreyish,
     paddingLeft: scale(4),
     marginTop: verticalScale(5),
   },
   countryDetailText: {
     alignItems: "center",
-    fontSize: scale(14),
+    fontSize: scale(15),
     color: colours.darkBlueTheme,
-     fontWeight: Platform.OS ==="ios" ? "500" : "900",
-    paddingLeft: scale(10),
+    fontWeight: Platform.OS ==="ios" ? "500" : "600",
+    paddingLeft: scale(5),
     borderWidth:0,
     marginTop: verticalScale(5),
   },
@@ -165,6 +160,7 @@ export default StyleSheet.create({
     width: scale(150),
     height: scale(150),
     alignSelf: "center",
+    alignItems: "center"
   },
   membershipText: {
     fontSize: scale(12),
@@ -191,11 +187,11 @@ export default StyleSheet.create({
 
   membershipText1: {
     fontSize: scale(15),
-    fontWeight: "bold",
+    fontWeight: '600',
     // textAlign:"center",
     padding:scale(1),
     margin:scale(1),
-    paddingStart:scale(14),
+    paddingStart:scale(15),
     paddingEnd:scale(10),
     paddingBottom:scale(3),
     color:"#000", 
@@ -218,6 +214,7 @@ export default StyleSheet.create({
   },
 
   informationContainer1: {
+    flex:1,
     backgroundColor: "#f0fffd",
     paddingHorizontal: scale(15),
     paddingVertical: verticalScale(20),

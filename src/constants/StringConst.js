@@ -118,7 +118,7 @@ export const WHERE_ARE_YOU_FLYING_FROM = `Where are you flying from?`;
 export const WHERE_ARE_YOU_FLYING_TO = `Where are you flying to?`;
 export const LOCATION_NOT_AVAILABLE = `This location is not available.`;
 export const AIRLINE_NOT_AVAILABLE = `This airline is not available.`;
-export const MAP_SEARCH_UPGRADE_MESSAGE = `You need Silver or Gold membership to use the map page`;
+export const MAP_SEARCH_UPGRADE_MESSAGE = `Upgrade to Silver or Gold membership to use the World Map search`;
 export const NO_AVAILIBILTY = `No availabilty found. Please update your search parameters`;
 
 export const SELECT_AIRLINE_MESSAGE = "Please Select Airline and Membership";
@@ -143,8 +143,8 @@ export const RETURN_DATE_RANGE = `Return Date Range`;
 export const VERIFY_EMAIL = `Please verify your email to create alerts. `;
 export const SELECT_DEPARTURE_DATE = `Please select departure date`;
 export const SELECT_RETURN_DATE = `Please select return date`;
-export const CREATE_ALERT_LIMIT = `You have reached max limit of Active Alerts. Please upgrade your membership to create more Alerts`;
-export const CREATE_ALERT_LIMIT_IOS = `You have reached max. limit of Active Alerts.`;
+export const CREATE_ALERT_LIMIT = `You have reached your limit of Active Alerts. Upgrade your membership to create more Alerts`;
+export const CREATE_ALERT_LIMIT_IOS = `You have reached your limit of Active Alerts. Upgrade your membership to create more Alerts`;
 export const CREATE_ALERT_LIMIT_GOLD = `You have reached max limit of Active Alerts. Please contact support for more details`;
 export const START_DATE = `Start Date`;
 export const END_DATE = `End Date`;
@@ -153,8 +153,8 @@ export const CHECK_CIRCLE = `check-circle`;
 export const CHECK_EMPTY_CIRCLE = `checkbox-blank-circle-outline`;
 export const AVIOS_POINT_INFO = `Avios point pricing may be inaccurate.We’re working on a fix.`;
 export const CLICK_HERE_FOR_INFO = `Click here for more options & information`;
-export const ONLY_ONE_FLIGHT_SCHEDULE =  `Only one flight scheduled`;
-export const MULTIPLE_FLIGHT_SCHEDULE = `Multiple Flights Scheduled`
+export const ONLY_ONE_FLIGHT_SCHEDULE =  `One flight scheduled`;
+export const MULTIPLE_FLIGHT_SCHEDULE = `Multiple Flights scheduled`
 export const CLICK_ON_THE_DATES_TO_SEE_DETAILS = `Click here to see flight details`;
 
 
@@ -398,7 +398,7 @@ export const GOLD_MEMBER = "Gold Member";
 export const VIEW_BILLING_DATA = "View Billing Data";
 export const CANCEL_TRIAL = "Cancel Trial";
 export const CHANGE_PLAN = "Change Plan";
-export const ACTIVE_ALERTS_AT_ONCE = "Active Alerts at Once";
+export const ACTIVE_ALERTS_AT_ONCE = "active Alerts included";
 export const FREE_TRIAL_DAYS_LEFT = "days left of free trial";
 
 //Drawer Page
@@ -788,7 +788,7 @@ export const profileScreenOptions = [
     navigationScreen: AIRLINE_MEMBERSHIP_SCREEN,
   },
   {
-    text: "Delete Account",
+    text: "Delete Your \nAccount",
     icon: IMAGE_CONST.DELETE_ACCOUNT_ICON,
     // navigationScreen: AIRLINE_MEMBERSHIP_SCREEN,
   },
@@ -842,7 +842,7 @@ export const profileScreenOptions3 = [
     navigationScreen: MANAGE_CONTACT_SCREEN,
   },
   {
-    text: "Delete Account",
+    text: "Delete Your \nAccount",
     icon: IMAGE_CONST.DELETE_ACCOUNT_ICON,
     // navigationScreen: AIRLINE_MEMBERSHIP_SCREEN,
   },

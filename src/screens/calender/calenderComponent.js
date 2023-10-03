@@ -1201,7 +1201,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 <Text style={[styles.seatNumberText1,{
                   marginTop:scale(15),marginBottom:scale(5)
                 }]}>
-                  Only one flight scheduled
+                  One flight scheduled
                 </Text>
                 : null
             }
@@ -1255,35 +1255,40 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           return( 
                             <TouchableOpacity  
                               onPress={()=>{
-                                if(singleMap == "Economy"){
 
-                                  this.setState({
-                                    skyScannerCabinCode:"economy",
-                                    cabinCode:"M",
-                                  })
-                                }
-                                if(singleMap == "Premium"){
-                                  this.setState({
-                                    skyScannerCabinCode:"premiumeconomy",
-                                    cabinCode:"W"
-                                  })
-                                }if(singleMap == "Business"){
-                                  this.setState({
-                                    skyScannerCabinCode:"business",
-                                    cabinCode:"C"
-                                  })
+                                if(this.props.isLoggedIn == true){
+                                  if(singleMap == "Economy"){
 
-                                }if(singleMap == "First"){
+                                    this.setState({
+                                      skyScannerCabinCode:"economy",
+                                      cabinCode:"M",
+                                    })
+                                  }
+                                  if(singleMap == "Premium"){
+                                    this.setState({
+                                      skyScannerCabinCode:"premiumeconomy",
+                                      cabinCode:"W"
+                                    })
+                                  }if(singleMap == "Business"){
+                                    this.setState({
+                                      skyScannerCabinCode:"business",
+                                      cabinCode:"C"
+                                    })
+  
+                                  }if(singleMap == "First"){
+                                    this.setState({
+                                      cabinCode:"F",
+                                      skyScannerCabinCode:"first"
+                                    })
+                                  }
                                   this.setState({
-                                    cabinCode:"F",
-                                    skyScannerCabinCode:"first"
+                                    showModelDropdownForBA:false,
+                                    showModelDropdownForSS:false
                                   })
+                                  this.handleBaRedirection()
+                                }else{
+                                  this.props.navigation.navigate(STRING_CONST.LOGIN)
                                 }
-                                this.setState({
-                                  showModelDropdownForBA:false,
-                                  showModelDropdownForSS:false
-                                })
-                                this.handleBaRedirection()
                               }}
                               style={{justifyContent:'center',alignItems:'center',paddingTop:classSelectedArray.length > 2 ? scale(6):scale(1),
                               backgroundColor:singleMap=="Economy" ? "#dee3ff" : singleMap == "Premium" ? "#fef1dd" : singleMap == "Business" ? "#f1d9fc" : singleMap == "First" ? "#fcddea" : null
@@ -1487,7 +1492,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                               );
                             }}
                           >
-                            <Text style={styles.aviosText2} >{"No Flight Scheduled"}</Text>
+                            <Text style={styles.aviosText2} >{"No flight scheduled"}</Text>
                           </TouchableOpacity>
                           :
                           null
@@ -1644,14 +1649,16 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     })
     let data = this.state.searchData
     return (
-      <View style={{ flex: 1, }} >
+      <View>
         {
           flightData && flightData.map((selectedFlight) => {
             return (
               <Animated.View
               style={[
                 styles.animatedView1,
-                {
+                { 
+                  backgroundColor:"#FFF",
+                  borderColor:"#EFEFEF",
                   transform: [{ translateY: this.state.bounceValue }],
                 },
               ]}
@@ -1665,10 +1672,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 >
                   <View style={[styles.titleView]}>
                     <TouchableOpacity onPress={() => { }}>
-                      <Image
-                        source={IMAGE_CONST.WHITE_BACKGROUND_BA_LOGO}
-                        style={{ marginRight: scale(10) }}
-                      />
+                    <Image
+                  source={IMAGE_CONST.BA_LOGO_CAL}
+                  style={{ marginRight: scale(10),height:scale(30),width:scale(70),margin:scale(5),marginBottom:scale(10) }}
+                />
                     </TouchableOpacity>
                     <Text style={styles.titleText1}>{`${STRING_CONST.SEAT_AVAILABILITY
                       } (${this.state.isOffPeakValue
@@ -1678,6 +1685,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     <TouchableOpacity
                       style={{
                         alignSelf: "flex-end",
+                        marginTop:scale(-7),marginBottom:scale(9)
                       }}
                       onPress={() => {
                         this.setState({
@@ -1690,7 +1698,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     >
                       <Entypo
                         name="cross"
-                        size={scale(35)}
+                        size={scale(27)}
                         color={colours.lightGreyish}
                       />
                     </TouchableOpacity>
@@ -1709,221 +1717,101 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         </Text>
                       </Fragment>
                   }
-      
+                
+
+
                   <View
-                    style={[styles.timingContainer]}
-                    activeOpacity={0.6}
-                    onPress={() => { }}
-                  >
-                    <View style={{ flexDirection: "row", marginRight: scale(30) }}>
-                      <Image
-                        source={IMAGE_CONST.BIG_TAKE_OFF}
-                        style={{ marginRight: scale(10) }}
-                      />
+              style={[styles.timingContainer]}
+              activeOpacity={0.6}
+              onPress={() => { }}
+            >
+              <View style={{ flexDirection: "row", marginRight: scale(20) }}>
+                <Image
+                  source={IMAGE_CONST.BIG_TAKE_OFF}
+                  style={{ marginRight: scale(10),marginTop:scale(2), }}
+                />
+                <Text
+                  style={[
+                    styles.flightDetailText,
+                    { color:"#132C52", fontSize: scale(14),fontWeight:"600" },
+                  ]}
+                >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
+              </View>
+              <View style={{ flexDirection: "row",marginStart:scale(15)}}>
+                <Image
+                  source={IMAGE_CONST.BIG_LANDING}
+                  style={{ marginRight: scale(10) }}
+                />
+                <Text
+                  style={[
+                    styles.flightDetailText,
+                    { color: "#132C52", fontSize: scale(14),fontWeight:"600" },
+                  ]}
+                >{`${selectedFlight.arrival_time} ${selectedFlight.destination_code}`}</Text>
+              </View>
+            </View>
+
+            <View style={{width:scale(340),flexDirection:"row",justifyContent:"space-between",alignItems:"center",alignSelf:"center",margin:scale(1),marginBottom:scale(20),marginRight:scale(10)}}>
+                  <View style={{backgroundColor:"#E9F8FB",margin:scale(10),justifyContent:"center",alignSelf:"center",alignItems:"center",borderWidth:scale(1),borderRadius:scale(10),borderColor:"#03B2D8",width:scale(155),height:scale(110)}}> 
+                      <Image source={IMAGE_CONST.AERO_LOGO} resizeMode="contain" style={{height:scale(30),width:scale(54)}} />
                       <Text
-                        style={[
-                          styles.flightDetailText,
-                          { color: colours.white, fontSize: scale(14) },
-                        ]}
-                      >{`${selectedFlight.departure_time} ${selectedFlight.source_code}`}</Text>
-                    </View>
-                    <View style={{ flexDirection: "row" }}>
-                      <Image
-                        source={IMAGE_CONST.BIG_LANDING}
-                        style={{ marginRight: scale(10) }}
-                      />
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          { color: colours.white, fontSize: scale(14) },
-                        ]}
-                      >{`${selectedFlight.arrival_time} ${selectedFlight.destination_code}`}</Text>
-                    </View>
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#424448",
+                      fontWeight:"500",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${"Aircraft"}`}</Text>
+                  <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#727272",
+                      fontWeight:"400",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${selectedFlight.aircraft_details}`}</Text>
                   </View>
-                  <View style={{ alignSelf: "stretch", flex: 1 }}>
-                    {/* <View
-                      style={{
-                        flexDirection: "row",
-                        backgroundColor: "rgba(255,255,255,0.1)",
-                        flex: 1,
-                        paddingHorizontal: scale(20),
-                      }}
-                    >
+                  <View style={{backgroundColor:"#E9F8FB",justifyContent:"center",alignSelf:"center",alignItems:"center",borderWidth:scale(1),borderRadius:scale(10),borderColor:"#03B2D8",width:scale(155),height:scale(110)}}> 
+                      <Image source={IMAGE_CONST.TIME_LOGO}  resizeMode="contain" style={{height:scale(34),width:scale(34)}} />
                       <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${"Airline:"}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{`${"British Airways"}`}</Text>
-                    </View> */}
-                    {/* <View
-                      style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-                    >
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${`Flight:`}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{selectedFlight.flight}</Text>
-                    </View> */}
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        // backgroundColor: "rgba(255,255,255,0.1)",
-                        alignItems: "center",
-                        paddingHorizontal: scale(20),
-                      }} >
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${"Aircraft:"}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{`${selectedFlight.aircraft_details}`}</Text>
-                    </View>
-                    {/* <View
-                      // style={{
-                      //   flexDirection: "row",
-                      //   backgroundColor: "rgba(255,255,255,0.1)",
-                      //   alignItems: "center",
-                      //   paddingHorizontal: scale(20),
-                      // }}
-      
-                      style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-      
-                    >
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${`Departure:`}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{`${moment(selectedFlight.departure).format(
-                        "ddd, DD MMM YYYY, "
-                      )}${selectedFlight.departure_time}`}</Text>
-                    </View> */}
-                    {/* <View
-                      style={{
-                        flexDirection: "row",
-                        backgroundColor: "rgba(255,255,255,0.1)",
-                        paddingHorizontal: scale(20),
-                      }}
-      
-                    >
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${`Arrival:`}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{`${moment(selectedFlight.arrival_date).format(
-                        "ddd, DD MMM YYYY, "
-                      )}${selectedFlight.arrival_time}`}</Text>
-                    </View> */}
-                    <View
-                      style={{ flexDirection: "row", backgroundColor: "rgba(255,255,255,0.1)", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
-                    >
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 4,
-                          },
-                        ]}
-                      >{`${"Duration:"}`}</Text>
-                      <Text
-                        style={[
-                          styles.flightDetailText,
-                          {
-                            color: colours.white,
-                            fontSize: scale(14),
-                            padding: scale(10),
-                            flex: 6,
-                          },
-                        ]}
-                      >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
-                    </View>
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#424448",
+                      fontWeight:"500",
+                      fontSize: scale(14),
+                      paddingTop:scale(8),
+                      padding: scale(1),
+                    },
+                  ]}
+                >{`${"Duration"}`}</Text>
+                  <Text
+                  style={[
+                    styles.flightDetailText,
+                    {
+                      color: "#727272",
+                      fontWeight:"400",
+                      fontSize: scale(14),
+                      paddingTop:scale(5),
+                      padding: scale(1),
+                    
+                    },
+                  ]}
+                >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
                   </View>
+
+
+
+                  </View>
+            
                 </View>
               </View>
             </Animated.View>
@@ -2032,12 +1920,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         returnEndDate = new Date(rtnEndDate).getTime()
         returnExpireDate = new Date(goldExpirertnDate)
         if (returnExpireDate < returnEndDate) {
-          txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Inbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 60 days.`
           inbounddateRange = true
           days = 90
         }
         else {
-          txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Outbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 60 days.`
           days = 90
           outbounddateRange = true
         }
@@ -2049,13 +1937,13 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         returnExpireDate = new Date(silverExpirertnDate)
         if (returnExpireDate < returnEndDate) {
           days = 45
-          txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Inbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 45 days.`
           inbounddateRange = true
         }
         else {
           days = 45
           outbounddateRange = true
-          txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Outbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 45 days.`
         }
       }
       else {
@@ -2066,12 +1954,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         if (returnExpireDate < returnEndDate) {
           days = 20
           inbounddateRange = true
-          txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Inbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 20 days.`
         }
         else {
           days = 20
           outbounddateRange = true
-          txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Outbound date range.`
+          txtForPopup = `You are allowed a maximum date range of 20 days.`
         }
       }
       if (expireDate === departureEndDate) {
@@ -3082,14 +2970,14 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   showAlert1() {  
     Alert.alert(  
         '',  
-        'Upgrade Membership to see availability for all cabin classes',  
+        'Upgrade to Silver or Gold membership to see availability for all cabin classes',  
         [  
             {  
                 text: 'Cancel',  
                 onPress: () => console.log('Cancel Pressed'),  
                 style: 'Cancel',  
             },  
-            {text: 'OK', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
+            {text: 'Upgrade', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
         ]  
     );  
 }  
@@ -3153,7 +3041,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         classSelected:newClassArray
                       });
                     } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
                     }
                   }
               }
@@ -3198,7 +3086,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         classSelected: newClassArray
                       });
                     } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
                     }
                   }
               }
@@ -3246,7 +3134,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           classSelected:newClassArray,
                         });
                     } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
                     }
                 }
               }
@@ -3293,7 +3181,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         classSelected:newClassArray,
                       });
                     } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `seats aren't available currently` : 'seat isn’t available currently'}`);
+                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
                     }
                 }
               }
@@ -3504,7 +3392,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     const { isOffPeakValue, isPeakValue, airLinesDetailsObject, searchData } = this.state;
 
 
-    let txt = "No Flight Scheduled"
+    let txt = "No flight scheduled"
     let flightSchedule = this.props.flightSchedule;
     let actualDay = day.dateString;
     if (flightSchedule) {
@@ -3562,7 +3450,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           this.setState({ noFlightScheduleDate: actualDay,selectedDate:selectedDate, showTicketDetailModal: false,
             clickDate:actualDay
           })
-          this.setState({ noFlightScheduleAlertTxt: "No Seat Available in any Cabin Class" })
+          this.setState({ noFlightScheduleAlertTxt: "No seat available in any cabin class" })
 
         }
         else if (scheduleDateKey && availableDateKey) {
@@ -4275,7 +4163,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               source={IMAGE_CONST.LOGIN_ICON}
               style={{ marginTop: verticalScale(35), width: scale(106), height: scale(94) }}
             />
-            <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please login/Signup to use this feature"}</Text>
+            <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please log in/sign up to use this feature"}</Text>
             {/* {this.state.isSingleButton
             ? this.singleButtonView()
             : this.doubleButtonView()} */}
@@ -4288,7 +4176,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               <Text style={styles.rightButtonTextStyle}>
-                {"SignIn"}
+                {"Log in"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -4298,7 +4186,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               <Text style={styles.rightButtonTextStyle}>
-                {"Signup"}
+                {"Sign up"}
               </Text>
             </TouchableOpacity>
             </View>
@@ -4475,7 +4363,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     alignSelf: "flex-end",
                     marginTop:scale(10)
                   }}
-                    onPress={() => { this.Hide_Custom_Alert2()
+                    onPress={() => {this.Hide_Custom_Alert2()
                   }}
                 >
                   <Entypo
@@ -4554,7 +4442,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   marginBottom:scale(2),
                   alignSelf:'center'
                  }]}>
-                 Only one flight scheduled
+                 One flight scheduled
                </Text>
                <View style={{height:scale(70)}}>
                {this._renderFlightList()}

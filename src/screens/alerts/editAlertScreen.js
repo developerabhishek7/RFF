@@ -823,14 +823,14 @@ class EditAlertComponent extends Component {
   showAlert1() {  
     Alert.alert(  
         '',  
-        'Upgrade Membership to see availability for all cabin classes',  
+        'Upgrade to Silver or Gold membership to see availability for all cabin classes',  
         [  
             {  
                 text: 'Cancel',  
                 onPress: () => console.log('Cancel Pressed'),  
                 style: 'Cancel',  
             },  
-            {text: 'OK', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
+            {text: 'Upgrade', onPress: () =>  RootNavigation.navigationRef.navigate("MembershipContainerScreen") },  
         ]  
     );  
 }  
@@ -914,12 +914,12 @@ class EditAlertComponent extends Component {
       returnExpireDate = new Date(goldExpirertnDate)
 
       if (returnExpireDate < returnEndDate) {
-        txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Inbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 60 days.`
         inbounddateRange = true
         days = 90
       }
       else {
-        txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Outbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 60 days.`
         days = 90
         outbounddateRange = true
       }
@@ -933,13 +933,13 @@ class EditAlertComponent extends Component {
       returnExpireDate = new Date(silverExpirertnDate)
       if (returnExpireDate < returnEndDate) {
         days = 45
-        txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Inbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 45 days.`
         inbounddateRange = true
       }
       else {
         days = 45
         outbounddateRange = true
-        txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Outbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 45 days.`
       }
     }
     else {
@@ -951,12 +951,12 @@ class EditAlertComponent extends Component {
       if (returnExpireDate < returnEndDate) {
         days = 20
         inbounddateRange = true
-        txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Inbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 20 days.`
       }
       else {
         days = 20
         outbounddateRange = true
-        txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Outbound date range.`
+        txtForPopup = `You are allowed a maximum date range of 20 days.`
       }
     }
     if (expireDate === departureEndDate) {

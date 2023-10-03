@@ -30,7 +30,7 @@ export default class SourceDestinationListComponent extends Component {
     this.state={
       isOnFocus:false
     }
-    const { locationsObject, type, sourceSelected, allLocations,returnType,travelTo } = this.props.route.params
+    const { locationsObject, type, sourceSelected, allLocations,headerTxt,travelTo } = this.props.route.params
     
    // console.log("yes check on source destination findflight screen locaiton Object ---------------- ",locationsObject)
     // console.log("yes check on source destination findflight screen all Location ---------------- ",allLocations)
@@ -341,8 +341,8 @@ multipleCitiesTxt (){
   const {screenType,} = this.state
   let travelTo  = this.props.route.params.travelTo
   let returnType = this.props.route.params.returnType
-  console.log("yes check  inside the mutiple cities text - - - -   - - - - - - -",this.state.searchedList)
-  // console.log("yes check  inside the mutiple cities text - - - -   - - - - - - -",travelTo)
+  console.log("yes check  inside the mutiple cities text returnType - - - -   - - - - - - -",returnType)
+  console.log("yes check  inside the mutiple cities text travelTo - - - -   - - - - - - -",travelTo)
   return (
     <View style={{borderWidth:0,borderColor:"red"}}>
         <Text
@@ -358,7 +358,7 @@ multipleCitiesTxt (){
             }}
           >
             {
-              returnType == 0 ?
+              returnType == 1 ?
               <Fragment>
               {"We only let you choose hubs with flights to more than one place"}
               </Fragment>
@@ -407,7 +407,7 @@ singleCityTxt () {
 
 renderHeader() {
   const {screenType,searchText} = this.state
-
+  let headerTxt  = this.props.route.params.headerTxt
 
   console.log("yes pring seatch text  --fv- - - -f-f -b- ",searchText)
   return (
@@ -419,7 +419,7 @@ renderHeader() {
             this.props.navigation.goBack()}}>
         {IMAGE_CONST.IOS_BACK_ARROW}
       </TouchableOpacity>
-          <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>Search Destination</Text>
+          <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? headerTxt :  "Search Destination"}</Text>
           <Text>    </Text>
          </View>
          <View style={{marginTop:scale(5),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>

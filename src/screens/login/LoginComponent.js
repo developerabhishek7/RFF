@@ -37,15 +37,16 @@ import {
   setLoginStatus
 } from "../../actions/loginActions";
 import * as CustomAlert from "../../utils/showAlert";
-import { GoogleSignin,statusCodes } from "@react-native-google-signin/google-signin";
+import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
 import { colours } from "../../constants/ColorConst";
 import * as Utils from "../../utils/commonMethods";
 import { resetNetworkStatus } from "../../actions/commonActions";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import jwt_decode from "jwt-decode";
 import { getCountryList } from "../../actions/userActions";
- 
-import {GenerateUUID}  from "react-native-uuid"
+import SvgUri from 'react-native-svg-uri';
+
+import { GenerateUUID } from "react-native-uuid"
 // import crashlytics from "@react-native-firebase/crashlytics";
 class LoginComponent extends Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class LoginComponent extends Component {
       isLoginPressed: false,
       isInvalidEmail: false,
       showNetworkPopUp: false,
+      isOnFocus: false,
+      isOnFocusPassword: false,
       // emailProps:this.props.route.params.email ? this.props.route.params.email : "",
       // passwordProps:this.props.route.params.password ? this.props.route.params.password : ""
     };
@@ -75,11 +78,11 @@ class LoginComponent extends Component {
     header: null,
   });
 
-  async componentDidMount () {
+  async componentDidMount() {
     // console.log("yes check here uuid  - - - - -",uuid())
 
     // crashlytics().log("App mounted.............................");
-   await GoogleSignin.configure()
+    await GoogleSignin.configure()
     this.props.getCountryListAction()
     await this.componentWillFocus();
 
@@ -94,11 +97,11 @@ class LoginComponent extends Component {
     await AsyncStorage.setItem("navigateToLogin", "true");
 
     // console.log("check param on did mount #########",this.props.navigation.getParam("email"))
-      // if(this.props.route.params && this.props.route.params.email != undefined && this.props.route.params.email != "" && this.props.route.params.email != null){
-      //   console.log("check param on did mount 111111 #########",this.props.route.params.email)    
-      // }
-     
-    
+    // if(this.props.route.params && this.props.route.params.email != undefined && this.props.route.params.email != "" && this.props.route.params.email != null){
+    //   console.log("check param on did mount 111111 #########",this.props.route.params.email)    
+    // }
+
+
 
 
   }
@@ -175,7 +178,7 @@ class LoginComponent extends Component {
   //     androidSdkKey: "Android SDK Key",
   //     iOsSdkKey: "iOS SDK Key",
   //   });
-  
+
 
   //   return (
   //     <CheckoutCart
@@ -196,7 +199,7 @@ class LoginComponent extends Component {
   // }
 
 
- 
+
 
 
   async onAppleButtonPress() {
@@ -205,7 +208,7 @@ class LoginComponent extends Component {
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
     var decoded = jwt_decode(appleAuthRequestResponse.identityToken);
-    const userInfo = {};       
+    const userInfo = {};
     userInfo.auth_uid = appleAuthRequestResponse.user;
     userInfo.auth_token = appleAuthRequestResponse.identityToken;
     userInfo.provider = "apple";
@@ -230,7 +233,7 @@ class LoginComponent extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.userData) {
-    
+
       let userDetails = nextProps.userData;
       // this.props.navigation.navigate("Authenticated");
       // ------------- Commented for now only------------------
@@ -248,15 +251,15 @@ class LoginComponent extends Component {
 
         let email = ""
         let password = ""
-        if(this.props.route.params){
-           email = this.props.route.params.email
-           password = this.props.route.params.password
-        }  
+        if (this.props.route.params) {
+          email = this.props.route.params.email
+          password = this.props.route.params.password
+        }
 
         const userData = {
           user: {
-            email:email,
-            password:password,
+            email: email,
+            password: password,
           },
         };
         // this.props.signInAction(userData)                   
@@ -318,7 +321,7 @@ class LoginComponent extends Component {
         user: {
           email,
           password,
-          sessionId:sessionId
+          sessionId: sessionId
         },
       };
       this.props.signInAction(userData);
@@ -386,7 +389,7 @@ class LoginComponent extends Component {
 
 
 
-  
+
     try {
       try {
         let imageObject = {};
@@ -400,7 +403,7 @@ class LoginComponent extends Component {
 
         this.setState({ userInfo: userGoogleInfo });
 
-        console.log("yes chekc here  - - - - - - ",userGoogleInfo.user.photo)
+        console.log("yes chekc here  - - - - - - ", userGoogleInfo.user.photo)
 
         const image = await Utils.getImageInfo(userGoogleInfo.user.photo);
         // imageObject["uri"] = userGoogleInfo.user.photo;
@@ -409,16 +412,16 @@ class LoginComponent extends Component {
 
         // console.log("yes check here iomag ##### ",image)
 
-        if(userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null){
-          imageObject["uri"] = userGoogleInfo.user.photo ?  userGoogleInfo.user.photo :  null
-          imageObject["type"] =  image ? image.type.split("/")[1] : null
+        if (userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null) {
+          imageObject["uri"] = userGoogleInfo.user.photo ? userGoogleInfo.user.photo : null
+          imageObject["type"] = image ? image.type.split("/")[1] : null
           imageObject["fileName"] = "RFFUser";
         }
 
         let sessionId = uuid.v4()
 
 
-        console.log("yes chek here session id - - - - -",sessionId)
+        console.log("yes chek here session id - - - - -", sessionId)
 
         const userInfo = {};
 
@@ -446,11 +449,11 @@ class LoginComponent extends Component {
           { user: userInfo },
           (res) => this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_IN_GOOGLE_EVENT),
           (res) => this.socialLoginFailureCallBack(res),
-          imageObject?imageObject : null,
+          imageObject ? imageObject : null,
           imageObject.type ? imageObject.type : null
         );
       } catch (error) {
-        
+
         console.log("Message", error.message);
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
           console.log("User Cancelled the Login Flow");
@@ -495,20 +498,9 @@ class LoginComponent extends Component {
     const { isLoginPressed, password, email, isInvalidEmail } = this.state;
     return (
       <View style={styles.inputFieldContainer}>
-         <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isLoginPressed && Utils.isEmptyString(email)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.EMAIL}
-          </Text>
+
         {/* <View style={styles.emailContainer}>
+         
           <TextInput
             style={[
               styles.input,
@@ -534,6 +526,7 @@ class LoginComponent extends Component {
             underlineColorAndroid={'#FFFFFF'}
 
           />
+
           {isInvalidEmail && !Validators.validEmail(email) && (
             <Text style={styles.errorText}>
               {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
@@ -541,7 +534,9 @@ class LoginComponent extends Component {
           )}
         </View> */}
 
+
         <View style={styles.passContainer1}>
+
           <TextInput
             ref={(input) => {
               this.secondTextInput = input;
@@ -555,7 +550,18 @@ class LoginComponent extends Component {
                     : colours.borderBottomLineColor,
               },
             ]}
-            placeholder=""
+            placeholder={STR_CONST.EMAIL}
+            onFocus={() => {
+              this.setState({
+                isOnFocus: true
+              })
+            }}
+            onBlur={() => {
+              this.setState({
+                isOnFocus: false
+              })
+            }}
+            placeholderTextColor={this.state.isOnFocus ? colours.lightGreyPlaceholder : null}
             autoCapitalize="none"
             onChangeText={(email) => {
               this.setState({ email });
@@ -571,42 +577,32 @@ class LoginComponent extends Component {
             underlineColorAndroid={'#FFFFFF'}
           />
           <TouchableOpacity
-           
-            style={styles.eyeContainer}
+            style={styles.emailContainer}
           >
-            <FastImage
+            <SvgUri
+              width={scale(20)}
+              height={scale(20)}
+              source={IMG_CONST.EMAIL_LOGO_SVG}
+            />
+            {/* <FastImage
               style={
-               {height:scale(20),width:scale(20),marginBottom:scale(4),marginRight:scale(5)}
+                { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
               }
               resizeMode="contain"
-              source={ IMG_CONST.EMAIL_LOGO
+              source={IMG_CONST.EMAIL_LOGO
               }
-            />
+            /> */}
           </TouchableOpacity>
         </View>
 
         {isInvalidEmail && !Validators.validEmail(email) && (
-            <Text style={styles.errorText}>
-              {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
-            </Text>
-          )}
-
-        <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isLoginPressed && Utils.isEmptyString(password)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-                    marginTop:scale(30),marginBottom:scale(-19)
-              },
-            ]}
-          >
-            {STR_CONST.PASSWORD}
+          <Text style={styles.errorText}>
+            {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
           </Text>
+        )}
+
         <View style={styles.passContainer}>
-          
+
           <TextInput
             ref={(input) => {
               this.secondTextInput = input;
@@ -620,7 +616,18 @@ class LoginComponent extends Component {
                     : colours.borderBottomLineColor,
               },
             ]}
-            placeholder=""
+            placeholder={STR_CONST.PASSWORD}
+            onFocus={() => {
+              this.setState({
+                isOnFocusPassword: true
+              })
+            }}
+            onBlur={() => {
+              this.setState({
+                isOnFocusPassword: false
+              })
+            }}
+            placeholderTextColor={this.state.isOnFocusPassword ? colours.lightGreyPlaceholder : null}
             autoCapitalize="none"
             onChangeText={(password) => {
               this.setState({ password });
@@ -642,7 +649,18 @@ class LoginComponent extends Component {
             }
             style={styles.eyeContainer}
           >
-            <FastImage
+
+            <SvgUri
+              width= {scale(20)}
+              height= {scale(20)}
+             source={
+                this.state.isHidePassword
+                  ? IMG_CONST.PASSWORD_HIDDEN
+                  : IMG_CONST.PASSWORD_SHOW
+              } 
+            />
+
+            {/* <FastImage
               style={
                 this.state.isHidePassword
                   ? styles.inVisibleEye
@@ -653,7 +671,7 @@ class LoginComponent extends Component {
                   ? IMG_CONST.EYE_INVISIBLE
                   : IMG_CONST.EYE_VISIBLE
               }
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         <Text
@@ -668,34 +686,34 @@ class LoginComponent extends Component {
 
   renderButtonContainer() {
 
-    const {email,password} = this.state;
+    const { email, password } = this.state;
 
     return (
       <Fragment>
         {
           email && password ?
-          <TouchableOpacity
-          onPress={() => this.validation()}
-          style={[styles.signInButton,{
-            backgroundColor: colours.lightBlueTheme,
-          }]}
-          activeOpacity={0.7}
-  >
-          <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
-        </TouchableOpacity>
-          : 
-          <TouchableOpacity
-          // onPress={() => this.validation()}
-          style={[styles.signInButton,{
-            backgroundColor:!email && !password ? colours.gray :colours.lightBlueTheme,
-          }]}
-          activeOpacity={0.7}
-  >
-  
-          <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.validation()}
+              style={[styles.signInButton, {
+                backgroundColor: colours.lightBlueTheme,
+              }]}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity
+              // onPress={() => this.validation()}
+              style={[styles.signInButton, {
+                backgroundColor: !email && !password ? colours.gray : colours.lightBlueTheme,
+              }]}
+              activeOpacity={0.7}
+            >
+
+              <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
+            </TouchableOpacity>
         }
-     
+
       </Fragment>
     );
   }
@@ -705,7 +723,7 @@ class LoginComponent extends Component {
       <View style={styles.googleFBContainer}>
         <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_IN}</Text>
         <View style={styles.buttonContainer}>
-        
+
           <TouchableOpacity
             onPress={() => this.onPressGoogleSocialLogin()}
             style={styles.googleFb}
@@ -714,7 +732,7 @@ class LoginComponent extends Component {
             {/* <Text
             style={styles.iconTxt}
           > Google</Text> */}
-       
+
           </TouchableOpacity>
 
 
@@ -729,7 +747,7 @@ class LoginComponent extends Component {
           
          
           </TouchableOpacity> */}
-        
+
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}
@@ -761,13 +779,13 @@ class LoginComponent extends Component {
   }
   skipButton() {
     return (
-    <TouchableOpacity
-      onPress={() => {
-        this.props.navigation.navigate("FindFlightContainerScreen")    
-          }}
-      style={styles.skipButton1}
+      <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("FindFlightContainerScreen")
+        }}
+        style={styles.skipButton1}
       >
-      <Text style={styles.skipText1}>{STR_CONST.SKIP}</Text>
+        <Text style={styles.skipText1}>{STR_CONST.SKIP}</Text>
       </TouchableOpacity>
     );
   }
@@ -782,27 +800,39 @@ class LoginComponent extends Component {
 
   render() {
     return (
-        <FastImage source={IMG_CONST.Login_bg} style={{height:"100%",width:"100%",}}
-          imageStyle={{marginTop:scale(30)}}
-        >
+      <View style={{ height: "100%", width: "100%", backgroundColor: colours.lightBlueBackground }}>
         {this.renderLogoContainer()}
-        <View style={{justifyContent:"center",alignItems:"center",marginTop:scale(60)}}>
-        {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
+
+        <FastImage
+          source={IMG_CONST.Login_img}
+          style={{ height: scale(180), width: scale(180), alignSelf: 'center' }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
          > */}
           {/* {this.renderLogoContainer()} */}
-        
-          {this.renderInputFields()}
-          {this.renderButtonContainer()}
-          {this.renderGoogleFBButtonContainer()}
-          <View style={{flexDirection:"row",borderWidth:0,justifyContent:"space-around",alignItems:"center",marginTop:scale(1),marginBottom:scale(20)}}>
-          {this.renderBottomTextContainer()}
-          {this.skipButton()}
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps={"always"}
+            showsVerticalScrollIndicator={false}
+          >
+            {this.renderInputFields()}
+            {this.renderButtonContainer()}
+            {this.renderGoogleFBButtonContainer()}
+          </KeyboardAwareScrollView>
+          <View style={{
+            width: scale(320),
+            flexDirection: "row", borderWidth: 0, justifyContent: "space-around", alignItems: "center", marginTop: scale(1), marginBottom: scale(20)
+          }}>
+            {this.renderBottomTextContainer()}
+            {this.skipButton()}
           </View>
-        {/* </KeyboardAwareScrollView> */}
-        {/* <TransLoader isLoading={this.state.isLoading} /> */}
+          {/* </KeyboardAwareScrollView> */}
+          {/* <TransLoader isLoading={this.state.isLoading} /> */}
         </View>
-        </FastImage>
-   
+      </View>
+
     );
   }
 }
@@ -814,7 +844,7 @@ const mapDispatchToProps = (dispatch) => ({
     errorCallback,
     imageObject,
     extension
-  ) =>  
+  ) =>
     dispatch(
       socialLogin(
         userData,

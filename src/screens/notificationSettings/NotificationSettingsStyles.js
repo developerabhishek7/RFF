@@ -13,22 +13,24 @@ export default StyleSheet.create({
     fontFamily: appFonts.INTER_REGULAR,
   },
   notificationTitle: {
-    fontSize: scale(14),
+    fontSize: scale(15),
     color: colours.darkBlueTheme,
     padding:scale(4),
     marginStart:scale(-25),
     fontFamily: appFonts.INTER_REGULAR,
   },
   notificationDetail: {
-    fontSize: scale(12),
+    fontSize: scale(13),
+    fontWeight:'400',
     color: colours.greyText,
     fontFamily: appFonts.INTER_REGULAR,
     marginTop:verticalScale(5),
     borderWidth:0,
     width:scale(270),
-    fontWeight:"600",
     alignSelf:"center",
-    margin:scale(7),marginBottom:scale(20)
+    marginBottom:scale(20),
+    lineHeight:20,
+    paddingRight:scale(40),
   },
   textInputHeading: {
     fontSize: scale(13),
@@ -87,7 +89,6 @@ export default StyleSheet.create({
   },
   availabilityAlertView: {
     marginHorizontal: scale(35),
-    marginTop: verticalScale(20),
     marginBottom: verticalScale(40),
   },
   availabilityAlertInnerView: {
@@ -106,8 +107,10 @@ export default StyleSheet.create({
     borderWidth:1,borderColor:"#abe9f6",
     backgroundColor:"#f6fdfe",
     borderRadius:scale(10),
-    marginTop:scale(20),
-    width:scale(320)
+    marginTop:scale(22),
+    width:scale(320),
+    paddingTop: scale(10),
+    paddingBottom: scale(10),
     // ,margin:scale(7),
     // padding:scale(3),
   },

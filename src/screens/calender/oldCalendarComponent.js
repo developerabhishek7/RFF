@@ -1108,7 +1108,7 @@
 //                 <Text style={[styles.seatNumberText1,{
 //                   marginTop:scale(15),marginBottom:scale(5)
 //                 }]}>
-//                   Only one flight scheduled
+//                   One flight scheduled
 //                 </Text>
 //                 : null
 //             }
@@ -1389,7 +1389,7 @@
 //                               );
 //                             }}
 //                           >
-//                             <Text style={styles.aviosText2} >{"No Flight Scheduled"}</Text>
+//                             <Text style={styles.aviosText2} >{"No flight scheduled"}</Text>
 //                           </TouchableOpacity>
 //                           :
 //                           null
@@ -2214,12 +2214,12 @@
 //         returnEndDate = new Date(rtnEndDate).getTime()
 //         returnExpireDate = new Date(goldExpirertnDate)
 //         if (returnExpireDate < returnEndDate) {
-//           txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Inbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 60 days.`
 //           inbounddateRange = true
 //           days = 90
 //         }
 //         else {
-//           txtForPopup = `Maximum date range allowed is 60 days. Please reduce your Outbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 60 days.`
 //           days = 90
 //           outbounddateRange = true
 //         }
@@ -2231,13 +2231,13 @@
 //         returnExpireDate = new Date(silverExpirertnDate)
 //         if (returnExpireDate < returnEndDate) {
 //           days = 45
-//           txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Inbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 45 days.`
 //           inbounddateRange = true
 //         }
 //         else {
 //           days = 45
 //           outbounddateRange = true
-//           txtForPopup = `Maximum date range allowed is 45 days. Please reduce your Outbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 45 days.`
 //         }
 //       }
 //       else {
@@ -2248,12 +2248,12 @@
 //         if (returnExpireDate < returnEndDate) {
 //           days = 20
 //           inbounddateRange = true
-//           txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Inbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 20 days..`
 //         }
 //         else {
 //           days = 20
 //           outbounddateRange = true
-//           txtForPopup = `Maximum date range allowed is 20 days. Please reduce your Outbound date range.`
+//           txtForPopup = `You are allowed a maximum date range of 20 days..`
 //         }
 //       }
 //       if (expireDate === departureEndDate) {
@@ -3413,7 +3413,7 @@
 
 //   onDayPressed(day, isOffPeakValue1) {
 //     const { isOffPeakValue, isPeakValue, airLinesDetailsObject, searchData } = this.state;
-//     let txt = "No Flight Scheduled"
+//     let txt = "No flight scheduled"
 //     let flightSchedule = this.props.flightSchedule;
 //     let actualDay = day.dateString;
 //     if (flightSchedule) {
@@ -3456,7 +3456,7 @@
 //           }
 //           // this.Show_Custom_Alert2()
 //           // this.setState({ noFlightScheduleDate: actualDay })
-//           // this.setState({ noFlightScheduleAlertTxt: "No Flight Scheduled" })
+//           // this.setState({ noFlightScheduleAlertTxt: "No flight scheduled" })
 //         }
 
 
@@ -4279,7 +4279,7 @@
 //               source={IMAGE_CONST.LOGIN_ICON}
 //               style={{ marginTop: verticalScale(35), width: scale(106), height: scale(94) }}
 //             />
-//             <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please login/Signup to use this feature"}</Text>
+//             <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please log in/sign up to use this feature"}</Text>
 //             {/* {this.state.isSingleButton
 //             ? this.singleButtonView()
 //             : this.doubleButtonView()} */}
@@ -4555,7 +4555,7 @@
 //                   marginBottom:scale(2),
 //                   alignSelf:'center'
 //                  }]}>
-//                  Only one flight scheduled
+//                  One flight scheduled
 //                </Text>
 //                <View style={{height:scale(70)}}>
 //                {this._renderFlightList()}

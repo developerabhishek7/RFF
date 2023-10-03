@@ -182,23 +182,20 @@ export default StyleSheet.create({
   detailLocationText:{
     width: width - scale(30),
     paddingHorizontal: verticalScale(10),
-    color: colours.white,
+    color: "#132C52",
     fontFamily: STRING_CONST.appFonts.INTER_BOLD,
     fontSize: scale(18),
     fontWeight: "bold",
-    marginTop: scale(20),
+    marginTop: scale(10),
   },
   timingContainer: {
     marginRight: scale(10),
     marginVertical: verticalScale(10),
     borderRadius:scale(4),
-    paddingHorizontal:scale(15),
-    paddingVertical:verticalScale(10),
     flexDirection:'row',
     justifyContent:'space-between',
-    alignItems:'center',
     alignSelf:"flex-start",
-    marginHorizontal:scale(15),
+    marginStart:scale(17)
   },
   animatedView1: {
     position: "absolute",
@@ -222,7 +219,6 @@ export default StyleSheet.create({
     borderTopRightRadius: scale(30),
     paddingTop:verticalScale(7),
     zIndex: 5,    
-    // borderWidth:1,
     borderWidth:scale(2),
     elevation:1,
     borderColor:"#EFEFEF",
@@ -288,7 +284,7 @@ export default StyleSheet.create({
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
     fontSize: scale(15),
     fontWeight:"700",
-    color:"#FFF"
+    color:"#132C52",
   },
   classText: {
     fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,

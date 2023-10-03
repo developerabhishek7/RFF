@@ -297,6 +297,7 @@ class DrawerComponentComponent extends Component {
       STR_CONST.LOGOUT_MSG,
       null,
       [
+        { text: "Cancel", style: "cancel" },
         {
           text: "Log out",
           onPress: () => {
@@ -306,7 +307,7 @@ class DrawerComponentComponent extends Component {
             this.bindLogoutAndSocialLogin()
           },
         },
-        { text: "Cancel", style: "cancel" },
+      
       ],
       { cancelable: false }
     );

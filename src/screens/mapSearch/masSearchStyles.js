@@ -47,7 +47,7 @@ export default StyleSheet.create({
     padding: verticalScale(13),
     alignSelf: "center",
     justifyContent: "center",
-    height: verticalScale(50),
+    height: verticalScale(60),
   },
 
   buttonTextStyle: {
@@ -90,7 +90,7 @@ export default StyleSheet.create({
   tabTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
-    fontSize:scale(14),
+    fontSize:scale(16),
     fontWeight: "bold",
     textAlign:'center',
     color:"#FFF"
@@ -109,7 +109,6 @@ export default StyleSheet.create({
     flexDirection: "row",
     marginTop: verticalScale(15),
     alignItems: "center",
-    borderBottomWidth: 0.5,
     borderBottomColor: colours.borderBottomLineColor,
     width: width / 2 - 40,
   },
@@ -118,7 +117,7 @@ export default StyleSheet.create({
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
     fontSize:scale(14),
-    fontWeight: "bold",
+    fontWeight: "700",
     marginVertical: verticalScale(10),
     color: colours.lightGreyish,
   },
@@ -142,8 +141,8 @@ export default StyleSheet.create({
   airlineMembershipTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(10),
-    fontSize:scale(10),
-    fontWeight: "bold",
+    fontSize:scale(14),
+    fontWeight: '400',
     marginTop: verticalScale(3),
     color: colours.lightGreyish,
   },

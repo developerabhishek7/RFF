@@ -31,13 +31,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
 import * as API_CONST from "../../helpers/config";
-import {getAccessToken, getUserId} from '../../constants/DataConst'
+import { getAccessToken, getUserId } from '../../constants/DataConst'
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import { getUserInfo } from "../../actions/userActions";
 import axios from 'axios'
 import { Alert } from "react-native";
 
-import { URL,USER_API_URL } from "../../../env.json";
+import { URL, USER_API_URL } from "../../../env.json";
 
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
@@ -63,8 +63,8 @@ export default class ProfileScreenComponent extends Component {
       //     JSON.parse(this.props.userData.address.airpot_city)
       //   )
       //   : "",
-      departureCity:"",
-      selectedCountry:"",
+      departureCity: "",
+      selectedCountry: "",
       Alert_Visibility2: false,
       flightsTakenAnnually: this.getDataObject(
         userData.flights_taken_annually,
@@ -80,7 +80,7 @@ export default class ProfileScreenComponent extends Component {
       submitPressed: false,
       pickerCustomButton: [],
       showBorder: 0,
-      viewImage:false,
+      viewImage: false,
       countryListArray: [],
       stateListArray: userData.address
         ? this.onCountrySelected(
@@ -90,7 +90,7 @@ export default class ProfileScreenComponent extends Component {
       cityListArray: [],
       countryArray: STR_CONST.COUNTRY_ARRAY,
       isLoader: false,
-      cityAddress:""
+      cityAddress: ""
     };
   }
 
@@ -163,10 +163,10 @@ export default class ProfileScreenComponent extends Component {
   };
 
 
-  componentWillUnmount() {   
+  componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
-    this.handleBackButton(this.props.navigation),
-  );
+      this.handleBackButton(this.props.navigation),
+    );
   }
 
 
@@ -232,7 +232,7 @@ export default class ProfileScreenComponent extends Component {
       userInfo["flights_taken_annually"] = flightsTakenAnnually.value;
       userInfo["travelling_abroad_in_next_12_months"] =
         travellingAbroadInNext12Months.value;
-     
+
 
       // return false
 
@@ -281,7 +281,7 @@ export default class ProfileScreenComponent extends Component {
 
     if (userData.image && !isEmptyString(userData.image)) {
       this.setState({
-        pickerCustomButton: [{ name: "Remove", title: STR_CONST.REMOVE_PHOTO },{ name: "View", title: "View Image" }],
+        pickerCustomButton: [{ name: "Remove", title: STR_CONST.REMOVE_PHOTO }, { name: "View", title: "View Image" }],
       });
     }
     if (!isEmptyString(userData.country)) {
@@ -299,9 +299,9 @@ export default class ProfileScreenComponent extends Component {
       this.componentWillFocus.bind(this)
     );
 
- BackHandler.addEventListener('hardwareBackPress', () =>
- this.handleBackButton(this.props.navigation),
-);
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.handleBackButton(this.props.navigation),
+    );
 
   }
 
@@ -317,10 +317,10 @@ export default class ProfileScreenComponent extends Component {
       });
       let address = userData.address
       this.setState({
-        cityAddress:address
-    })
+        cityAddress: address
+      })
       if (userData.first_name !== prevProps.userData.first_name && userData.last_name !== prevProps.userData.last_name) {
-        const { first_name, last_name, image,address } = this.props.userData
+        const { first_name, last_name, image, address } = this.props.userData
         this.setState({
           firstName: first_name ? first_name : "",
           lastName: last_name ? last_name : "",
@@ -331,7 +331,7 @@ export default class ProfileScreenComponent extends Component {
         this.setState({
           pickerCustomButton: [
             { name: "Remove", title: STR_CONST.REMOVE_PHOTO },
-            {  name: "View", title: "View Image" },
+            { name: "View", title: "View Image" },
           ],
         });
       } else if (!this.props.userData.image) {
@@ -374,93 +374,93 @@ export default class ProfileScreenComponent extends Component {
 
 
 
-renderLoader() {
-  return (
-    <Modal
-      transparent={true}
-      animationType={'none'}
-      visible={this.state.isLoader}
-    >
-      <View style={{
-        flex: 1, justifyContent: 'center',
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
-        alignItems: 'center',
-        width: width + 4, height: height,
-        marginStart: scale(0),
-        marginEnd: scale(0),
-        marginTop: scale(0),
-        marginBottom: scale(0),
-      }}>
+  renderLoader() {
+    return (
+      <Modal
+        transparent={true}
+        animationType={'none'}
+        visible={this.state.isLoader}
+      >
         <View style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
+          flex: 1, justifyContent: 'center',
+          backgroundColor: 'rgba(52, 52, 52, 0.8)',
           alignItems: 'center',
-          justifyContent: 'center',
+          width: width + 4, height: height,
+          marginStart: scale(0),
+          marginEnd: scale(0),
+          marginTop: scale(0),
+          marginBottom: scale(0),
         }}>
-          <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+          <View style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
+              <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
-  )
-}
+      </Modal>
+    )
+  }
 
 
 
 
-uploadImage = async (imageData) => {
-   this.setState({isLoader:true})
-      const accesstoken = await getAccessToken();
-      const userId = await getUserId();
-      const authToken = API_CONST.AUTH0RIZATION_TOKEN;
-      const data = new FormData();
-      data.append('image', { 
-        uri: imageData.uri,
-        name: 'image.jpg',
-        type: imageData.type
-      }
-      );
-     
-      let url = `${USER_API_URL}/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
-     
-      var config = {
-        method: 'put',
-        url: url,
-        headers: {
-          'authorization': authToken,
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },  
-        data:data,
+  uploadImage = async (imageData) => {
+    this.setState({ isLoader: true })
+    const accesstoken = await getAccessToken();
+    const userId = await getUserId();
+    const authToken = API_CONST.AUTH0RIZATION_TOKEN;
+    const data = new FormData();
+    data.append('image', {
+      uri: imageData.uri,
+      name: 'image.jpg',
+      type: imageData.type
+    }
+    );
+
+    let url = `${USER_API_URL}/v1/users/${userId}/upload_profile_image?user[access_token]=${accesstoken}`
+
+    var config = {
+      method: 'put',
+      url: url,
+      headers: {
+        'authorization': authToken,
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+      data: data,
     };
-      let res = await axios(config).then((res)=>{
-        this.setState({isLoader:false})
-        this.props.getUserInfoAction()
-          // this.props.navigation.goBack()
+    let res = await axios(config).then((res) => {
+      this.setState({ isLoader: false })
+      this.props.getUserInfoAction()
+      // this.props.navigation.goBack()
 
-      }).catch((error)=>{
-        this.isAlert()
-        // this.setState({isLoader:false})
-       
-      })
-};
+    }).catch((error) => {
+      this.isAlert()
+      // this.setState({isLoader:false})
 
-isAlert = () => {
-  Alert.alert(
-    'Message',
-    'Format is not matching!',
-    [{text: 'OK',onPress: ()=>{ this.setState({isLoader:false})}}],
-    {cancelable: false},
-  );
- 
-}
+    })
+  };
+
+  isAlert = () => {
+    Alert.alert(
+      'Message',
+      'Format is not matching!',
+      [{ text: 'OK', onPress: () => { this.setState({ isLoader: false }) } }],
+      { cancelable: false },
+    );
+
+  }
 
   chooseFile = () => {
-   
+
     var options = {
       imageFileType: 'png',
       title: "Select Image",
@@ -470,7 +470,7 @@ isAlert = () => {
         path: "images",
       },
     };
-    
+
     // ImagePicker.showImagePicker(options, (response) => { 
     //   if (response.didCancel) {
     //     console.log("User cancelled image picker");
@@ -483,7 +483,7 @@ isAlert = () => {
     //     else{
     //       this.props.deleteProfileImageAction();
     //     }
-     
+
     //   } else {
     //     let url = response.uri
     //     // let uri = url.split('.jpg').join('.png');
@@ -493,46 +493,60 @@ isAlert = () => {
     //     type:response.type,
     //   }
     //     this.uploadImage(imageData)
-        
+
     //   }
     // });
   };
 
   profileImage() {
-    const {userData} = this.props
+    const { userData } = this.props
     return (
       <FastImage
         source={IMG_CONST.PROFILE_IMAGE_RING}
         style={styles.imageBackgroundStyle}
       >
         <TouchableOpacity onPress={this.chooseFile.bind(this)}>
-          <FastImage
-            source={null}
-            style={[
-              styles.profileImage,
-              {
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: colours.darkBlueTheme,
-              },
-            ]}
-          >
-            {this.state.addFileURI && this.state.addFileURI !== "" ? (
+
+          <View style={{
+            borderColor: "#35c1e0", width: scale(135), height: scale(135),
+            backgroundColor: '#35c1e0',
+            marginTop: scale(12),
+            borderWidth: scale(4), borderRadius: scale(100)
+          }}>
+            <View style={{
+              borderColor: "#d7f3f8", width: scale(125), height: scale(125),
+              backgroundColor: '#d7f3f8',
+              borderWidth: scale(4), borderRadius: scale(100)
+            }}>
               <FastImage
-                style={styles.innerProfileImage}
-                source={{
-                  uri: this.state.addFileURI,
-                  priority: FastImage.priority.normal,
-                  cache: FastImage.cacheControl.immutable,
-                }}
-              />
-            ) : (
-              <Text style={styles.nameInitialsStyle}>
-                {this.state.firstName && this.state.firstName[0].toUpperCase()}
-                {this.state.lastName && this.state.lastName[0].toUpperCase()}
-              </Text>
-            )}
-          </FastImage>
+                source={null}
+                style={[
+                  styles.profileImage,
+                  {
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: colours.darkBlueTheme,
+                  },
+                ]}
+              >
+                {this.state.addFileURI && this.state.addFileURI !== "" ? (
+                  <FastImage
+                    style={styles.innerProfileImage}
+                    source={{
+                      uri: this.state.addFileURI,
+                      priority: FastImage.priority.normal,
+                      cache: FastImage.cacheControl.immutable,
+                    }}
+                  />
+                ) : (
+                  <Text style={styles.nameInitialsStyle}>
+                    {this.state.firstName && this.state.firstName[0].toUpperCase()}
+                    {this.state.lastName && this.state.lastName[0].toUpperCase()}
+                  </Text>
+                )}
+              </FastImage>
+            </View>
+          </View>
         </TouchableOpacity>
       </FastImage>
     );
@@ -577,7 +591,7 @@ isAlert = () => {
     //     selectedCountryStateListArray.push(item);
     //   }
     // });
-    this.setState({                       
+    this.setState({
       stateListArray: selectedCountryStateListArray,
     });
     return selectedCountryStateListArray;
@@ -710,7 +724,7 @@ isAlert = () => {
           ]}
         >
           <TextInput
-          underlineColorAndroid="transparent"
+            underlineColorAndroid="transparent"
             style={styles.textInput}
             placeholder=""
             autoCapitalize={"words"}
@@ -817,9 +831,9 @@ isAlert = () => {
 
   // addUserPreferenceLocation() {
   //   const { departureLocationList, submitPressed, departureCity, } = this.state;
-    
+
   //   // console.log("check here departure location list ####### ",departureLocationList)
-   
+
   //   return (
   //     <TouchableOpacity
   //       style={{ marginTop: verticalScale(32) }}
@@ -887,17 +901,17 @@ isAlert = () => {
   //     </TouchableOpacity>
   //   );
   // }
-  
+
 
   addUserPreferenceLocation() {
-    const { departureLocationList, departureCity,cityAddress } = this.state;
+    const { departureLocationList, departureCity, cityAddress } = this.state;
     let airpotName = ""
-    if(cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0){
+    if (cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0) {
 
       let data = JSON.parse(cityAddress.airpot_city)
-       airpotName = data.name
+      airpotName = data.name
     }
-     return (
+    return (
       <TouchableOpacity
         style={{ marginTop: verticalScale(32) }}
         onPress={() => {
@@ -928,7 +942,7 @@ isAlert = () => {
           style={[
             styles.textInputView,
             {
-              borderBottomColor:colours.borderBottomLineColor,
+              borderBottomColor: colours.borderBottomLineColor,
             },
           ]}
         >
@@ -942,19 +956,19 @@ isAlert = () => {
               },
             ]}
           >
-            {departureCity ? 
+            {departureCity ?
               <Text style={styles.countryDetailText}>
                 {`${departureCity.city_name} (${departureCity.code})`}
               </Text>
-             : 
-            airpotName ? 
-            <Text style={styles.countryDetailText}>
-            {airpotName}
-            </Text>
-            : 
-              <Text style={styles.countryText}>
-                {STRING_CONST.PREFFERED_DEPARTURE}
-              </Text>
+              :
+              airpotName ?
+                <Text style={styles.countryDetailText}>
+                  {airpotName}
+                </Text>
+                :
+                <Text style={styles.countryText}>
+                  {STRING_CONST.PREFFERED_DEPARTURE}
+                </Text>
             }
 
             {IMG_CONST.DARK_SORT_DOWN}
@@ -976,16 +990,16 @@ isAlert = () => {
             {/* <Text style={{ color: colours.redColor }}> *</Text> */}
           </Text>
         ) : null}
-        <ModalDropdown        
-          showsVerticalScrollIndicator={true}          
+        <ModalDropdown
+          showsVerticalScrollIndicator={true}
           onDropdownWillShow={() => {
 
             this.setState({
               showBorder: 1,
-              colours:"red"
+              colours: "red"
             });
           }}
-          
+
           onDropdownWillHide={() => {
             this.setState({
               showBorder: 0,
@@ -1001,15 +1015,15 @@ isAlert = () => {
                   ? colours.redColor
                   : colours.borderBottomLineColor,
             },
-          ]}          
+          ]}
           dropdownStyle={{
             width: scale(302),
             borderColor: "gray",
             height: STR_CONST.ageBandOption.length * 50,
             borderTopWidth: 0.5,
-            borderTopColor:showBorder == 1 ? "gray": "skyblue",
-            borderBottomColor:showBorder == 1 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderTopColor: showBorder == 1 ? "gray" : "skyblue",
+            borderBottomColor: showBorder == 1 ? "gray" : "skyblue",
+            borderBottomWidth: 0.5
           }}
           onSelect={(option) => {
             this.setState({
@@ -1074,13 +1088,13 @@ isAlert = () => {
             },
           ]}
           dropdownStyle={{
-            width: scale(302),          
-            height: STR_CONST.genderOptions.length * 50,                     
-            borderColor: "gray",       
+            width: scale(302),
+            height: STR_CONST.genderOptions.length * 50,
+            borderColor: "gray",
             borderTopWidth: 0.5,
-            borderTopColor:showBorder == 2 ? "gray": "skyblue",
-            borderBottomColor:showBorder == 2 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderTopColor: showBorder == 2 ? "gray" : "skyblue",
+            borderBottomColor: showBorder == 2 ? "gray" : "skyblue",
+            borderBottomWidth: 0.5
           }}
           onSelect={(option) => {
             this.setState({
@@ -1148,13 +1162,13 @@ isAlert = () => {
             },
           ]}
           dropdownStyle={{
-            width: scale(302),          
-            height: STR_CONST.genderOptions.length * scale(36),                     
-            borderColor: "gray",       
+            width: scale(302),
+            height: STR_CONST.genderOptions.length * scale(36),
+            borderColor: "gray",
             borderTopWidth: 0.5,
-            borderTopColor:showBorder == 3 ? "gray": "skyblue",
-            borderBottomColor:showBorder == 3 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderTopColor: showBorder == 3 ? "gray" : "skyblue",
+            borderBottomColor: showBorder == 3 ? "gray" : "skyblue",
+            borderBottomWidth: 0.5
           }}
           onSelect={(option) => {
             this.setState({
@@ -1202,48 +1216,48 @@ isAlert = () => {
   renderImage() {
     return (
       <Modal
-            visible={this.state.Alert_Visibility2}
-            animationType={"none"}
-            transparent={true}
-            onRequestClose={() => {
-              this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
-            }}>
-            <View
-              style={{
-                // backgroundColor: 'rgba(52, 52, 52, 0.8)',
-                backgroundColor:"#000000",
-                flex: 1,
-                // justifyContent: 'center',
-                // alignItems: 'center',
-                height:height,
-                width:width
-              }}>
-              {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
-              
-              <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{width:scale(20),height:scale(20),marginTop:scale(50),margin:scale(10)}}>
-              <FastImage source= {require("../../assets/back2.png")} style={{height:verticalScale(30), width:verticalScale(30)}} />
-              </TouchableOpacity>
+        visible={this.state.Alert_Visibility2}
+        animationType={"none"}
+        transparent={true}
+        onRequestClose={() => {
+          this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
+        }}>
+        <View
+          style={{
+            // backgroundColor: 'rgba(52, 52, 52, 0.8)',
+            backgroundColor: "#000000",
+            flex: 1,
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            height: height,
+            width: width
+          }}>
+          {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
 
-              <View style={{ flex:1,justifyContent:"center",alignItems:"center"}}>
-              <FastImage
-                style={styles.innerProfileImage1}
-                source={{
-                  uri: this.state.addFileURI,
-                  priority: FastImage.priority.normal,
-                  cache: FastImage.cacheControl.immutable,
-                }}
-              />
-               </View>
-                {/* <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
+          <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{ width: scale(20), height: scale(20), marginTop: scale(50), margin: scale(10) }}>
+            <FastImage source={require("../../assets/back2.png")} style={{ height: verticalScale(30), width: verticalScale(30) }} />
+          </TouchableOpacity>
+
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <FastImage
+              style={styles.innerProfileImage1}
+              source={{
+                uri: this.state.addFileURI,
+                priority: FastImage.priority.normal,
+                cache: FastImage.cacheControl.immutable,
+              }}
+            />
+          </View>
+          {/* <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
                 <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text> */}
-                {/* <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
+          {/* <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
                   style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 9, margin: 7, marginTop: 10, }}
                 >
                   <Text style={{ marginStart: 30, marginEnd: 30, margin: 9, color: "#FFF" }}>OK</Text>
                 </TouchableOpacity> */}
-              {/* </View> */}
-            </View>
-          </Modal>
+          {/* </View> */}
+        </View>
+      </Modal>
     )
   }
 
@@ -1286,14 +1300,14 @@ isAlert = () => {
                   : colours.borderBottomLineColor,
             },
           ]}
-          dropdownStyle={{  
-            width: scale(302),          
-            height: STR_CONST.genderOptions.length * scale(36),                     
-            borderColor: "gray",       
+          dropdownStyle={{
+            width: scale(302),
+            height: STR_CONST.genderOptions.length * scale(36),
+            borderColor: "gray",
             borderTopWidth: 0.5,
-            borderTopColor:showBorder == 4 ? "gray": "skyblue",
-            borderBottomColor:showBorder == 4 ? "gray": "skyblue",
-            borderBottomWidth:0.5
+            borderTopColor: showBorder == 4 ? "gray" : "skyblue",
+            borderBottomColor: showBorder == 4 ? "gray" : "skyblue",
+            borderBottomWidth: 0.5
           }}
           onSelect={(option) => {
             this.setState({
@@ -1331,13 +1345,13 @@ isAlert = () => {
       </TouchableOpacity>
     );
   }
-  getMembershipText(userData){
+  getMembershipText(userData) {
     let member = ''
     if (userData.gold_member) {
       member = STR_CONST.GOLD_MEMBER;
     } else if (userData.silver_member) {
       member = STR_CONST.SILVER_MEMBER;
-    } else if(userData.bronze_member){
+    } else if (userData.bronze_member) {
       member = STR_CONST.BRONZE_MEMBER;
     }
     else {
@@ -1349,18 +1363,19 @@ isAlert = () => {
 
   renderHeader() {
     return (
-     <View style={{backgroundColor:"#03B2D8",borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:scale(20)}}>
-        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(40),alignSelf:"center"}}>
-        <TouchableOpacity onPress={() => {
-              this.props.navigation.goBack()}}>
-           {IMAGE_CONST.IOS_BACK_ARROW}
-            </TouchableOpacity>
-  
-            <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),marginStart:scale(40),marginTop:scale(1),color:"#FFF"}}>Profile</Text>
-  
-            <Text></Text>
-          
-                        {/* <TextInput 
+      <View style={{ backgroundColor: "#03B2D8", borderBottomLeftRadius: scale(25), borderBottomRightRadius: scale(25), width: "100%", marginTop: scale(8) }}>
+        <View style={{ justifyContent: "space-between", width: "92%", flexDirection: "row", borderWidth: 0, marginTop: scale(40), alignSelf: "center" }}>
+          <TouchableOpacity onPress={() => {
+            this.props.navigation.goBack()
+          }}>
+            {IMAGE_CONST.IOS_BACK_ARROW}
+          </TouchableOpacity>
+
+          <Text style={{ fontSize: scale(20), fontWeight: "700", padding: scale(10), marginStart: scale(40), marginTop: scale(1), color: "#FFF" }}>Profile</Text>
+
+          <Text></Text>
+
+          {/* <TextInput 
                 //  onChangeText={(searchText) => {
                 //   this.onSearch(searchText)
                 // }}
@@ -1368,172 +1383,192 @@ isAlert = () => {
                 placeholderTextColor="#FFF"
                 onChangeText={(term) => { this.searchUpdated(term) }}
               style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  /> */}
-              <TouchableOpacity style={{}}
-                  onPress={()=>{this.props.navigation.navigate("ProfileDetailsScreen")}}
-              >
-              <FastImage source={require("../../assets/profile/edit.png")} resizeMode="contain" style={{height:scale(20),margin:scale(10),width:scale(20),}} />
-              </TouchableOpacity>
-         
-           </View>
-  
-     </View>
+          <TouchableOpacity style={{}}
+            onPress={() => { this.props.navigation.navigate("ProfileDetailsScreen") }}
+          >
+            <FastImage source={require("../../assets/profile/edit.png")} resizeMode="contain" style={{ height: scale(20), margin: scale(10), width: scale(20), }} />
+          </TouchableOpacity>
+
+        </View>
+
+      </View>
     );
   }
   render() {
-    const { firstName,cityAddress, lastName, selectedCountry, submitPressed } = this.state;
-    const {userData} = this.props
+    const { firstName, cityAddress, lastName, selectedCountry, submitPressed } = this.state;
+    const { userData } = this.props
 
     let silver_member = userData.silver_member
     let gold_member = userData.gold_member
     let bronze_member = userData.bronze_member
 
     let airpotName = ""
-    if(cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0){
+    if (cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0) {
 
       let airport = userData.address.airpot_city
       let data = JSON.parse(airport)
-       airpotName = data.name
+      airpotName = data.name
     }
     return (
-        <ImageBackground source={IMG_CONST.PROFILE_BG} style={{justifyContent:'center',alignItems:"center",marginTop:scale(-20),width:"100%",height:"100%"}}
+      <ImageBackground source={IMG_CONST.PROFILE_BG} style={{ justifyContent: 'center', alignItems: "center", width: "100%", height: "100%" }}
         //   imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
-          resizeMode="cover"
-        >
-      
-      
-          {this.renderLoader()}
-          {this.renderHeader()}
-          <View style={{ flex: 1 }}>
+        resizeMode="cover"
+      >
+
+
+        {this.renderLoader()}
+        {this.renderHeader()}
+        <View style={{ flex: 1 }}>
           {this.profileImage()}
 
-          <View style={{alignSelf:"center",justifyContent:"center",alignItems:"center"}}>
-            <Text style={{fontSize:scale(14),fontWeight:"500",color:"#FFF"}}>Hello!</Text>
-            <View style={{flexDirection:"row",padding:scale(3),}}>
-                <Text style={{fontSize:scale(16),fontWeight:"700",color:"#FFFFFF"}}>{userData.first_name}</Text>
-                <Text  style={{fontSize:scale(16),fontWeight:"700",color:"#FFFFFF"}}> {userData.last_name}</Text>
+          <View style={{ alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
+            <Text style={{ fontSize: scale(14), fontWeight: "500", color: "#FFF" }}>Hello!</Text>
+            <View style={{ flexDirection: "row", padding: scale(3), }}>
+              <Text style={{ fontSize: scale(16), fontWeight: "700", color: "#FFFFFF" }}>{userData.first_name}</Text>
+              <Text style={{ fontSize: scale(16), fontWeight: "700", color: "#FFFFFF" }}> {userData.last_name}</Text>
             </View>
-           
+
           </View>
 
           {
-            bronze_member || silver_member || gold_member  ?
-            <View style={{backgroundColor:"#5bbfb4",padding:scale(2),borderRadius:scale(20),margin:scale(4),alignSelf:"center"}}>
-            <Text style={styles.membershipText}>
-              { this.getMembershipText(userData)}
-            </Text>
-            </View>
-            : null
+            bronze_member || silver_member || gold_member ?
+              <View style={{ backgroundColor: "#5bbfb4", padding: scale(2), borderRadius: scale(20), margin: scale(4), alignSelf: "center" }}>
+                <Text style={styles.membershipText}>
+                  {this.getMembershipText(userData)}
+                </Text>
+              </View>
+              : null
           }
 
           <View style={styles.informationContainer}>
 
-              <View style={{flexDirection:"row",}}>
-                  <FastImage source={IMG_CONST.AIRPORT} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
-                  <View style={{justifyContent:"center",alignItems:"center"}}>
-                        <Text style={styles.membershipText1}>{airpotName}</Text>
-                        <Text style={{
-            textAlign:"left",  fontSize: scale(14),
-            fontWeight: "bold",
-            padding:scale(0),
-            paddingStart:scale(7),
-            color:"#adb1b1", 
-          }}>My closest airport</Text>
-                  </View>
+            <View style={{ flexDirection: "row", }}>
+              <FastImage source={IMG_CONST.AIRPORT} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+              <View style={{ alignContent: 'center' }}>
+                <Text style={styles.membershipText1}>{airpotName}</Text>
+                <Text style={{
+                  textAlign: "left",
+                  fontSize: scale(14),
+                  fontWeight: '500',
+                  paddingStart: scale(15),
+                  color: "#adb1b1",
+                }}>My closest airport</Text>
               </View>
+            </View>
 
           </View>
 
 
 
-          <View style={{flexDirection:"row",justifyContent:"space-between",width:scale(340)}}>
-          <View style={styles.informationContainer1}>
-            <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                <FastImage source={IMG_CONST.AGE_GRP} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
-                <View style={{justifyContent:"center",alignItems:"center"}}>
-                      <Text style={[styles.membershipText1,{
-                        textAlign:"center",marginBottom:scale(-3),
-                      }]}>{userData.age_band}</Text>
-                      <Text style={[styles.contentTxt,{
-                        textAlign:"center"
-                      }]}>Age Band</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", width: scale(340) }}>
+            <View style={
+              [styles.informationContainer1,
+              {
+                marginEnd: 9,
+              }
+              ]
+            }>
+              <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <FastImage source={IMG_CONST.AGE_GRP} style={{ height: scale(60), width: scale(60), marginStart: scale(18) }} resizeMode="contain" />
+                <View>
+                  <Text style={[styles.membershipText1, {
+                    paddingStart: scale(15),
+                    marginBottom: scale(-3),
+                  }]}>{userData.age_band}</Text>
+                  <Text style={[styles.contentTxt, {
+                    fontWeight: '500',
+                    paddingStart: scale(15)
+                  }]}>Age Band</Text>
                 </View>
-            </View>
+              </View>
             </View>
 
-            <View style={styles.informationContainer1}>
-            <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                <FastImage source={IMG_CONST.EQUALITY} style={{height:scale(55),width:scale(55)}} resizeMode="contain" />
-                <View style={{justifyContent:"center",alignItems:"center"}}>
-                      <Text style={[styles.membershipText1,{
-                         textAlign:"center",marginBottom:scale(-3),
-                      }]}>{userData.gender}</Text>
-                      <Text style={[styles.contentTxt,{
-                        textAlign:"center"
-                      }]}>Gender</Text>
+            <View style={
+              [styles.informationContainer1,
+              {
+                marginEnd: 9,
+              }
+              ]
+            }>
+              <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <FastImage source={IMG_CONST.EQUALITY} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+                <View>
+                  <Text style={[styles.membershipText1, {
+                    paddingStart: scale(15),
+                    marginBottom: scale(-3)
+                  }]}>{userData.gender}</Text>
+                  <Text style={[styles.contentTxt, {
+                    fontWeight: '500',
+                    paddingStart: scale(15)
+                  }]}>Gender</Text>
                 </View>
+              </View>
             </View>
+          </View>
+
+
+
+
+          <View style={styles.informationContainer}>
+
+            <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
+              <FastImage source={IMG_CONST.LIKELY} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+              <View style={{}}>
+                <Text style={styles.membershipText1}>
+                  {userData.flights_taken_annually}
+                </Text>
+                <Text style={{
+                  textAlign: "left", fontSize: scale(14),
+                  fontWeight: '500',
+                  padding: scale(0),
+                  paddingStart: scale(15),
+                  color: "#adb1b1",
+                }}>Average number of return fights</Text>
+
+                <Text style={{
+                  textAlign: "left", fontSize: scale(14),
+                  fontWeight: '500',
+                  padding: scale(0),
+                  paddingStart: scale(15),
+                  color: "#adb1b1",
+                }}>taken annually</Text>
+              </View>
             </View>
+
+          </View>
+
+
+
+          <View style={styles.informationContainer}>
+
+            <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
+              <FastImage source={IMG_CONST.TRAVEL} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+              <View>
+                <Text style={styles.membershipText1}>{userData.travelling_abroad_in_next_12_months}</Text>
+                <Text style={{
+                  textAlign: "left", fontSize: scale(14),
+                  fontWeight: '500',
+                  padding: scale(0),
+                  paddingStart: scale(15),
+                  color: "#adb1b1",
+                }}>Do you plan to travel abroad in </Text>
+
+                <Text style={{
+                  textAlign: "left", fontSize: scale(14),
+                  fontWeight: '500',
+                  padding: scale(0),
+                  paddingStart: scale(15),
+                  color: "#adb1b1",
+                }}>the next 12 months?</Text>
+              </View>
             </View>
 
+          </View>
 
 
 
-<View style={styles.informationContainer}>
 
-<View style={{flexDirection:"row",alignSelf:"flex-start"}}>
-    <FastImage source={IMG_CONST.LIKELY} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
-    <View style={{}}>
-          <Text style={styles.membershipText1}>
-          {userData.flights_taken_annually}
-            </Text>
-          <Text style={{
-            textAlign:"left",  fontSize: scale(14),
-            fontWeight: "bold",
-            padding:scale(0),
-            paddingStart:scale(15),
-            color:"#adb1b1", 
-          }}>Average number of return fights</Text>
-
-<Text style={  {textAlign:"left",  fontSize: scale(14),
-            fontWeight: "bold",
-            padding:scale(0),
-            paddingStart:scale(15),
-            color:"#adb1b1",}}>taken annually</Text>
-      </View>
-</View>
-
-</View>
-
-
-
-<View style={styles.informationContainer}>
-
-<View style={{flexDirection:"row",alignSelf:"flex-start"}}>
-    <FastImage source={IMG_CONST.TRAVEL} style={{height:scale(60),width:scale(60)}} resizeMode="contain" />
-    <View style={{}}>
-          <Text style={styles.membershipText1}>{userData.travelling_abroad_in_next_12_months}</Text>
-          <Text style={{
-            textAlign:"left",  fontSize: scale(14),
-            fontWeight: "bold",
-            padding:scale(0),
-            paddingStart:scale(15),
-            color:"#adb1b1", 
-          }}>Do you plan to travel abroad in </Text>
-
-<Text style={  {textAlign:"left",  fontSize: scale(14),
-            fontWeight: "bold",
-            padding:scale(0),
-            paddingStart:scale(15),
-            color:"#adb1b1",}}>the next 12 months?</Text>
-      </View>
-</View>
-
-</View>
-
-        
-          
-          
-           {/* {this.addUserPreferenceLocation()} 
+          {/* {this.addUserPreferenceLocation()} 
             {this.addUserAge()}
             {this.addUserGender()}
             {this.addUserFlightNumber()}
@@ -1541,12 +1576,12 @@ isAlert = () => {
             {this.renderButton(STR_CONST.SAVE_CHANGES, () => {
               this.submitData();
             })} */}
-      
-         
-          </View>
+
+
+        </View>
         {/* </KeyboardAwareScrollView> */}
 
-        </ImageBackground>
+      </ImageBackground>
     );
   }
 }

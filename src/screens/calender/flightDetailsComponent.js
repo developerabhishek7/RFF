@@ -223,11 +223,6 @@ class FlightDetailsCompoent extends Component {
                   style={{ marginRight: scale(10),height:scale(30),width:scale(70),margin:scale(5),marginBottom:scale(10) }}
                 />
               </TouchableOpacity>
-              {/* <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
-                } (${!this.state.isOffPeakValue
-                  ? STRING_CONST.OFF_PEAK_FARE
-                  : STRING_CONST.PEAK_FARE
-                })`}</Text> */}
               <TouchableOpacity
                 style={{
                   alignSelf: "flex-end",
@@ -355,192 +350,7 @@ class FlightDetailsCompoent extends Component {
 
 
                   </View>
-            <View style={{ alignSelf: "stretch", flex: 1 }}>
-              {/* <View
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                  flex: 1,
-                  paddingHorizontal: scale(20),
-                }}
-              >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${"Airline:"}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{`${"British Airways"}`}</Text>
-              </View> */}
-              {/* <View
-                style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-              >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${`Flight:`}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{selectedFlight.flight}</Text>
-              </View> */}
-              {/* <View
-                style={{
-                  flexDirection: "row",
-                  // backgroundColor: "rgba(255,255,255,0.1)",
-                  alignItems: "center",
-                  paddingHorizontal: scale(20),
-                }} >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color:"#41454b" ,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${"Aircraft:"}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: "#41454b",
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{`${selectedFlight.aircraft_details}`}</Text>
-              </View> */}
-              {/* <View
-                // style={{
-                //   flexDirection: "row",
-                //   backgroundColor: "rgba(255,255,255,0.1)",
-                //   alignItems: "center",
-                //   paddingHorizontal: scale(20),
-                // }}
-
-                style={{ flexDirection: "row", paddingHorizontal: scale(20) }}
-
-              >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${`Departure:`}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{`${moment(selectedFlight.departure).format(
-                  "ddd, DD MMM YYYY, "
-                )}${selectedFlight.departure_time}`}</Text>
-              </View> */}
-              {/* <View
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                  paddingHorizontal: scale(20),
-                }}
-
-              >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${`Arrival:`}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: colours.white,
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{`${moment(selectedFlight.arrival_date).format(
-                  "ddd, DD MMM YYYY, "
-                )}${selectedFlight.arrival_time}`}</Text>
-              </View> */}
-              {/* <View
-                style={{ flexDirection: "row", backgroundColor: "#e4f6fa", paddingHorizontal: scale(20), paddingBottom: scale(10), marginBottom: scale(6) }}
-              >
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: "#41454b",
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 4,
-                    },
-                  ]}
-                >{`${"Duration:"}`}</Text>
-                <Text
-                  style={[
-                    styles.flightDetailText,
-                    {
-                      color: "#41454b",
-                      fontSize: scale(14),
-                      padding: scale(10),
-                      flex: 6,
-                    },
-                  ]}
-                >{`${getTimeFromMins(selectedFlight.duration)}`}</Text>
-              </View> */}
-
-
-            </View>
+            
           </View>
         </View>
       </Animated.View>
@@ -985,9 +795,10 @@ class FlightDetailsCompoent extends Component {
     }
   }
 
+
+
   noflightDataFunction() {
     const { flightCount } = this.state
-
     console.log("yes check here flight count - - - - - - - -",flightCount)
     return (
       <FastImage
@@ -1060,13 +871,6 @@ class FlightDetailsCompoent extends Component {
     const userData = this.props.userData
     let bronzeMember = userData.bronze_member
 
-
-    console.log("yes check here datestring - - -  - -- -",this.state.dateString)
-    console.log("yes check here selectedDate day - - -  - -- -",this.state.selectedDate.day)
-    console.log("yes check here classSelected date - - -  -",this.state.classSelected)
-    console.log("yes check here isOffPeakValue date - - -  -",this.state.isOffPeakValue)
-
-
   
     return (
       <SafeAreaView style={styles.container}>
@@ -1114,7 +918,7 @@ class FlightDetailsCompoent extends Component {
 
                           { marginTop: verticalScale(20), alignSelf: 'center' },
                         ]}
-                      >{`${"No Flight Scheduled"}`}</Text>
+                      >{`${"No flight scheduled"}`}</Text>
                     </View>
                     :
                     <Fragment>
@@ -1145,20 +949,25 @@ class FlightDetailsCompoent extends Component {
                 <TouchableOpacity
                   style={styles.checkOnAirlineButton}
                   onPress={() => {
-                    if (this.state.trip_type == "one_way") {
-                      this.setState({
-                        showModelDropdownForBA: true,
-                        showModelDropdownForSS: false
-                      })
+                    if(this.props.isLoggedIn){ 
+                      if (this.state.trip_type == "one_way") {
+                        this.setState({
+                          showModelDropdownForBA: true,
+                          showModelDropdownForSS: false
+                        })
+                      }
+                      else {
+                        this.props.navigation.navigate("priceDetails", {
+                          cabinClassData: this.state.cabinClassData,
+                          headerTxt: "Booking Details",
+                          trip_type: this.state.trip_type,
+                          searchData: this.state.searchData,
+                          selectedDate: this.state.selectedDate,
+                        })
+                      }
                     }
-                    else {
-                      this.props.navigation.navigate("priceDetails", {
-                        cabinClassData: this.state.cabinClassData,
-                        headerTxt: "Booking Details",
-                        trip_type: this.state.trip_type,
-                        searchData: this.state.searchData,
-                        selectedDate: this.state.selectedDate,
-                      })
+                    else{
+                      this.props.navigation.navigate(STRING_CONST.LOGIN)
                     }
                   }}
                 >
@@ -1174,35 +983,43 @@ class FlightDetailsCompoent extends Component {
                       return (
                         <TouchableOpacity
                           onPress={() => {
-                            if (singleMap == "Economy") {
+                            if(this.props.isLoggedIn){
+                              if (singleMap == "Economy") {
 
+                                this.setState({
+                                  skyScannerCabinCode: "economy",
+                                  cabinCode: "M",
+                                })
+                              }
+                              if (singleMap == "Premium") {
+                                this.setState({
+                                  skyScannerCabinCode: "premiumeconomy",
+                                  cabinCode: "W"
+                                })
+                              } if (singleMap == "Business") {
+                                this.setState({
+                                  skyScannerCabinCode: "business",
+                                  cabinCode: "C"
+                                })
+  
+                              } if (singleMap == "First") {
+                                this.setState({
+                                  cabinCode: "F",
+                                  skyScannerCabinCode: "first"
+                                })
+                              }
                               this.setState({
-                                skyScannerCabinCode: "economy",
-                                cabinCode: "M",
+                                showModelDropdownForBA: false,
+                                showModelDropdownForSS: false
                               })
+                              this.handleBaRedirection()
                             }
-                            if (singleMap == "Premium") {
-                              this.setState({
-                                skyScannerCabinCode: "premiumeconomy",
-                                cabinCode: "W"
-                              })
-                            } if (singleMap == "Business") {
-                              this.setState({
-                                skyScannerCabinCode: "business",
-                                cabinCode: "C"
-                              })
+                            else{
+                              this.props.navigation.navigate(STRING_CONST.LOGIN)
+                            }
 
-                            } if (singleMap == "First") {
-                              this.setState({
-                                cabinCode: "F",
-                                skyScannerCabinCode: "first"
-                              })
-                            }
-                            this.setState({
-                              showModelDropdownForBA: false,
-                              showModelDropdownForSS: false
-                            })
-                            this.handleBaRedirection()
+
+                           
                           }}
                           style={{
                             justifyContent: 'center', alignItems: 'center', paddingTop: classDataArray.length > 2 ? scale(6) : scale(2),

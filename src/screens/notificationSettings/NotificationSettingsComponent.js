@@ -38,10 +38,10 @@ export default class NotificationSettingsComponent extends Component {
         ? this.props.userData.phone.enabled
         : false,
       sendEmail: this.props.userData.email_notifiable,
-      deviceName:"",
-      deviecBrand:"",
-      isEmulator:"",
-      isTablet:""
+      deviceName: "",
+      deviecBrand: "",
+      isEmulator: "",
+      isTablet: ""
     };
   }
 
@@ -56,7 +56,7 @@ export default class NotificationSettingsComponent extends Component {
 
 
     this.setState({
-      deviecBrand,deviceName,isTablet,isEmulator
+      deviecBrand, deviceName, isTablet, isEmulator
     })
 
     const accesstoken = await getAccessToken();
@@ -71,11 +71,11 @@ export default class NotificationSettingsComponent extends Component {
 
 
 
-    );  
+    );
 
     BackHandler.addEventListener('hardwareBackPress', () =>
-    this.handleBackButton(this.props.navigation),
-  );
+      this.handleBackButton(this.props.navigation),
+    );
 
   }
 
@@ -97,10 +97,10 @@ export default class NotificationSettingsComponent extends Component {
   };
 
 
-  componentWillUnmount() {   
+  componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
-    this.handleBackButton(this.props.navigation),
-  );
+      this.handleBackButton(this.props.navigation),
+    );
   }
 
   componentDidUpdate(prevProps) {
@@ -139,17 +139,22 @@ export default class NotificationSettingsComponent extends Component {
   //   );
   // }
 
-  renderHeader(){
-    return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
-        <ScreenHeader
-          {...this.props}
-          left
-          title={STR_CONST.NOTIFICATION_SETTINGS}
-          notifCount={2}
-          clickOnLeft={() => this.props.navigation.goBack()}
-        />
+  renderHeader() {
+    return (
+      <View style={{
+        alignItems: "center", backgroundColor: "#03B2D8",
+        height: scale(110),
+        width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60),
+        borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20)
+      }}>
+        <View style={{ marginTop: scale(40) }}>
+          <ScreenHeader
+            {...this.props}
+            left
+            title={STR_CONST.NOTIFICATION_SETTINGS}
+            notifCount={2}
+            clickOnLeft={() => this.props.navigation.goBack()}
+          />
         </View>
       </View>
     )
@@ -157,10 +162,10 @@ export default class NotificationSettingsComponent extends Component {
 
 
   postHogAnalytics = (body) => {
-    if(this.props.isLoggedIn){
+    if (this.props.isLoggedIn) {
       this.props.loggedinUserPostHogFun(body)
     }
-    else{
+    else {
       this.props.guestUserPostHogFunc(body)
     }
   }
@@ -173,7 +178,7 @@ export default class NotificationSettingsComponent extends Component {
             sendSMS: !this.state.sendSMS,
           },
           () => {
-            
+
             if (this.props.isLoggedIn == true) {
               let loggedInUserPostHog = {}
               loggedInUserPostHog["user"] = {
@@ -181,13 +186,13 @@ export default class NotificationSettingsComponent extends Component {
               }
               loggedInUserPostHog["event_name"] = "Turning Phone Number Notification Toggle"
               loggedInUserPostHog["data"] = {
-                "metaData" : {
-                          "deviecBrand":this.state.deviecBrand,
-                          "deviceName":this.state.deviceName,
-                          "isEmulator":this.state.isEmulator,
-                          "isTablet":this.state.isTablet,
-                          "plateform": "Mobile",
-                        }
+                "metaData": {
+                  "deviecBrand": this.state.deviecBrand,
+                  "deviceName": this.state.deviceName,
+                  "isEmulator": this.state.isEmulator,
+                  "isTablet": this.state.isTablet,
+                  "plateform": "Mobile",
+                }
               }
               // this.postHogAnalytics(loggedInUserPostHog)
             }
@@ -197,13 +202,13 @@ export default class NotificationSettingsComponent extends Component {
               guestUserPostHog["sessionId"] = `${uuid_Key}`
               guestUserPostHog["event_name"] = "Turning Phone Number Notification Toggle"
               guestUserPostHog["data"] = {
-                "metaData" : {
-                          "deviecBrand":this.state.deviecBrand,
-                          "deviceName":this.state.deviceName,
-                          "isEmulator":this.state.isEmulator,
-                          "isTablet":this.state.isTablet,
-                          "plateform": "Mobile",
-                        }
+                "metaData": {
+                  "deviecBrand": this.state.deviecBrand,
+                  "deviceName": this.state.deviceName,
+                  "isEmulator": this.state.isEmulator,
+                  "isTablet": this.state.isTablet,
+                  "plateform": "Mobile",
+                }
               }
               // this.postHogAnalytics(guestUserPostHog)
             }
@@ -258,34 +263,24 @@ export default class NotificationSettingsComponent extends Component {
   availabilityAlert() {
     const { sendSMS, sendEmail, notificationSettings } = this.state;
     let userData = this.props.userData;
-    const {navigation} = this.props
+    const { navigation } = this.props
 
     return (
-      <View style={styles.availabilityAlertView}>
-        <Text
-          style={[
-            styles.infoTitle,
-            { fontWeight: Platform.OS == "ios" ? "600" : "bold" },
-          ]}
-        >
-          {/* {STR_CONST.AVAILABILITY_ALERTS} */}
-        </Text>
+      <View>
 
 
 
-
-
-        <View style={styles.containerView}>
-        <View style={styles.availabilityAlertInnerView}>
-        <Image source={IMG_CONST.MSG}
+        <View style={[styles.containerView, { marginTop: scale(6) }]}>
+          <View style={styles.availabilityAlertInnerView}>
+            <Image source={IMG_CONST.MSG}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
+              style={{ height: scale(30), width: scale(30), marginStart: scale(20), marginRight: scale(5) }}
             />
-          <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
-            {STR_CONST.SMS_ALERT_NOTIFICATION}
-          </Text>
-          <View style={styles.flexRowContainer}>
-            {/* <Text
+            <Text style={[styles.notificationTitle, { fontWeight: "700" }]}>
+              {STR_CONST.SMS_ALERT_NOTIFICATION}
+            </Text>
+            <View style={styles.flexRowContainer}>
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -296,50 +291,50 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.OFF}
             </Text> */}
-            <Switch
-              value={sendSMS}
-              onValueChange={(val) => {
-                if (!userData.gold_member) {
-                 
+              <Switch
+                value={sendSMS}
+                onValueChange={(val) => {
+                  if (!userData.gold_member) {
+
                     // userData.isAppReviewSuccess 
                     // this.props.navigation.dispatch(DrawerActions.openDrawer())
-                   
+
                     this.props.navigation.navigate(
                       STR_CONST.MANAGE_CONTACT_SCREEN,
                       {
                         userData: this.props.userData,
                       }
                     );
-                  // this.props.navigation.navigate(STRING_CONST.MANAGE_CONTACT_SCREEN);
-                  // this.props.navigation.navigate(STRING_CONST.PRICING_SCREEN);
-                } else if (!userData.phone || !userData.phone.verified) {
-                  this.props.navigation.navigate(
-                    STR_CONST.MANAGE_CONTACT_SCREEN,
-                    {
-                      userData: this.props.userData,
-                    }
-                  );
-                } else {
-                  this.toggleSwitch(true);
-                }
-              }}
-              circleSize={scale(16)}
-              barHeight={scale(20)}
-              circleBorderWidth={0}
-              backgroundActive={colours.dimLightBlueTheme}
-              backgroundInactive={colours.backgroundInactive}
-              circleActiveColor={colours.lightBlueTheme}
-              circleInActiveColor={colours.lightGreyish}
-              changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
-              innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
-              renderActiveText={false}
-              renderInActiveText={false}
-              switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
-              switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
-              switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
-              switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
-            />
-            {/* <Text
+                    // this.props.navigation.navigate(STRING_CONST.MANAGE_CONTACT_SCREEN);
+                    // this.props.navigation.navigate(STRING_CONST.PRICING_SCREEN);
+                  } else if (!userData.phone || !userData.phone.verified) {
+                    this.props.navigation.navigate(
+                      STR_CONST.MANAGE_CONTACT_SCREEN,
+                      {
+                        userData: this.props.userData,
+                      }
+                    );
+                  } else {
+                    this.toggleSwitch(true);
+                  }
+                }}
+                circleSize={scale(16)}
+                barHeight={scale(20)}
+                circleBorderWidth={0}
+                backgroundActive={colours.dimLightBlueTheme}
+                backgroundInactive={colours.backgroundInactive}
+                circleActiveColor={colours.lightBlueTheme}
+                circleInActiveColor={colours.lightGreyish}
+                changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
+                innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
+                renderActiveText={false}
+                renderInActiveText={false}
+                switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
+                switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
+                switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
+                switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
+              />
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -350,33 +345,27 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.ON}
             </Text> */}
+            </View>
           </View>
-        </View>
-        <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
+          <Text style={styles.notificationDetail}>
             {STR_CONST.SMS_NOTIFICATION_DETAILS}
           </Text>
 
-          </View>
-
-
-
-
-
-
+        </View>
 
 
         <View style={styles.containerView}>
-        <View style={styles.availabilityAlertInnerView}>
-        <Image source={IMG_CONST.EMAIL}
+          <View style={styles.availabilityAlertInnerView}>
+            <Image source={IMG_CONST.EMAIL}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
-               />
-          <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
-            {STR_CONST.EMAIL_ALERT_NOTIFICATION}
-          </Text>
-          <View style={styles.flexRowContainer}>
-            
-            {/* <Text
+              style={{ height: scale(30), width: scale(30), marginStart: scale(20), marginRight: scale(5) }}
+            />
+            <Text style={[styles.notificationTitle, { fontWeight: "700" }]}>
+              {STR_CONST.EMAIL_ALERT_NOTIFICATION}
+            </Text>
+            <View style={styles.flexRowContainer}>
+
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -387,27 +376,27 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.OFF}
             </Text> */}
-            <Switch
-              value={sendEmail}
-              onValueChange={(val) => this.toggleSwitch(false)}
-              disabled={false}
-              circleSize={scale(16)}
-              barHeight={scale(20)}
-              circleBorderWidth={0}
-              backgroundActive={colours.dimLightBlueTheme}
-              backgroundInactive={colours.backgroundInactive}
-              circleActiveColor={colours.lightBlueTheme}
-              circleInActiveColor={colours.lightGreyish}
-              changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
-              innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
-              renderActiveText={false}
-              renderInActiveText={false}
-              switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
-              switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
-              switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
-              switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
-            />
-            {/* <Text
+              <Switch
+                value={sendEmail}
+                onValueChange={(val) => this.toggleSwitch(false)}
+                disabled={false}
+                circleSize={scale(16)}
+                barHeight={scale(20)}
+                circleBorderWidth={0}
+                backgroundActive={colours.dimLightBlueTheme}
+                backgroundInactive={colours.backgroundInactive}
+                circleActiveColor={colours.lightBlueTheme}
+                circleInActiveColor={colours.lightGreyish}
+                changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
+                innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
+                renderActiveText={false}
+                renderInActiveText={false}
+                switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
+                switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
+                switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
+                switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
+              />
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -418,36 +407,36 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.ON}
             </Text> */}
+            </View>
           </View>
-        </View>
-        <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
+
+          <Text style={styles.notificationDetail}>
             {STR_CONST.EMAIL_NOTIFICATION_DETAILS}
           </Text>
-
-          </View>
+        </View>
         {/* <View style={styles.line} /> */}
 
 
-       
 
 
-          
+
+
         {/* <View style={styles.line} /> */}
 
 
         <View style={styles.containerView}>
-        <View style={styles.availabilityAlertInnerView}>
-         
-        <Image source={IMG_CONST.LOGO}
+          <View style={styles.availabilityAlertInnerView}>
+
+            <Image source={IMG_CONST.LOGO}
               resizeMode="contain"
-              style={{height:scale(30),width:scale(30),marginStart:scale(20),marginRight:scale(5)}}
-              />
-         
-          <Text style={[styles.notificationTitle, { fontWeight: "600" }]}>
-            {STR_CONST.PUSH_NOTIFICATION}
-          </Text>
-          <View style={styles.flexRowContainer}>
-            {/* <Text
+              style={{ height: scale(30), width: scale(30), marginStart: scale(20), marginRight: scale(5) }}
+            />
+
+            <Text style={[styles.notificationTitle, { fontWeight: "700" }]}>
+              {STR_CONST.PUSH_NOTIFICATION}
+            </Text>
+            <View style={styles.flexRowContainer}>
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -458,31 +447,31 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.OFF}
             </Text> */}
-            <Switch
-              value={
-                notificationSettings && notificationSettings.push_notification
-              }
-              onValueChange={async (val) => {
-                await this.onNotificationSettingsChange(val);
-              }}
-              disabled={false}
-              circleSize={scale(16)}
-              barHeight={scale(20)}
-              circleBorderWidth={0}
-              backgroundActive={colours.dimLightBlueTheme}
-              backgroundInactive={colours.backgroundInactive}
-              circleActiveColor={colours.lightBlueTheme}
-              circleInActiveColor={colours.lightGreyish}
-              changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
-              innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
-              renderActiveText={false}
-              renderInActiveText={false}
-              switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
-              switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
-              switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
-              switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
-            />
-            {/* <Text
+              <Switch
+                value={
+                  notificationSettings && notificationSettings.push_notification
+                }
+                onValueChange={async (val) => {
+                  await this.onNotificationSettingsChange(val);
+                }}
+                disabled={false}
+                circleSize={scale(16)}
+                barHeight={scale(20)}
+                circleBorderWidth={0}
+                backgroundActive={colours.dimLightBlueTheme}
+                backgroundInactive={colours.backgroundInactive}
+                circleActiveColor={colours.lightBlueTheme}
+                circleInActiveColor={colours.lightGreyish}
+                changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
+                innerCircleStyle={styles.switchInnerCircle} // style for inner animated circle for what you (may) be rendering inside the circle
+                renderActiveText={false}
+                renderInActiveText={false}
+                switchLeftPx={2} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
+                switchRightPx={2} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
+                switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
+                switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
+              />
+              {/* <Text
               style={[
                 styles.onOffText,
                 {
@@ -493,14 +482,14 @@ export default class NotificationSettingsComponent extends Component {
             >
               {STR_CONST.ON}
             </Text> */}
+            </View>
           </View>
-        </View>
-        <Text style={[styles.notificationDetail, { fontWeight: "600" }]}>
+          <Text style={styles.notificationDetail}>
             {STR_CONST.PUSH_NOTIFICATION_DETAILS}
           </Text>
-          </View>
+        </View>
         {/* <View style={styles.line} /> */}
-       
+
       </View>
     );
   }
@@ -604,12 +593,12 @@ export default class NotificationSettingsComponent extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
-          {this.renderHeader()}
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
+        {this.renderHeader()}
 
         <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-        
-          <View style={{ flex: 1,justifyContent:'center',alignItems:'center',alignSelf:'center' }}>
+
+          <View style={{ alignSelf: 'center' }}>
             {this.availabilityAlert()}
             {/* {this.keepInTouchAlert()} */}
           </View>

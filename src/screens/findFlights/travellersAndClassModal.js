@@ -140,8 +140,8 @@ export default class TravellersAndClassModal extends Component {
   // this.props.navigation.navigate("MembershipContainerScreen")}
   redirectToMembershipFunction() {
     Alert.alert(
-      'Upgrade Membership to see availability for all cabin classes',
-      [{text: 'OKAY',onPress: ()=>{console.log("yes printing -  - -  - ")}}],
+      'Upgrade to Silver or Gold membership to see availability for all cabin classes',
+      [{text: 'Upgrade',onPress: ()=>{console.log("yes printing -  - -  - ")}}],
       {cancelable: false},
     );
   }
@@ -155,14 +155,14 @@ navigateToMembership(){
   showAlert1() {  
     Alert.alert(  
         '',  
-        'Upgrade Membership to see availability for all cabin classes',  
+        'Upgrade to Silver or Gold membership to see availability for all cabin classes',  
         [  
             {  
                 text: 'Cancel',  
                 onPress: () => console.log('Cancel Pressed'),  
                 style: 'Cancel',  
             },  
-            {text: 'OK', onPress: () => this.navigateToMembership() },  
+            {text: 'Upgrade', onPress: () => this.navigateToMembership() },  
         ]  
     );  
 }  

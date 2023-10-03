@@ -388,6 +388,7 @@ export default class FindFlightComponent extends Component {
             style={[
               styles.tabTextStyle,
               {
+                fontWeight: this.state.selectedIndex == 0 ? '700' : '500',
                 color:
                   this.state.selectedIndex == 0
                     ? "#585c5f"
@@ -424,6 +425,7 @@ export default class FindFlightComponent extends Component {
             style={[
               styles.tabTextStyle,
               {
+                fontWeight: this.state.selectedIndex !== 0 ? '700' : '500',
                 color:
                   this.state.selectedIndex !== 0
                     ? "#585c5f"
@@ -525,7 +527,7 @@ export default class FindFlightComponent extends Component {
         >
           <FastImage
             source={IMAGE_CONST.TRAVELLER_ICON}
-            style={[styles.infoIcon1, { marginRight: scale(9) }]}
+            style={[styles.infoIcon1, { marginLeft: scale(2) ,marginRight: scale(9) }]}
           />
           <View>
             <Text
@@ -764,7 +766,11 @@ export default class FindFlightComponent extends Component {
           <FastImage
             source={IMAGE_CONST.DEPARTURE}
             resizeMode="contain"
-            style={[styles.infoIcon1, { marginRight: scale(10) }]}
+            style={[styles.infoIcon1, { 
+              height:scale(18), 
+              width:scale(18),
+              marginLeft: scale(3),
+              marginRight: scale(10) }]}
           />
           <View style={{}}>
             <Text
@@ -775,7 +781,7 @@ export default class FindFlightComponent extends Component {
                     isSearchClicked && isEmptyString(departStartDate)
                       ? colours.errorColor
                       : colours.lightGreyish,
-                  fontSize: departEndDate ? scale(10) : scale(14),
+                  fontSize: departEndDate ? scale(12) : scale(14),
                 },
               ]}
             >
@@ -787,7 +793,7 @@ export default class FindFlightComponent extends Component {
                   (styles.inputTextStyle,
                     [
                       {
-                        fontWeight: "bold",
+                        fontWeight: '600',
                         color: !departEndDate
                           ? colours.lightGreyish
                           : colours.darkBlueTheme,
@@ -852,7 +858,10 @@ export default class FindFlightComponent extends Component {
           >
             <FastImage
               source={IMAGE_CONST.DEPARTURE}
-              style={[styles.infoIcon1, { marginRight: scale(7) }]}
+              style={[styles.infoIcon1, { 
+                height:scale(18), 
+                width:scale(18),
+                marginLeft: scale(3),marginRight: scale(10) }]}
             />
             <View style={{}}>
               <Text
@@ -864,7 +873,7 @@ export default class FindFlightComponent extends Component {
                         ? colours.errorColor
                         : colours.lightGreyish
                       : colours.borderBottomLineColor,
-                    fontSize: returnStartDate ? scale(10) : scale(14),
+                    fontSize: returnStartDate ? scale(12) : scale(14),
                   },
                 ]}
               >
@@ -876,7 +885,7 @@ export default class FindFlightComponent extends Component {
                     (styles.inputTextStyle,
                       [
                         {
-                          fontWeight: "bold",
+                          fontWeight: '600',
                           color: !returnStartDate
                             ? colours.lightGreyish
                             : colours.darkBlueTheme,
@@ -1023,9 +1032,9 @@ export default class FindFlightComponent extends Component {
                           <TouchableOpacity onPress={async () => {
                             this.setState({ checked: key, })
                           }}
-                            style={{ flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
+                            style={{ paddingTop: scale(8) , flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
                             <FastImage source={require("../../assets/common/radio_btn_check.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
-                            <Text style={{ fontSize: scale(13), padding: scale(2), paddingStart: scale(4), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
+                            <Text style={{ fontSize: scale(14), fontWeight:'400', padding: scale(2), paddingStart: scale(8), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
                           </TouchableOpacity>
                           :
                           <TouchableOpacity onPress={async () => {
@@ -1036,7 +1045,7 @@ export default class FindFlightComponent extends Component {
                           }}
                             style={{ flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
                             <FastImage source={require("../../assets/common/radio_btn_uncheck.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
-                            <Text style={{ fontSize: scale(13), padding: scale(2), paddingStart: scale(4), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
+                            <Text style={{ fontSize: scale(14), fontWeight:'400', padding: scale(2), paddingStart: scale(8), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
                           </TouchableOpacity>
                       }
                     </View>
@@ -1185,7 +1194,7 @@ export default class FindFlightComponent extends Component {
                             isSearchClicked && !selectedSource
                               ? colours.errorColor
                               : colours.lightGreyish,
-                          fontSize: selectedSource ? scale(10) : scale(14),
+                          fontSize: selectedSource ? scale(12) : scale(14),
                         },
                       ]}
                     >
@@ -1200,7 +1209,7 @@ export default class FindFlightComponent extends Component {
                             isSearchClicked && !selectedSource
                               ? colours.errorColor
                               : colours.lightGreyish,
-                          fontSize: selectedSource ? scale(10) : scale(14),
+                          fontSize: selectedSource ? scale(12) : scale(14),
                         },
                       ]}
                     >
@@ -1236,11 +1245,11 @@ export default class FindFlightComponent extends Component {
                 (styles.inputTextStyle,
                   [
                     {
-                      fontWeight: "bold",
+                      fontWeight: '600',
                       color: !selectedSource
                         ? colours.lightGreyish
                         : colours.darkBlueTheme,
-                      fontSize: selectedSource ? scale(15) : scale(10),
+                      fontSize: selectedSource ? scale(14) : scale(10),
                       width: scale(270)
                     },
                   ])
@@ -1314,7 +1323,7 @@ export default class FindFlightComponent extends Component {
                 title={STRING_CONST.UPGRADE_MEMBERSHIP_TEXT}
                 message={STRING_CONST.MAP_SEARCH_UPGRADE_MESSAGE}
                 image={IMAGE_CONST.UPGRADE_MEMBERSHIP}
-                leftButtonText={STRING_CONST.NO}
+                leftButtonText={"Cancel"}
                 rightButtonText={STRING_CONST.UPGRADE}
                 onLeftButtonPress={() => {
                   this.setState({
