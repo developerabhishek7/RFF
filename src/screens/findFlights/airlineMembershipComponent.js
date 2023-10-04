@@ -9,7 +9,7 @@ import {
   Dimensions,
   BackHandler,
   Platform,
-  
+
 } from "react-native";
 import styles from "./findFlightStyles";
 const { height, width } = Dimensions.get('window');
@@ -22,6 +22,8 @@ import { colours } from "../../constants/ColorConst";
 import { TextInput, FlatList, ScrollView } from "react-native-gesture-handler";
 import { appFonts, AIRLINE_NOT_AVAILABLE, BRITISH_AIRWAYS } from "../../constants/StringConst";
 import { getAirlinesLogo, getAirwaysDisplayName } from "../../utils/commonMethods";
+import MyStatusBar from "../../components/statusbar";
+
 export default class AirlineMembershipComponent extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +32,9 @@ export default class AirlineMembershipComponent extends Component {
       airLinesMembershipDetailsObject: airlineMembershipData,
       searchedList: airlineMembershipData,
       searchText: "",
-      isOpenDialog:true,
+      isOpenDialog: true,
       airlineSelected: this.props.route.params.airlineSelected ? this.props.route.params.airlineSelected : {},
-      tierSelected: this.props.route.params.tierSelected  ? this.props.route.params.tierSelected : {}
+      tierSelected: this.props.route.params.tierSelected ? this.props.route.params.tierSelected : {}
     };
   }
 
@@ -89,17 +91,17 @@ export default class AirlineMembershipComponent extends Component {
   // }
 
 
-  renderHeader(){
-    return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
-        <ScreenHeader
-          {...this.props}
-          left
-          title={"Airline Membership Tier"}
-          notifCount={2}
-          clickOnLeft={() => this.props.navigation.goBack()}
-        />
+  renderHeader() {
+    return (
+      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ?  scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+        <View style={{ marginTop: Platform.OS == "android" ? scale(16) : scale(40) }}>
+          <ScreenHeader
+            {...this.props}
+            left
+            title={"Airline Membership Tier"}
+            notifCount={2}
+            clickOnLeft={() => this.props.navigation.goBack()}
+          />
         </View>
       </View>
     )
@@ -165,92 +167,93 @@ export default class AirlineMembershipComponent extends Component {
           paddingVertical: verticalScale(10),
           marginTop: verticalScale(5),
           width: width * 0.72,
-         
+
           backgroundColor: (itemObject.airline == (airlineSelected.airline || getAirwaysDisplayName(airlineSelected))) && (item.value == (tierSelected.value || tierSelected)) ? colours.dimSkyBlueColor : ''
         }}>
-          {
-            item.value == "blue"  ?
-            <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+        {
+          item.value == "blue" ?
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
 
-            <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
-            <Text style={styles.membershipSubListTextStyle}>(Choose if Unsure)</Text>
-            {
-               item.value == tierSelected ?
-               <Image
-               source={require('../../assets/common/rightCheck.png')}
-               style={styles.tickMark}
-               resizeMode="contain"
-             />
-               : null
-            }
-           
+              <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
+              <Text style={styles.membershipSubListTextStyle}>(Choose if Unsure)</Text>
+              {
+                item.value == tierSelected ?
+                  <Image
+                    source={require('../../assets/common/rightCheck.png')}
+                    style={styles.tickMark}
+                    resizeMode="contain"
+                  />
+                  : null
+              }
+
             </View>
             :
             item.value == tierSelected ?
-              <View style={{flexDirection:"row",justifyContent:"space-between"}}>
-             <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
-              <FastImage
-               resizeMode="contain"
-               source={require('../../assets/common/rightCheck.png')}
-              style={styles.tickMark}
-            />
+              <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
+                <FastImage
+                  resizeMode="contain"
+                  source={require('../../assets/common/rightCheck.png')}
+                  style={styles.tickMark}
+                />
               </View>
-            :
-            <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
-          }
+              :
+              <Text style={styles.membershipSubListTextStyle}>{item.title}</Text>
+        }
         {/* <Text style={styles.membershipSubListTextStyle}>{item.title}</Text> */}
       </TouchableHighlight>
     );
   }
 
   renderListItem(itemObject, index) {
-    const {tierSelected,isOpenDialog} = this.state;    
+    const { tierSelected, isOpenDialog } = this.state;
 
     return (
-      <TouchableOpacity onPress={()=>{
-        this.setState({isOpenDialog:!this.state.isOpenDialog})
+      <TouchableOpacity onPress={() => {
+        this.setState({ isOpenDialog: !this.state.isOpenDialog })
       }} >
-        
-      <View >
-        {itemObject.airline == BRITISH_AIRWAYS && <View style={{ marginTop: verticalScale(20) }}>
+
+        <View >
+          {itemObject.airline == BRITISH_AIRWAYS && <View style={{ marginTop: verticalScale(20) }}>
             <View style={styles.airlineContainer}>
-            <FastImage source={getAirlinesLogo(BRITISH_AIRWAYS)} resizeMode="contain" style={{ marginRight: scale(10),height:scale(20),width:scale(40) }} />
-            <Text style={styles.membershipListTextStyle}>{itemObject.airline}</Text>
-            {tierSelected ?
-              <View style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 13, marginStart: 13, }}>
-                <Text style={styles.membershipListTextStyle1} >{`${tierSelected.title ?  tierSelected.title : tierSelected}`}
-                </Text>
-              </View>
-              : null} 
+              <FastImage source={getAirlinesLogo(BRITISH_AIRWAYS)} resizeMode="contain" style={{ marginRight: scale(10), height: scale(20), width: scale(40) }} />
+              <Text style={styles.membershipListTextStyle}>{itemObject.airline}</Text>
+              {tierSelected ?
+                <View style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 13, marginStart: 13, }}>
+                  <Text style={styles.membershipListTextStyle1} >{`${tierSelected.title ? tierSelected.title : tierSelected}`}
+                  </Text>
+                </View>
+                : null}
               {
-                isOpenDialog  ?
-                <FastImage resizeMode="contain" source={require("../../assets/up1.png")} style={{width:scale(13),height:scale(13),marginStart:Platform.OS == "android" ? scale(20) : scale(5)}} />
-                :
-                <FastImage resizeMode="contain" source={require("../../assets/down1.png")} style={{width:scale(13),height:scale(13),marginStart:Platform.OS == "android" ? scale(20) : scale(5)}} />
+                isOpenDialog ?
+                  <FastImage resizeMode="contain" source={require("../../assets/up1.png")} style={{ width: scale(13), height: scale(13), marginStart: Platform.OS == "android" ? scale(20) : scale(5) }} />
+                  :
+                  <FastImage resizeMode="contain" source={require("../../assets/down1.png")} style={{ width: scale(13), height: scale(13), marginStart: Platform.OS == "android" ? scale(20) : scale(5) }} />
               }
-              </View>
-                {
-                  this.state.isOpenDialog ?
-                      <FlatList
-                      keyboardShouldPersistTaps='always'
-                      data={itemObject.memberships}
-                      renderItem={({ item, index }) => {
-                        return this.renderSubListItem(item, index, itemObject);
-                      }}
-                    />
-                  : null
-                }
-        </View>}
-      </View>
-       </TouchableOpacity>
+            </View>
+            {
+              this.state.isOpenDialog ?
+                <FlatList
+                  keyboardShouldPersistTaps='always'
+                  data={itemObject.memberships}
+                  renderItem={({ item, index }) => {
+                    return this.renderSubListItem(item, index, itemObject);
+                  }}
+                />
+                : null
+            }
+          </View>}
+        </View>
+      </TouchableOpacity>
     );
   }
 
   renderList() {
     return (
-      <View style={{ flex: 1,
-       justifyContent:'center',
-       alignItems:'center',
+      <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
         {
           this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
@@ -284,14 +287,17 @@ export default class AirlineMembershipComponent extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1,borderWidth:0,borderColor:"green"}} >
+      <View style={{ flex: 1, borderWidth: 0, borderColor: "green" }} >
         <SafeAreaView style={styles.container}>
+          <MyStatusBar />
           {this.renderHeader()}
           <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps='always'>
             {/* {this.renderCrossIcon()} */}
-            
-            <View style={{ justifyContent: 'center', alignItems: 'center',
-            margin: scale(9), marginTop: scale(21), marginBottom: -scale(9), }}>
+
+            <View style={{
+              justifyContent: 'center', alignItems: 'center',
+              margin: scale(9), marginTop: scale(21), marginBottom: -scale(9),
+            }}>
               <Text style={{ color: "gray", fontFamily: appFonts.INTER_SEMI_BOLD, fontSize: scale(13), alignSelf: "flex-start", paddingStart: scale(42) }}>{"Select Your Airline Membership Tier"}</Text>
             </View>
             {/* {this.renderSearchView()} */}

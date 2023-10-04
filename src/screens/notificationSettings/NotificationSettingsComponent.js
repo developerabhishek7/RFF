@@ -27,6 +27,7 @@ import DeviceInfo from "react-native-device-info";
 var uuid = require('react-native-uuid');
 import { DrawerActions } from "@react-navigation/drawer";
 import FastImage from 'react-native-fast-image'
+import MyStatusBar from "../../components/statusbar";
 
 
 export default class NotificationSettingsComponent extends Component {
@@ -143,11 +144,11 @@ export default class NotificationSettingsComponent extends Component {
     return (
       <View style={{
         alignItems: "center", backgroundColor: "#03B2D8",
-        height: scale(110),
+        height: Platform.OS == 'ios' ? scale(110) : scale(80),
         width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60),
         borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20)
       }}>
-        <View style={{ marginTop: scale(40) }}>
+        <View style={{ marginTop: Platform.OS == "android" ? scale(16) :scale(40) }}>
           <ScreenHeader
             {...this.props}
             left
@@ -594,6 +595,7 @@ export default class NotificationSettingsComponent extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
+      <MyStatusBar />
         {this.renderHeader()}
 
         <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">

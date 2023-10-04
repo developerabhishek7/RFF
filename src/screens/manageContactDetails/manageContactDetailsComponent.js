@@ -27,6 +27,7 @@ import { isEmptyString, getCountryCodes, getISOCode, storeCountryData, isAndroid
 import PhoneInput from "react-native-phone-input";
 import ModalPickerImage from "./modalComponent";
 import DeviceInfo from "react-native-device-info";
+import MyStatusBar from "../../components/statusbar";
 
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
@@ -319,8 +320,8 @@ export default class ProfileScreenComponent extends Component {
 
   renderHeader() {
     return (
-      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
-        <View style={{ marginTop: scale(40) }}>
+      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) :scale(110) , width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+        <View style={{ marginTop: Platform.OS == "android" ? scale(16) : scale(40) }}>
           <ScreenHeader
             {...this.props}
             left
@@ -1152,6 +1153,8 @@ export default class ProfileScreenComponent extends Component {
           style={{ flex: 1 }}
           behavior={Platform.OS == "android" ? "" : "padding"}
         >
+
+        <MyStatusBar />
           {this.renderHeader()}
           <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
 

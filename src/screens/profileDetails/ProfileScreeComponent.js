@@ -1364,7 +1364,7 @@ export default class ProfileScreenComponent extends Component {
   renderHeader() {
     return (
       <View style={{ backgroundColor: "#03B2D8", borderBottomLeftRadius: scale(25), borderBottomRightRadius: scale(25), width: "100%", marginTop: scale(8) }}>
-        <View style={{ justifyContent: "space-between", width: "92%", flexDirection: "row", borderWidth: 0, marginTop: scale(40), alignSelf: "center" }}>
+        <View style={{ justifyContent: "space-between", width: "92%", flexDirection: "row", borderWidth: 0, marginTop: Platform.OS == "android" ? scale(40) : scale(25),  alignSelf: "center" }}>
           <TouchableOpacity onPress={() => {
             this.props.navigation.goBack()
           }}>

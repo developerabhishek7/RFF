@@ -17,11 +17,10 @@ export default StyleSheet.create({
     backgroundColor:"#03B2D8",
     paddingHorizontal: verticalScale(20),
     padding:scale(4),
-    height:Platform.OS == "ios" ? scale(110) : scale(90),
+    height:Platform.OS == "ios" ? scale(110) : scale(80),
     borderBottomColor:"#03B2D8",
-    borderBottomWidth:3,
-    marginTop:Platform.OS == "ios" ? scale(-60) : scale(20),
-    paddingTop:scale(30),
+    marginTop:Platform.OS == "ios" ? scale(-60) : scale(-5),
+    paddingTop:Platform.OS == "ios" ? scale(35) : scale(1),
     borderBottomLeftRadius:scale(20),borderBottomRightRadius:scale(20)
   },
   cellContainer: {

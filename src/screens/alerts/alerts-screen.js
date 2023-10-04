@@ -16,7 +16,6 @@ import { CommonActions } from '@react-navigation/native';
 import * as RootNavigation from '../../router/RouteNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
-import MyStatusBar from '../../components/statusbar/index';
 import FontAwesome from "react-native-vector-icons/Feather";
 import { Dimensions } from "react-native";
 import Modal from "react-native-modal";
@@ -40,6 +39,7 @@ import moment from "moment";
 import { getStoreData, getUserId } from "../../constants/DataConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import MyStatusBar from "../../components/statusbar";
 
 import {
   sendAuditData,
@@ -940,10 +940,11 @@ class AlertsScreen extends React.Component {
     // console.log("yes check here alert count value - - - - - - ",alerts)
     return(
       <View style={{alignItems:"center",backgroundColor:"#03B2D8",
-      height:alerts && alerts.length > 0 ? scale(280) : scale(100),width:"100%",marginTop:
+      height:alerts && alerts.length > 0  ? scale(280) : Platform.OS == "android" ? scale(80) : scale(100),width:"100%",marginTop:
       Platform.OS == "ios"? scale(-60) :
-      scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
-        <View style={{marginTop:scale(40),}}>
+      scale(-20)
+      ,borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
+        <View style={{marginTop:Platform.OS == "android" ? scale(16):scale(40),}}>
         <ScreenHeader
           {...this.props}
           left
@@ -1275,8 +1276,8 @@ class AlertsScreen extends React.Component {
     const {alerts} = this.state
     let alertCountValue  = alerts.length
     return(
-      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(25) : scale(45),marginTop:scale(-180),marginBottom:scale(-10)}}>
-        <Text style={{fontSize:scale(16),fontWeight:"700",padding:scale(1),marginStart:scale(20),color:"#FFFFFF"}}> {alertCountValue} Alerts</Text>
+      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(40) : scale(20),marginTop:scale(-200),marginBottom:scale(-10)}}>
+        <Text style={{fontSize:scale(16),fontWeight:"700",paddingTop:Platform.OS == "ios" ? scale(20) : scale(1),padding:scale(1),marginStart:scale(20),color:"#FFFFFF"}}> {alertCountValue} Alerts</Text>
       </View>
     )
   }
@@ -1285,8 +1286,7 @@ class AlertsScreen extends React.Component {
     const { showMenu,alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
     return (
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
-       {/* <MyStatusBar  /> */}
-     
+        <MyStatusBar />
         {this.renderHeader(alertLength)}
 
         {this.renderLoader()}

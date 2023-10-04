@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
+import MyStatusBar from '../../components/statusbar/index';
 
 import { getAirlinesAvailability, getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
 import {
@@ -208,8 +209,10 @@ checkIfPeakOffPeakDataMonth = () => {
     let data = JSON.parse(this.props.route.params.singleMap)
     return (
         <View style={styles.headerView}>
-          <View style={{ flexDirection:"row",alignItems:"center",marginTop:scale(50) ,marginStart:scale(6) }}>
-          <TouchableOpacity onPress={() => {
+          <View style={{ flexDirection:"row",alignItems:"center",marginTop:Platform.OS == "android" ? scale(27) : scale(45) ,marginStart:scale(6) }}>
+          <TouchableOpacity 
+          style={{marginTop: scale(7)}}
+          onPress={() => {
             this.setState({
               peakKey:"",
               peak:""
@@ -2587,6 +2590,7 @@ checkIfPeakOffPeakDataMonth = () => {
     }
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
+        <MyStatusBar />
         {this.renderLoader()}
         {this.renderHeader()}
         {this.renderPeakFairText()}

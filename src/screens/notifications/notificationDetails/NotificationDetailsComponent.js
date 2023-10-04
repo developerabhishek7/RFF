@@ -21,6 +21,7 @@ import ScreenHeader from "../../../components/header/Header";
 import * as STRING_CONST from "../../../constants/StringConst";
 import * as IMG_CONST from "../../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
+import MyStatusBar from "../../../components/statusbar";
 
 import moment from "moment";
 import {
@@ -895,8 +896,8 @@ class NotificationDetailComponent extends Component {
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:Platform.OS =="android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -938,6 +939,7 @@ class NotificationDetailComponent extends Component {
   render() {
     return (     
       <SafeAreaView style={styles.container}>
+         <MyStatusBar />
          {this.renderHeader()}
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {this.renderLoader()}

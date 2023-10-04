@@ -23,6 +23,7 @@ import * as IMG_CONST from "../../constants/ImageConst";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FastImage from 'react-native-fast-image'
 import * as IMAGE_CONST from "../../constants/ImageConst";
+import MyStatusBar from "../../components/statusbar";
 
 export default class ChangePasswordComponent extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class ChangePasswordComponent extends Component {
   };
 
 
-  
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -121,9 +122,9 @@ export default class ChangePasswordComponent extends Component {
               ]}
             >
               {STRING_CONST.OLD_PASSWORD}
-              <Text style={{color:"red"}}>*</Text>
+              <Text style={{ color: "red" }}>*</Text>
             </Text>
-           
+
             <View
               style={[
                 styles.textInputView,
@@ -187,7 +188,7 @@ export default class ChangePasswordComponent extends Component {
               ]}
             >
               {STRING_CONST.NEW_PASSWORD}
-              <Text style={{color:"red"}}>*</Text>
+              <Text style={{ color: "red" }}>*</Text>
             </Text>
             <View
               style={[
@@ -254,7 +255,7 @@ export default class ChangePasswordComponent extends Component {
               ]}
             >
               {STRING_CONST.CONFIRM_PASSWORD}
-              <Text style={{color:"red"}}>*</Text>
+              <Text style={{ color: "red" }}>*</Text>
             </Text>
             <View
               style={[
@@ -360,26 +361,26 @@ export default class ChangePasswordComponent extends Component {
   // }
 
 
-  renderHeader(alertLength){
-    const {alertCount} = this.state;
-    return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
-        <ScreenHeader
-          {...this.props}
-          left
-          title={STR_CONST.CHANGE_PASSWORD}
-          notifCount={2}
-          clickOnLeft={() =>
-            // this.props.navigation.goBack()
-            this.props.navigation.navigate("ProfileScreen")
-          }
-        />
+  renderHeader(alertLength) {
+    const { alertCount } = this.state;
+    return (
+      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "ios" ? scale(-60) : scale(-20), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+        <View style={{ marginTop: Platform.OS == "android"? scale(16) : scale(40) }}>
+          <ScreenHeader
+            {...this.props}
+            left
+            title={STR_CONST.CHANGE_PASSWORD}
+            notifCount={2}
+            clickOnLeft={() =>
+              // this.props.navigation.goBack()
+              this.props.navigation.navigate("ProfileScreen")
+            }
+          />
         </View>
       </View>
     )
   }
-  
+
 
 
 
@@ -398,25 +399,27 @@ export default class ChangePasswordComponent extends Component {
     );
   }
 
-  
+
   render() {
     return (
       // <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
-        <SafeAreaView style={{ flex: 1 }}>
-           {this.renderHeader()}
-           <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
-           <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{height:scale(250),marginTop:scale(-30),alignSelf:"center",width:scale(200),justifyContent:"center",alignItems:"center"}} />
-         
-           {/* <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"> */}
-            {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
-       
+      <SafeAreaView style={{ flex: 1 }}>
+
+        <MyStatusBar />
+        {this.renderHeader()}
+        <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
+          <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{ height: scale(250), marginTop: scale(-30), alignSelf: "center", width: scale(200), justifyContent: "center", alignItems: "center" }} />
+
+          {/* <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"> */}
+          {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
+
           <View style={{ flex: 1, borderWidth: 0, borderColor: "green", justifyContent: "center", alignItems: 'center' }}>
             {this.editPasswordView()}
           </View>
- 
-        {/* </ScrollView> */}
+
+          {/* </ScrollView> */}
         </KeyboardAwareScrollView>
-        
+
       </SafeAreaView>
       // </FastImage>
 

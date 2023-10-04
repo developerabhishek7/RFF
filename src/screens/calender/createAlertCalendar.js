@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   Platform,
+  ScrollView
 } from "react-native";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
@@ -19,6 +20,8 @@ import { getCalendarLocals } from "../../utils/commonMethods";
 import * as STRING_CONST from "../../constants/StringConst";
 import FastImage from 'react-native-fast-image'
 import * as IMAGE_CONST from "../../constants/ImageConst";
+import MyStatusBar from "../../components/statusbar";
+
 export default class CalenderComponent extends Component {
   constructor(props) {
     super(props);
@@ -152,9 +155,9 @@ export default class CalenderComponent extends Component {
     const headingText = this.props.route.params.headingText;
 
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(100),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
-        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:scale(50)}}>
-        <TouchableOpacity style={{paddingStart:scale(20)}} onPress={() => {
+     <View style={{backgroundColor:"#03B2D8",height:Platform.OS =="android" ? scale(80) : scale(110),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) :scale(-60) }}>
+        <View style={{justifyContent:"space-between",width:"94%",flexDirection:"row",marginTop:Platform.OS == "android"? scale(20): scale(50)}}>
+        <TouchableOpacity style={{paddingStart:scale(20),marginTop:Platform.OS == "android" ? scale(8) : scale(1)}} onPress={() => {
               this.props.navigation.goBack()}}>
                 {IMAGE_CONST.IOS_BACK_ARROW}
             </TouchableOpacity>
@@ -311,11 +314,13 @@ export default class CalenderComponent extends Component {
     const today = moment().format("YYYY-MM-DD");
     return (
       <SafeAreaView style={styles.container}>
+         <MyStatusBar />
          {this.renderHeader()}
          <View style={{backgroundColor:"#84D4E5",alignSelf:"center",height:scale(5),borderTopLeftRadius:scale(7),borderTopRightRadius:scale(7),width:scale(120),marginTop:scale(-7)}} />
         <View style={styles.createAlertContainer}>
           <View style={{ flex: 1,}}>
             {/* {this.renderHeading()} */}
+            <ScrollView showsVerticalScrollIndicator={false} >
             <View
               style={[
                 styles.calendarContainer,
@@ -324,6 +329,9 @@ export default class CalenderComponent extends Component {
               onStartShouldSetResponder={() => true}
             >
               <CalendarList
+                ref={(ref) => {
+                  this._refCalendarList = ref;
+                }}
                   calendarStyle={[styles.calendarStyle,{
                     borderWidth:1,
                     borderColor:"#E4E4E4",
@@ -383,6 +391,7 @@ export default class CalenderComponent extends Component {
                 }}
               />
             </View>
+            </ScrollView>
           </View>
           {
             this.state.startDate && 

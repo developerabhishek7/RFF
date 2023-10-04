@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { View, Text, Image, Alert,BackHandler,Linking,SafeAreaView } from "react-native";
+import { View, Text, Image, Alert,BackHandler,Linking,SafeAreaView, Platform } from "react-native";
 import ScreenHeader from "../../components/header/Header";
 import { connect } from "react-redux";
 import * as STRING_CONST from "../../constants/StringConst";
@@ -17,7 +17,7 @@ import * as STR_CONST from "../../constants/StringConst";
 import FastImage from 'react-native-fast-image'
 import {BA_EXE_URL,SKY_SCANNER_URL} from '../../helpers/config'
 
-
+import MyStatusBar from "../../components/statusbar";
 import styles from "./PriceDetailsStyle";
 import {
   getCabinClass
@@ -222,9 +222,9 @@ componentDidMount(){
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) :  scale(110),width:"100%",marginTop:
         Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
+        <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -1290,6 +1290,7 @@ componentDidMount(){
   render() {
     return (
       <SafeAreaView style={{ flex: 1}}>
+        <MyStatusBar />
         <View style={{ flex: 1,  }}>
           {this.renderHeader()}
           {this.renderBody()}
