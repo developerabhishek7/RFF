@@ -17,7 +17,8 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import Utils from "../../utils/commonMethods";
 import scale from "../../helpers/scale";
 import moment from "moment";
-import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image';
+import MyStatusBar from "../../components/statusbar";
 
 export default class NotificationsComponent extends Component {
   constructor(props) {
@@ -194,8 +195,8 @@ export default class NotificationsComponent extends Component {
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "ios" ?  scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS == "ios" ?  scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+        <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}> 
         <ScreenHeader
           {...this.props}
           left
@@ -237,6 +238,7 @@ export default class NotificationsComponent extends Component {
     const { notificationList } = this.state;
     return (
       <SafeAreaView style={styles.container}>
+         <MyStatusBar />
         {this.renderHeader()}
         {notificationList && notificationList.length > 0
           ? this._renderNotif(notificationList)

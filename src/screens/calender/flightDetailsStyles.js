@@ -308,7 +308,7 @@ export default StyleSheet.create({
     alignItems: "center",
     marginStart:scale(30),
     paddingHorizontal: verticalScale(20),
-    marginTop: verticalScale(50),
+    marginTop: Platform.OS == "android" ? verticalScale(16) : verticalScale(50),
   },
   titleText: {
     color:"#132C52",

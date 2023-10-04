@@ -12,6 +12,8 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
+import MyStatusBar from '../../components/statusbar/index'
+import { StatusBar } from 'native-base';
 
 export default class DestinationsComponent extends Component {
   constructor(props) {
@@ -96,9 +98,11 @@ export default class DestinationsComponent extends Component {
 
   renderHeader() {
     return (
-     <View style={{backgroundColor:"#03B2D8",height:scale(170),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20) }}>
-        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:scale(50),alignSelf:"center"}}>
-        <TouchableOpacity onPress={() => {
+     <View style={{backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(140) : scale(160),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20) }}>
+        <View style={{justifyContent:"space-between",width:"92%",flexDirection:"row",borderWidth:0,marginTop:Platform.OS == "android" ? scale(25) : scale(50),alignSelf:"center"}}>
+        <TouchableOpacity
+        style={{ borderWidth: 6, borderColor:"#03B2D8", marginStart: scale(-7) }}
+        onPress={() => {
               this.props.navigation.goBack()}}>
                   {IMAGE_CONST.IOS_BACK_ARROW}
         </TouchableOpacity>
@@ -107,7 +111,7 @@ export default class DestinationsComponent extends Component {
             <Text>          </Text>
            </View>
   
-           <View style={{marginTop:scale(10),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+           <View style={{marginTop:scale(1),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
            <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(5),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
               <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(18),width:scale(18),margin:scale(10),marginStart:scale(16)}} />
               </TouchableOpacity>
@@ -191,6 +195,7 @@ export default class DestinationsComponent extends Component {
       <SafeAreaView style={[styles.container,{
         backgroundColor:"#FFF"
       }]}>
+        <MyStatusBar />
         {this.renderHeader()}
 
         {this.renderClasses()}

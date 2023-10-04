@@ -53,6 +53,7 @@ import {
 } from "../../utils/commonMethods";
 import PopUpComponent from "../../shared/popUpComponent";
 import PostHog from 'posthog-react-native'
+import MyStatusBar from '../../components/statusbar/index'
 let economyPoints = "";
 let premiumPoints = "";
 let businessPoints = "";
@@ -2496,7 +2497,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     </Text>
                     <Text style={styles.dateText}>
                       {`${departStartDate
-                        ? `${getformattedDate(departStartDate)}`
+                        ? `${getformattedDate(departStartDate)}  - `
                         :""
                         }  ${departEndDate
                           ? `${getformattedDate(departEndDate)}`
@@ -2576,7 +2577,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         ]}
                       >
                         {`${returnStartDate
-                          ? `${getformattedDate(returnStartDate)}`
+                          ? `${getformattedDate(returnStartDate)}  - `
                           : ""
                           }  ${returnEndDate
                             ? `${getformattedDate(returnEndDate)}`
@@ -4473,6 +4474,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let classData = searchData.classSelected
      return (
         <SafeAreaView style={[styles.container]}  >
+          <MyStatusBar />
            {this.renderHeader()}
           <View style={{ backgroundColor: "#FFF", flex: 1}}>
             {/* {this.renderLoader()} */}

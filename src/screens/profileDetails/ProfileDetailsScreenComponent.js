@@ -360,7 +360,7 @@ export default class ProfileScreenComponent extends Component {
 
   renderHeader() {
     return (
-      <View style={{ marginHorizontal: scale(15), marginTop: scale(30) }}>
+      <View style={{ marginHorizontal: scale(15), marginTop: Platform.OS == "android" ? scale(30) :scale(24) }}>
         <ScreenHeader
           {...this.props}
           left

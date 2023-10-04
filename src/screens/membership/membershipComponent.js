@@ -33,6 +33,7 @@ import {APP_LINK} from '../../helpers/config'
 import moment from "moment";
 import RNRestart from 'react-native-restart'; 
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
+import MyStatusBar from "../../components/statusbar";
 let buildVersion = 0
 let isAppReviewSuccess = false
 
@@ -169,8 +170,8 @@ class MembershipComponent extends Component{
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(0)}}>
-        <View style={{marginTop:scale(40)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(0)}}>
+        <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -530,6 +531,7 @@ class MembershipComponent extends Component{
   let userData = this.props.userData;
       return (
         <SafeAreaView style={styles.container}>
+          <MyStatusBar />
           {this.renderHeader()}
           <ScrollView style={styles.container}>
             <View style={{ marginHorizontal: scale(20) }}>

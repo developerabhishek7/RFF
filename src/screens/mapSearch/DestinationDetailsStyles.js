@@ -43,7 +43,7 @@ export default StyleSheet.create({
         fontWeight: "600",
     },
     headerView: {
-        backgroundColor:"#3ab2d8",height:scale(120),width:scale(380),
+        backgroundColor:"#3ab2d8",height:Platform.OS == "android" ? scale(100) : scale(120),width:scale(380),
         marginTop:Platform.OS == "ios" ? scale(-60) :scale(-20),
         borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)
     },

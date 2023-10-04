@@ -21,6 +21,8 @@ import {SVG_URL} from '../../helpers/config'
 const { height, width } = Dimensions.get('window');
 import { appFonts, LOCATION_NOT_AVAILABLE } from "../../constants/StringConst";
 import ScreenHeader from "../../components/header/Header";
+import MyStatusBar from "../../components/statusbar";
+
 export default class SourceDestinationListComponent extends Component {
   constructor(props) {
     super(props);
@@ -411,20 +413,23 @@ renderHeader() {
 
   console.log("yes pring seatch text  --fv- - - -f-f -b- ",searchText)
   return (
-   <View style={{backgroundColor:"#03B2D8",height:screenType ? scale(170) : scale(200),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
-      marginTop:Platform.OS=="ios"?scale(-60):scale(-15)
+   <View style={{backgroundColor:"#03B2D8",height:screenType ? scale(180) : scale(210),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
+      marginTop:Platform.OS=="ios"?scale(-60):scale(-50)
    }}>
       <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(50)}}>
-      <TouchableOpacity onPress={() => {
+      <TouchableOpacity
+      style = {{marginTop: scale(10),}}
+      onPress={() => {
             this.props.navigation.goBack()}}>
         {IMAGE_CONST.IOS_BACK_ARROW}
       </TouchableOpacity>
-          <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? headerTxt :  "Search Destination"}</Text>
+          <Text style={{marginTop: scale(4), fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? headerTxt :  "Search Destination"}</Text>
           <Text>    </Text>
          </View>
-         <View style={{marginTop:scale(5),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+         <View style={{marginTop: scale(10), backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
          <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-            <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(17),width:scale(17),margin:scale(10)}} />
+            <FastImage source={require("../../assets/findFlight/search.png")}
+            resizeMode="contain" style={{height:scale(17),width:scale(17),margin:scale(10)}} />
             </TouchableOpacity>
             <TextInput 
                onChangeText={(searchText) => {
@@ -475,7 +480,7 @@ renderHeader() {
     const {screenType} = this.state; 
     return (
       <SafeAreaView style={styles.container}>
-
+        <MyStatusBar />
          {this.renderHeader()}
         <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps={'always'}>
           {/* {this.renderCrossIcon()} */}

@@ -20,6 +20,7 @@ const { height, width } = Dimensions.get("window");
 import styles from "./editAlertStyle";
 import * as RootNavigation from '../../router/RouteNavigation';
 import PopUpComponent from "../../shared/popUpComponent";
+import MyStatusBar from "../../components/statusbar";
 import {
   cancelAlerts,
   resetCancelAlert,
@@ -269,9 +270,9 @@ class EditAlertComponent extends Component {
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:
         Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
-        <View style={{marginTop:scale(40)}}>
+        <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
@@ -1316,6 +1317,7 @@ class EditAlertComponent extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
+        <MyStatusBar />
         <View style={{ flex: 1,  }}>
           
           {this.renderHeader()}

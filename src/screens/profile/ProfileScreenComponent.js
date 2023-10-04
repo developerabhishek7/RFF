@@ -20,6 +20,7 @@ import styles from "./ProfileScreenStyles";
 import * as STR_CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
 import { Platform } from "react-native";
+import MyStatusBar from "../../components/statusbar";
 
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
@@ -110,8 +111,8 @@ export default class ProfileScreenComponent extends Component {
 
   renderHeader() {
     return (
-      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: scale(200), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
-        <View style={{ marginTop: scale(40) }}>
+      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height:  scale(200), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+        <View style={{ marginTop: Platform.OS =="ios" ? scale(40) : scale(20) }}>
           <ScreenHeader
             {...this.props}
             left
@@ -206,9 +207,10 @@ export default class ProfileScreenComponent extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
+         <MyStatusBar />
         {this.renderHeader()}
         <ScrollView style={{
-          flex: 1, marginTop: scale(-100)
+          flex: 1, marginTop:Platform.OS == "android" ?  scale(-120) : scale(-110)
         }} keyboardShouldPersistTaps="always">
           <View style={{
             paddingLeft: scale(20),

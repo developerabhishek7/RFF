@@ -36,7 +36,7 @@ import CalendarDate from "../../components/calendarDate/calendarDateComponent";
 import {NavigationAction} from '@react-navigation/native'
 const { height, width } = Dimensions.get("window");
 import ModalDropdown from "react-native-modal-dropdown";
-
+import MyStatusBar from "../../components/statusbar";
 // import FindFlightComponent from "../findFlights/findFlightComponent";
 class FlightDetailsCompoent extends Component {
   constructor(props) {
@@ -160,7 +160,7 @@ class FlightDetailsCompoent extends Component {
   renderHeader() {
     let data = this.state.searchData
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(70) : scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => {
@@ -874,6 +874,7 @@ class FlightDetailsCompoent extends Component {
   
     return (
       <SafeAreaView style={styles.container}>
+        <MyStatusBar />
         <View style={styles.outerViewStyle}>
           {this.renderHeader()}
           {/* {this.addUserAge()} */}

@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Alert,
   ScrollView,
-  Linking
+  Linking,
+  Platform,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
@@ -33,6 +34,7 @@ import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
 let buildVersion = 0
 import DeviceInfo from "react-native-device-info";
+
 class DrawerComponentComponent extends Component {
   constructor(props) {
     super(props);
@@ -260,7 +262,7 @@ class DrawerComponentComponent extends Component {
               {
               isLoggedIn ?
               <TouchableOpacity
-                style={{marginBottom:scale(0),marginTop:isLoggedIn ? scale(20):scale(10),marginLeft:scale(20),alignSelf:"center"}}
+                style={{ marginBottom:scale(0),marginTop:isLoggedIn && Platform.OS == 'ios' ? scale(20):scale(8),marginLeft:scale(20),alignSelf:"center"}}
                 onPress={async()=>{
                   const accesstoken = await getAccessToken();
                   const userId = await getUserId()
