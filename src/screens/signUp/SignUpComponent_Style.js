@@ -19,6 +19,7 @@ export default StyleSheet.create({
   logoContainer: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    marginTop:scale(12),
   },
 
   
@@ -82,8 +83,8 @@ export default StyleSheet.create({
 
   eyeContainer: {
     position: "absolute",
-    right: scale(18),
-    bottom: scale(14),
+    right: scale(16),
+    bottom: scale(6),
     marginRight: scale(5) 
   },
 

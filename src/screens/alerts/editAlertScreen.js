@@ -782,7 +782,7 @@ class EditAlertComponent extends Component {
                 },
               ]}
             >
-              {passengerCount > 1 ?   "Passengers"   : "Passenger"}
+              {passengerCount > 1 ?   "Passengers"   : "Passenger  "}
               {/* {STRING_CONST.PASSENGER_COUNT} */}
          
             </Text>

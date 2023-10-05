@@ -749,7 +749,7 @@ export default class ProfileScreenComponent extends Component {
           }
           {this.props.userData.phone ? (
             <Menu
-              style={{ marginHorizontal: scale(-30), marginTop: verticalScale(2),}}
+              style={{ marginStart: scale(-30), marginTop: verticalScale(2),}}
               ref={(ref) => this.setMenuRef(ref, 4)}
               button={
                 <TouchableOpacity
@@ -783,7 +783,7 @@ export default class ProfileScreenComponent extends Component {
                 style={{ height: verticalScale(35) }}
                 textStyle={{ color: "black", fontSize: scale(12) }}
               >
-                {STR_CONST.SEND_OTP}
+                {"Send OTP"}
               </MenuItem>
               <MenuDivider style={{ marginHorizontal: scale(30) }} />
               <MenuItem
@@ -931,7 +931,7 @@ export default class ProfileScreenComponent extends Component {
                       const { addEmail } = this.state;
                   Keyboard.dismiss();
                   if (this.checkEmail(addEmail)) {
-                    alert(STR_CONST.EMAIL_EXIST);
+                    Alert.alert(STR_CONST.EMAIL_EXIST);
                   } else {
                     this.setState({
                       isAddEmailPressed: true,

@@ -225,6 +225,7 @@ export const CHANGE_PASSWORD_ICON = require('../assets/common/changePasswordIcon
 export const DRAWER_MENU = require('../assets/common/drawer_menu.png');
 export const AIRLINE_TIER_ICON = require('../assets/common/airlineTierIcon.png');
 export const DELETE_ACCOUNT_ICON = require('../assets/common/deleteAccountIcon.png');
+export const ARROW_DOWN_PNG = require('../assets/common/arrow_down.png');
 
 export const SORTING_UP = require('../assets/alerts/sortUp.png');
 export const SORTING_DOWN = require('../assets/alerts/sortDown.png');

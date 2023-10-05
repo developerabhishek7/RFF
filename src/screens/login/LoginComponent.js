@@ -571,7 +571,7 @@ class LoginComponent extends Component {
             onSubmitEditing={() => {
               this.secondTextInput.focus();
             }}
-            maxLength={25}
+            maxLength={30}
             blurOnSubmit={false}
             returnKeyType="next"
             underlineColorAndroid={'#FFFFFF'}
@@ -579,19 +579,18 @@ class LoginComponent extends Component {
           <TouchableOpacity
             style={styles.emailContainer}
           >
-            <SvgUri
+            {/* <SvgUri
               width={scale(20)}
               height={scale(20)}
               source={IMG_CONST.EMAIL_LOGO_SVG}
-            />
-            {/* <FastImage
+            /> */}
+            <FastImage
               style={
                 { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
               }
               resizeMode="contain"
-              source={IMG_CONST.EMAIL_LOGO
-              }
-            /> */}
+              source={IMG_CONST.EMAIL_LOGO}
+            />
           </TouchableOpacity>
         </View>
 
@@ -650,7 +649,7 @@ class LoginComponent extends Component {
             style={styles.eyeContainer}
           >
 
-            <SvgUri
+            {/* <SvgUri
               width= {scale(20)}
               height= {scale(20)}
              source={
@@ -658,9 +657,9 @@ class LoginComponent extends Component {
                   ? IMG_CONST.PASSWORD_HIDDEN
                   : IMG_CONST.PASSWORD_SHOW
               } 
-            />
+            /> */}
 
-            {/* <FastImage
+            <FastImage
               style={
                 this.state.isHidePassword
                   ? styles.inVisibleEye
@@ -671,7 +670,7 @@ class LoginComponent extends Component {
                   ? IMG_CONST.EYE_INVISIBLE
                   : IMG_CONST.EYE_VISIBLE
               }
-            /> */}
+            />
           </TouchableOpacity>
         </View>
         <Text

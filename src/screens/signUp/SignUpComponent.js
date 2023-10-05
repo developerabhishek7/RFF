@@ -752,6 +752,7 @@ class SignUpComponent extends Component {
               onSubmitEditing={() => {
                 this.fourthTextInput.focus();
               }}
+              maxLength={30}
               blurOnSubmit={false}
               returnKeyType="next"
               underlineColorAndroid={'#FFFFFF'}
@@ -762,19 +763,19 @@ class SignUpComponent extends Component {
               // }
               style={styles.emailContainer}
             >
-              <SvgUri
+              {/* <SvgUri
                 width={scale(20)}
                 height={scale(20)}
                 source={IMG_CONST.EMAIL_LOGO_SVG}
-              />
-              {/* <FastImage
+              /> */}
+              <FastImage
                 style={
                   { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
                 }
                 resizeMode="contain"
                 source={IMG_CONST.EMAIL_LOGO
                 }
-              /> */}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -892,7 +893,7 @@ class SignUpComponent extends Component {
               }
               style={styles.eyeContainer}
             >
-              <SvgUri
+              {/* <SvgUri
                 width={scale(20)}
                 height={scale(20)}
                 source={
@@ -900,8 +901,8 @@ class SignUpComponent extends Component {
                     ? IMG_CONST.PASSWORD_HIDDEN
                     : IMG_CONST.PASSWORD_SHOW
                 }
-              />
-              {/* <FastImage
+              /> */}
+              <FastImage
                 style={
                   this.state.isHidePassword
                     ? styles.inVisibleEye
@@ -912,7 +913,7 @@ class SignUpComponent extends Component {
                     ? IMG_CONST.EYE_INVISIBLE
                     : IMG_CONST.EYE_VISIBLE
                 }
-              /> */}
+              />
             </TouchableOpacity>
           </View>
 
@@ -1043,7 +1044,7 @@ class SignUpComponent extends Component {
               }
               style={styles.eyeContainer}
             >
-              <SvgUri
+              {/* <SvgUri
                 width={scale(20)}
                 height={scale(20)}
                 source={
@@ -1051,8 +1052,8 @@ class SignUpComponent extends Component {
                     ? IMG_CONST.PASSWORD_HIDDEN
                     : IMG_CONST.PASSWORD_SHOW
                 }
-              />
-              {/* <FastImage
+              /> */}
+              <FastImage
                 style={
                   isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
                 }
@@ -1061,7 +1062,7 @@ class SignUpComponent extends Component {
                     ? IMG_CONST.EYE_INVISIBLE
                     : IMG_CONST.EYE_VISIBLE
                 }
-              /> */}
+              />
             </TouchableOpacity>
           </View>
 

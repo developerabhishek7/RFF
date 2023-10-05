@@ -407,7 +407,7 @@ export default class ChangePasswordComponent extends Component {
 
         <MyStatusBar />
         {this.renderHeader()}
-        <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
+        <KeyboardAwareScrollView enableOnAndroid={false} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
           <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{ height: scale(250), marginTop: scale(-30), alignSelf: "center", width: scale(200), justifyContent: "center", alignItems: "center" }} />
 
           {/* <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"> */}

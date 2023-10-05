@@ -341,7 +341,8 @@ class DrawerComponentComponent extends Component {
           resizeMode="stretch"
         /> */}
         {this.profileImage()}
-        <ScrollView scrollEnabled={false} style={{ marginTop: isLoggedIn ? verticalScale(215) : verticalScale(200), marginLeft: scale(0),}}>
+        <ScrollView scrollEnabled={false} style={{ 
+          marginTop: isLoggedIn ? verticalScale(215) : verticalScale(200), marginLeft: scale(0),}}>
          
           <View  style={styles.lineStyle} />
           <TouchableOpacity

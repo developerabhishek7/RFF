@@ -160,7 +160,7 @@ class FlightDetailsCompoent extends Component {
   renderHeader() {
     let data = this.state.searchData
     return (
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(70) : scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(10) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(70) : scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-2) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
       <TouchableOpacity style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => {

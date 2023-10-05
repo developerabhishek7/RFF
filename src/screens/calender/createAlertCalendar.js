@@ -318,13 +318,16 @@ export default class CalenderComponent extends Component {
          {this.renderHeader()}
          <View style={{backgroundColor:"#84D4E5",alignSelf:"center",height:scale(5),borderTopLeftRadius:scale(7),borderTopRightRadius:scale(7),width:scale(120),marginTop:scale(-7)}} />
         <View style={styles.createAlertContainer}>
-          <View style={{ flex: 1,}}>
+          <View style={{ flex: 1, backgroundColor:'#FFFFFF'}}>
             {/* {this.renderHeading()} */}
             <ScrollView showsVerticalScrollIndicator={false} >
             <View
               style={[
                 styles.calendarContainer,
-                { paddingHorizontal: scale(0) },
+                { paddingHorizontal: scale(0),
+                  marginBottom:scale(40),
+                  backgroundColor:'#FFFFFF'
+                },
               ]}
               onStartShouldSetResponder={() => true}
             >
