@@ -213,7 +213,8 @@ export default class SourceDestinationListComponent extends Component {
             >CIties with multiple airports</Text>
           <FlatList
             keyboardShouldPersistTaps='always'
-            showVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => { 
               if (item.code == "LON") {                          
@@ -267,7 +268,8 @@ export default class SourceDestinationListComponent extends Component {
           >Cities with one airport</Text>
              <FlatList
             keyboardShouldPersistTaps='always'
-            showVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => {
               if (item.code != "LON") {
@@ -309,7 +311,8 @@ export default class SourceDestinationListComponent extends Component {
           this.state.searchedList && this.state.searchedList.length !== 0 ? <FlatList
             keyboardShouldPersistTaps='always'
             extraData={this.getSortedList()}
-            showVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={this.getSortedList()}
             renderItem={({ item, index }) => {                                                
                 return this.renderListItem(item, index);
@@ -482,7 +485,10 @@ renderHeader() {
       <SafeAreaView style={styles.container}>
         <MyStatusBar />
          {this.renderHeader()}
-        <ScrollView style={styles.outerViewStyle} keyboardShouldPersistTaps={'always'}>
+        <ScrollView
+         showsVerticalScrollIndicator={false}
+         showsHorizontalScrollIndicator={false}
+         style={styles.outerViewStyle} keyboardShouldPersistTaps={'always'}>
           {/* {this.renderCrossIcon()} */}
           {/* {this.renderSearchView()} */}
           {

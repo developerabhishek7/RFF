@@ -430,8 +430,12 @@ function MainStack() {
           ref={navigationRef}
           
       >
-         <Drawer.Navigator drawerContent={drawerViewModel}
+         <Drawer.Navigator 
+         drawerContent={drawerViewModel}
                 screenOptions={{ headerShown: false, drawerType: "front" ,swipeEnabled:false,
+                drawerStyle: {
+                  backgroundColor: 'transparent',
+                },
               }}
           >
           {/* {isLoggedIn ? ( */}           

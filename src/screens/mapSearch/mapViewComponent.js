@@ -1,6 +1,6 @@
 import MapView, {Marker} from 'react-native-maps';
 import React, { Component, Fragment } from "react";
-import { StyleSheet, View, ImageBackground,Image, Text, Modal,TouchableOpacity, BackHandler,Dimensions } from "react-native";
+import { StyleSheet, View, ImageBackground,Image, Text, Modal,TouchableOpacity, BackHandler,Dimensions, Platform } from "react-native";
 import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -341,7 +341,7 @@ class MapComponent extends Component {
     let destinations = (this.props.route.params.destinations)
     const { tripType,zoomLevel} = this.state;
   return (
-    <View style={{ flex: 1, borderWidth: 0, borderColor: "green",backgroundColor:"#75cff0" }}>
+    <View style={{ flex: 1, borderWidth: 0, borderColor: "green",backgroundColor:"#75cff0", }}>
 
       {this.renderLoader()}
         {this.composeAvailabilityData()}
@@ -615,6 +615,7 @@ class MapComponent extends Component {
                 paddingHorizontal: scale(6),
                 backgroundColor: colours.white,
                 borderRadius: scale(5),
+                marginTop: Platform.OS == 'android' ? scale(15) : scale(5),
               }}
             >
               {IMG_CONST.CHEVRON_BACK}

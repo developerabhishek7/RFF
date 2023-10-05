@@ -2367,7 +2367,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               },
               () => {
                 setTimeout(() => {
-                  alert(STRING_CONST.CREATE_ALERT_LIMIT_GOLD);
+                  Alert.alert("You have reached your limit of Active Alerts.");
                 }, 100);
               }
             );
@@ -2497,7 +2497,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     </Text>
                     <Text style={styles.dateText}>
                       {`${departStartDate
-                        ? `${getformattedDate(departStartDate)}  - `
+                        ? `${getformattedDate(departStartDate)}  -`
                         :""
                         }  ${departEndDate
                           ? `${getformattedDate(departEndDate)}`
@@ -2577,7 +2577,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         ]}
                       >
                         {`${returnStartDate
-                          ? `${getformattedDate(returnStartDate)}  - `
+                          ? `${getformattedDate(returnStartDate)}  -`
                           : ""
                           }  ${returnEndDate
                             ? `${getformattedDate(returnEndDate)}`
@@ -2913,11 +2913,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         style={
           styles.headerContainer
         }
-        onPress={() => { 
-          RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
-          // this.props.navigation.goBack() 
-        }}
-      >
+        >
         <TouchableOpacity
           onPress={() => { 
             // this.props.navigation.goBack() 
@@ -4142,15 +4138,14 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               style={[
                 styles.titleView,
                 {
-                  justifyContent: this.state.haveCrossIcon
-                    ? "space-between"
-                    : "center",
+                  justifyContent: 'space-between'
                 },
               ]}
             >
-              <Text style={styles.titleTextStyle}>{"    "}</Text>
-              <Text style={styles.titleTextStyle}>{"SignIn"}</Text>
+              <Text style={styles.titleTextStyle}>{"       "}</Text>
+              <Text style={[styles.titleTextStyle, { textAlign:'center' }]}>{"Sign In / Sign Up"}</Text>
               <TouchableOpacity
+                style={{ }}
                 onPress={() => {
                   this.setState({ showLoginCnfmPopup: false, haveCrossIcon: false });
                 }}
@@ -4164,12 +4159,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               source={IMAGE_CONST.LOGIN_ICON}
               style={{ marginTop: verticalScale(35), width: scale(106), height: scale(94) }}
             />
-            <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please log in/sign up to use this feature"}</Text>
+            <Text style={[styles.messageStyle, { fontWeight: "500", }]}>{"Please Sign In / Sign Up to use this feature"}</Text>
             {/* {this.state.isSingleButton
             ? this.singleButtonView()
             : this.doubleButtonView()} */}
 
-            <View style={{flexDirection:"row",justifyContent:"space-between",width:scale(250)}}>
+            <View style={{flexDirection:"row",justifyContent:"space-between",width:scale(320)}}>
             <TouchableOpacity
               style={styles.singleButtonStyle}
               onPress={() => {
@@ -4177,7 +4172,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               <Text style={styles.rightButtonTextStyle}>
-                {"Log in"}
+                {"Sign In"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -4187,7 +4182,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               }}
             >
               <Text style={styles.rightButtonTextStyle}>
-                {"Sign up"}
+                {"Sign Up"}
               </Text>
             </TouchableOpacity>
             </View>
@@ -4641,7 +4636,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             {showLoginPopup && (
               <PopUpComponent
                 isSingleButton={false}
-                title={STRING_CONST.LOGIN}
+                title={"Sign In / Sign Up"}
                 message={STRING_CONST.LOGIN_TEXT}
                 image={IMAGE_CONST.LOGIN_ICON}
                 leftButtonText={STRING_CONST.NO}

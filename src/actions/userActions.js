@@ -360,10 +360,15 @@ export function updatePassword(passwordInfo) {
       } else {
         dispatch(CommonActions.stopLoader()); // To stop Loader
         let data = await res.json();
+        console.log('Let DATATAT ',data)
+        if(data.error =="Your old & new passwords are same."){
+            Alert.alert("Your old & new passwords are same.");
+        }else{
         await dispatch({
           type: UPDATE_PASSWORD_ERROR,
           payload: { passwordError: data.error },
         });
+      }
       }
     } catch (e) {
       console.log("cath error Update Password ", e);

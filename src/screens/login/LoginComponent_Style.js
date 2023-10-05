@@ -17,6 +17,7 @@ export default StyleSheet.create({
   logoContainer: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    marginTop:scale(12),
   },
 
   rffLogo: {
@@ -71,11 +72,13 @@ export default StyleSheet.create({
 
   eyeContainer: {
     position: "absolute",
-    right: scale(18),
-    bottom: scale(12),
+    right: scale(16),
+    bottom: scale(6),
   },
 
   visibleEye: {
+    width: scale(36),
+    height: scale(36),
   },
 
   inVisibleEye: {

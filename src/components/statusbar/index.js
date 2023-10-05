@@ -3,7 +3,7 @@ import {SafeAreaView,StatusBar,StyleSheet,View,Platform} from 'react-native'
 const MyStatusBar = ({backgroundColor, ...props}) => (
     <View style={[styles.statusBar, { backgroundColor }]}>
       <SafeAreaView>
-        <StatusBar translucent backgroundColor={backgroundColor} barStyle="light-content" {...props} />
+        <StatusBar translucent backgroundColor={'#03B2D8'} barStyle="light-content" {...props} />
       </SafeAreaView>
     </View>
   );

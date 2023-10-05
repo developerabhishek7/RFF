@@ -1022,7 +1022,7 @@ export default class FindFlightComponent extends Component {
         </TouchableOpacity> */}
         {
           // this.state.selectedIndex == 0 ?
-            <View>
+            <View style={{marginTop:scale(6)}}>
               {
                 this.state.travelData.map((singleMap, key) => {
                   return (
@@ -1032,7 +1032,7 @@ export default class FindFlightComponent extends Component {
                           <TouchableOpacity onPress={async () => {
                             this.setState({ checked: key, })
                           }}
-                            style={{ paddingTop: scale(8) , flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
+                            style={{flexDirection: 'row', width: width * 0.93, alignItems: 'center', borderWidth: 0, flexWrap: "wrap", margin: scale(7) }}>
                             <FastImage source={require("../../assets/common/radio_btn_check.png")} style={{ height: scale(18), width: scale(18), padding: scale(4) }} />
                             <Text style={{ fontSize: scale(14), fontWeight:'400', padding: scale(2), paddingStart: scale(8), fontFamily: STRING_CONST.appFonts.INTER_REGULAR }}> {singleMap.value}</Text>
                           </TouchableOpacity>
@@ -1410,6 +1410,20 @@ export default class FindFlightComponent extends Component {
                     />
                     <Text style={[styles.messageStyle,{fontWeight: "500",}]}>{STRING_CONST.LOGIN_TEXT}</Text>
                     <View style={styles.doubleButtonView}>
+                  
+                      <TouchableOpacity
+                        style={styles.leftButtonStyle}
+                        onPress={() => {
+                          this.setState({
+                                  showLoginPopup: false,
+                                });
+                                this.props.navigation.navigate("SignIn");
+                        }}
+                      >
+                        <Text style={styles.leftButtonTextStyle}>
+                         {"Sign In"}
+                        </Text>
+                      </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.leftButtonStyle}
                         onPress={() => {
@@ -1421,19 +1435,6 @@ export default class FindFlightComponent extends Component {
                       >
                         <Text style={styles.leftButtonTextStyle}>
                           {STRING_CONST.SIGN_UP}
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.leftButtonStyle}
-                        onPress={() => {
-                          this.setState({
-                                  showLoginPopup: false,
-                                });
-                                this.props.navigation.navigate("SignIn");
-                        }}
-                      >
-                        <Text style={styles.leftButtonTextStyle}>
-                        {STRING_CONST.LOGIN}
                         </Text>
                       </TouchableOpacity>
                     </View>

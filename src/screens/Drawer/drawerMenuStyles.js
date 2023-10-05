@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import * as CONST from "../../constants/StringConst";
@@ -8,8 +8,12 @@ import {isPad} from '../../utils/commonMethods'
 export default StyleSheet.create({
   mainView: {
     flex:1,
-    backgroundColor: "#FFF",
-    justifyContent:"center",alignItems:"center",
+    backgroundColor: colours.white,
+    justifyContent:"center",
+    alignItems:"center",
+    marginTop: Platform.OS == 'android' ? scale(35) : scale(0),
+    borderTopRightRadius:scale(40),
+    borderBottomRightRadius:scale(40)
     // borderWidth:1,
     // borderTopRightRadius:scale(20),borderBottomRightRadius:scale(20)
   },
@@ -43,7 +47,7 @@ export default StyleSheet.create({
 
   profileView: {
     position: "absolute",
-    top: verticalScale(80),
+    top: Platform.OS == 'android' ? verticalScale(60) : verticalScale(80),
     width:scale(240),
     alignSelf: "center",
     // flexDirection:"row",
@@ -167,7 +171,7 @@ export default StyleSheet.create({
     fontSize: scale(13),
     fontWeight: "bold",
     color:colours.lightBlueTheme, 
-    marginTop:verticalScale(-4),   
+    marginTop: Platform.OS =='android' ? verticalScale(15) : verticalScale(-4),   
     textDecorationLine: "underline",
     textDecorationStyle: "solid",
     textDecorationColor: colours.lightBlueTheme, 

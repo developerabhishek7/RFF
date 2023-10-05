@@ -65,7 +65,9 @@ export default class TravellersAndClassModal extends Component {
         <Text
           style={[
             styles.membershipSubListTextStyle,
-            { marginHorizontal: scale(12) },
+            { marginHorizontal: scale(12),
+              textAlign:"center",
+              paddingStart:scale(0), },
           ]}
         >
           {this.state.travellersCount}

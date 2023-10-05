@@ -981,15 +981,9 @@ export default class ProfileScreenComponent extends Component {
                   {STRING_CONST.PREFFERED_DEPARTURE}
                 </Text>
             }
-          <SvgUri
-              width={scale(15)}
-              height={scale(18)}
-              source={IMG_CONST.ARROW_DOWN_SVG}
-              style = {{
-              marginTop: scale(5),
-              marginEnd: scale(12)
-              }}
-            />
+            <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
+             resizeMode="contain"
+             style={{ height: scale(16), width: scale(16), marginEnd:scale(14), marginTop: scale(4) }} />
           </View>
         </View>
       </TouchableOpacity>
@@ -1061,16 +1055,9 @@ export default class ProfileScreenComponent extends Component {
                 {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
-
-            <SvgUri
-              width={scale(15)}
-              height={scale(18)}
-              source={IMG_CONST.ARROW_DOWN_SVG}
-              style = {{
-              marginTop: scale(5),
-              marginEnd: scale(12)
-              }}
-            />
+            <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
+             resizeMode="contain"
+             style={{ height: scale(16), width: scale(16), marginEnd:scale(14), marginTop: scale(4) }} />
           </View>
         </ModalDropdown>
       </TouchableOpacity>
@@ -1134,15 +1121,9 @@ export default class ProfileScreenComponent extends Component {
                 {STRING_CONST.GENDER}
               </Text>
             )}
-          <SvgUri
-              width={scale(15)}
-              height={scale(18)}
-              source={IMG_CONST.ARROW_DOWN_SVG}
-              style = {{
-              marginTop: scale(5),
-              marginEnd: scale(12)
-              }}
-            />
+           <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
+             resizeMode="contain"
+             style={{ height: scale(16), width: scale(16), marginEnd:scale(14), marginTop: scale(4) }} />
           </View>
         </ModalDropdown>
       </TouchableOpacity>
@@ -1211,15 +1192,9 @@ export default class ProfileScreenComponent extends Component {
                 {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
-          <SvgUri
-              width={scale(15)}
-              height={scale(18)}
-              source={IMG_CONST.ARROW_DOWN_SVG}
-              style = {{
-              marginTop: scale(5),
-              marginEnd: scale(12),
-              }}
-            />
+           <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
+             resizeMode="contain"
+             style={{ height: scale(16), width: scale(16), marginEnd:scale(14), marginTop: scale(4) }} />
           </View>
         </ModalDropdown>
       </TouchableOpacity>
@@ -1351,15 +1326,10 @@ export default class ProfileScreenComponent extends Component {
                 {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
-          <SvgUri
-              width={scale(15)}
-              height={scale(18)}
-              source={IMG_CONST.ARROW_DOWN_SVG}
-              style = {{
-              marginTop: scale(5),
-              marginEnd: scale(12),
-              }}
-            />
+            <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
+             resizeMode="contain"
+             style={{ height: scale(16), width: scale(16), marginEnd:scale(14), marginTop: scale(4) }} />
+          
           </View>
         </ModalDropdown>
       </TouchableOpacity>
