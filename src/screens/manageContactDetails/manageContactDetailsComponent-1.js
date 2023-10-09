@@ -21,6 +21,7 @@ import Octicons from "react-native-vector-icons/Feather";
 import CustomButton from "../../components/customComponents/CustomButton";
 import Validators from "../../helpers/Validator";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+
 import { getAccessToken } from "../../constants/DataConst";
 import { isEmptyString, getCountryCodes, getISOCode, storeCountryData, isAndroid } from "../../utils/commonMethods";
 import PhoneInput from "react-native-phone-input";
@@ -377,11 +378,7 @@ export default class ProfileScreenComponent extends Component {
 
     return (
       <Fragment >
-        <View style={[styles.emailIdsInnerView,
-         {
-          width: "100%"
-        },
-        ]}>
+        <View style={styles.emailIdsInnerView}>
           {
             index == 0 && isFocuesOnEmail == true ?
               <TextInput
@@ -461,7 +458,7 @@ export default class ProfileScreenComponent extends Component {
             ref={(ref) => this.setMenuRef(ref, index)}
             button={
               <TouchableOpacity
-                style={{ marginTop: 5 }}
+                style={{ paddingHorizontal: scale(15), marginTop: 5 }}
                 onPress={() => {
                   this.showMenu(index);
                 }}
@@ -637,12 +634,14 @@ export default class ProfileScreenComponent extends Component {
     let goldMember = userData.gold_member
 
     return (
-      <View style={{  }}>
+      <View style={{ borderWidth: 0 }}>
         <View
           style={[
             styles.emailIdsInnerView,
             {
-              width: "100%"
+              justifyContent: "flex-start",
+              width: "100%",
+              borderWidth: 0, borderColor: "green", alignItems: 'center'
             },
           ]}
         >
@@ -754,7 +753,7 @@ export default class ProfileScreenComponent extends Component {
               ref={(ref) => this.setMenuRef(ref, 4)}
               button={
                 <TouchableOpacity
-                  style={{ alignSelf:'flex-end'}}
+                  style={{ paddingHorizontal: scale(15) }}
                   onPress={() => {
                     this.showMenu(4);
                   }}

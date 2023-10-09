@@ -214,6 +214,7 @@ class MapComponent extends Component {
 
 
   renderBottomButton(buttonText, backgroundColor, onButtonPress) {
+   let destination =  (this.props.route.params.destinations)
     return (
       <TouchableOpacity
         style={[styles.buttonStyleMap, { backgroundColor: backgroundColor, position: "absolute", bottom: 40 }]}
@@ -230,7 +231,7 @@ class MapComponent extends Component {
           fontFamily: STRING_CONST.appFonts.INTER_BOLD,
           fontSize: scale(16),
           fontWeight: "bold",
-        }}>{buttonText}</Text>
+        }}>{buttonText} ({destination.length})</Text>
       </TouchableOpacity>
     );
     }
@@ -339,6 +340,8 @@ class MapComponent extends Component {
 
   render() {
     let destinations = (this.props.route.params.destinations)
+
+    console.log("check here inside the render method  = = = = = = =",destinations.length)
     const { tripType,zoomLevel} = this.state;
   return (
     <View style={{ flex: 1, borderWidth: 0, borderColor: "green",backgroundColor:"#75cff0", }}>
@@ -348,8 +351,10 @@ class MapComponent extends Component {
         <MapView
           style={styles.mapStyle}
           initialRegion={{
-            latitude: -89.98155760646617,
-            longitude: 89.99346179538875,
+            // latitude: -89.98155760646617,
+            // longitude: 89.99346179538875,
+            latitude: 54.5260,
+            longitude: 15.2551,
             latitudeDelta: 180,
             longitudeDelta: 180,
           }}
@@ -681,7 +686,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(MapComponent);
 const mapStyle = [
   {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
   {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-  {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+  {elementType: 'labels.text.stroke',  stylers: [
+    {
+      visibility: "off"
+    }
+  ]},
   {
     featureType: 'administrative.locality',
     elementType: 'labels.text.fill',
@@ -705,32 +714,56 @@ const mapStyle = [
   {
     featureType: 'road',
     elementType: 'geometry',
-    stylers: [{color: '#38414e'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'road',
     elementType: 'geometry.stroke',
-    stylers: [{color: '#212a37'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'road',
     elementType: 'labels.text.fill',
-    stylers: [{color: '#9ca5b3'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'road.highway',
     elementType: 'geometry',
-    stylers: [{color: '#746855'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'road.highway',
     elementType: 'geometry.stroke',
-    stylers: [{color: '#1f2835'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'road.highway',
     elementType: 'labels.text.fill',
-    stylers: [{color: '#f3d19c'}],
+    stylers: [
+      {
+        visibility: "off"
+      }
+    ]
   },
   {
     featureType: 'transit',

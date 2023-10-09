@@ -71,6 +71,9 @@ let expireDate = ""
 let isAlertExpireDays = ""
 let isAlertExpireDays2 = ""
 
+var requiredKey = false
+
+
 export default class CalenderComponent extends Component {
   constructor(props) {
     super(props);
@@ -456,26 +459,26 @@ export default class CalenderComponent extends Component {
     const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
 
     let clickDate
-    var requiredKey = false
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
     if (this.state.clickDate) {
       let date = this.state.clickDate
-
+     
       let date1 = moment(date).format('DD-MM-YYYY')
       let date2 = moment(nextThreeMonth).format('DD-MM-YYYY')
 
-      const dt1 = moment(date, 'DD-MM-YYYY').valueOf()
+      const dt1 = moment(date1, 'DD-MM-YYYY').valueOf()
       const dt2 = moment(date2, 'DD-MM-YYYY').valueOf()
       if (dt1 == dt2) {
-        requiredKey = false
-      }
-      if (dt1 > dt2) {
-        requiredKey = false
-      }
-      if (dt2 > dt1) {
         requiredKey = true
       }
+      if (dt1 > dt2) {
+        requiredKey = true
+      }
+      if (dt2 > dt1) {
+        requiredKey = false
+      }
+
     }
 
     const { searchData, offPeakKey,showModelDropdownForBA,showModelDropdownForSS, airLinesDetailsObject, } = this.state;
@@ -2990,13 +2993,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let business = classSelected[2]
     let first = classSelected[3]
 
-
-
-    // let economy = classSelected[0] && availability.economy
-    // let premium = classSelected[1] && availability.premium
-    // let business = classSelected[2] && availability.business
-    // let first = classSelected[3] && availability.first
-
    let classSelectedArray = []
 
     if (economy) {
@@ -4168,6 +4164,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             <TouchableOpacity
               style={styles.singleButtonStyle}
               onPress={() => {
+                this.setState({ showLoginCnfmPopup: false,})
                 this.props.navigation.navigate("SignIn")
               }}
             >
@@ -4178,6 +4175,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             <TouchableOpacity
               style={styles.singleButtonStyle}
               onPress={() => {
+                this.setState({ showLoginCnfmPopup: false,})
                 this.props.navigation.navigate("SignUp")
               }}
             >
@@ -4563,7 +4561,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               "stylesheet.calendar.header": {
                 header: styles.header,
                 monthText: styles.monthText,
-              margin:scale(10),borderColor:"red",borderWidth:1
+                margin:scale(10),borderColor:"red",borderWidth:1
               },
             }}
             listFooterComponent={() => {

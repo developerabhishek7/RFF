@@ -297,7 +297,7 @@ function secureFetchMultiPart(type, accessToken, body = '') {
 	} else {
 		requestObj["method"] = type;
 		requestObj["headers"] = {
-			Authorization: `Token ${accessToken}`,
+			Authorization: accessToken,
 			'Content-Type': 'multipart/form-data',
 			'Accept': 'application/json'
 		};

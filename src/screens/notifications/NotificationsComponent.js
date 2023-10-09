@@ -130,7 +130,7 @@ export default class NotificationsComponent extends Component {
     }
 
     let date = item.created_at
-    let actualDate =  moment(date).format("DD-MM-YYYY : HH:mm")
+    let actualDate =  moment(date).format("DD-MM-YYYY  HH:mm")
 
     return (
       // eslint-disable-next-line react/jsx-filename-extension

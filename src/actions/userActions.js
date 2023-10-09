@@ -8,7 +8,7 @@ import {
   securePut,
   securePatch,
   securePutForUserProfile,
-  securePostForUser,securePutForUser,secureDeleteForUser, secureGetForUser, securePatchForUser, secureDelete
+  securePostForUser,securePutForUser,secureDeleteForUser, secureGetForUser, securePatchForUser, secureDelete, securePost, securePostMultiPart
 } from "../services/apiService";
 import * as API_CONST from "../helpers/config";
 import {
@@ -42,7 +42,12 @@ import {
   LOGGEDIN_USER_POSTHOG_FAIL,
   USER_CONFIG_DETAILS,
   USER_CONFIG_DETAILS_SUCCESS,
-  USER_CONFIG_DETAILS_FAIL
+  USER_CONFIG_DETAILS_FAIL,
+  GET_ZENDESK_CATEGORY_SUCCESS,
+  GET_ZENDESK_CATEGORY_FAIL,
+  POST_ZENDESK_TICKET,
+  POST_ZENDESK_TICKET_SUCCESS,
+  POST_ZENDESK_TICKET_FAIL,
 } from "../constants/ActionConst";
 import {NETWORK_ERROR} from '../constants/StringConst'
 import * as STR_CONST from '../constants/StringConst'
@@ -300,7 +305,7 @@ export function getUserInfo() {
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
       const accesstoken = await getAccessToken();
       const userId = await getUserId();
-      // console.log("yes pint user id here #######       ",userId,     accesstoken)
+      console.log("yes pint user id here #######   accesstoken    ", accesstoken)
       const res = await secureGetForUser(
         `/v1/users/${userId}?user[access_token]=${accesstoken}`,
         authToken
@@ -415,6 +420,7 @@ export function updateUserInfo(userInfo,addingUserDetail) {
         });}
         if(isLastName){
           Alert.alert("Your personal information has been updated successfully")
+          RootNavigation.navigationRef.navigate("UserProfileScreen")
         }
         dispatch(CommonActions.stopLoader()); // To stop Loader
       } else {  
@@ -674,7 +680,7 @@ export function updateGuestUserPostHog(userInfo) {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;      
-      const res = await securePostForUser(`/v1/posthog_guest`, authToken,
+      const res = await securePost(`/v1/posthog_guest`, authToken,
        userInfo
       );
 
@@ -801,6 +807,92 @@ export function getUserConfigDetails() {
         });
       } else {
         console.log(STR_CONST.SOMETHING_WENT_WRONG);
+      }
+    }
+  };
+}
+
+
+export function getZendeskCategoryData() {
+  return async (dispatch, getState) => {
+    try {
+      const authToken = API_CONST.AUTH0RIZATION_TOKEN;
+      const accesstoken = await getAccessToken();
+      // console.log("yes pint user id here #######       ",userId,     accesstoken)
+      const res = await secureGetForUser(
+        `/v1/supports/categories?user[access_token]=${accesstoken}`,
+        authToken
+      );
+      if (res) {
+        await dispatch({
+          type: GET_ZENDESK_CATEGORY_SUCCESS,
+          payload: { zendeskCategory: res.data },
+        });
+        dispatch(CommonActions.stopLoader());
+      } else {
+        dispatch(CommonActions.stopLoader());
+        await dispatch({
+          type: GET_ZENDESK_CATEGORY_FAIL,
+          payload: { zendeskCategoryError: res.error },
+        });
+      }
+    } catch (e) {
+      console.log("cath error User Action get user info", e);
+      dispatch(CommonActions.stopLoader());
+      if (e.status == 403) {
+        await dispatch({
+          type: SESSION_EXPIRED,
+          payload: { sessionExpired: true },
+        });
+      } else {
+        console.log(STR_CONST.SOMETHING_WENT_WRONG);
+      }
+    }
+  };
+}
+
+
+export function submitHelpForm(postData) {
+
+  console.log('postZendeskTicket ', postData);
+
+  return async (dispatch, getState) => {
+    try {
+      dispatch(CommonActions.startLoader()); // To start Loader
+      const authToken = API_CONST.AUTH0RIZATION_TOKEN;
+      const accesstoken = await getAccessToken();
+      // const userId = await getUserId();
+      // userData["access_token"] = accesstoken;
+      const res = await securePostMultiPart(`/v1/supports/ticket?user[access_token]=${accesstoken}`, authToken,
+       postData
+      );
+      console.log("POST_ZENDESK_TICKET_SUCCESS >>>  ", res)
+      if (res) {
+        await dispatch({
+          type: POST_ZENDESK_TICKET_SUCCESS,
+        });
+        dispatch(CommonActions.stopLoader());
+      } else {
+        let response = await res
+        console.log("POST_ZENDESK_TICKET_FAIL >>>  ", response, response.status)
+        dispatch(CommonActions.stopLoader());
+            
+        await dispatch({
+          type: POST_ZENDESK_TICKET_FAIL,
+          payload: { postZendeskError: response.error },
+        });
+      }
+    } catch (e) {
+      dispatch(CommonActions.stopLoader());
+      if (e.status == 401) {
+        await dispatch({
+          type: SESSION_EXPIRED,
+          payload: { sessionExpired: true },
+        });
+      } else if(e == STR_CONST.NETWORK_ERROR){
+        await dispatch(CommonActions.setNetworkStatus(''));
+      }else{
+        alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };

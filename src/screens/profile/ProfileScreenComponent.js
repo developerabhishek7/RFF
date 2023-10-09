@@ -220,6 +220,7 @@ export default class ProfileScreenComponent extends Component {
           </View>
           <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: scale(30) }}>
             <Text style={{ fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, fontWeight: Platform.OS === "android" ? "700" : "100", color: colours.darkBlueTheme }}>App version : 0.1.6</Text>
+            <Text style={{ fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, fontWeight: Platform.OS === "android" ? "700" : "100", color: colours.darkBlueTheme }}>Beta Release</Text>
           </View>
         </ScrollView>
       </SafeAreaView>

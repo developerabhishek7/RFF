@@ -243,7 +243,9 @@ class DrawerComponentComponent extends Component {
           <Text numberOfLines={1} style={[styles.nameStyle,{
             width:verticalScale(110)
           }]}>
-            { `${this.getCapitalName(userData.first_name)} ${this.getCapitalName(userData.last_name)}`}
+            { `${this.getCapitalName(userData.first_name)}`}
+            {/* ${this.getCapitalName(userData.last_name)}
+            } */}
           </Text>
           {
             bronze_member || silver_member || gold_member  ?
@@ -437,7 +439,25 @@ class DrawerComponentComponent extends Component {
               {STR_CONST.MORE_TITLE}
             </Text>
           </TouchableOpacity>
-          <View  style={styles.lineStyle} />
+          <View style={styles.lineStyle} />
+          {
+            isLoggedIn && this.state.userData &&
+            <TouchableOpacity
+              style={styles.screenButtonStyle}
+              onPress={() => {
+                navigation.navigate(STR_CONST.HELP_SCREEN);
+                navigation.dispatch(DrawerActions.closeDrawer());
+              }}
+            >
+              {this.getMenuOptionImage(IMAGE_CONST.MORE_ICON)}
+
+              <Text style={styles.screenTitle}>
+                {"Help"}
+              </Text>
+            </TouchableOpacity>
+           
+          }
+          {isLoggedIn && <View  style={styles.lineStyle} /> }
           <View style={{ marginTop:scale(20),alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[

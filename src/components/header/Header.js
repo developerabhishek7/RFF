@@ -88,7 +88,8 @@ class ScreenHeader extends Component {
 
   _renderRightIcon() {
 
-
+    const userData = this.props.userData;
+    let gold_member = userData.gold_member
     let isLoggedIn = this.props.isLoggedIn;
     const { badgeCount } = this.state;
     return (
@@ -96,7 +97,9 @@ class ScreenHeader extends Component {
         disabled={!isLoggedIn}
         style={styles.rightIconCon}
         onPress={() => {
-          this.props.clickOnRight();
+          if(gold_member){
+            this.props.clickOnRight();
+          }
         }}
       >
         <View>
@@ -107,14 +110,20 @@ class ScreenHeader extends Component {
             </Fragment>
           : null
          } 
-          <FastImage
-            style={styles.backIcon}
-            source={
-              isLoggedIn
-                ? IMAGE_CONST.DARK_NOTIFICATION_BELL_ICON
-                : ""
-            }
-          />
+         {
+        
+
+
+        <FastImage
+          style={styles.backIcon}
+          source={
+            isLoggedIn &&   gold_member
+              ? IMAGE_CONST.DARK_NOTIFICATION_BELL_ICON
+              : ""
+          }
+        />
+         }
+         
         </View>
       </TouchableOpacity>
     );
@@ -162,6 +171,7 @@ class ScreenHeader extends Component {
   render() {
     // const routeName = this.props.route.params.routeName;
     const userData = this.props.userData;
+    let gold_member = userData.gold_member
     const isLoggedIn = this.props.isLoggedIn
   return (
       <View>
@@ -181,14 +191,24 @@ class ScreenHeader extends Component {
             : this._renderTitle("")}
           <View style={{ flexDirection: "row" }}>
             {this.props.showSort ? this.filterIcon() : null}
-            {this.props.right ? (
+            {
+              
+              <Fragment>
+
+                  {this.props.right ? (
               this._renderRightIcon()
             ) : (
               <View style={styles.emptyRight} />
             )}
+
+
+              </Fragment>
+            }
+          
           </View>
         </View>
-       
+
+
         {/* {
           userData && Object.keys(userData).length != 0 && isLoggedIn ?
           <Fragment>

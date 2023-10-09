@@ -49,6 +49,7 @@ import NoNetWorkComponent from '../screens/noNetwork/NoNetworkComponent'
 import { connect } from "react-redux";
 import scale, { verticalScale } from '../helpers/scale'
 import FindFlightComponent from '../screens/findFlights/findFlightComponent';
+import HelpComponent from '../screens/help/HelpComponent'
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -201,6 +202,13 @@ const drawerViewModel = (navigation) => {
         <Stack.Screen
           name="NoNetworkScreen"
           component={NoNetWorkComponent}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="HelpScreen"
+          component={HelpComponent}
           options={{
             headerShown: false
           }}
