@@ -33,6 +33,7 @@ import { setLoginStatus } from "../../actions/loginActions";
 import { getAlerts, cancelAlerts } from "../../actions/alertActions";
 import {
   getUserInfo, getCountryList,
+  getZendeskCategoryData,
   getStateList,getUserConfigDetails,
   getCityList, updateUserInfo, updateAirlineTier, updateGuestUserPostHog, updateLoggedInUserPostHog
 } from "../../actions/userActions";
@@ -109,6 +110,7 @@ class FindFlightContainer extends Component {
     this.props.getLocationsAction()
     this.props.getProductPlansAction()
     this.props.getPeakOffPeakDataAction()
+    this.props.getZendeskCategoryDataAction()
     
     const isLoggedIn = await getStoreData('authorizationHeader')
     const guestId = await getStoreData('guestId')
@@ -485,6 +487,7 @@ const mapDispatchToProps = (dispatch) => {
     getPeakOffPeakDataAction: () => dispatch(getPeakOffPeakData()),
     getUserConfigDetailsAction:() => dispatch(getUserConfigDetails()),
     getCabinClassAction:(data)=> dispatch(getCabinClass(data)),
+    getZendeskCategoryDataAction: () => dispatch(getZendeskCategoryData()),
   };
 };
 export default connect(

@@ -176,10 +176,12 @@ export default class SourceDestinationListComponent extends Component {
           }}
             activeOpacity={1}
              underlayColor={colours.dimLightBlueBackgroundColor}
-            style={{ borderRadius: scale(5),justifyContent:"center",
-            width:scale(290),borderWidth:0, 
+              style={{ borderRadius: scale(5),
+              justifyContent:"center",
+              width:scale(290),borderWidth:0,
              backgroundColor: this.state.selectedLocation && this.state.selectedLocation.code == itemObject.code ? colours.dimLightBlueBackgroundColor : "#FFF" }}>
-               <Text style={styles.membershipSubListTextStyle}>
+               <Text style={[styles.membershipSubListTextStyle,{
+               }]}>
                 {this.getLocationText(itemObject, countryName)} 
                 </Text>
           </TouchableHighlight>
@@ -208,7 +210,7 @@ export default class SourceDestinationListComponent extends Component {
               <Text
               style={{
                 color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-                alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
+                alignSelf: 'flex-start', marginTop: verticalScale(9), marginBottom: verticalScale(1),
               }}
             >CIties with multiple airports</Text>
           <FlatList
@@ -426,7 +428,7 @@ renderHeader() {
             this.props.navigation.goBack()}}>
         {IMAGE_CONST.IOS_BACK_ARROW}
       </TouchableOpacity>
-          <Text style={{marginTop: scale(4), fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? headerTxt :  "Search Destination"}</Text>
+          <Text style={{marginTop: scale(4), fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? "My Home Airport" :  "Search Destination"}</Text>
           <Text>    </Text>
          </View>
          <View style={{marginTop: scale(10), backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
@@ -439,7 +441,7 @@ renderHeader() {
                 this.onSearch(searchText)
               }}
               value={this.state.searchText}
-              placeholder={this.props.route.params.placeholderTitle}              
+              placeholder= {!headerTxt && this.props.route.params.placeholderTitle}              
               onFocus={()=>{
                 this.setState({
                     isOnFocus:!this.state.isOnFocus

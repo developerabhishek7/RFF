@@ -35,7 +35,14 @@ import {
 
   USER_CONFIG_DETAILS_SUCCESS,
   USER_CONFIG_DETAILS_FAIL,
-  USER_CONFIG_DETAILS
+  USER_CONFIG_DETAILS,
+
+  GET_ZENDESK_CATEGORY_SUCCESS,
+  GET_ZENDESK_CATEGORY_FAIL,
+
+  POST_ZENDESK_TICKET,
+  POST_ZENDESK_TICKET_FAIL
+
 } from "../constants/ActionConst";
 
 const initialState = {
@@ -70,7 +77,13 @@ const initialState = {
   loggedInUserPostHogError:"",
 
   userConfigDetails:{},
-  userConfigDetailsError:""
+  userConfigDetailsError:"",
+
+  zendeskCategory:{},
+  zendeskCategoryError:"",
+
+  postZendeskTicket:{},
+  postZendeskError:"",
 };
 
 export default function(state = initialState, action) {
@@ -95,6 +108,29 @@ export default function(state = initialState, action) {
         ...state,
         userError: action.payload.userError,
       };
+
+      case GET_ZENDESK_CATEGORY_SUCCESS:
+        return {
+          ...state,
+          zendeskCategory: action.payload,
+        };
+      case GET_ZENDESK_CATEGORY_FAIL:
+        return {
+          ...state,
+          zendeskCategoryError: action.payload.error,
+        };
+
+      case POST_ZENDESK_TICKET:
+        return {
+          ...state,
+          postZendeskTicket: action.payload,
+        };
+      case POST_ZENDESK_TICKET_FAIL:
+        return {
+          ...state,
+          postZendeskError: action.payload.error,
+        };
+
       case ADD_USER_DETAILS_SUCCESS:{
       return {
         ...state,

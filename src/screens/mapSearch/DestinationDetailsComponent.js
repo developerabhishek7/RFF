@@ -241,23 +241,28 @@ checkIfPeakOffPeakDataMonth = () => {
 
     return (
       <View style={{ marginTop: scale(10),backgroundColor:"#FFF" }}>
-        <View style={styles.peakFairMainView}>
+        <View style={[styles.peakFairMainView,{
+          // borderWidth:1,
+          width:scale(356)
+        }]}>
           
           <View style={[styles.peakFairSubHeaderView,{
             backgroundColor:  !peak  && actualDate ? "#FFFFFF" : peak && actualDate ? colours.skyBlueColor : "#FFF",
             // borderBottomColor: !peak  && actualDate ? "gray"  : "#FFF",
             // borderBottomWidth:0.3,
+            width:scale(178),
             borderLeftColor:peak  && actualDate ? "gray"  : "#FFF",
             borderLeftWidth:0.3,
             borderRightWidth:0.3,
             borderRightColor:peak  && actualDate ? "gray"  : "#FFF",
             borderTopWidth:0.3,
             borderTopColor:peak  && actualDate ? "gray"  : "#FFF",
-         
          }]}>
             <ImageBackground
               source={require("../../assets/classes/PEAK.png")}
-              style={styles.peakFairImg}
+              style={[styles.peakFairImg,{
+                marginStart:scale(-10)
+              }]}
             >
             </ImageBackground>
             <Text style={styles.peakFairTxt}>Peak Fare</Text>
@@ -266,8 +271,7 @@ checkIfPeakOffPeakDataMonth = () => {
             backgroundColor: peak && actualDate ? "#FFFFFF" : !peak && actualDate ? colours.skyBlueColor : "#FFF",
             // borderBottomColor: peak  && actualDate ? "gray"  : "#FFF",
             // borderBottomWidth:0.3,
-            
-         
+            width:scale(178),
             borderLeftColor:!peak  && actualDate ? "gray"  : "#FFF",
             borderLeftWidth:0.3,
             borderRightWidth:0.3,
@@ -276,7 +280,6 @@ checkIfPeakOffPeakDataMonth = () => {
             borderTopColor:!peak  && actualDate ? "gray"  : "#FFF",
 
       }]}>
-           
            <ImageBackground
               source={require("../../assets/classes/OFFPEAK.png")}
               style={styles.peakFairImg}
@@ -955,7 +958,7 @@ checkIfPeakOffPeakDataMonth = () => {
     let actualDate = Object.entries(dates.availability.outbound)
     let count 
     return (
-      <View style={{ flex:1,flexDirection: "row",alignSelf:"center",marginStart:scale(20),marginEnd:scale(20) }}>
+      <View style={{ flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
           actualDate.map((singleMap ,index) => {
 
@@ -1025,7 +1028,7 @@ checkIfPeakOffPeakDataMonth = () => {
             return (
               <Fragment>
                 {
-                  index <= 4 ?
+                  index <= 9 ?
 
                   <View style={styles.outboundMainView}>
                   {
@@ -1730,7 +1733,7 @@ checkIfPeakOffPeakDataMonth = () => {
     });
 
     return (
-      <View style={{ flexDirection: "row",borderWidth:0,alignSelf:"center", flex: 1,marginStart:scale(0),marginEnd:scale(0) }}>
+      <View style={{ flexDirection: "row",flexWrap:"wrap",borderWidth:0,alignSelf:"flex-start", flex: 1,marginStart:scale(10),marginEnd:scale(0) }}>
         {
           actualDate.length!=0 ? actualDate.map((singleMap, index) => {
 
@@ -1744,7 +1747,6 @@ checkIfPeakOffPeakDataMonth = () => {
             let month = "";
             let businessClass = singleMap[dateKeys]
             let returnDateMonth = new Date(dates).getMonth()
-
 
            let peak = dateKeys.peak;
             let business;
@@ -1828,7 +1830,7 @@ checkIfPeakOffPeakDataMonth = () => {
             return (
               <Fragment>
                 {
-                  index <= 4 ?
+                  index <= 9 ?
                   <View style={styles.outboundMainView}>
                   {
                     peak == true ?

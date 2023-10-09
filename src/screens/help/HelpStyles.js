@@ -1,0 +1,153 @@
+import { StyleSheet } from "react-native";
+import scale, { verticalScale } from "../../helpers/scale";
+import * as CONST from "../../constants/StringConst";
+import { colours } from "../../constants/ColorConst";
+
+module.exports = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colours.white,
+  },
+  image: {
+    height: scale(200),
+    width: scale(241),
+  },
+  title: {
+    fontSize: scale(16),
+    lineHeight: scale(19),
+    color: colours.darkBlueTheme,
+    fontFamily: CONST.appFonts.INTER_REGULAR,
+    marginTop: verticalScale(30),
+    fontWeight: 'bold'
+  },
+  textInputView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: scale(1),
+    alignItems: "center",
+    borderBottomColor: colours.borderBottomLineColor,
+    paddingRight: scale(10),
+  },
+  textInputHeading: {
+    fontSize: scale(12),
+    fontFamily: CONST.appFonts.INTER_REGULAR,
+    lineHeight: scale(15),
+    color: colours.lightGreyish,
+    marginTop: verticalScale(20),
+  },
+  subjectView: {
+    flexDirection: "row",
+    width: scale(302),
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: colours.white,
+    paddingBottom: 10,
+  },
+  subjectText: {
+    alignItems: "center",
+    fontSize: scale(16),
+    color: colours.lightGreyish,
+    paddingLeft: scale(4),
+    marginTop: verticalScale(5),
+  },
+  subjectDetailText: {
+    alignItems: "center",
+    fontSize: scale(16),
+    color: colours.darkBlueTheme,
+    fontWeight: "600",
+    paddingLeft: scale(4),
+  },
+  textInputMessageView: {
+    flexDirection: "row",
+    backgroundColor: colours.white,
+    borderWidth: 1,
+    borderColor:colours.borderBottomLineColor,
+    borderRadius:scale(6),
+    height: verticalScale(120),
+    marginTop: verticalScale(8),
+    borderColor: colours.borderColor,
+  },
+  textInput: {
+    alignItems: "center",
+    fontSize: scale(16),
+    paddingLeft: scale(4),
+    height: 100,
+    textAlignVertical: 'top',
+  },
+  textBelowAttach: {
+    fontSize: scale(15),
+    fontFamily: CONST.appFonts.INTER_REGULAR,
+    lineHeight: scale(15),
+    color: colours.lightGreyish,
+    marginTop: scale(4),
+  },
+  attachView: { flex: 1, flexDirection: "row",
+   justifyContent: 'space-between', 
+   marginTop: verticalScale(18),
+   alignItems: 'center',
+  },
+  attachText: {
+    fontSize: scale(16),
+    lineHeight: scale(19),
+    color: colours.darkBlueTheme,
+    fontFamily: CONST.appFonts.INTER_REGULAR,
+    fontWeight: 'bold'
+  },
+  buttonTextStyle: {
+    textAlign: 'center',
+    color: colours.white,
+    fontFamily: CONST.appFonts.INTER_BOLD,
+    fontSize: scale(15),
+    fontWeight: 'bold',
+    paddingStart:4,
+  },
+  attachButton: {
+    flexDirection:'row',
+    justifyContent: "center",
+    alignItems: "center",    
+    borderRadius: 22,
+    backgroundColor: colours.lightBlueTheme,
+    paddingStart:scale(16),
+    paddingEnd:scale(16),
+    height: scale(40),
+  },
+  buttonStyle: {
+    marginTop:verticalScale(30),
+    flexDirection: "row",
+    width: scale(302),
+    borderRadius: verticalScale(11),
+    alignItems: "center",
+    padding: verticalScale(13),
+    alignSelf: "center",
+    justifyContent: "center",
+    height: verticalScale(50),
+  },
+  listView: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingTop: 20,
+    alignItems:'center',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    margin: 5,
+    width: scale(80),
+  },
+  image: {
+    width: scale(80),
+    height: scale(150),
+    borderRadius: 10,
+  },
+  deleteIcon: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: colours.white,
+    borderRadius: 20,
+    width: scale(16),
+    height: scale(16),
+    justifyContent: 'center',
+    alignItems: CONST.CENTER,
+  },
+
+});

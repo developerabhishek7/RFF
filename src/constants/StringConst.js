@@ -198,6 +198,7 @@ export const AIRLINE_TIER_SCREEN = "airlineTierScreen";
 export const PROFILE_DETAIL_SCREEN = "ProfileDetailsScreen";
 export const USER_PROFILE_DETAIL_SCREEN = "UserProfileScreen";
 export const UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";
+export const HELP_SCREEN = "HelpScreen";
 
 // Screen Title Constants
 export const ALERT_SCREEN_TITLE = "My Alerts";

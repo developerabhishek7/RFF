@@ -320,8 +320,8 @@ export default StyleSheet.create({
     borderTopLeftRadius: scale(7),
     borderTopRightRadius: scale(7),
     height: verticalScale(39),
-    marginLeft: scale(-12),
-    marginRight: scale(-12),
+    marginLeft: scale(-15),
+    marginRight: scale(-15),
   },
   calendarStyle: {
     // borderWidth: scale(1),

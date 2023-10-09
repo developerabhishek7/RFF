@@ -83,9 +83,11 @@ class NotificationDetailComponent extends Component {
 
     setTimeout(() => {
       const {notificationDetails} = this.state;
-      data = {
-        "source":notificationDetails.alert.source_code,
-       "destination": notificationDetails.alert.destination_code
+      if(notificationDetails){
+        data = {
+          "source":notificationDetails.alert.source_code,
+         "destination": notificationDetails.alert.destination_code
+        }
       }
     }, 1000);
 
@@ -806,7 +808,7 @@ class NotificationDetailComponent extends Component {
     let firstFourOutboundDates = [...outBoundDateArray];
 
     let date = notificationDetails.notification_created_at
-    let actualDate =  moment(date).format("DD-MM-YYYY : HH:mm")
+    let actualDate =  moment(date).format("DD-MM-YYYY  HH:mm")
 
     return (
       <View style={styles.cellContainer} activeOpacity={0.6} onPress={() => {}}>
