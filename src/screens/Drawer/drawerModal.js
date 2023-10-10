@@ -29,7 +29,7 @@ import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
 import * as Config from "../../helpers/config";
-import { getUserConfigDetails } from "../../actions/userActions";
+import { getUserConfigDetails,getUserInfo } from "../../actions/userActions";
 import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
 let buildVersion = 0
@@ -191,23 +191,32 @@ class DrawerComponentComponent extends Component {
   profileImage() {
     let isLoggedIn = this.props.isLoggedIn;
     const { userData } = this.state;
-    let silver_member = userData.silver_member
-    let gold_member = userData.gold_member
-    let bronze_member = userData.bronze_member
+    let silver_member 
+    let gold_member 
+    let bronze_member 
+    if(userData && userData!== undefined && userData !== null && userData !== ""){
+         silver_member = userData.silver_member
+       gold_member = userData.gold_member
+       bronze_member = userData.bronze_member
+    } 
+
+    console.log("yes check on gold membership = = =  = = = ",gold_member)
+    console.log("yes check on silver membership = = =  = = = ",silver_member)
+    console.log("yes check on bronze_member  = = =  = = = ",bronze_member)
     // let isAppReviewSuccess = ""
 
     return (
       <View >
       <View style={styles.profileView}>
-          <View style={{flexDirection:"row",alignItems:"center",justifyContent:"flex-start",marginStart:scale(10)}}>
-            {this.state.userData.image ? (
+          <View style={{flexDirection:"column",alignItems:"center",justifyContent:"flex-start",marginStart:scale(10)}}>
+            {this.state.userData && this.state.userData.image ? (
               <View style={{borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100)}}>
               <FastImage
                 style={styles.innerProfileImage}
                 source={
                   isLoggedIn
                     ? {
-                        uri: this.state.userData.image,
+                        uri: this.state.userData && this.state.userData.image,
                         priority: FastImage.priority.normal,
                         cache: FastImage.cacheControl.immutable,
                       }
@@ -216,15 +225,15 @@ class DrawerComponentComponent extends Component {
               />
                </View>
             ) : isLoggedIn ? (
-              userData.first_name ? 
+              userData && userData.first_name ? 
               <View style={{backgroundColor:"#cdf0f7",borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",  }}>
               <Text style={[styles.nameInitialsStyle,{
               }]}
                 numberOfLines={1}
               >
-                {this.state.userData.first_name &&
+                {userData &&  this.state.userData.first_name &&
                   this.state.userData.first_name[0].toUpperCase()}
-                {this.state.userData.last_name &&
+                { userData && this.state.userData.last_name &&
                   this.state.userData.last_name[0].toUpperCase()}
               </Text> 
               </View>
@@ -241,24 +250,22 @@ class DrawerComponentComponent extends Component {
             {isLoggedIn ? STR_CONST.HELLO : STR_CONST.RFF}
           </Text> */}
           <Text numberOfLines={1} style={[styles.nameStyle,{
-            width:verticalScale(110)
+            width:verticalScale(210),borderWidth:0,textAlign:"center",alignSelf:"center"
           }]}>
-            { `${this.getCapitalName(userData.first_name)}`}
-            {/* ${this.getCapitalName(userData.last_name)}
-            } */}
+            { `${userData && this.getCapitalName(userData.first_name)}  ${userData && this.getCapitalName(userData.last_name)}`} 
           </Text>
           {
             bronze_member || silver_member || gold_member  ?
             <View style={{backgroundColor:"#a5e5f1",padding:scale(2),borderRadius:scale(20),margin:scale(4),justifyContent:"center",marginStart:scale(-3)}}>
             <Text style={styles.membershipText}>
-              { this.getMembershipText(userData)}
+              {this.getMembershipText(userData)}
             </Text>
             </View>
             : null
           }
         </View>
         </View>
-        {
+        {/* {
             buildVersion  == 0  || isAppReviewSuccess == false ?
               <Fragment>
               {
@@ -281,7 +288,7 @@ class DrawerComponentComponent extends Component {
             }              
             </Fragment>
             : null
-           }
+           } */}
       </View>
       </View>
     );
@@ -440,7 +447,7 @@ class DrawerComponentComponent extends Component {
             </Text>
           </TouchableOpacity>
           <View style={styles.lineStyle} />
-          {
+          {/* {
             isLoggedIn && this.state.userData &&
             <TouchableOpacity
               style={styles.screenButtonStyle}
@@ -457,7 +464,7 @@ class DrawerComponentComponent extends Component {
             </TouchableOpacity>
            
           }
-          {isLoggedIn && <View  style={styles.lineStyle} /> }
+          {isLoggedIn && <View  style={styles.lineStyle} /> } */}
           <View style={{ marginTop:scale(20),alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
@@ -535,7 +542,6 @@ class DrawerComponentComponent extends Component {
 }
 const mapStateToProps = (state) => {
   const { userInfo, logIn, common, } = state;
-  // console.log("yes check here user INgor on drawer screen  -   - - - - - -",userInfo.userConfigDetails)
   return {
     userData: userInfo.userData,
     isLoggedIn: logIn.isLoggedIn,

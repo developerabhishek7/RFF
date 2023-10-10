@@ -1360,9 +1360,9 @@ export default class ProfileScreenComponent extends Component {
         {this.renderLoader()}
         {this.profileImage()}
         </View>
-        <KeyboardAwareScrollView style={{ flex: 1, marginTop: scale(10) }} keyboardShouldPersistTaps="always" extraHeight={120} extraScrollHeight={120}
+        <KeyboardAwareScrollView style={{ flex: 1, marginTop: scale(10) }}  extraHeight={120} extraScrollHeight={120}
           showsVerticalScrollIndicator={false}
-
+          keyboardShouldPersistTaps="handled"
         >
           <View style={{ flex: 1, borderWidth: 0, width: scale(330), justifyContent: "center", alignItems: "center", }}>
             <View

@@ -654,7 +654,8 @@ class AlertsScreen extends React.Component {
     isLoader:false,
     showMenu:false,
     AlertId:0,
-    staticDateArray:[]
+    staticDateArray:[],
+    startDate:''
   };
 
 
@@ -782,6 +783,7 @@ class AlertsScreen extends React.Component {
           searchData: this.state.searchData,
           focusedDate: this.state.searchData.endDate,
           monthKey:monthKey,
+          startDate:this.state.startDate,
           peakOffpeakData: this.props.peakOffpeakData,
           staticDateArray:this.state.staticDateArray
         })
@@ -1315,7 +1317,7 @@ class AlertsScreen extends React.Component {
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              // console.log("yes print here item - - - - -  -",item),
+              console.log("yes print here item - - - - -  -",item.startDate),
               <AlertCard
                 cancelAlert={this.confirmCancelAlert}
                 {...item}
@@ -1327,6 +1329,9 @@ class AlertsScreen extends React.Component {
                     source: searchData.sourceCode,
                     destination: searchData.destinationCode,
                   }                  
+                  this.setState({
+                    startDate: item.startDate
+                  })
                   let auditData = await this.getAuditData(searchData);   
                   this.props.getAirlinesAvailabilityAction(searchData);
                   this.props.sendAuditDataAction(auditData);

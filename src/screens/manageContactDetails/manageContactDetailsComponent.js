@@ -457,7 +457,7 @@ export default class ProfileScreenComponent extends Component {
           )}
 
           <Menu
-            style={{ marginHorizontal: scale(-30), marginTop: verticalScale(8) }}
+            style={{ marginHorizontal: scale(-15), marginTop: verticalScale(8) }}
             ref={(ref) => this.setMenuRef(ref, index)}
             button={
               <TouchableOpacity
@@ -546,7 +546,6 @@ export default class ProfileScreenComponent extends Component {
                 {STR_CONST.DELETE_EMAIL}
               </MenuItem>
             ) : null}
-
           </Menu>
         </View>
         {
@@ -581,16 +580,6 @@ export default class ProfileScreenComponent extends Component {
                     <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(16)}}>Update</Text>
                   </TouchableOpacity>
                   : null
-                  // : <TouchableOpacity
-                  //   onPress={() => {
-                  //     this.setState({
-                  //       isFocused: true,
-                  //       isFocuesOnEmail: true
-                  //     })
-                  //   }}
-                  //   style={{ backgroundColor: colours.lightBlueTheme, padding: scale(3), borderRadius: scale(10) }}>
-                  //   <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(17), paddingStart: scale(27), paddingEnd: scale(27), padding: scale(1) }}>Edit</Text>
-                  // </TouchableOpacity>
               }
             </View>
             : null
@@ -750,7 +739,7 @@ export default class ProfileScreenComponent extends Component {
           }
           {this.props.userData.phone ? (
             <Menu
-              style={{ marginStart: scale(-30), marginTop: verticalScale(2),}}
+              style={{ marginStart: scale(-15), marginTop: verticalScale(2),}}
               ref={(ref) => this.setMenuRef(ref, 4)}
               button={
                 <TouchableOpacity
@@ -821,6 +810,7 @@ export default class ProfileScreenComponent extends Component {
         alternateEmails.unshift(item);
       }
     });
+    alternateEmails = alternateEmails.sort((a,b) => a.id - b.id);
     return alternateEmails;
   }
 

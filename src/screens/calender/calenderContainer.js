@@ -36,14 +36,14 @@ import moment from "moment";
 
  
    componentDidUpdate(prevProps){
-     let bronze_member = this.props.userInfo.bronze_member
+    //  let bronze_member = this.props.userInfo.bronze_member
      if( this.props !== prevProps){
        this.props
        if(this.props.createAlertSuccess && this.props.createAlertSuccess !== prevProps.createAlertSuccess )
        {
          Alert.alert(CONST.ALERT_CREATED)
          this.props.resetCreateAlertDataAction()
-         if(bronze_member == true){
+        //  if(bronze_member == true){
            // Alert.alert(CONST.ALERT_CREATED, null, [
            //   {
            //     text: 'OK',
@@ -52,8 +52,8 @@ import moment from "moment";
            //     },
            //   },
            // ]);
-           Alert.alert(STR_CONST.BRONZE_ALERT_INFO)
-         }              
+          //  Alert.alert(STR_CONST.BRONZE_ALERT_INFO)
+        //  }              
        }
        else if (this.props.createAlertError) {
          alert(this.props.createAlertError)
@@ -80,6 +80,7 @@ import moment from "moment";
          focusedDate={this.props.route.params.focusedDate}
          cabinClassData={this.props.cabinClassData}
          staticDateArray={this.props.route.params.staticDateArray}
+         startDate={this.props.route.params.startDate}
          getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
          multipleFlightScheduleData={this.props.multipleFlightScheduleData}   
          alertsArray={this.props.alertsArray} 

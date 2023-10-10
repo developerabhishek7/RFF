@@ -12,7 +12,8 @@ import {
   TouchableHighlight,
   BackHandler,
   Alert,
-  ImageBackground
+  ImageBackground,
+
 } from "react-native";
 import FastImage from 'react-native-fast-image'
 // import crashlytics from "@react-native-firebase/crashlytics";
@@ -101,6 +102,7 @@ export default class FindFlightComponent extends Component {
     };
   }
 
+  
   getNearestCity(airports) {
     const { currentLatitude, currentLongitude } = this.props
     let distanceArray = []
@@ -109,7 +111,6 @@ export default class FindFlightComponent extends Component {
         let distance = getGeoDistance(currentLatitude, currentLongitude, item.latitude, item.longitude, "K")
         distanceArray.push(distance)
       })
-
       if (!this.state.selectedSource) {
         this.setState({
           selectedSource: airports[distanceArray.indexOf(Math.min(...distanceArray))]
@@ -236,6 +237,8 @@ export default class FindFlightComponent extends Component {
     let isEmulator = await DeviceInfo.isEmulator()
     let trackData = {}
     let isNewSignUp = await AsyncStorage.getItem("isNewSignUp");
+
+    await NativeModules.DevSettings.reload();
 
     setTimeout(() => {
       if (userData && Object.keys(userData).length !== 0 && isNewSignUp) {
@@ -603,12 +606,20 @@ export default class FindFlightComponent extends Component {
   getClassText() {
 
     const { userData } = this.props;
-    let bronzeMember = userData.bronze_member
+
+    // console.log("yes check here user data - - - - - - -",userData)
+
+    let bronzeMember
+    if(userData && Object.keys(userData).length != 0){
+       bronzeMember = userData.bronze_member
+    }
+
+  
     let classObject
     let classSelected
 
 
-    if (bronzeMember) {
+    if(userData && bronzeMember) {
       classObject = this.state.classObject1;
       classSelected = this.state.classSelected1;
 
@@ -668,8 +679,6 @@ export default class FindFlightComponent extends Component {
   }
   getClassView() {
 
-    const { classObject } = this.state
-
     return (
       <TouchableOpacity
         style={styles.classViewContainer}
@@ -704,6 +713,7 @@ export default class FindFlightComponent extends Component {
               ]}
             >
               {this.state.classObject ? this.getClassText() : STRING_CONST.CABIN_CLASS}
+          
             </Text>
           </View>
         </TouchableOpacity>
@@ -751,12 +761,10 @@ export default class FindFlightComponent extends Component {
       isSearchClicked: true,
       isLoader: true
     })
+    let bronzeMember = false
+    let userData  = this.props.userData;
 
-    const { userData } = this.props;
-
-    let goldMember = userData.gold_member
-    let silverMember = userData.silver_member
-    let bronzeMember = userData.bronze_member
+    console.log("pring yser data -------------------------- - - - - - - - -  -",userData)
 
     const {
       airlineSelected,
@@ -774,7 +782,7 @@ export default class FindFlightComponent extends Component {
 
     if (selectedSource && selectedDestination) {
       let travel_classes
-      if (bronzeMember) {
+      if (userData && userData!== undefined && userData.bronze_member) {
         travel_classes = getBAClassesString(classSelected1)
       }
       else {
@@ -789,11 +797,11 @@ export default class FindFlightComponent extends Component {
         sourceCode: selectedSource.code,
         destinationCode: selectedDestination.code,
         passengerCount: travellersCount,
-        tier: bronzeMember ? "bronze" : "gold",
+        tier: userData && userData!== undefined && userData.bronze_member  ? "bronze" : "gold",
         selectedSource: selectedSource,
         selectedDestination: selectedDestination,
         isReturn: selectedIndex == 1,
-        classSelected: bronzeMember ? classSelected1 : classSelected,
+        classSelected: userData && userData!== undefined && userData.bronze_member  ? classSelected1 : classSelected,
         // airways: airlineSelected,                                 
         airways: "british_airways"
       };
@@ -843,7 +851,7 @@ export default class FindFlightComponent extends Component {
           destinationCountry: selectedDestination && selectedDestination.country_name ? selectedDestination.country_name : 'N/A',
           journeyType: selectedIndex == 1 ? "return" : "one_way",
           numberOfPassengers: travellersCount,
-          cabinClasses: bronzeMember ? "Economy" : this.renderClassValues(),
+          cabinClasses: userData && userData!== undefined && userData.bronze_member  ? "Economy" : this.renderClassValues(),
           searchOriginatedFrom: 'Home Page',
           outboundStartDate: 'N/A since Calendar Page search',
           outboundEndDate: 'N/A since Calendar Page search',
@@ -940,7 +948,13 @@ export default class FindFlightComponent extends Component {
         {this.getLocation()}
         {/* { selectedSource && nearestAirports && currentLatitude &&
         <Text style = {styles.airportNameStyle}>{STRING_CONST.NEAREST_AIRPORT}: {this.getNearestAirport(nearestAirports)} </Text>} */}
+      
+
+      
         {this.getClassView()}
+
+
+
         {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{ color: colours.redColor, alignSelf: 'center', marginBottom: verticalScale(5), fontSize: scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>}
         {this.renderBottomButton1("Search", colours.lightBlueTheme, () => {
           this.validateFindFlightData();
@@ -1454,9 +1468,11 @@ export default class FindFlightComponent extends Component {
     const { userData } = this.props;
     let isLoggedIn = this.props.isLoggedIn
 
-    let goldMember = userData.gold_member
-    let silverMember = userData.silver_member
-    let bronzeMember = userData.bronze_member
+    let bronzeMember
+    if( userData && Object.keys(userData).length != 0){
+       bronzeMember = userData.bronze_member
+    }
+  
     return (
       <TravellersAndClassModal
         showClassModal={true}

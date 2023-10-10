@@ -262,6 +262,11 @@ class LoginComponent extends Component {
             password: password,
           },
         };
+
+        this.setState({
+          email:"",
+          password:""
+        })
         // this.props.signInAction(userData)                   
         // this.props.navigation.navigate("UpdateProfileScreen");      
         this.props.navigation.navigate("FindFlightContainerScreen");
@@ -813,7 +818,7 @@ class LoginComponent extends Component {
          > */}
           {/* {this.renderLogoContainer()} */}
           <KeyboardAwareScrollView
-            keyboardShouldPersistTaps={"always"}
+            keyboardShouldPersistTaps={"handled"}
             showsVerticalScrollIndicator={false}
           >
             {this.renderInputFields()}

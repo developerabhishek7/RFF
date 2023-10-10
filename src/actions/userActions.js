@@ -305,13 +305,11 @@ export function getUserInfo() {
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
       const accesstoken = await getAccessToken();
       const userId = await getUserId();
-      console.log("yes pint user id here #######   accesstoken    ", accesstoken)
       const res = await secureGetForUser(
         `/v1/users/${userId}?user[access_token]=${accesstoken}`,
         authToken
       );
       if (res) {
-        // console.log("yes check reposne- - - - - - -",res)
         await dispatch({
           type: SET_BADGE_COUNT,
           badgeCount: res.data.unread_notifications_count,
