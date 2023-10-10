@@ -51,6 +51,7 @@ export function sendOTP() {
       };
       const url = `/v1/users/${userId}/user_phone_numbers/resend_otp`;
       const res = await securePutForUser(url, authToken, { user: userData });
+    
       if (res && res.status == 200) {
         await dispatch({
           type: RESEND_OTP_SUCCESS,
@@ -59,10 +60,16 @@ export function sendOTP() {
       } else {
         dispatch(CommonActions.stopLoader()); // To stop Loader
         let response = await res.json();
-        await dispatch({
-          type: RESEND_OTP_ERROR,
-          payload: response.error,
-        });
+        // console.log("yes check here respo - - - - - - - - - -",response)
+        if(response.error == "OTP cannot be send for Bronze and Silver users."){
+          Alert.alert("OTP cannot be send for Bronze and Silver users.")
+        }
+        else{
+          await dispatch({
+            type: RESEND_OTP_ERROR,
+            payload: response.error,
+          });
+        }
       }
     } catch (e) {
       console.log("catch error resendPrimaryVerification", e,);
@@ -338,6 +345,7 @@ export function createAlternateEmail(body) {
         body,
         true
       );      
+
       if (res && res.status == 200) {
         await dispatch({
           type: CREATE_ALTERNATE_EMAIL_SUCCESS,
@@ -345,10 +353,14 @@ export function createAlternateEmail(body) {
         dispatch(getUserInfo());
       } else {
         let data = await res.json();
-        await dispatch({
-          type: CREATE_ALTERNATE_EMAIL_ERROR,
-          payload: data.error,
-        });
+        if(data.error == "This email already exists."){
+          Alert.alert("This email already exists.")
+        }else{
+          await dispatch({
+            type: CREATE_ALTERNATE_EMAIL_ERROR,
+            payload: data.error,
+          });
+        }
         dispatch(CommonActions.stopLoader()); // To stop Loader
       }
     } catch (e) {
@@ -361,7 +373,7 @@ export function createAlternateEmail(body) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
       console.log("catch of createAlternateEmail", e);
     }

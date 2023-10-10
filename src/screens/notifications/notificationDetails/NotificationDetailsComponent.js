@@ -22,7 +22,6 @@ import * as STRING_CONST from "../../../constants/StringConst";
 import * as IMG_CONST from "../../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
 import MyStatusBar from "../../../components/statusbar";
-
 import moment from "moment";
 import {
   markNotificationAsRead,
@@ -200,12 +199,14 @@ class NotificationDetailComponent extends Component {
       ) {    
         this.state.searchData &&
         this.setState({ isLoader: false }, () => {
-          this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
+          let startDate = this.state.notificationDetails.alert.start_date
+           this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
             searchData:this.state.searchData,
             focusedDate: this.state.outBoundDateArray[0],
             monthKey:monthKey,
             peakOffpeakData: this.props.peakOffpeakData,
-            staticDateArray:this.state.staticDateArray
+            staticDateArray:this.state.staticDateArray,
+            startDate:startDate
           })
         })
       }

@@ -89,8 +89,13 @@ class ScreenHeader extends Component {
   _renderRightIcon() {
 
     const userData = this.props.userData;
-    let gold_member = userData.gold_member
-    let isLoggedIn = this.props.isLoggedIn;
+    let gold_member
+    let isLoggedIn
+    if(userData){
+       gold_member = userData.gold_member
+       isLoggedIn = this.props.isLoggedIn;
+    }
+   
     const { badgeCount } = this.state;
     return (
       <TouchableOpacity
@@ -104,16 +109,13 @@ class ScreenHeader extends Component {
       >
         <View>
          {
-          isLoggedIn ?
+          isLoggedIn && gold_member ?
             <Fragment>
               { badgeCount > 0 ? this.renderCountView() : null}
             </Fragment>
           : null
          } 
          {
-        
-
-
         <FastImage
           style={styles.backIcon}
           source={
@@ -123,7 +125,6 @@ class ScreenHeader extends Component {
           }
         />
          }
-         
         </View>
       </TouchableOpacity>
     );
@@ -169,10 +170,9 @@ class ScreenHeader extends Component {
   }
 
   render() {
-    // const routeName = this.props.route.params.routeName;
-    const userData = this.props.userData;
-    let gold_member = userData.gold_member
-    const isLoggedIn = this.props.isLoggedIn
+
+
+
   return (
       <View>
         <View

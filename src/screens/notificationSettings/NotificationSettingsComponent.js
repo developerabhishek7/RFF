@@ -172,6 +172,7 @@ export default class NotificationSettingsComponent extends Component {
   }
 
   toggleSwitch(forSMS) {
+
     if (forSMS) {
       if (this.props.userData.phone.verified) {
         this.setState(
@@ -219,7 +220,7 @@ export default class NotificationSettingsComponent extends Component {
           }
         );
       } else {
-        alert(STRING_CONST.VERIFY_NUMBER);
+        Alert.alert(STRING_CONST.VERIFY_NUMBER);
       }
     } else {
       this.setState(
@@ -232,6 +233,8 @@ export default class NotificationSettingsComponent extends Component {
       );
     }
   }
+
+
 
   async onNotificationSettingsChange(val) {
     if (!this.props.userData.bronze_member) {
@@ -450,10 +453,15 @@ export default class NotificationSettingsComponent extends Component {
             </Text> */}
               <Switch
                 value={
-                  notificationSettings && notificationSettings.push_notification
+                  userData.gold_member ?  notificationSettings && notificationSettings.push_notification : false
                 }
                 onValueChange={async (val) => {
-                  await this.onNotificationSettingsChange(val);
+                  console.log("print value her on = = = = = = == ",val)
+                  if (!userData.gold_member) {
+                    this.props.navigation.navigate("MembershipContainerScreen")
+                  }else{
+                    await this.onNotificationSettingsChange(val);
+                  }
                 }}
                 disabled={false}
                 circleSize={scale(16)}
@@ -472,17 +480,7 @@ export default class NotificationSettingsComponent extends Component {
                 switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
                 switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
               />
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: !sendEmail ? colours.greyText : colours.lightBlueTheme,
-                  marginLeft: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.ON}
-            </Text> */}
+            
             </View>
           </View>
           <Text style={styles.notificationDetail}>

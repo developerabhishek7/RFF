@@ -58,7 +58,9 @@ export default StyleSheet.create({
     peakFairSubHeaderView: { flexDirection: "row", justifyContent: 'center', alignItems: 'center',
     // padding:scale(1),paddingStart:scale(5),paddingEnd:scale(5),
     borderWidth:0,
-    backgroundColor:"#FFF"
+    backgroundColor:"#FFF",
+    borderTopLeftRadius:scale(10),
+    borderTopRightRadius:scale(10)
   },
     peakFairImg: { height: scale(60), width: scale(60), margin: scale(1), justifyContent: 'center', alignItems: 'center' },
     peakFairTxt: { fontSize: scale(15), padding: scale(1), marginRight:scale(7),paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },

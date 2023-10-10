@@ -16,6 +16,9 @@ import {
    USER_SIGN_OUT_SUCCESS,
    USER_SIGN_OUT_ERROR,
    SESSION_EXPIRED,
+   RESET_FINDFLIGHT_DATA,
+   RESET_USER_DATA_ERROR,
+   GET_USER_DETAIL_SUCCESS
  } from "../constants/ActionConst";
  import * as CommonActions from "./commonActions";
  import { getPresignedURL } from "./userActions";
@@ -185,13 +188,36 @@ import * as RootNavigation from '../router/RouteNavigation';
          authToken
        );
        if (res && res.status == 200) {
+        setUserData();
+        dispatch(CommonActions.stopLoader());
+        // RootNavigation.navigationRef.navigate("SignIn")
         await AsyncStorage.removeItem("MAP_TOKEN")
-         setUserData();
+        
          await dispatch({
            type: USER_SIGN_OUT_SUCCESS,
          });
-         RootNavigation.navigationRef.navigate("SignIn")
-         dispatch(CommonActions.stopLoader());
+         await dispatch({
+          type: GET_USER_DETAIL_SUCCESS,
+          payload: { userData:{} },
+        });
+
+
+
+        //  await dispatch({
+        //   type: GET_USER_DETAIL_SUCCESS,
+        //   payload: { userData:{} },
+        // });
+        //  await dispatch({
+        //   type: GET_USER_DETAIL_SUCCESS,
+        //   payload: {},
+        // });
+        //  await dispatch({
+        //   type: RESET_FINDFLIGHT_DATA,
+        // });
+        // await dispatch({
+        //   type: RESET_USER_DATA_ERROR,
+        // });
+   
        } else {
          await dispatch({
            type: USER_SIGN_OUT_ERROR,

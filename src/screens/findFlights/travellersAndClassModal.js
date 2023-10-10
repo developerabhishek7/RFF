@@ -169,18 +169,20 @@ navigateToMembership(){
     );  
 }  
   getClassType() {
-    let economy = this.state.classTypeArray[0].class
     let isEconomySelected = this.state.classTypeArray[0].isSelected
-    let premium = this.state.classTypeArray[1].class
+
     let isPremiumSelected = this.state.classTypeArray[1].isSelected
-    let business = this.state.classTypeArray[2].class
+
     let isBusinessSelected = this.state.classTypeArray[2].isSelected
-    let first = this.state.classTypeArray[3].class
+
     let isFirstSelected = this.state.classTypeArray[3].isSelected
     const {userData,showClassModal}  = this.props;
-    let goldMember = userData.gold_member
-    let silverMember = userData.silver_member
-    let bronzeMember = userData.bronze_member
+
+    let bronzeMember
+    if(userData){
+       bronzeMember = userData.bronze_member
+    }
+   
 
     return (
       <View>

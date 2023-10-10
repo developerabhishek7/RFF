@@ -47,7 +47,7 @@ export default StyleSheet.create({
 
   profileView: {
     position: "absolute",
-    top: Platform.OS == 'android' ? verticalScale(60) : verticalScale(80),
+    top: Platform.OS == 'android' ? verticalScale(40) : verticalScale(50),
     width:scale(240),
     alignSelf: "center",
     // flexDirection:"row",
@@ -88,7 +88,6 @@ export default StyleSheet.create({
   },
 
   logOutButton: {
-    // width: isPad() ? width - scale(110) :width - scale(90),
     padding: scale(12),
     borderRadius: verticalScale(50),
     alignSelf: "stretch",
@@ -147,7 +146,8 @@ export default StyleSheet.create({
     // borderWidth:1
   },
   greetingsView: {
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent:"center",
     marginStart:scale(15),
     marginTop: verticalScale(10),
   },

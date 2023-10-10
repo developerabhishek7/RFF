@@ -122,6 +122,9 @@ class FindFlightContainer extends Component {
     
 
     const Device_Token = await AsyncStorage.getItem("Device_Token");
+
+    console.log("yes check here login value - - -  - - - -",isLoggedIn)
+
     if (isLoggedIn) {
       const userId = await getUserId("userId");
       let Id = JSON.parse(userId)
@@ -216,7 +219,7 @@ class FindFlightContainer extends Component {
           console.log("yes check here search details  - - - - - - -",searchDetails)
 
 
-          if(searchDetails && searchDetails.searchCount < 3 || !this.props.userInfo.bronze_member){
+          if(searchDetails && searchDetails.searchCount < 3 || this.props.userInfo && this.props.userInfo !== undefined && this.props.userInfo !== null && !this.props.userInfo.bronze_member){
             this.setState({ isLoader: false }, () => {
               this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {
                 searchData: this.state.searchData, focusedDate: null,
@@ -225,7 +228,7 @@ class FindFlightContainer extends Component {
               })
           })
           }else{  
-            if(this.props.userInfo.bronze_member && searchDetails.searchCount >= 3){
+            if(this.props.userInfo && this.props.userInfo !== undefined && this.props.userInfo !== null && this.props.userInfo.bronze_member && searchDetails.searchCount >= 3){
               this.isAlert()
             }
             else{

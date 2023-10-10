@@ -145,7 +145,7 @@ export default class CalenderComponent extends Component {
       showLoginCnfmPopup: false,
       isPeakValue: true,
       isOffPeakValue: true,
-      showAirlineModal: !this.props.userInfo.airline_memberships,
+      showAirlineModal: this.props.userInfo && !this.props.userInfo.airline_memberships,
       userSelectedAirlineIndex: -1,
       userSelectedAirlineMembershipIndex: -1,
       userSelectedAirline: this.props.airlinesMembershipDetails[0],
@@ -3007,8 +3007,11 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if (first) {
       classSelectedArray.push(first)
     }
+    let bronzeMember
     let userData = this.props.userInfo
-    let bronzeMember = userData.bronze_member
+    if(userData && userData !== undefined && userData !== null){
+      bronzeMember = userData.bronze_member
+    }
 
     return (
       <View style={[styles.ticketClassView, {
@@ -3053,12 +3056,22 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 this.state.selectedIndex == 0
                   ? this.state.outBoundVisibleArray.includes("economy")
                     ? colours.blue
-                    : colours.gray
+                    :"#EFEFEF"
                   : this.state.inBoundVisibleArray.includes("economy")
                     ? colours.blue
-                    : colours.gray
+                    :"#EFEFEF"
               )}
-            <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text>
+            {/* <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text> */}
+            {
+                this.state.selectedIndex == 0 ?
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.outBoundVisibleArray.includes("economy") ? 1 : 0.3
+                }]}>{STRING_CONST.ECONOMY}</Text>
+                :
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.inBoundVisibleArray.includes("economy") ? 1 : 0.3
+                }]}>{STRING_CONST.ECONOMY}</Text>
+              }
           </TouchableOpacity>
         )}
         {availability.premium && (
@@ -3098,15 +3111,28 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 this.state.selectedIndex == 0
                   ? this.state.outBoundVisibleArray.includes("premium")
                     ? colours.yellow
-                    : colours.gray
+                    :"#EFEFEF"
                   : this.state.inBoundVisibleArray.includes("premium")
                     ? colours.yellow
-                    : colours.gray
+                    :"#EFEFEF"
               )}
-            <Text style={styles.classTextStyle}>
-              {/* {STRING_CONST.PREMIUM_ECONOMY} */}
+            {
+                this.state.selectedIndex == 0 ?
+
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.outBoundVisibleArray.includes("premium") ? 1 : 0.3
+                }]}>  {"Prem Econ"}</Text>
+                :
+
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.inBoundVisibleArray.includes("premium") ? 1 : 0.3
+               
+                }]}>  {"Prem Econ"}</Text>
+              }
+
+            {/* <Text style={styles.classTextStyle}>
               {"Prem Econ"}
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         )}
         {availability.business && (
@@ -3146,12 +3172,22 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 this.state.selectedIndex == 0
                   ? this.state.outBoundVisibleArray.includes("business")
                     ? colours.purple
-                    : colours.gray
+                    :"#EFEFEF"
                   : this.state.inBoundVisibleArray.includes("business")
                     ? colours.purple
-                    : colours.gray
+                    :"#EFEFEF"
               )}
-            <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text>
+            {/* <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text> */}
+            {
+                this.state.selectedIndex == 0 ?
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.outBoundVisibleArray.includes("business") ? 1 : 0.3
+                }]}>{STRING_CONST.BUSINESS}</Text>
+                :
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.inBoundVisibleArray.includes("business") ? 1 : 0.3
+                }]}>{STRING_CONST.BUSINESS}</Text>
+              }
           </TouchableOpacity>
         )}
         {availability.first && (
@@ -3193,12 +3229,25 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 this.state.selectedIndex == 0
                   ? this.state.outBoundVisibleArray.includes("first")
                     ? colours.pink
-                    : colours.gray
+                    :"#EFEFEF"
                   : this.state.inBoundVisibleArray.includes("first")
                     ? colours.pink
-                    : colours.gray
+                    :"#EFEFEF"
               )}
-            <Text style={styles.classTextStyle}>{STRING_CONST.FIRST}</Text>
+              {
+                this.state.selectedIndex == 0 ?
+
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.outBoundVisibleArray.includes("first") ? 1 : 0.3
+                }]}>{STRING_CONST.FIRST}</Text>
+                :
+
+                <Text style={[styles.classTextStyle,{
+                  opacity: this.state.inBoundVisibleArray.includes("first") ? 1 : 0.3
+               
+                }]}>{STRING_CONST.FIRST}</Text>
+              }
+         
           </TouchableOpacity>
         )}
       </View>
@@ -4465,6 +4514,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let userInfo  =  this.props.userInfo
     let isLoggedIn = this.props.isLoggedIn
     let classData = searchData.classSelected
+    let startDate = this.props.startDate
+
+    console.log("yes print here  - - - - - -",startDate)
+
      return (
         <SafeAreaView style={[styles.container]}  >
           <MyStatusBar />
@@ -4487,6 +4540,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   })
                 }
               }}
+              ref={ref => this.scrollView = ref}
+               onContentSizeChange={(contentWidth, contentHeight)=>{        
+               this.scrollView.scrollTo({animated: true});
+              }}
             >
               {/* {this.renderCalendarList()} */}
               <View style={[styles.calendarContainer,{
@@ -4502,14 +4559,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             style={{
               backgroundColor:"#E4E4E4",marginBottom:scale(35)
             }}
-            firstDay={1}
+            firstDay={startDate ? startDate : today}
             showScrollIndicator={false}
             onVisibleMonthsChange={(months) => {
               let firstDay = moment().startOf('month')
               let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
-              console.log("print 3 month popup add - - - - - -  -",nextThreeMonth)
               if (months[0].dateString >= nextThreeMonth && !this.props.isLoggedIn) {
-                console.log("getting condition is satisfying or not  -  - --  - - - -",months)
                 this.setState({ showLoginCnfmPopup: true }, () => {
                   this.renderLoginPopup()
                 })
@@ -4526,8 +4581,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               this._toggleSubview();
               this.seatAvailabilityModal(day, isOffPeakValue1)
             }}
+            current={startDate ? startDate : today}
+            key={startDate ? startDate : today}
             pastScrollRange={0}
-            minDate={today}
+            minDate={startDate ? startDate : today}
             futureScrollRange={ isLoggedIn ? 12 : 3}
             scrollEnabled={true}
             calendarWidth={scale(330)}
@@ -4601,22 +4658,16 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             {showCreateAlertModal && this.createAlertModal()}
             {showUpgradePopUp && (
               <PopUpComponent
-                isSingleButton={isAndroid() ? false : true}
-                title={
-                  isAndroid()
-                    ? STRING_CONST.UPGRADE_MEMBERSHIP_TEXT
-                    : STRING_CONST.LIMIT_EXCEEDED
-                }
+                isSingleButton={false}
+                title={STRING_CONST.LIMIT_EXCEEDED}
                 message={
                   isAndroid()
                     ? STRING_CONST.CREATE_ALERT_LIMIT
                     : STRING_CONST.CREATE_ALERT_LIMIT_IOS
                 }
                 image={IMAGE_CONST.UPGRADE_MEMBERSHIP}
-                leftButtonText={STRING_CONST.NO}
-                rightButtonText={
-                  isAndroid() ? STRING_CONST.UPGRADE : STRING_CONST.OK
-                }
+                leftButtonText={STRING_CONST.CANCEL_TEXT}
+                rightButtonText={STRING_CONST.UPGRADE}
                 onLeftButtonPress={() => {
                   this.setState({
                     showUpgradePopUp: false,

@@ -1212,7 +1212,7 @@ class SignUpComponent extends Component {
         {/* <SafeAreaView style={styles.container}> */}
 
         <KeyboardAwareScrollView
-          keyboardShouldPersistTaps={"always"}
+          keyboardShouldPersistTaps={"handled"}
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
         >

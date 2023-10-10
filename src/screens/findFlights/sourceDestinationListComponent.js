@@ -441,7 +441,7 @@ renderHeader() {
                 this.onSearch(searchText)
               }}
               value={this.state.searchText}
-              placeholder= {!headerTxt && this.props.route.params.placeholderTitle}              
+              placeholder= {headerTxt ? headerTxt : this.props.route.params.placeholderTitle}              
               onFocus={()=>{
                 this.setState({
                     isOnFocus:!this.state.isOnFocus

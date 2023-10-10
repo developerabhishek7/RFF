@@ -216,7 +216,7 @@ export const BA_LOGO_CAL = require('../assets/calendar/BA.png');
 
 export const TIME_LOGO = require('../assets/calendar/time.png');
 export const AERO_LOGO = require('../assets/calendar/aero.png');
-
+export const HELP_ICON = require('../assets/common/help.png'); 
 
 export const USER_PROFILE_ICON = require('../assets/common/userProfileIcon.png');
 export const NOTIFICATION_SETTINGS_ICON = require('../assets/common/notificationSettingsIcon.png');
