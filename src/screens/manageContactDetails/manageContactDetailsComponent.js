@@ -626,7 +626,7 @@ export default class ProfileScreenComponent extends Component {
     let goldMember = userData.gold_member
 
     return (
-      <View style={{  }}>
+      <View style={{}}>
         <View
           style={[
             styles.emailIdsInnerView,
@@ -813,6 +813,8 @@ export default class ProfileScreenComponent extends Component {
     alternateEmails = alternateEmails.sort((a,b) => a.id - b.id);
     return alternateEmails;
   }
+
+  
 
   emailIdsView() {
     const { alternateEmails } = this.state;

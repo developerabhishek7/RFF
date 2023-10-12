@@ -125,10 +125,20 @@ class SignUpComponent extends Component {
           sessionId: sessionId
         },
       };
+      console.log("yes print on signup component -- - -  - - -",email)
+      console.log("yes print on signup component -- - -  - - -",password)
+
       if (email && password) {
         this.props.signInAction(userData);
       }
 
+      setTimeout(() => {
+        this.setState({
+          email:"",
+          password:""
+        })
+      }, 1000);
+     
       // this.props.navigation.navigate("SignIn", { email: email, password: password });
       // trackEventDetails(STR_CONST.SIGN_UP_EVENT, null, this.props.userDetails);
     }

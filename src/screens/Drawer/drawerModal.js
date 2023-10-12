@@ -181,6 +181,7 @@ class DrawerComponentComponent extends Component {
     return member
   }
 
+
   reloaderApp(){
     setTimeout(() => {
       RNRestart.Restart()
@@ -200,9 +201,10 @@ class DrawerComponentComponent extends Component {
        bronze_member = userData.bronze_member
     } 
 
-    console.log("yes check on gold membership = = =  = = = ",gold_member)
-    console.log("yes check on silver membership = = =  = = = ",silver_member)
-    console.log("yes check on bronze_member  = = =  = = = ",bronze_member)
+    // console.log("yes check on gold membership = = =  = = = ",gold_member)
+    // console.log("yes check on silver membership = = =  = = = ",silver_member)
+    // console.log("yes check on bronze_member  = = =  = = = ",bronze_member)
+   
     // let isAppReviewSuccess = ""
 
     return (
@@ -448,7 +450,7 @@ class DrawerComponentComponent extends Component {
           </TouchableOpacity>
           <View style={styles.lineStyle} />
           {/* {
-            isLoggedIn && this.state.userData &&
+            isLoggedIn && this.state.userData && this.state.userData.gold_member &&
             <TouchableOpacity
               style={styles.screenButtonStyle}
               onPress={() => {
@@ -456,15 +458,15 @@ class DrawerComponentComponent extends Component {
                 navigation.dispatch(DrawerActions.closeDrawer());
               }}
             >
-              {this.getMenuOptionImage(IMAGE_CONST.MORE_ICON)}
+              {this.getMenuOptionImage(IMAGE_CONST.HELP_ICON)}
 
               <Text style={styles.screenTitle}>
                 {"Help"}
               </Text>
             </TouchableOpacity>
            
-          }
-          {isLoggedIn && <View  style={styles.lineStyle} /> } */}
+          } */}
+          {/* {isLoggedIn && this.state.userData && this.state.userData.gold_member  && <View  style={styles.lineStyle} /> } */}
           <View style={{ marginTop:scale(20),alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
