@@ -637,11 +637,19 @@ export function deleteAccount(emailId) {
         // await dispatch({
         //   type: DELETE_USER_ACCOUNT_SUCCESS,
         // });
+      
         await dispatch({
           type: USER_SIGN_OUT_SUCCESS,
         });
-         Alert.alert("Your Account has been deleted successfully!")
-          RootNavigation.navigationRef.navigate("login")
+        await dispatch({
+          type: GET_USER_DETAIL_SUCCESS,
+          payload: { userData:{} },
+        });
+        RootNavigation.navigationRef.navigate("login",{
+          email:"",password:""
+        })
+        Alert.alert("Your Account has been deleted successfully!")
+      
       
       } else {
         //  await dispatch({
@@ -870,6 +878,8 @@ export function submitHelpForm(postData) {
           type: POST_ZENDESK_TICKET_SUCCESS,
         });
         dispatch(CommonActions.stopLoader());
+        Alert.alert("Support ticket created sucessfully.")
+        RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
       } else {
         let response = await res
         console.log("POST_ZENDESK_TICKET_FAIL >>>  ", response, response.status)

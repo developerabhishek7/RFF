@@ -312,8 +312,6 @@ class LoginComponent extends Component {
     });
     const email = this.state.email.trim();
     let sessionId = uuid.v4()
-
-
     const password = this.state.password.trim();
     if (!Utils.isEmptyString(email) && !Utils.isEmptyString(password)) {
       if (!email || !Validators.validEmail(email)) {
@@ -329,7 +327,12 @@ class LoginComponent extends Component {
           sessionId: sessionId
         },
       };
-      this.props.signInAction(userData);
+      console.log("yes pring here email and password - - - - - -",email)
+      console.log("yes pring here email and password - - - - - -",password)
+      
+      if(email && password){
+        this.props.signInAction(userData);
+      }
     }
   }
 

@@ -48,6 +48,9 @@
            user_phone_number: userPhoneNumber,
          }
        );
+       if(res){
+        dispatch(getUserInfo())
+       }
  
      } catch (e) {
        console.log(e);
@@ -71,6 +74,9 @@
            user: userData,
          }
        );
+       if(res){
+        dispatch(getUserInfo())
+       }
      } catch (e) {
        console.log(e);
      }
@@ -88,13 +94,12 @@
        const accesstoken = await getAccessToken();
        const userId = await getUserId();
        let userData = {};
- 
+
        userData["access_token"] = accesstoken;
        const res = await securePutForUser(`/v1/users/${userId}/fcm_tokens`, authToken, {
          user: userData,
          fcm_token: fcmToken,
        });
-
      } catch (e) {
        console.log("catch error sendFCMToken", e);
        dispatch(CommonActions.stopLoader());

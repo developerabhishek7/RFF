@@ -516,8 +516,8 @@ export default class ProfileScreenComponent extends Component {
                 !item.is_primary &&
                   this.props.userData.social_user &&
                   item.verified
-                  ? true
-                  : false
+                  ? false
+                  : true
               }
               style={{ height: verticalScale(50) }}
               textStyle={{ color: colours.black, fontSize: scale(12) }}

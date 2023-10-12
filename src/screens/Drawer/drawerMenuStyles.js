@@ -11,7 +11,7 @@ export default StyleSheet.create({
     backgroundColor: colours.white,
     justifyContent:"center",
     alignItems:"center",
-    marginTop: Platform.OS == 'android' ? scale(35) : scale(0),
+    marginTop: Platform.OS == 'android' ? scale(25) : scale(0),
     borderTopRightRadius:scale(40),
     borderBottomRightRadius:scale(40)
     // borderWidth:1,
