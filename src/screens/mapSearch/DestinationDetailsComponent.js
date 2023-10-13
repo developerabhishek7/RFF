@@ -64,6 +64,8 @@ class DestinationsComponent extends Component {
       isLoader:false,
       peak: "",
       mapSearchData: {},
+      departureDaysDiff:0,
+      returnDaysDiff:0,
       tripType: this.props.route.params.tripType,
       sourceCode: this.props.route.params.sourceCode,
       destination:this.props.route.params.destination
@@ -136,12 +138,25 @@ checkIfPeakOffPeakDataMonth = () => {
 
     let searchData = this.props.route.params.searchData
 
-
     let auditData = JSON.parse(this.props.route.params.auditData)
+
+
+
+    var start1 = moment(auditData.search_data.departure_date_from);
+      var end1 = moment(auditData.search_data.departure_date_to);
+      let departureDaysDiff =   end1.diff(start1, "days")
+
+
+
+    var start = moment(auditData.search_data.arrival_date_from);
+      var end = moment(auditData.search_data.arrival_date_to);
+      let returnDaysDiff =   end.diff(start, "days")
+    
+
     let WhereFrom = this.props.route.params.WhereFrom
     let data1 = JSON.parse(this.props.route.params.singleMap)
 
-    this.setState({ WhereFrom })
+    this.setState({ WhereFrom,departureDaysDiff,returnDaysDiff })
 
     this.checkIfPeakOffPeakDataMonth()
     this.props.getPeakOffPeakDataAction()
@@ -153,7 +168,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
 
-    console.log("yes check here data - - - - --  ",this.state.tripType)
+    console.log("yes check here data - - - - --  ",    this.state.tripType)
 
     setTimeout(() => {
       this.getDates()
@@ -2602,6 +2617,8 @@ checkIfPeakOffPeakDataMonth = () => {
     if (destinationData.availability.inbound) {
       isInBoundTrue = Object.entries(destinationData.availability.inbound)
     }
+    const {tripType, departureDaysDiff, returnDaysDiff} = this.state
+   
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
         <MyStatusBar />
@@ -2632,13 +2649,13 @@ checkIfPeakOffPeakDataMonth = () => {
                     : null
                 } */}
                 {
-                  departureCount ?
+                  departureDaysDiff ?
                     <TouchableOpacity onPress={() => { this.gotoCalender() }} style={{
                       alignItems: "flex-end", alignSelf: "flex-end", justifyContent: "center", marginRight: scale(30), margin: scale(10)
                       , marginTop: this.state.month ? scale(7) : scale(7),
 
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{departureCount} More days </Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{tripType == "one_way" ? departureDaysDiff - 20 : departureDaysDiff - 10} More days </Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null
@@ -2662,12 +2679,12 @@ checkIfPeakOffPeakDataMonth = () => {
                     : null
                 } */}
                 {
-                  returnCount ?
+                  returnDaysDiff ?
                     <TouchableOpacity onPress={() => { this.gotoCalender() }} style={{
                       alignItems: "flex-end", alignSelf: "flex-end",
                       marginTop: this.state.returnDateMonth ? scale(7) : scale(7), justifyContent: "center", marginRight: scale(30), margin: scale(10), borderWidth: 0
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnCount} More days</Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnDaysDiff ? returnDaysDiff - 10 : ""} More days</Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null

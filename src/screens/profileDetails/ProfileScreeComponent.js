@@ -1452,7 +1452,7 @@ export default class ProfileScreenComponent extends Component {
                   fontWeight: '500',
                   paddingStart: scale(15),
                   color: "#adb1b1",
-                }}>My closest airport</Text>
+                }}>My Home airport</Text>
               </View>
             </View>
 
