@@ -278,6 +278,8 @@ export default class CalenderComponent extends Component {
 
   renderCabinClass = ()   => {
     let cabinClassData = this.props.cabinClassData
+
+    
     let classTypeArray = [
       {
         "class":cabinClassData.economy ? "Economy" : false,
@@ -2687,7 +2689,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   onClassTypeSelected(item, index) {
     let classTypeArray = this.state.classTypeArray;
     classTypeArray[index].isSelected = !classTypeArray[index].isSelected;
-   
+    
     this.setState({
       classTypeArray: classTypeArray,
     });
@@ -2701,18 +2703,25 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isFirstSelected = this.state.classTypeArray[3].isSelected
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
+
+
+    const {classSelected}  = this.state
+
     return (
       <View>
         {
           <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
           {
             this.state.classTypeArray.map((item, index) => { 
+              console.log("yes check here item economy - - - - - - ",item.isSelected , this.state.classSelected[0])
+              console.log("yes check here item premium - - - - - - ",item.isSelected , this.state.classSelected[1])
+              console.log("yes check here item business - - - - - - ",item.isSelected , this.state.classSelected[2])
+              console.log("yes check here item first - - - - - - ",item.isSelected , this.state.classSelected[3])
                 return (
                 <Fragment>
                  {
                   item.class ? 
                   <Fragment>
-                  
                   <View>
                     <TouchableOpacity
                       style={{ backgroundColor:  item.class  == "Economy" ?
@@ -2730,13 +2739,37 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
-                            this.onClassTypeSelected(item, index);
+                            let newClassArray = this.state.classSelected;
+                            newClassArray[0] = !newClassArray[0];
+                            if(classSelected[0] == true){
+                              newClassArray = false
+                            }
+                            else{
+                              newClassArray = true
+                            }
+                            this.setState({
+                              classSelected:newClassArray
+                            },()=>{
+                              this.onClassTypeSelected(item, index);
+                            })
                           }
                         }
                         else if(item.class == "Premium Economy") { 
                           if(!bronzeMember){
                             if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
-                              this.onClassTypeSelected(item, index);
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[1] = !newClassArray[1];
+                                if(classSelected[1] == true){
+                                  newClassArray = false
+                                }
+                                else{
+                                  newClassArray = true
+                                }
+                                this.setState({
+                                  classSelected:newClassArray
+                                },()=>{
+                                  this.onClassTypeSelected(item, index);
+                                })
                             }
                           }
                           else{
@@ -2747,7 +2780,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         else if(item.class == "Business"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
-                              this.onClassTypeSelected(item, index);
+                              let newClassArray = this.state.classSelected;
+                              newClassArray[2] = !newClassArray[2];
+                              if(classSelected[2] == true){
+                                newClassArray = false
+                              }
+                              else{
+                                newClassArray = true
+                              }
+                              this.setState({
+                                classSelected:newClassArray
+                              },()=>{
+                                this.onClassTypeSelected(item, index);
+                              })
                             }
                           }
                           else{
@@ -2758,7 +2803,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         else if(item.class == "First"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                              this.onClassTypeSelected(item, index);
+                              let newClassArray = this.state.classSelected;
+                              newClassArray[3] = !newClassArray[3];
+                              if(classSelected[3] == true){
+                                newClassArray = false
+                              }
+                              else{
+                                newClassArray = true
+                              }
+                              this.setState({
+                                classSelected:newClassArray
+                              },()=>{
+                                this.onClassTypeSelected(item, index);
+                              })
+
                             }
                           }else{
                             this.setState({ showCreateAlertModal: false })
@@ -2771,13 +2829,37 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         onPress={() => {
                           if(item.class == "Economy") { 
                             if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
+                              let newClassArray = this.state.classSelected;
+                            newClassArray[0] = !newClassArray[0];
+                            if(classSelected[0] == true){
+                              newClassArray = false
+                            }
+                            else{
+                              newClassArray = true
+                            }
+                            this.setState({
+                              classSelected:newClassArray
+                            },()=>{
                               this.onClassTypeSelected(item, index);
+                            })
                             }
                           }
                           else if(item.class == "Premium Economy") { 
                             if(!bronzeMember){
                               if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
-                                this.onClassTypeSelected(item, index);
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[1] = !newClassArray[1];
+                                if(classSelected[1] == true){
+                                  newClassArray = false
+                                }
+                                else{
+                                  newClassArray = true
+                                }
+                                this.setState({
+                                  classSelected:newClassArray
+                                },()=>{
+                                  this.onClassTypeSelected(item, index);
+                                })
                               }
                             }else{
                               this.setState({ showCreateAlertModal: false })
@@ -2786,9 +2868,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           }
                           else if(item.class == "Business"){
                             if(!bronzeMember){
-                              if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
-                                this.onClassTypeSelected(item, index);
+                              let newClassArray = this.state.classSelected;
+                              newClassArray[2] = !newClassArray[2];
+                              if(classSelected[2] == true){
+                                newClassArray = false
                               }
+                              else{
+                                newClassArray = true
+                              }
+                              this.setState({
+                                classSelected:newClassArray
+                              },()=>{
+                                this.onClassTypeSelected(item, index);
+                              })
                             }
                             else{
                               this.setState({ showCreateAlertModal: false })
@@ -2798,8 +2890,19 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           else if(item.class == "First"){
                             if(!bronzeMember){
                               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                                this.onClassTypeSelected(item, index);
-                              }
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[3] = !newClassArray[3];
+                                if(classSelected[3] == true){
+                                  newClassArray = false
+                                }
+                                else{
+                                  newClassArray = true
+                                }
+                                this.setState({
+                                  classSelected:newClassArray
+                                },()=>{
+                                  this.onClassTypeSelected(item, index);
+                                })                              }
                             }else{
                               
                               this.showAlert1()
@@ -2808,23 +2911,30 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         }}
                       >
                       <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(6),marginStart:scale(80)}}>
-                        <MaterialIcon
-                          name={
-                            item.isSelected ? "checkbox-marked-circle" : "radiobox-blank"
-                          }
-                          size={verticalScale(22)}
-                          color={
-                            item.class == "Economy" ?
-                            item.isSelected ? "#2044ff" : colours.lightGreyish :
-                            item.class == "Premium Economy" ?
-                            item.isSelected ? "#f8a41e" : colours.lightGreyish :
-                            item.class == "Business" ? 
-                            item.isSelected ? "#af49de" : colours.lightGreyish :
-                            item.class == "First" ? 
-                            item.isSelected ? "#eb186f" : colours.lightGreyish :
-                             null
-                          }
-                        />
+                        {
+                          item.class == "Economy"  ? 
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected  ? "#2044ff" : colours.lightGreyish}
+                          /> :  item.class == "Premium Economy"   ? 
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected   ? "#f8a41e" : colours.lightGreyish}
+                          /> :  item.class == "Business" ?
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected  ? "#af49de" : colours.lightGreyish}
+                          /> :  item.class == "First" ? 
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected  ? "#eb186f" : colours.lightGreyish}
+                          />  : null
+                        }
+                         
                         </View>
                       </TouchableOpacity>
                       <View style={{flexDirection:"column",margin:scale(4)}}>
@@ -2840,12 +2950,12 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         style={{height:scale(40),width:scale(40),alignSelf:"center",justifyContent:"center",alignItems:"center"}}
                       >
                       </ImageBackground>
-                      <Text
-                        style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
-                      >
-                        {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
-                        {/* {item.class == "First" ? "First Class " : item.class} */}
-                      </Text>
+                        <Text
+                          style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
+                        >
+                          {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
+                          {/* {item.class == "First" ? "First Class " : item.class} */}
+                        </Text>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -2919,8 +3029,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         >
         <TouchableOpacity
           onPress={() => { 
-            // this.props.navigation.goBack() 
-            RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
+            this.props.navigation.goBack() 
+            // RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
           }}
         >
            {IMAGE_CONST.IOS_BACK_ARROW}
@@ -2935,7 +3045,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     {this.state.searchData.selectedDestination.city_name}
                   </Text>
                   {this.ticketDetailView()}
-                </View>
+                </View>          
                 : null
             }
           </View>
@@ -2993,6 +3103,15 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let business = classSelected[2]
     let first = classSelected[3]
 
+    let isEconomyAvailable = availability.economy ? true : ""
+    let isPremiumAvailable = availability.premium ? true : ""
+    let isBusinessAvailble = availability.business ? true : ""
+    let isFirstAvailable = availability.first ? true : ""
+
+   let classAvialability = [isEconomyAvailable, isPremiumAvailable,isBusinessAvailble,isFirstAvailable]
+
+    const emptyCount = classAvialability.filter(a => a.length === 0).length;
+
    let classSelectedArray = []
 
     if (economy) {
@@ -3013,244 +3132,372 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       bronzeMember = userData.bronze_member
     }
 
+
+    console.log("yes check here classSelected  - - - - -  - -",emptyCount)
+
     return (
-      <View style={[styles.ticketClassView, {
-        justifyContent: classSelected.length > 2 ? "center" : "center",
-      }]}>
-        {availability.economy && (
-          <TouchableOpacity
-            style={[
-              styles.classButton]}
-            onPress={() => {
-              if(!bronzeMember){
-                if (premium || business || first) {
-                    if (
-                      (this.state.selectedIndex == 0 &&
-                        this.state.outBoundVisibleArray.includes("economy")) ||
-                      (this.state.selectedIndex == 1 &&
-                        this.state.inBoundVisibleArray.includes("economy"))
-                    ) {
-                      let newClassArray = this.state.classSelected;
-                      let arr = this.state.classSelected
-                      newClassArray[0] = !newClassArray[0];
-                      this.setState({
-                        classSelected:newClassArray
-                      });
-                    } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
-                    }
+      <Fragment>
+        {
+          emptyCount == 2 ?
+          <View style={[styles.ticketClassView, {
+            justifyContent: classSelected.length > 2 ? "center" : "center",
+          }]}>
+            {availability.economy && (
+              <TouchableOpacity
+                style={[
+                  styles.classButton]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (business) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("economy")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("economy"))
+                        ) {
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[0] = !newClassArray[0];
+                          this.setState({
+                            classSelected:newClassArray
+                          });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                      }
                   }
-              }
-              else{
-                this.showAlert1()
-              }
-            }}
-          >
-            {!this.state.classSelected[0]
-              ? this.getIcon(
-                STRING_CONST.CHECK_EMPTY_CIRCLE,
-                colours.lightGreyish
-              )
-              : this.getIcon(
-                STRING_CONST.CHECK_CIRCLE,
-                this.state.selectedIndex == 0
-                  ? this.state.outBoundVisibleArray.includes("economy")
-                    ? colours.blue
-                    :"#EFEFEF"
-                  : this.state.inBoundVisibleArray.includes("economy")
-                    ? colours.blue
-                    :"#EFEFEF"
-              )}
-            {/* <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text> */}
-            {
-                this.state.selectedIndex == 0 ?
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.outBoundVisibleArray.includes("economy") ? 1 : 0.3
-                }]}>{STRING_CONST.ECONOMY}</Text>
-                :
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.inBoundVisibleArray.includes("economy") ? 1 : 0.3
-                }]}>{STRING_CONST.ECONOMY}</Text>
-              }
-          </TouchableOpacity>
-        )}
-        {availability.premium && (
-          <TouchableOpacity
-            style={[styles.classButton]}
-            onPress={() => {
-              if(!bronzeMember){
-                if (economy || business || first) {
-                    if (
-                      (this.state.selectedIndex == 0 &&
-                        this.state.outBoundVisibleArray.includes("premium")) ||
-                      (this.state.selectedIndex == 1 &&
-                        this.state.inBoundVisibleArray.includes("premium"))
-                    ) {
-                      let newClassArray = this.state.classSelected;
-                      newClassArray[1] = !newClassArray[1];
-                      this.setState({
-                        classSelected: newClassArray
-                      });
-                    } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
-                    }
+                  else{
+                    this.showAlert1()
                   }
-              }
-              else{
-                this.showAlert1()
-              }
-            }}
-          >
-            {!this.state.classSelected[1]
-              ? this.getIcon(
-                STRING_CONST.CHECK_EMPTY_CIRCLE,
-                colours.lightGreyish
-              )
-              : this.getIcon(
-                STRING_CONST.CHECK_CIRCLE,
-                this.state.selectedIndex == 0
-                  ? this.state.outBoundVisibleArray.includes("premium")
-                    ? colours.yellow
-                    :"#EFEFEF"
-                  : this.state.inBoundVisibleArray.includes("premium")
-                    ? colours.yellow
-                    :"#EFEFEF"
-              )}
-            {
-                this.state.selectedIndex == 0 ?
-
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.outBoundVisibleArray.includes("premium") ? 1 : 0.3
-                }]}>  {"Prem Econ"}</Text>
-                :
-
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.inBoundVisibleArray.includes("premium") ? 1 : 0.3
-               
-                }]}>  {"Prem Econ"}</Text>
-              }
-
-            {/* <Text style={styles.classTextStyle}>
-              {"Prem Econ"}
-            </Text> */}
-          </TouchableOpacity>
-        )}
-        {availability.business && (
-          <TouchableOpacity
-            style={[styles.classButton]}
-            onPress={() => {
-              if(!bronzeMember){
-                if (economy || premium || first) {
-                    if (
-                      (this.state.selectedIndex == 0 &&
-                        this.state.outBoundVisibleArray.includes("business")) ||
-                      (this.state.selectedIndex == 1 &&
-                        this.state.inBoundVisibleArray.includes("business"))
-                    ) {
-                      let newClassArray = this.state.classSelected;
-                      newClassArray[2] = !newClassArray[2];
-                      this.setState({
-                          classSelected:newClassArray,
-                        });
-                    } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
-                    }
-                }
-              }
-              else{
-                this.showAlert1()
-              }        
-            }}
-          >
-            {!this.state.classSelected[2]
-              ? this.getIcon(
-                STRING_CONST.CHECK_EMPTY_CIRCLE,
-                colours.lightGreyish
-              )
-              : this.getIcon(
-                STRING_CONST.CHECK_CIRCLE,
-                this.state.selectedIndex == 0
-                  ? this.state.outBoundVisibleArray.includes("business")
-                    ? colours.purple
-                    :"#EFEFEF"
-                  : this.state.inBoundVisibleArray.includes("business")
-                    ? colours.purple
-                    :"#EFEFEF"
-              )}
-            {/* <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text> */}
-            {
-                this.state.selectedIndex == 0 ?
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.outBoundVisibleArray.includes("business") ? 1 : 0.3
-                }]}>{STRING_CONST.BUSINESS}</Text>
-                :
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.inBoundVisibleArray.includes("business") ? 1 : 0.3
-                }]}>{STRING_CONST.BUSINESS}</Text>
-              }
-          </TouchableOpacity>
-        )}
-        {availability.first && (
-          <TouchableOpacity
-            style={[
-              styles.classButton,
-            ]}
-            onPress={() => {
-              if(!bronzeMember){
-                if (economy || premium || business) {
-                    if (
-                      (this.state.selectedIndex == 0 &&
-                        this.state.outBoundVisibleArray.includes("first")) ||
-                      (this.state.selectedIndex == 1 &&
-                        this.state.inBoundVisibleArray.includes("first"))
-                    ){
-                      let newClassArray = this.state.classSelected;
-                      newClassArray[3] = !newClassArray[3];
-                      this.setState({
-                        classSelected:newClassArray,
-                      });
-                    } else {
-                      Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
-                    }
-                }
-              }
-              else{
-                this.showAlert1()
-              }
-            }}
-          >
-            {!this.state.classSelected[3]
-              ? this.getIcon(
-                STRING_CONST.CHECK_EMPTY_CIRCLE,
-                colours.lightGreyish
-              )
-              : this.getIcon(
-                STRING_CONST.CHECK_CIRCLE,
-                this.state.selectedIndex == 0
-                  ? this.state.outBoundVisibleArray.includes("first")
-                    ? colours.pink
-                    :"#EFEFEF"
-                  : this.state.inBoundVisibleArray.includes("first")
-                    ? colours.pink
-                    :"#EFEFEF"
-              )}
-              {
-                this.state.selectedIndex == 0 ?
-
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.outBoundVisibleArray.includes("first") ? 1 : 0.3
-                }]}>{STRING_CONST.FIRST}</Text>
-                :
-
-                <Text style={[styles.classTextStyle,{
-                  opacity: this.state.inBoundVisibleArray.includes("first") ? 1 : 0.3
-               
-                }]}>{STRING_CONST.FIRST}</Text>
-              }
+                }}
+              >
+                {!this.state.classSelected[0]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("economy")
+                        ? colours.blue
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("economy")
+                        ? colours.blue
+                        :"#EFEFEF"
+                  )}
+                {/* <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text> */}
+                {
+                    this.state.selectedIndex == 0 ?
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("economy") ? 1 : 0.3
+                    }]}>{STRING_CONST.ECONOMY}</Text>
+                    :
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("economy") ? 1 : 0.3
+                    }]}>{STRING_CONST.ECONOMY}</Text>
+                  }
+              </TouchableOpacity>
+            )}
          
-          </TouchableOpacity>
-        )}
-      </View>
+            {availability.business && (
+              <TouchableOpacity
+                style={[styles.classButton]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (economy) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("business")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("business"))
+                        ) {
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[2] = !newClassArray[2];
+                          this.setState({
+                              classSelected:newClassArray,
+                            });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                    }
+                  }
+                  else{
+                    this.showAlert1()
+                  }        
+                }}
+              >
+                {!this.state.classSelected[2]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("business")
+                        ? colours.purple
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("business")
+                        ? colours.purple
+                        :"#EFEFEF"
+                  )}
+                {/* <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text> */}
+                {
+                    this.state.selectedIndex == 0 ?
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("business") ? 1 : 0.3
+                    }]}>{STRING_CONST.BUSINESS}</Text>
+                    :
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("business") ? 1 : 0.3
+                    }]}>{STRING_CONST.BUSINESS}</Text>
+                  }
+              </TouchableOpacity>
+            )}
+          
+          </View>
+
+          :
+
+          <View style={[styles.ticketClassView, {
+            justifyContent: classSelected.length > 2 ? "center" : "center",
+          }]}>
+            {availability.economy && (
+              <TouchableOpacity
+                style={[
+                  styles.classButton]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (premium || business || first) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("economy")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("economy"))
+                        ) {
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[0] = !newClassArray[0];
+                          this.setState({
+                            classSelected:newClassArray
+                          });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                      }
+                  }
+                  else{
+                    this.showAlert1()
+                  }
+                }}
+              >
+                {!this.state.classSelected[0]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("economy")
+                        ? colours.blue
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("economy")
+                        ? colours.blue
+                        :"#EFEFEF"
+                  )}
+                {/* <Text style={styles.classTextStyle}>{STRING_CONST.ECONOMY}</Text> */}
+                {
+                    this.state.selectedIndex == 0 ?
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("economy") ? 1 : 0.3
+                    }]}>{STRING_CONST.ECONOMY}</Text>
+                    :
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("economy") ? 1 : 0.3
+                    }]}>{STRING_CONST.ECONOMY}</Text>
+                  }
+              </TouchableOpacity>
+            )}
+            {availability.premium && (
+              <TouchableOpacity
+                style={[styles.classButton]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (economy || business || first) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("premium")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("premium"))
+                        ) {
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[1] = !newClassArray[1];
+                          this.setState({
+                            classSelected: newClassArray
+                          });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                      }
+                  }
+                  else{
+                    this.showAlert1()
+                  }
+                }}
+              >
+                {!this.state.classSelected[1]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("premium")
+                        ? colours.yellow
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("premium")
+                        ? colours.yellow
+                        :"#EFEFEF"
+                  )}
+                {
+                    this.state.selectedIndex == 0 ?
+    
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("premium") ? 1 : 0.3
+                    }]}>  {"Prem Econ"}</Text>
+                    :
+    
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("premium") ? 1 : 0.3
+                   
+                    }]}>  {"Prem Econ"}</Text>
+                  }
+    
+                {/* <Text style={styles.classTextStyle}>
+                  {"Prem Econ"}
+                </Text> */}
+              </TouchableOpacity>
+            )}
+            {availability.business && (
+              <TouchableOpacity
+                style={[styles.classButton]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (economy || premium || first) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("business")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("business"))
+                        ) {
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[2] = !newClassArray[2];
+                          this.setState({
+                              classSelected:newClassArray,
+                            });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                    }
+                  }
+                  else{
+                    this.showAlert1()
+                  }        
+                }}
+              >
+                {!this.state.classSelected[2]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("business")
+                        ? colours.purple
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("business")
+                        ? colours.purple
+                        :"#EFEFEF"
+                  )}
+                {/* <Text style={styles.classTextStyle}>{STRING_CONST.BUSINESS}</Text> */}
+                {
+                    this.state.selectedIndex == 0 ?
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("business") ? 1 : 0.3
+                    }]}>{STRING_CONST.BUSINESS}</Text>
+                    :
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("business") ? 1 : 0.3
+                    }]}>{STRING_CONST.BUSINESS}</Text>
+                  }
+              </TouchableOpacity>
+            )}
+            {availability.first && (
+              <TouchableOpacity
+                style={[
+                  styles.classButton,
+                ]}
+                onPress={() => {
+                  if(!bronzeMember){
+                    if (economy || premium || business) {
+                        if (
+                          (this.state.selectedIndex == 0 &&
+                            this.state.outBoundVisibleArray.includes("first")) ||
+                          (this.state.selectedIndex == 1 &&
+                            this.state.inBoundVisibleArray.includes("first"))
+                        ){
+                          let newClassArray = this.state.classSelected;
+                          newClassArray[3] = !newClassArray[3];
+                          this.setState({
+                            classSelected:newClassArray,
+                          });
+                        } else {
+                          Alert.alert(`${this.state.searchData.passengerCount > 1 ? `Seats aren't available currently` : 'Seat isn’t available currently'}`);
+                        }
+                    }
+                  }
+                  else{
+                    this.showAlert1()
+                  }
+                }}
+              >
+                {!this.state.classSelected[3]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE,
+                    this.state.selectedIndex == 0
+                      ? this.state.outBoundVisibleArray.includes("first")
+                        ? colours.pink
+                        :"#EFEFEF"
+                      : this.state.inBoundVisibleArray.includes("first")
+                        ? colours.pink
+                        :"#EFEFEF"
+                  )}
+                  {
+                    this.state.selectedIndex == 0 ?
+    
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.outBoundVisibleArray.includes("first") ? 1 : 0.3
+                    }]}>{STRING_CONST.FIRST}</Text>
+                    :
+    
+                    <Text style={[styles.classTextStyle,{
+                      opacity: this.state.inBoundVisibleArray.includes("first") ? 1 : 0.3
+                   
+                    }]}>{STRING_CONST.FIRST}</Text>
+                  }
+             
+              </TouchableOpacity>
+            )}
+          </View>
+        }
+
+      </Fragment>
     );
   }
   singleTabView() {
@@ -4406,7 +4653,15 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     alignSelf: "flex-end",
                     marginTop:scale(10)
                   }}
-                    onPress={() => {this.Hide_Custom_Alert2()
+                    onPress={() => {
+                      this.setState({
+                        // showTicketDetailModal: false,
+                        bounceValue: new Animated.Value(250),
+                        isHidden: true,
+                        selectedDate: {},
+                      });
+                      this._toggleSubview();
+                      this.Hide_Custom_Alert2()
                   }}
                 >
                   <Entypo
@@ -4526,7 +4781,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
             <View style={{borderWidth:0}}>
-             {this.state.airLinesDetailsObject ? this.ticketClass() : null}
+             {/* {this.state.airLinesDetailsObject ? this.ticketClass() : null} */}
+             {this.ticketClass()}
                 {this.fareView()}
                 {this.state.searchData.isReturn
                   ? this.tabView()
@@ -4573,7 +4829,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               this.seatAvailabilityModal(day, isOffPeakValue1)
             }}
             current={startDate ? startDate : today}
-            key={startDate ? startDate : today}
+            // key={startDate ? startDate : today}
             pastScrollRange={0}
             minDate={startDate ? startDate : today}
             futureScrollRange={ isLoggedIn ? 12 : 3}

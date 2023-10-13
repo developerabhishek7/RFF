@@ -254,7 +254,7 @@ class DrawerComponentComponent extends Component {
           <Text numberOfLines={1} style={[styles.nameStyle,{
             width:verticalScale(210),borderWidth:0,textAlign:"center",alignSelf:"center"
           }]}>
-            { `${userData && this.getCapitalName(userData.first_name)}  ${userData && this.getCapitalName(userData.last_name)}`} 
+            { `${userData && this.getCapitalName(userData.first_name)} ${userData && this.getCapitalName(userData.last_name)}`} 
           </Text>
           {
             bronze_member || silver_member || gold_member  ?
@@ -449,7 +449,7 @@ class DrawerComponentComponent extends Component {
             </Text>
           </TouchableOpacity>
           <View style={styles.lineStyle} />
-          {/* {
+          {
             isLoggedIn && this.state.userData && this.state.userData.gold_member &&
             <TouchableOpacity
               style={styles.screenButtonStyle}
@@ -459,14 +459,12 @@ class DrawerComponentComponent extends Component {
               }}
             >
               {this.getMenuOptionImage(IMAGE_CONST.HELP_ICON)}
-
               <Text style={styles.screenTitle}>
                 {"Help"}
               </Text>
             </TouchableOpacity>
-           
-          } */}
-          {/* {isLoggedIn && this.state.userData && this.state.userData.gold_member  && <View  style={styles.lineStyle} /> } */}
+          }
+          {isLoggedIn && this.state.userData && this.state.userData.gold_member  && <View  style={styles.lineStyle} /> }
           <View style={{ marginTop:scale(20),alignSelf:'stretch',width:isPad() ? width - scale(90) :scale(310) }}>
           <TouchableOpacity
           style={[
