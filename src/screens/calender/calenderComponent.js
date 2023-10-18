@@ -118,6 +118,7 @@ export default class CalenderComponent extends Component {
       classSelected: this.props.searchData.classSelected,
       showCreateAlertModal: false,
       airLinesDetailsObject: this.props.airLinesDetailsObject,
+      calendarSeatsObject:  this.props.calendarSeatsObject  && this.props.calendarSeatsObject,
       showTicketDetailModal: false,
       Alert_Visibility2: false,
       noFlightScheduleDate: "",
@@ -330,9 +331,58 @@ export default class CalenderComponent extends Component {
 
     // this.checkOnloaderFalse()
     let userData = this.props.userInfo
-    let bronzeMember = userData.bronze_member
+    let bronzeMember = userData && userData.bronze_member
     const today = moment();
     let data = this.props.searchData.classSelected;
+
+
+    let availability = this.state.airLinesDetailsObject.availability;
+
+    let economy = data[0]
+    let premium = data[1]
+    let business = data[2]
+    let first = data[3]
+
+    let isEconomyAvailable = availability.economy ? true : ""
+    let isPremiumAvailable = availability.premium ? true : ""
+    let isBusinessAvailble = availability.business ? true : ""
+    let isFirstAvailable = availability.first ? true : ""
+
+
+   let classSelectedArray = []
+
+    if (economy && isEconomyAvailable) {
+      classSelectedArray.push(true)
+    }
+    else{
+      classSelectedArray.push(false)
+    }
+    if (premium && isPremiumAvailable) {
+      classSelectedArray.push(true)
+    }
+    else{
+      classSelectedArray.push(false)
+    }
+    if (business && isBusinessAvailble) {
+      classSelectedArray.push(true)
+    }
+    else{
+      classSelectedArray.push(false)
+    }
+    if (first && isFirstAvailable) {
+      classSelectedArray.push(true)
+    }
+    else{
+      classSelectedArray.push(false)
+    }
+
+    var data2 = [true,false,false,false]
+    
+    this.setState({
+      classSelected: bronzeMember ? data2 : classSelectedArray,
+    });
+
+
     let outBound = this.state.airLinesDetailsObject.outbound_availability;
     let inBound = this.state.airLinesDetailsObject.inbound_availability;
     let outBoundVisibleArray = this.getVisibilityArray(outBound)
@@ -390,50 +440,8 @@ export default class CalenderComponent extends Component {
       this.setState({ isLoader: false })   
     }, 1000);
 
-    // for (const item in data) {
-    //   console.log("check item on the did mount #######    ",data)
-    //   if (item == "economy") {
-    //     if (this.state.classSelected[0] && data[item] ) {
-    //       classData.push(true);
-    //     } else {
-    //       classData.push(false);
-    //     }
-    //   }
-    //   else if (item == "premium") {
-    //     if (this.state.classSelected[1] && data[item]) {
-    //       classData.push(true);
-    //     } else {
-    //       classData.push(false);
-    //     }
-    //   }
-    //   else if (item == "business") {
-    //     if (this.state.classSelected[2] && data[item]) {
-    //       classData.push(true);
-    //     } else {
-    //       classData.push(false);
-    //     }
-    //   }
-    //   else if (item == "first") {
-    //     if (this.state.classSelected[3] && data[item]) {
-    //       classData.push(true);
-    //     } else {
-    //       classData.push(false);
-    //     }
-    //   }
-    // }
 
-    // let lastDate = this.state.peakOffpeakData.slice(-1)[0] 
-    //   if(lastDate){
-    //     setTimeout(() => {
-    //       this._refCalendarList.scrollToDay(lastDate);
-    //     });
-    //   }
-      
-    var data2 = [true,false,false,false]
-    
-    this.setState({
-      classSelected: bronzeMember ? data2 : classData,
-    });
+
   
       BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -453,13 +461,10 @@ export default class CalenderComponent extends Component {
   }
 
   formatPrice = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  
 
-  seatAvailabilityModal(day, isOffPeakValue1) {
-
+  seatAvailabilityModal(day) {
     const firstDay = moment().startOf('month')
     const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
-
     let clickDate
     let userData = this.props.userInfo
     let bronzeMember = userData.bronze_member
@@ -483,8 +488,9 @@ export default class CalenderComponent extends Component {
 
     }
 
-    const { searchData, offPeakKey,showModelDropdownForBA,showModelDropdownForSS, airLinesDetailsObject, } = this.state;
-   
+    const { searchData, offPeakKey,showModelDropdownForBA,calendarSeatsObject, airLinesDetailsObject, } = this.state;
+
+
     let airline = searchData.airline
     let destination = searchData.destinationCode
     let sourceCode = searchData.sourceCode
@@ -515,8 +521,17 @@ export default class CalenderComponent extends Component {
 
     let availableOutBoundDate = {}
     let availableInBoundDate = {}
-    availableOutBoundDate = airLinesDetailsObject.outbound_availability;
-    availableInBoundDate = airLinesDetailsObject.inbound_availability;
+
+    let seatsAvailableOutBoundData = {}
+    let seatsAvailableInBoundData = {}
+    availableOutBoundDate = airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0 && airLinesDetailsObject.outbound_availability;
+
+    seatsAvailableOutBoundData = calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0 && calendarSeatsObject.outbound_availability;
+
+
+    seatsAvailableInBoundData = calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0 && calendarSeatsObject.inbound_availability;
+
+    availableInBoundDate = airLinesDetailsObject && Object.keys(calendarSeatsObject).length !== 0 && airLinesDetailsObject.inbound_availability;
 
     let availavleClassesData = this.state.airLinesDetailsObject.availability
 
@@ -554,10 +569,10 @@ export default class CalenderComponent extends Component {
       dateExpire = false
       let obj
       if (this.state.selectedIndex == 0) {
-        obj = Object.entries(availableOutBoundDate)
+        obj = seatsAvailableOutBoundData &&  Object.entries(seatsAvailableOutBoundData) 
       }
       else {
-        obj = Object.entries(availableInBoundDate)
+        obj = seatsAvailableInBoundData &&  Object.entries(seatsAvailableInBoundData)
       }
       if (day) {
         clickDate = day.dateString
@@ -565,7 +580,10 @@ export default class CalenderComponent extends Component {
       let date = moment(clickDate).format("YYYY-MM-DD")
       obj.map((singleMap) => {
 
-        if (this.state.clickDate == singleMap[0]) {
+      const mapDate1 = moment(this.state.clickDate, 'DD-MM-YYYY').valueOf()
+      const mapDate2 = moment(singleMap[0], 'DD-MM-YYYY').valueOf()
+
+      if (mapDate1 === mapDate2) {
           if (singleMap[1].economy) {
             if (singleMap[1].economy.seats) {
               economySeats = singleMap[1].economy.seats
@@ -606,20 +624,21 @@ export default class CalenderComponent extends Component {
     dateExpire = false
     let obj
     if (this.state.selectedIndex == 0) {
-      obj = Object.entries(availableOutBoundDate)
+      obj = seatsAvailableOutBoundData &&  Object.entries(seatsAvailableOutBoundData) 
     }
     else {
-      obj = Object.entries(availableInBoundDate)
+      obj = seatsAvailableInBoundData &&  Object.entries(seatsAvailableInBoundData) 
     }
     if (day) {
       clickDate = day.dateString
     }
     let date = moment(clickDate).format("YYYY-MM-DD")
     obj.map((singleMap) => {
+    const mapDate1 = moment(this.state.clickDate, 'DD-MM-YYYY').valueOf()
+    const mapDate2 = moment(singleMap[0], 'DD-MM-YYYY').valueOf()
 
-    
-      if (this.state.clickDate == singleMap[0]) {
-      if (singleMap[1].economy) {
+      if (mapDate1 === mapDate2) {
+        if (singleMap[1].economy) {
           if (singleMap[1].economy.seats) {
             economySeats = singleMap[1].economy.seats
           }
@@ -654,6 +673,13 @@ export default class CalenderComponent extends Component {
       }
     })
   }
+  console.log("yes check seats of economy - - - - - -",economySeats)
+  console.log("yes check seats of premium - - - - - -",premiumSeats)
+  console.log("yes check seats of business - - - - - -",businessSeats)
+  console.log("yes check seats of first - - - - - -",firstSeats)
+
+
+
     let economySS 
     let premiumSS
     let businessSS
@@ -671,7 +697,7 @@ export default class CalenderComponent extends Component {
       if(requiredKey === false){ 
         if(offPeakKey == false){ 
           pointsBA.map((singleMap)=>{
-            if(singleMap.one_way ==true && singleMap.peak_type === "offpeak" ){
+            if(singleMap.one_way ==true && singleMap.peak_type == "offpeak" ){
               if(singleMap.economy_avios){
                 economyBA = singleMap.economy_avios
               }
@@ -689,7 +715,7 @@ export default class CalenderComponent extends Component {
     }
     else{
           pointsBA.map((singleMap)=>{
-              if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+              if(singleMap.one_way ==true && singleMap.peak_type == "peak"){
               if(singleMap.economy_avios){
                 economyBA = singleMap.economy_avios
               }
@@ -728,10 +754,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
  
 
   if(requiredKey === false){ 
-
     if(offPeakKey === false){
       pointsSS.map((singleMap)=>{
-        if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+        if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
           if(singleMap.economy_avios){
             economySS = singleMap.economy_avios
           }
@@ -750,7 +775,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     else{
       pointsSS.map((singleMap)=>{
     
-        if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+        if(singleMap.one_way == true && singleMap.peak_type == "peak"){
           if(singleMap.economy_avios){
             economySS = singleMap.economy_avios
           }
@@ -772,7 +797,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
    }
   else{
     if(requiredKey === true){ 
-
     economyBA = 1100
     premiumBA = 1100
     businessBA = 1100
@@ -793,7 +817,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       if (pointsBA && Object.keys(pointsBA).length !== 0 && this.props.isLoggedIn == true) {
         if(offPeakKey == false){ 
               pointsBA.map((singleMap)=>{
-                if(singleMap.one_way ==true && singleMap.peak_type === "offpeak" ){
+                if(singleMap.one_way ==true && singleMap.peak_type == "offpeak" ){
                   if(singleMap.economy_avios){
                     economyBA = singleMap.economy_avios
                   }
@@ -811,7 +835,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         }
         else{
               pointsBA.map((singleMap)=>{
-                  if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+                  if(singleMap.one_way ==true && singleMap.peak_type == "peak"){
                   if(singleMap.economy_avios){
                     economyBA = singleMap.economy_avios
                   }
@@ -833,7 +857,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == true) {
   if(offPeakKey === false){
     pointsSS.map((singleMap)=>{
-      if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+      if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
         if(singleMap.economy_avios){
           economySS = singleMap.economy_avios
         }
@@ -851,7 +875,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
   }
   else{
     pointsSS.map((singleMap)=>{
-      if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+      if(singleMap.one_way == true && singleMap.peak_type == "peak"){
         if(singleMap.economy_avios){
           economySS = singleMap.economy_avios
         }
@@ -948,7 +972,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               </TouchableOpacity>
               <Text style={[styles.titleText,{
                 paddingStart:scale(20)
-              }]}>{searchData.selectedSource.city_name} - {searchData.selectedDestination.city_name}</Text>
+              }]}>{searchData.selectedSource.city_name} - {searchData.selectedDestination.city_name}
+              {` (${!offPeakKey ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
+                  })`}
+              </Text>
             
               {/* (${!data.peak ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
                 }) */}
@@ -979,9 +1006,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 fontSize: scale(13),
               }}
             >
-              {this.state.dateString}
+              {this.state.dateString} 
             </Text>
-            <View style={{ backgroundColor: "#0072A0", borderRadius: scale(20), margin: scale(4),marginBottom:scale(10), opacity: 0.4 }}>
+            {/* <View style={{ backgroundColor: "#0072A0", borderRadius: scale(20), margin: scale(4),marginBottom:scale(10), opacity: 0.4 }}>
               <Text
                 style={{
                   color: colours.black,
@@ -997,7 +1024,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 {`${!offPeakKey ? STRING_CONST.OFF_PEAK_FARE : STRING_CONST.PEAK_FARE
                   }`}
               </Text>
-            </View>
+            </View> */}
             <View style={styles.availabiltyView}>
               <View>
                 <View
@@ -1188,7 +1215,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                               {"-"}
                             </>
                           }
-                        {/* {firstSeats ? firstSeats : "0"} */}
                       </Text>
                       <Text style={styles.seatNumberText}>
                       {  firstSS ? this.getPointsText(firstSS) : 
@@ -1230,7 +1256,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         // showModelDropdownForSS:false
                       })
                     }
-
                     else{
                         this.props.navigation.navigate("priceDetails",{
                         cabinClassData:this.state.cabinClassData,
@@ -1309,81 +1334,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         })}
                       </View> 
                   }
-                  {/* <TouchableOpacity
-                  style={styles.checkOnAirlineButton1}
-                  onPress={() => {
-                    if(trip_type == "one_way"){
-                      this.setState({
-                        showModelDropdownForSS:true,
-                        showModelDropdownForBA:false
-                      })
-                    }
-                    else{
-                        this.props.navigation.navigate("priceDetails",{
-                        cabinClassData:this.state.cabinClassData,
-                        trip_type:trip_type,
-                        headerTxt:"See Cash Prices",
-                        searchData:this.state.searchData,
-                        classArray1:classSelectedArray,
-                        selectedDate: this.state.selectedDate,
-                      })
-                    }
-                  }}
-                  >
-                   <Text
-                    style={{ color: colours.white, marginLeft: scale(10), fontSize: scale(13) }}
-                  >
-                    {"Price"}
-                  </Text>
-                  </TouchableOpacity> */}
-                  {/* {
-                    showModelDropdownForSS && 
-                    <View style={{height:classSelectedArray.length > 2 ? scale(135) : scale(80),borderRadius:scale(3),marginTop:scale(-9),width:scale(334),marginBottom:scale(25),alignSelf:"center",}}>
-                   {travelData.map((singleMap)=>{
-                          return( 
-                            <TouchableOpacity  
-                              onPress={()=>{
-                                if(singleMap == "Economy"){
-                                  this.setState({
-                                    skyScannerCabinCode:"economy",
-                                    cabinCode:"M"
-                                  })
-                                }
-                                if(singleMap == "Premium"){
-                                  this.setState({
-                                    skyScannerCabinCode:"premiumeconomy",
-                                    cabinCode:"W"
-                                  })
-                                }if(singleMap == "Business"){
-                                  this.setState({
-                                    skyScannerCabinCode:"business",
-                                    cabinCode:"C"
-                                  })
-                                }if(singleMap == "First"){
-                                  this.setState({
-                                    cabinCode:"F",
-                                    skyScannerCabinCode:"first"
-                                  })
-                                }
-                                this.setState({
-                                  showModelDropdownForBA:false,
-                                  showModelDropdownForSS:false
-                                })
-                                this.handleSkyScannerRedirection()
-                              }}
-                              style={{justifyContent:'center',alignItems:'center',paddingTop:classSelectedArray.length > 2 ? scale(6):scale(1),
-                              backgroundColor:singleMap=="Economy" ? "#dee3ff" : singleMap == "Premium" ? "#fef1dd" : singleMap == "Business" ? "#f1d9fc" : singleMap == "First" ? "#fcddea" : null
-                              }} >
-                           <Text style={[styles.classTxt,{
-                              color:singleMap=="Economy" ? "#2044FF" : singleMap == "Premium" ? "#FEA41D" : singleMap == "Business" ? "#A400F1" : singleMap == "First" ? "#F31973" : null
-                            }]}>
-                              {singleMap}
-                            </Text>
-                          </TouchableOpacity>
-                          )
-                        })}
-                      </View> 
-                  } */}
                   </Fragment>
                 : null}
               <Fragment>
@@ -1684,7 +1634,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                 />
                     </TouchableOpacity>
                     <Text style={styles.titleText1}>{`${STRING_CONST.SEAT_AVAILABILITY
-                      } (${this.state.isOffPeakValue
+                      } (${!this.state.isOffPeakValue
                         ? STRING_CONST.OFF_PEAK_FARE
                         : STRING_CONST.PEAK_FARE
                       })`}</Text>
@@ -1698,6 +1648,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           showDetailsModal: false,
                           bounceValue: new Animated.Value(250),
                           isHidden: true,
+                          selectedDate: {},
                         });
                         this._toggleSubview();
                       }}
@@ -1987,9 +1938,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       if (returnExpireDate < returnEndDate) {
         isAlertExpireDays2 = false
       }
-
       let data = this.state.airLinesDetailsObject.availability;
-
       let classData = []
       if (data) {
         if (data.economy == true) {
@@ -2023,9 +1972,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         newArray.push(singleMap.isSelected)
       })
 
-      let travel_classes = getBAClassesString(newArray);
+      let travel_classes = getBAClassesString(classSelected);
 
-      let classForAlert = this.getBAClassesStringForAlert(newArray)
+      let classForAlert = this.getBAClassesStringForAlert(classSelected)
 
 
       let availableclasses = this.state.airLinesDetailsObject.availability;
@@ -2091,7 +2040,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         },
       };
 
-    
       if (this.state.searchData.isReturn) {
         if (isAlertExpireDays && isAlertExpireDays2) {
           const trackData = {
@@ -2702,21 +2650,52 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isBusinessSelected = this.state.classTypeArray[2].isSelected
     let isFirstSelected = this.state.classTypeArray[3].isSelected
     let userData = this.props.userInfo
-    let bronzeMember = userData.bronze_member
 
+    const {airLinesDetailsObject} = this.state
+    let availability = airLinesDetailsObject.availability;
 
     const {classSelected}  = this.state
 
+    let economy = classSelected[0]
+    let premium = classSelected[1]
+    let business = classSelected[2]
+    let first = classSelected[3]
+
+   let classSelectedArray = []
+
+    if (economy) {
+      classSelectedArray.push(economy)
+    }
+    if (premium) {
+      classSelectedArray.push(premium)
+    }
+    if (business) {
+      classSelectedArray.push(business)
+    }
+    if (first) {
+      classSelectedArray.push(first)
+    }
+    let bronzeMember
+    if(userData && userData !== undefined && userData !== null){
+      bronzeMember = userData.bronze_member
+    }
+
+    let isEconomyAvailable = availability.economy ? true : ""
+    let isPremiumAvailable = availability.premium ? true : ""
+    let isBusinessAvailble = availability.business ? true : ""
+    let isFirstAvailable = availability.first ? true : ""
+
+   let classAvialability = [isEconomyAvailable, isPremiumAvailable,isBusinessAvailble,isFirstAvailable]
+
+    const emptyCount = classAvialability.filter(a => a.length === 0).length;
+
     return (
-      <View>
+      <Fragment>
         {
-          <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
+          emptyCount == 2 ?
+<View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
           {
             this.state.classTypeArray.map((item, index) => { 
-              console.log("yes check here item economy - - - - - - ",item.isSelected , this.state.classSelected[0])
-              console.log("yes check here item premium - - - - - - ",item.isSelected , this.state.classSelected[1])
-              console.log("yes check here item business - - - - - - ",item.isSelected , this.state.classSelected[2])
-              console.log("yes check here item first - - - - - - ",item.isSelected , this.state.classSelected[3])
                 return (
                 <Fragment>
                  {
@@ -2729,47 +2708,197 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                       "#fef8ed" : item.class == "Business" ?
                       "#f8ebfe" : item.class == "First" ? 
                       "#fde8f1" : null,
-                      // borderColor:  item.class  == "Economy" ?
-                      // "#bfc9ff" : item.class == "Premium Economy" ?
-                      // "#fce1b3" : item.class == "Business" ?
-                      // "#d7a1f0" : item.class == "First" ? 
-                      // "#f9b9d4" : null,
-
+                      borderRadius:scale(10),borderWidth:0,marginVertical: verticalScale(7),alignItems:"center",width:scale(153),height:scale(120) }}
+                      onPress={() => {
+                        if(item.class == "Economy") { 
+                          if(isBusinessSelected) { 
+                            if (business) {
+                            if (
+                              (this.state.selectedIndex == 0 &&
+                                this.state.outBoundVisibleArray.includes("economy")) ||
+                              (this.state.selectedIndex == 1 &&
+                                this.state.inBoundVisibleArray.includes("economy"))
+                            ) {
+                              let newClassArray = this.state.classSelected;
+                              newClassArray[0] = !newClassArray[0];
+                              this.setState({
+                                classSelected:newClassArray
+                              });
+                            }
+                          }
+                          }
+                        }
+                        else if(item.class == "Business"){
+                          if(!bronzeMember){
+                            if(isEconomySelected) { 
+                              if (economy) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("business")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("business"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[2] = !newClassArray[2];
+                                this.setState({
+                                    classSelected:newClassArray,
+                                  });
+                                }
+                              }
+                            }
+                          }
+                          else{
+                            this.setState({ showCreateAlertModal: false })
+                            this.showAlert1()
+                          }
+                        }
+                      
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          if(item.class == "Economy") { 
+                            if(isBusinessSelected) { 
+                              if (business) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("economy")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("economy"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[0] = !newClassArray[0];
+                                this.setState({
+                                  classSelected:newClassArray
+                                });
+                               }
+                            }
+                          }
+                          }
+                          else if(item.class == "Business"){
+                            if(!bronzeMember){
+                              if (economy) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("business")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("business"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[2] = !newClassArray[2];
+                                this.setState({
+                                    classSelected:newClassArray,
+                                  });
+                                }
+                              }
+                            }
+                            else{
+                              this.setState({ showCreateAlertModal: false })
+                              this.showAlert1()
+                            }
+                          }
+                        }}
+                      >
+                      <View style={{alignSelf:"flex-end",justifyContent:"flex-end",marginTop:scale(6),marginStart:scale(80)}}>
+                        {
+                          item.class == "Economy"  ? 
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected && classSelected[0] ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected  ? "#2044ff" : colours.lightGreyish}
+                          />  :  item.class == "Business" ?
+                          <MaterialIcon  
+                              size={verticalScale(22)}
+                              name={item.isSelected && classSelected[2] ? "checkbox-marked-circle" : "radiobox-blank" }
+                              color={item.isSelected  ? "#af49de" : colours.lightGreyish}
+                          />   : null
+                        }
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{flexDirection:"column",margin:scale(4)}}>
+                      <ImageBackground
+                        source={
+                          item.class  == "Economy" ?
+                          IMAGE_CONST.ECONOMYC : item.class == "Premium Economy" ?
+                          IMAGE_CONST.PREMIUMC : item.class == "Business" ?
+                          IMAGE_CONST.BUSINESSC : item.class == "First" ? 
+                          IMAGE_CONST.FIRSTC : null
+                        }
+                        resizeMode="contain"
+                        style={{height:scale(40),width:scale(40),alignSelf:"center",justifyContent:"center",alignItems:"center"}}
+                      >
+                      </ImageBackground>
+                        <Text
+                          style={[styles.membershipSubListTextStyle, { marginLeft: scale(12),marginTop:scale(4),marginBottom:scale(9) }]}
+                        >
+                          {item.class == "First" ? "First Class " :  item.class == "Premium Economy" ? "Prem Econ" : item.class }
+                          {/* {item.class == "First" ? "First Class " : item.class} */}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  </Fragment>
+                  : null
+                 }
+                  </Fragment>
+                )                       
+            })
+          }
+          </View> : 
+          
+          
+          
+          <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-around"}}>
+          {
+            this.state.classTypeArray.map((item, index) => { 
+                return (
+                <Fragment>
+                 {
+                  item.class ? 
+                  <Fragment>
+                  <View>
+                    <TouchableOpacity
+                      style={{ backgroundColor:  item.class  == "Economy" ?
+                      "#edf0ff" : item.class == "Premium Economy" ?
+                      "#fef8ed" : item.class == "Business" ?
+                      "#f8ebfe" : item.class == "First" ? 
+                      "#fde8f1" : null,
                       borderRadius:scale(10),borderWidth:0,marginVertical: verticalScale(7),alignItems:"center",width:scale(153),height:scale(120) }}
                       onPress={() => {
                         if(item.class == "Economy") { 
                           if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
-                            let newClassArray = this.state.classSelected;
-                            newClassArray[0] = !newClassArray[0];
-                            if(classSelected[0] == true){
-                              newClassArray = false
+                            if (premium || business || first) {
+                            if (
+                              (this.state.selectedIndex == 0 &&
+                                this.state.outBoundVisibleArray.includes("economy")) ||
+                              (this.state.selectedIndex == 1 &&
+                                this.state.inBoundVisibleArray.includes("economy"))
+                            ) {
+                              let newClassArray = this.state.classSelected;
+                              newClassArray[0] = !newClassArray[0];
+                              this.setState({
+                                classSelected:newClassArray
+                              });
                             }
-                            else{
-                              newClassArray = true
-                            }
-                            this.setState({
-                              classSelected:newClassArray
-                            },()=>{
-                              this.onClassTypeSelected(item, index);
-                            })
+                          }
                           }
                         }
                         else if(item.class == "Premium Economy") { 
                           if(!bronzeMember){
                             if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
+                              if (economy || business || first) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("premium")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("premium"))
+                              ) {
                                 let newClassArray = this.state.classSelected;
                                 newClassArray[1] = !newClassArray[1];
-                                if(classSelected[1] == true){
-                                  newClassArray = false
-                                }
-                                else{
-                                  newClassArray = true
-                                }
                                 this.setState({
-                                  classSelected:newClassArray
-                                },()=>{
-                                  this.onClassTypeSelected(item, index);
-                                })
+                                  classSelected: newClassArray
+                                });}
+                              }
                             }
                           }
                           else{
@@ -2780,19 +2909,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         else if(item.class == "Business"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
-                              let newClassArray = this.state.classSelected;
-                              newClassArray[2] = !newClassArray[2];
-                              if(classSelected[2] == true){
-                                newClassArray = false
+                              if (economy || premium || first) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("business")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("business"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[2] = !newClassArray[2];
+                                this.setState({
+                                    classSelected:newClassArray,
+                                  });
+                                }
                               }
-                              else{
-                                newClassArray = true
-                              }
-                              this.setState({
-                                classSelected:newClassArray
-                              },()=>{
-                                this.onClassTypeSelected(item, index);
-                              })
                             }
                           }
                           else{
@@ -2803,20 +2933,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         else if(item.class == "First"){
                           if(!bronzeMember){
                             if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                              let newClassArray = this.state.classSelected;
-                              newClassArray[3] = !newClassArray[3];
-                              if(classSelected[3] == true){
-                                newClassArray = false
+                              if (economy || premium || business) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("first")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("first"))
+                              ){
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[3] = !newClassArray[3];
+                                this.setState({
+                                  classSelected:newClassArray,
+                                }); 
                               }
-                              else{
-                                newClassArray = true
-                              }
-                              this.setState({
-                                classSelected:newClassArray
-                              },()=>{
-                                this.onClassTypeSelected(item, index);
-                              })
-
+                            }
                             }
                           }else{
                             this.setState({ showCreateAlertModal: false })
@@ -2829,37 +2959,39 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                         onPress={() => {
                           if(item.class == "Economy") { 
                             if(isPremiumSelected || isBusinessSelected || isFirstSelected) { 
-                              let newClassArray = this.state.classSelected;
-                            newClassArray[0] = !newClassArray[0];
-                            if(classSelected[0] == true){
-                              newClassArray = false
+                              if (premium || business || first) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("economy")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("economy"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[0] = !newClassArray[0];
+                                this.setState({
+                                  classSelected:newClassArray
+                                });
+                               }
                             }
-                            else{
-                              newClassArray = true
-                            }
-                            this.setState({
-                              classSelected:newClassArray
-                            },()=>{
-                              this.onClassTypeSelected(item, index);
-                            })
-                            }
+                          }
                           }
                           else if(item.class == "Premium Economy") { 
                             if(!bronzeMember){
                               if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
-                                let newClassArray = this.state.classSelected;
-                                newClassArray[1] = !newClassArray[1];
-                                if(classSelected[1] == true){
-                                  newClassArray = false
-                                }
-                                else{
-                                  newClassArray = true
-                                }
-                                this.setState({
-                                  classSelected:newClassArray
-                                },()=>{
-                                  this.onClassTypeSelected(item, index);
-                                })
+                                if (economy || business || first) {
+                                  if (
+                                      (this.state.selectedIndex == 0 &&
+                                        this.state.outBoundVisibleArray.includes("premium")) ||
+                                      (this.state.selectedIndex == 1 &&
+                                    this.state.inBoundVisibleArray.includes("premium"))
+                                    ) {
+                                      let newClassArray = this.state.classSelected;
+                                      newClassArray[1] = !newClassArray[1];
+                                      this.setState({
+                                        classSelected: newClassArray
+                                      }); 
+                                    }
+                                  }
                               }
                             }else{
                               this.setState({ showCreateAlertModal: false })
@@ -2868,19 +3000,20 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           }
                           else if(item.class == "Business"){
                             if(!bronzeMember){
-                              let newClassArray = this.state.classSelected;
-                              newClassArray[2] = !newClassArray[2];
-                              if(classSelected[2] == true){
-                                newClassArray = false
+                              if (economy || premium || first) {
+                              if (
+                                (this.state.selectedIndex == 0 &&
+                                  this.state.outBoundVisibleArray.includes("business")) ||
+                                (this.state.selectedIndex == 1 &&
+                                  this.state.inBoundVisibleArray.includes("business"))
+                              ) {
+                                let newClassArray = this.state.classSelected;
+                                newClassArray[2] = !newClassArray[2];
+                                this.setState({
+                                    classSelected:newClassArray,
+                                  });
+                                }
                               }
-                              else{
-                                newClassArray = true
-                              }
-                              this.setState({
-                                classSelected:newClassArray
-                              },()=>{
-                                this.onClassTypeSelected(item, index);
-                              })
                             }
                             else{
                               this.setState({ showCreateAlertModal: false })
@@ -2889,22 +3022,23 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           }
                           else if(item.class == "First"){
                             if(!bronzeMember){
+                              if (economy || premium || business) {
                               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                                let newClassArray = this.state.classSelected;
-                                newClassArray[3] = !newClassArray[3];
-                                if(classSelected[3] == true){
-                                  newClassArray = false
+                                if (
+                                  (this.state.selectedIndex == 0 &&
+                                    this.state.outBoundVisibleArray.includes("first")) ||
+                                  (this.state.selectedIndex == 1 &&
+                                    this.state.inBoundVisibleArray.includes("first"))
+                                ){
+                                  let newClassArray = this.state.classSelected;
+                                  newClassArray[3] = !newClassArray[3];
+                                  this.setState({
+                                    classSelected:newClassArray,
+                                  });
                                 }
-                                else{
-                                  newClassArray = true
-                                }
-                                this.setState({
-                                  classSelected:newClassArray
-                                },()=>{
-                                  this.onClassTypeSelected(item, index);
-                                })                              }
+                              }
+                              }
                             }else{
-                              
                               this.showAlert1()
                             }
                           }
@@ -2915,26 +3049,25 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                           item.class == "Economy"  ? 
                           <MaterialIcon  
                               size={verticalScale(22)}
-                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              name={item.isSelected && classSelected[0] ? "checkbox-marked-circle" : "radiobox-blank" }
                               color={item.isSelected  ? "#2044ff" : colours.lightGreyish}
                           /> :  item.class == "Premium Economy"   ? 
                           <MaterialIcon  
                               size={verticalScale(22)}
-                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              name={item.isSelected && classSelected[1] ? "checkbox-marked-circle" : "radiobox-blank" }
                               color={item.isSelected   ? "#f8a41e" : colours.lightGreyish}
                           /> :  item.class == "Business" ?
                           <MaterialIcon  
                               size={verticalScale(22)}
-                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              name={item.isSelected && classSelected[2] ? "checkbox-marked-circle" : "radiobox-blank" }
                               color={item.isSelected  ? "#af49de" : colours.lightGreyish}
                           /> :  item.class == "First" ? 
                           <MaterialIcon  
                               size={verticalScale(22)}
-                              name={item.isSelected  ? "checkbox-marked-circle" : "radiobox-blank" }
+                              name={item.isSelected && classSelected[3]  ? "checkbox-marked-circle" : "radiobox-blank" }
                               color={item.isSelected  ? "#eb186f" : colours.lightGreyish}
                           />  : null
                         }
-                         
                         </View>
                       </TouchableOpacity>
                       <View style={{flexDirection:"column",margin:scale(4)}}>
@@ -2968,7 +3101,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
           }
           </View>
         }
-      </View>
+
+         
+
+      </Fragment>
     );
   }
 
@@ -3131,9 +3267,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     if(userData && userData !== undefined && userData !== null){
       bronzeMember = userData.bronze_member
     }
-
-
-    console.log("yes check here classSelected  - - - - -  - -",emptyCount)
 
     return (
       <Fragment>
@@ -3901,233 +4034,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
 
-  // getLocations(isLoader) {
-
-  //   const { isOffPeakValue, isPeakValue, airLinesDetailsObject, staticDateArray, peakOffpeakData
-  //     , sliderEconomyMax, sliderEconomyMin,
-  //     sliderPremiumMax, sliderPremiumMin,
-  //     sliderBusinessMax, sliderBusinessMin,
-  //     sliderFirstMax, sliderFirstMin,
-  //     sliderPoints, isSliderRun,
-  //     classSelected
-  //   } = this.state;
-
-  //   let flightSchedule = this.props.flightSchedule;
-  //   let outboundData = {};
-  //   let inboundData = {};
-  //   let scheduleOutBoundDate = {}
-  //   let availableOutBoundDate = {}
-  //   let scheduleInboundData = {}
-  //   let availableInBoundDate = {}
-  //   if (flightSchedule) {
-  //     scheduleOutBoundDate = flightSchedule.outbound_availability
-  //     availableOutBoundDate = airLinesDetailsObject.outbound_availability;
-  //     scheduleInboundData = flightSchedule.inbound_availability
-  //     availableInBoundDate = airLinesDetailsObject.inbound_availability;
-  //     if (scheduleOutBoundDate && availableOutBoundDate) {
-  //       for (let i of Object.keys(scheduleOutBoundDate)) {
-  //         if (availableOutBoundDate[i]) {
-  //           outboundData[i] = availableOutBoundDate[i]
-  //         }
-  //       }
-  //     }
-
-  //     if (scheduleInboundData && availableInBoundDate) {
-  //       for (let i of Object.keys(scheduleInboundData)) {
-  //         if (availableInBoundDate[i]) {
-  //           inboundData[i] = availableInBoundDate[i];
-  //         }
-  //       }
-  //     }
-  //     // if (outboundData && outboundData !== null && outboundData !== undefined && isLoader) {
-  //     //   this.setState({ isLoader: false })
-  //     // }
-  //   }
-
-  //   let userData = this.props.userInfo
-  //   var originalOutBoundObj = {}
-  //   var orignalInboundObj = {}
-  //   var originalGuestOutBoundObj = {}
-  //   var orignalGuestInboundObj = {}
-  //   let Obj = {}
-  //   if (peakOffpeakData) {
-  //     let dateArray = this.state.staticDateArray.filter(val => !peakOffpeakData.includes(val));
-
-  //     for (let data of dateArray) {
-  //       Obj[data] = { "peak": false }
-  //     }
-
-  //     if (this.props.isLoggedIn) {
-  //       originalOutBoundObj = {
-  //         ...Obj,
-  //         ...availableOutBoundDate
-  //       }
-  //       orignalInboundObj = {
-  //         ...Obj,
-  //         ...availableInBoundDate
-  //       }
-  //     }
-  //   }
-
-  //   if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
-  //     if (this.state.selectedIndex == 0) {
-  //       let mainObj = this.state.airLinesDetailsObject.outbound_availability
-  //       let data = { ...mainObj }
-  //       Object.keys(data).forEach((key) => {
-  //         Object.keys(data[key]).forEach((innerKey) => {
-  //           const firstDay = moment().startOf('month')
-  //           const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
-  //           const isMonthExceed = moment(key).isSameOrAfter(nextThreeMonth)
-  //           if (isMonthExceed && data[key][innerKey] && data[key][innerKey].seats) {
-  //             return data[key] = { peak: true, economy: { seats: 2, points: 1100 }, first: { seats: 2, points: 1100 }, isDummyData: true }
-  //           }
-  //         })
-  //       })
-  //       originalGuestOutBoundObj = {
-  //         ...Obj,
-  //         ...data
-  //       }
-  //     }
-  //     else {
-  //       let mainObj = this.state.airLinesDetailsObject.inbound_availability
-  //       let data = { ...mainObj }
-  //       Object.keys(data).forEach((key) => {
-  //         Object.keys(data[key]).forEach((innerKey) => {
-  //           const firstDay = moment().startOf('month')
-  //           const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
-  //           const isMonthExceed = moment(key).isSameOrAfter(nextThreeMonth)
-  //           if (isMonthExceed && data[key][innerKey] && data[key][innerKey].seats) {
-  //             return data[key] = { peak: true, economy: { seats: 2, points: 1100 }, first: { seats: 2, points: 1100 }, isDummyData: true }
-  //           }
-  //         })
-  //       })
-  //       orignalGuestInboundObj = {
-  //         ...Obj,
-  //         ...data
-  //       }
-  //     }
-  //   }
-
-
-  // //   if (sliderPoints && isSliderRun) {
-  // //     if(sliderEconomyMin == 0){
-  // //       sliderEconomy = false
-  // //    }
-  // //    else if(sliderEconomyMin == sliderPoints || sliderEconomyMin < sliderPoints){
-  // //       sliderEconomy = true
-  // //    }
-   
-  // //   if(sliderPremiumMin == 0){
-  // //       sliderPremium = false
-  // //    }
-  // //    else if(sliderPremiumMin == sliderPoints || sliderPremiumMin < sliderPoints){
-  // //       sliderPremium = true
-  // //    }
-   
-  // //  if(sliderBusinessMin == 0){
-  // //       sliderBusiness = false
-  // //    }
-  // //    else if(sliderBusinessMin == sliderPoints || sliderBusinessMin < sliderPoints){
-  // //       sliderBusiness = true
-  // //    }
-   
-  // //  if(sliderFirstMin == 0){
-  // //       sliderFirst = false
-  // //    }
-  // //    else if(sliderFirstMin == sliderPoints || sliderFirstMin < sliderPoints){
-  // //       sliderFirst = true
-  // //    }
-  // //   }
-
-  //   let availability = airLinesDetailsObject.availability;
-  //   var economyClass = false
-  //   var premiumClass = false
-  //   var businessClass = false
-  //   var firstClass = false
-
-
-  //       if(availability && Object.keys(availability).length !==0 ) {
-  //         economyClass = availability.economy
-  //         premiumClass = availability.premium
-  //         businessClass = availability.business
-  //         firstClass = availability.first   
-  //       }
-
-        
-
-  // // if(availability && Object.keys(availability).length !==0 ) {
-  // //   economyClass = availability.economy
-  // //   premiumClass = availability.premium
-  // //   businessClass = availability.business
-  // //   firstClass = availability.first   
-  // //  }
- 
-
-  //     let availability_data = {'economy': economyClass, 'premium': premiumClass, 'business': businessClass, 'first': firstClass }
-  //       // code for outbound obj - -  - - - 
-  //       // for(let i of Object.keys(originalOutBoundObj)){ 
-  //       //   if(originalOutBoundObj[i]["economy"]){
-  //       //     originalOutBoundObj[i]["aeconomy"] = originalOutBoundObj[i]["economy"]
-  //       //     delete originalOutBoundObj[i]['economy']
-  //       //   }
-  //       //     if(originalOutBoundObj[i]["premium"]){
-  //       //     originalOutBoundObj[i]["bpremium"] = originalOutBoundObj[i]["premium"]
-  //       //     delete originalOutBoundObj[i]['premium']
-  //       //   }
-  //       //   if(originalOutBoundObj[i]["business"]){
-  //       //     originalOutBoundObj[i]["cbusiness"] = originalOutBoundObj[i]["business"]
-  //       //     delete originalOutBoundObj[i]['business']
-  //       //   }
-
-  //       //   if(originalOutBoundObj[i]["first"]){
-  //       //     originalOutBoundObj[i]["dfirst"] = originalOutBoundObj[i]["first"]
-  //       //     delete originalOutBoundObj[i]['first']
-  //       //   }              
-  //       // }
-       
-  //       // code for inbound ---------- - - - 
-  //       // for(let i of Object.keys(orignalInboundObj)){ 
-  //       //   if(orignalInboundObj[i]["economy"]){
-  //       //     orignalInboundObj[i]["aeconomy"] = orignalInboundObj[i]["economy"]
-  //       //     delete orignalInboundObj[i]['economy']
-  //       //   }
-  //       //     if(orignalInboundObj[i]["premium"]){
-  //       //     orignalInboundObj[i]["bpremium"] = orignalInboundObj[i]["premium"]
-  //       //     delete orignalInboundObj[i]['premium']
-  //       //   }
-  //       //   if(orignalInboundObj[i]["business"]){
-  //       //     orignalInboundObj[i]["cbusiness"] = orignalInboundObj[i]["business"]
-  //       //     delete orignalInboundObj[i]['business']
-  //       //   }
-  //       //   if(orignalInboundObj[i]["first"]){
-  //       //     orignalInboundObj[i]["dfirst"] = orignalInboundObj[i]["first"]
-  //       //     delete orignalInboundObj[i]['first']
-  //       //   }
-  //       // }
-
-  //   let finalData = {}
-  //   if (!this.props.isLoggedIn || this.props.isLoggedIn == undefined || this.props.isLoggedIn == null || this.props.isLoggedIn == "" || this.props.isLoggedIn == false) {
-  //     finalData = {
-  //       outbound_availability: peakOffpeakData ? originalGuestOutBoundObj : availableOutBoundDate,
-  //       inbound_availability: peakOffpeakData ? orignalGuestInboundObj : availableInBoundDate,
-  //       availability: availability_data,
-  //       source: airLinesDetailsObject.source,
-  //       destination: airLinesDetailsObject.destination,
-  //     }
-  //   }
-  //   else {
-  //     finalData = {
-  //       outbound_availability: peakOffpeakData ? originalOutBoundObj : availableOutBoundDate,
-  //       inbound_availability: peakOffpeakData ? orignalInboundObj : availableInBoundDate,
-  //       availability: availability_data,
-  //       source: airLinesDetailsObject.source,
-  //       destination: airLinesDetailsObject.destination,
-  //     }
-  //   }
-  //   return finalData;
-  // }
-
-
   getLocations = () => {
     const { airLinesDetailsObject, peakOffpeakData, searchData, staticDateArray } = this.state;
     let classSelected = searchData.classSelected
@@ -4500,115 +4406,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
 
 
-  // renderCalendarList(){
-  //   const {
-  //     showTicketDetailModal,
-  //     showCreateAlertModal,
-  //     showUpgradePopUp,
-  //     showLoginPopup,
-  //     peakOffpeakData,
-  //     PeakOffPeakMonth,
-  //     sliderPoints,
-  //     isSliderRunDone,
-  //     isRenderAll,
-  //     newClassSliderArray,
-  //     finalData
-  //   } = this.state;
-  //   const today = moment().format("YYYY-MM-DD");
-  //   let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
-  //   let isLoader = this.state.isLoader
-  //   let userInfo  =  this.props.userInfo
-  //   let currentPlan = userInfo.gold_member
-  //   let isLoggedIn = this.props.isLoggedIn
-
-  //     return(
-  //       <View style={styles.calendarContainer} 
-  //       onStartShouldSetResponder={() => true}
-  //       >
-  //         <CalendarList
-  //           // ref={(ref) => {
-  //           //   this._refCalendarList = ref;
-  //           // }}
-  //           calendarStyle={styles.calendarStyle}
-  //           style={{
-  //             backgroundColor: colours.offWhite,
-  //           }}
-  //           firstDay={1}
-  //           showScrollIndicator={false}
-  //           onVisibleMonthsChange={(months) => {
-  //             console.log("yes print here month value -  - - -- - ",months)
-  //             let firstDay = moment().startOf('month')
-  //             let nextThreeMonth = moment(firstDay).add(2, 'months').format("YYYY-MM-DD")
-  //             if (months[0].dateString >= nextThreeMonth && !this.props.isLoggedIn) {
-  //               console.log("getting condition is satisfying or not  -  - --  - - - -",months)
-  //               this.setState({ showLoginCnfmPopup: true }, () => {
-  //                 this.renderLoginPopup()
-  //               })
-  //             }
-  //           }
-  //           }
-  //           onDayPress={(day) => {
-  //             let onPressDate = day
-  //             let scheuldeDateKey = day
-  //             let clickDate = day.dateString
-  //             let isOffPeakValue1 = this.state.isOffPeakValue
-  //             this.onDayPressed(day, isOffPeakValue1);
-  //             this.setState({ onDayPressedDate: day.dateString, clickDate: clickDate ,scheuldeDateKey:scheuldeDateKey,onPressDate:onPressDate})
-  //             this._toggleSubview();
-  //             this.seatAvailabilityModal(day, isOffPeakValue1)
-  //           }}
-  //           pastScrollRange={0}
-  //           minDate={today}
-  //           futureScrollRange={ isLoggedIn ? 12 : 3}
-  //           scrollEnabled={true}
-  //           calendarWidth={scale(343)}
-  //           horizontal={false}
-  //           isOutBounded={this.state.selectedIndex == 0}
-  //           classSelected={this.state.classSelected}
-  //           selectedDate={this.state.selectedDate}
-  //           passengerCount={this.state.searchData.passengerCount}
-  //           isOffPeakValue={this.state.isOffPeakValue}
-  //           theme={{
-  //             isOutBounded: this.state.selectedIndex == 0,
-  //             classSelected: this.state.classSelected,
-  //             availabilityData:this.getLocations(),
-  //             width: scale(20),
-  //             selectedDayBackgroundColor: "gray",
-  //             calendarBackground: colours.white,
-  //             textSectionTitleColor: colours.lightGreyish,
-  //             selectedDayTextColor: colours.white,
-  //             todayTextColor: colours.lightBlueTheme,
-  //             textDisabledColor: colours.lightGreyish,
-  //             selectedDotColor: colours.white,
-  //             monthTextColor: colours.lightBlueTheme,
-  //             textDayFontWeight: "300",
-  //             textMonthFontWeight: "`bold`",
-  //             textDayHeaderFontWeight: "300",
-  //             dayTextColor: '#2d4150',
-  //             textDayFontSize: scale(11),
-  //             textMonthFontSize: scale(11),
-  //             textDayHeaderFontSize: scale(11),
-  //             backgroundColor: '#ffffff',
-  //             "stylesheet.calendar.header": {
-  //               header: styles.header,
-  //               monthText: styles.monthText,
-  //             },
-  //           }}
-  //           listFooterComponent={() => {
-  //             return <View style={{ height: verticalScale(70) }} />;
-  //           }}
-  //         />
-  //       </View>
-  //     )
-  // }
-
-
-
   renderNoFlight(data,seatsAvailabilityData,noflightschedule,showTicketDetailModal,selectedDate,flightDate,isOffPeakValue1,day){
    
-
     let noFlightScheduleDate = moment(this.state.noFlightScheduleDate).format("DD MMM YYYY");
-      const {onDayPressedDate,scheuldeDateKey,onPressDate} = this.state;
+    const {onDayPressedDate,scheuldeDateKey,onPressDate} = this.state;
     let scheduleData = {}
     if (this.state.selectedIndex == 0) {
       scheduleData = this.props.flightSchedule.outbound_availability
@@ -4616,7 +4417,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     else {
       scheduleData = this.props.flightSchedule.inbound_availability
     }
-
     let checkFlightCount = 0
 
     // let testPoints = this.props.airlinesDetailPoints.airlinesDetailPoints.points
@@ -4676,7 +4476,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     : STRING_CONST.PEAK_FARE
                   })`}</Text>
         <Text style={{ fontSize: scale(14), color:"#41454b", padding: scale(7), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
-          <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(64), width: scale(64),margin:scale(6)  }} resizeMode="contain" />
+          <Image source={require('../../assets/calendar/sad.png')} style={{ height: scale(75), width: scale(75),margin:scale(6)  }} resizeMode="contain" />
           <Text style={{ fontSize: scale(14), fontWeight:"600",color:"#132C52", padding:scale(6), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
           
           {
@@ -4770,8 +4570,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     let isLoggedIn = this.props.isLoggedIn
     let classData = searchData.classSelected
     let startDate = this.props.startDate
-
-    // console.log("yes print here is Logged in inside render   - - - - - -",isLoggedIn)
 
      return (
         <SafeAreaView style={[styles.container]}  >
@@ -4925,7 +4723,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                     showUpgradePopUp: false,
                   });
                   this.props.navigation.navigate("MembershipContainerScreen")
-                 
                 }}
               />
             )}

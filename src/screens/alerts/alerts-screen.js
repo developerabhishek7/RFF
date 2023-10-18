@@ -34,7 +34,7 @@ import { getUserInfo } from "../../actions/userActions";
 import { sendFCMToken } from "../../actions/notificationActions";
 import ScreenHeader from "../../components/header/Header";
 import CustomButton from "../../components/customComponents/CustomButton";
-import { getAirlinesAvailability ,getPointsAvailability } from "../../actions/calendarActions";
+import { getAirlinesAvailability ,getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 import moment from "moment";
 import { getStoreData, getUserId } from "../../constants/DataConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
@@ -1317,8 +1317,7 @@ class AlertsScreen extends React.Component {
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              console.log("yes print here item - - - - -  -",item.startDate),
-              <AlertCard
+               <AlertCard
                 cancelAlert={this.confirmCancelAlert}
                 {...item}
                 onGetAvailability={async () => {
@@ -1334,6 +1333,7 @@ class AlertsScreen extends React.Component {
                   })
                   let auditData = await this.getAuditData(searchData);   
                   this.props.getAirlinesAvailabilityAction(searchData);
+                  this.props.getSeatsAvailabilityAction(searchData);
                   this.props.sendAuditDataAction(auditData);
                   this.props.getPointsAvailabilityAction(searchData)
                   this.props.getFlightScheduleAction(flightScheduleData)
@@ -1400,6 +1400,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     sendFCMTokenAction: (fcmToken) => dispatch(sendFCMToken(fcmToken)),
     getAirlinesAvailabilityAction:(searchData)=>dispatch(getAirlinesAvailability(searchData, 'ALERT')),
+    getSeatsAvailabilityAction:(searchData)=>dispatch(getSeatsAvailability(searchData, 'ALERT')),
     getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),

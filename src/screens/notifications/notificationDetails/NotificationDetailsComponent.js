@@ -41,7 +41,7 @@ import {
   getLocationName,
 } from "../../../utils/commonMethods";
 import * as STR_CONST from "../../../constants/StringConst";
-import { getAirlinesAvailability ,getPointsAvailability } from "../../../actions/calendarActions";
+import { getAirlinesAvailability ,getPointsAvailability, getSeatsAvailability } from "../../../actions/calendarActions";
 import {
   getAirlinesMembership,
   getPossibleRoutes,
@@ -637,6 +637,7 @@ class NotificationDetailComponent extends Component {
           onPress={() => {
             let data = this.getSearchData(alert);
             this.props.getAirlinesAvailabilityAction(data);
+            this.props.getSeatsAvailabilityAction(data);
             this.props.getPointsAvailabilityAction(data)
           }}
         >
@@ -719,6 +720,7 @@ class NotificationDetailComponent extends Component {
           onPress={() => {
             let data = this.getSearchData(alert);
             this.props.getAirlinesAvailabilityAction(data);
+            this.props.getSeatsAvailabilityAction(data);
             this.props.getPointsAvailabilityAction(data)
           }}
         >
@@ -977,6 +979,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetNotificationDetailsAction: () => dispatch(resetNotificationDetails()),
   getAirlinesAvailabilityAction: (searchData) =>
   dispatch(getAirlinesAvailability(searchData, STRING_CONST.NOTIFICATION)),
+  getSeatsAvailabilityAction: (searchData) =>
+  dispatch(getSeatsAvailability(searchData, STRING_CONST.NOTIFICATION)),
   getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
   getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
 });

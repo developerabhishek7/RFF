@@ -8,7 +8,7 @@ import * as IMG_CONST from "../../constants/ImageConst";
 import * as STRING_CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
 import scale, { verticalScale } from "../../helpers/scale";
-import { getAirlinesAvailability, getPointsAvailability } from "../../actions/calendarActions";
+import { getAirlinesAvailability, getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 // import {getMapKey} from '../../actions/mapSearchActions'
 import PopUpComponent from '../../shared/popUpComponent'
 import * as CONFIG from "../../helpers/config";
@@ -473,6 +473,7 @@ class MapComponent extends Component {
                     this.props.getFlightScheduleAction(flightScheduleData)
                     this.props.sendAuditDataAction(auditData);
                     this.props.getAirlinesAvailabilityAction(mapSearchData);
+                    this.props.getSeatsAvailabilityAction(mapSearchData);
                     this.props.getPointsAvailabilityAction(mapSearchData)
                     
                   }}
@@ -674,6 +675,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getAirlinesAvailabilityAction: (mapSearchData) =>
     dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
+    getSeatsAvailabilityAction: (mapSearchData) =>
+    dispatch(getSeatsAvailability(mapSearchData, 'MAP')),
     // updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
     updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),

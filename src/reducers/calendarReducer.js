@@ -8,7 +8,9 @@ GET_AVAILABLE_CALENDAR_POINTS_ERROR,
 GET_AVAILABLE_CALENDAR_POINTS_SUCESS,
 GET_PEAK_OFFPEAK_SUCCESS,
 GET_PEAK_OFFPEAK_ERROR,
-RESET_CALENDAR_DATA
+RESET_CALENDAR_DATA,
+CHECK_SEATS_AVAILABLE_SUCCESS,
+CHECK_SEATS_AVAILABLE_FAIL
   } from "../constants/ActionConst";
   
   const initialState = {
@@ -20,7 +22,9 @@ RESET_CALENDAR_DATA
     createAlertError:"",
     screenType:'',
     peakOffpeakData:"",
-    peakOffpeakError:""
+    peakOffpeakError:"",
+    calendarSeats:null,
+    calendarSeatsError:""
 
   };
   
@@ -48,6 +52,17 @@ RESET_CALENDAR_DATA
          return {
            ...state,
            airlinesDetailPointsError: action.payload.airlinesDetailPointsError,
+         };
+
+         case CHECK_SEATS_AVAILABLE_SUCCESS:{
+          return {
+           ...state,
+           calendarSeats: action.payload,
+         };}
+       case CHECK_SEATS_AVAILABLE_FAIL:
+         return {
+           ...state,
+           calendarSeatsError: action.payload.calendarSeatsError,
          };
 
          case GET_PEAK_OFFPEAK_SUCCESS:{
@@ -93,7 +108,9 @@ RESET_CALENDAR_DATA
             createAlertError:"",
             screenType:'',
             peakOffpeakData:"",
-            peakOffpeakError:""
+            peakOffpeakError:"",
+            calendarSeats:null,
+            calendarSeatsError:""
           }
          }
       default:

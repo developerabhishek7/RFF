@@ -120,7 +120,9 @@ const drawerViewModel = (navigation) => {
           name="FindFlightContainerScreen"
           component={FindFlightContainer}
           options={{
-            headerShown: false
+            headerShown: false,
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
 
@@ -218,7 +220,8 @@ const drawerViewModel = (navigation) => {
           component={FindFlightContainer}
           options={{
             headerShown: false,
-            gestureEnabled:false
+            gestureEnabled:false,
+            fullScreenGestureEnabled:false
           }}
         />
         <Stack.Screen

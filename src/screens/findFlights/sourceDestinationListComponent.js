@@ -348,8 +348,6 @@ multipleCitiesTxt (){
   const {screenType,} = this.state
   let travelTo  = this.props.route.params.travelTo
   let returnType = this.props.route.params.returnType
-  console.log("yes check  inside the mutiple cities text returnType - - - -   - - - - - - -",returnType)
-  console.log("yes check  inside the mutiple cities text travelTo - - - -   - - - - - - -",travelTo)
   return (
     <View style={{borderWidth:0,borderColor:"red"}}>
         <Text
@@ -367,7 +365,7 @@ multipleCitiesTxt (){
             {
               returnType == 1 ?
               <Fragment>
-              {"We only let you choose hubs with flights to more than one place"}
+              {`We only let you choose hubs with flights ${travelTo ? "to" : "from"} more than one place`}
               </Fragment>
               :
               <Fragment>

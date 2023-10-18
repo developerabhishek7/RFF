@@ -599,6 +599,7 @@ class SignUpComponent extends Component {
                   isSignUpPressed && Utils.isEmptyString(password)
                     ? colours.errorColor
                     : colours.borderBottomLineColor,
+                    width:scale(240),borderWidth:0
               },
             ]}
             underlineColorAndroid={'#FFFFFF'}
@@ -689,6 +690,7 @@ class SignUpComponent extends Component {
                     isSignUpPressed && Utils.isEmptyString(password)
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
+                      width:scale(240),borderWidth:0
                 },
               ]}
               placeholder={STR_CONST.LAST_NAME}
@@ -739,6 +741,7 @@ class SignUpComponent extends Component {
                     isSignUpPressed && Utils.isEmptyString(password)
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
+                      width:scale(240),borderWidth:0
                 },
               ]}
               placeholder={STR_CONST.EMAIL}
@@ -762,7 +765,7 @@ class SignUpComponent extends Component {
               onSubmitEditing={() => {
                 this.fourthTextInput.focus();
               }}
-              maxLength={30}
+              maxLength={35}
               blurOnSubmit={false}
               returnKeyType="next"
               underlineColorAndroid={'#FFFFFF'}
@@ -869,6 +872,7 @@ class SignUpComponent extends Component {
                     isSignUpPressed && Utils.isEmptyString(password)
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
+                      width:scale(240),borderWidth:0
                 },
               ]}
               placeholder={STR_CONST.PASSWORD}
@@ -887,7 +891,7 @@ class SignUpComponent extends Component {
               onChangeText={(password) => {
                 this.setState({ password });
               }}
-              maxLength={20}
+              maxLength={25}
               secureTextEntry={this.state.isHidePassword}
               value={this.state.password}
               underlineColorAndroid={'#FFFFFF'}
@@ -1019,6 +1023,7 @@ class SignUpComponent extends Component {
                         this.verifyValidation(CONFIRM_PASSWORD))
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
+                      width:scale(240),borderWidth:0
                 },
               ]}
               placeholder={STR_CONST.CONFIRM_PASSWORD}
@@ -1041,6 +1046,7 @@ class SignUpComponent extends Component {
               secureTextEntry={isHideConfirmPassword}
               value={confirmPassword}
               blurOnSubmit={false}
+              maxLength={25}
               onSubmitEditing={() => {
                 Keyboard.dismiss(), this.validation();
               }}

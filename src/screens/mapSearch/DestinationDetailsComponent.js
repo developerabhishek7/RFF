@@ -13,7 +13,7 @@ import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
 import MyStatusBar from '../../components/statusbar/index';
 
-import { getAirlinesAvailability, getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
+import { getAirlinesAvailability,getSeatsAvailability ,getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
 import {
   getAirlinesMembership,
   getPossibleRoutes,
@@ -134,15 +134,15 @@ checkIfPeakOffPeakDataMonth = () => {
   }
 
   componentDidMount = () => {
-    let singleMap = this.props.route.params.singleMap;
 
-    let searchData = this.props.route.params.searchData
+    let singleMap = JSON.parse(this.props.route.params.singleMap)
+
+    let searchData = JSON.parse(this.props.route.params.searchData)
 
     let auditData = JSON.parse(this.props.route.params.auditData)
 
 
-
-    var start1 = moment(auditData.search_data.departure_date_from);
+      var start1 = moment(auditData.search_data.departure_date_from);
       var end1 = moment(auditData.search_data.departure_date_to);
       let departureDaysDiff =   end1.diff(start1, "days")
 
@@ -348,117 +348,13 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
 
-
-    // console.log("yes check here points DAta  BA - - - -  -",pointsDatBA)
-    // console.log("yes check here  pointsDataSS - - - -  -",pointsDataSS)
-
-      // pointsData.map((singleMap) => {
-      //   if(typeof this.state.peak !== 'string' || !this.state.peak instanceof String){
-      //     if (singleMap.one_way == true && singleMap.peak_type == "offpeak" && this.state.peak === false) {
-      //       economyValue = singleMap.economy_avios
-      //       premiumValue = singleMap.premium_avios
-      //       businessValue = singleMap.business_avios
-      //       firstValue = singleMap.first_avios;
-      //     }
-      //     if (singleMap.one_way == true && singleMap.peak_type == "peak" && this.state.peak === true) {
-      //       businessValue = singleMap.business_avios
-      //       economyValue = singleMap.economy_avios
-      //       premiumValue = singleMap.premium_avios
-      //       firstValue = singleMap.first_avios;
-      //     }
-      //   }
-       
-      // })
-      // if(this.state.peak == false){
-      //   pointsData.map((singleMap)=>{
-      //     if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false ){
-      //       if(singleMap.economy_avios){
-      //         economyValue = singleMap.economy_avios
-      //       }
-      //       if(singleMap.premium_avios){
-      //         premiumValue = singleMap.premium_avios
-      //       }
-      //       if(singleMap.business_avios ){
-      //           businessValue = singleMap.business_avios
-      //       }
-      //       if(singleMap.first_avios){
-      //           firstValue = singleMap.first_avios
-      //       } 
-      //     }
-      //   })
-  
-      //   pointsData.map((singleMap)=>{
-      //     if(singleMap.one_way && singleMap.peak_type == "offpeak" && this.state.peak == false){
-      //       if(singleMap.economy_avios && economyValue == undefined){
-      //         economyValue = singleMap.economy_avios
-      //       }
-      //       if(singleMap.premium_avios && premiumValue == undefined){
-      //           premiumValue = singleMap.premium_avios
-      //       }
-      //       if(singleMap.business_avios && businessValue == undefined ){
-      //           businessValue = singleMap.business_avios
-      //       }
-      //       if(singleMap.first_avios && firstValue == undefined){
-      //           firstValue = singleMap.first_avios
-      //       }
-      //     }
-      //   })
-      // }
-  
-      // if(this.state.peak == true){
-      //   pointsData.map((singleMap)=>{
-      //     if(singleMap.one_way && singleMap.peak_type == "peak" && this.state.peak == true ){
-      //       if(singleMap.economy_avios){
-      //         economyValue = singleMap.economy_avios
-      //       }
-      //       if(singleMap.premium_avios){
-      //           premiumValue = singleMap.premium_avios
-      //       }
-      //       if(singleMap.business_avios ){
-      //           businessValue = singleMap.business_avios
-      //       }
-      //       if(singleMap.first_avios){
-      //           firstValue = singleMap.first_avios
-      //       } 
-      //     }
-      //   })
-  
-      //   pointsData.map((singleMap)=>{
-      //     if(singleMap.one_way && singleMap.peak_type == "peak"  && this.state.peak == true){
-      //       if(singleMap.economy_avios && economyValue == undefined){
-      //         economyValue = singleMap.economy_avios
-      //       }
-      //       if(singleMap.premium_avios && premiumValue == undefined){
-      //           premiumValue = singleMap.premium_avios
-      //       }
-      //       if(singleMap.business_avios && businessValue == undefined ){
-      //           businessValue = singleMap.business_avios
-      //       }
-      //       if(singleMap.first_avios && firstValue == undefined){
-      //           firstValue = singleMap.first_avios
-      //       }
-      //     }
-      //   })
-      // }
-
-
-
-
-
-
-
-
-
-
-
-
     // console.log("yes check here poi ts data  - - - - - - ",this.state.peak)
 
 
       if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
         if(this.state.peak  == false){ 
               pointsDatBA.map((singleMap)=>{
-                if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+                if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
                   if(singleMap.economy_avios){
                     economyValue = singleMap.economy_avios
                   }
@@ -476,7 +372,7 @@ checkIfPeakOffPeakDataMonth = () => {
         }
         else{
               pointsDatBA.map((singleMap)=>{
-                  if(singleMap.one_way ==true && singleMap.peak_type === "peak"){
+                  if(singleMap.one_way == true && singleMap.peak_type == "peak"){
                   if(singleMap.economy_avios){
                     economyValue = singleMap.economy_avios
                   }
@@ -508,7 +404,7 @@ checkIfPeakOffPeakDataMonth = () => {
   
       pointsDataSS.map((singleMap)=>{
   
-        if(singleMap.one_way == true && singleMap.peak_type === "offpeak" ){
+        if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
           if(singleMap.economy_avios){
             economyValue = singleMap.economy_avios
           }
@@ -527,7 +423,7 @@ checkIfPeakOffPeakDataMonth = () => {
     else{
       pointsDataSS.map((singleMap)=>{
   
-        if(singleMap.one_way == true && singleMap.peak_type === "peak"){
+        if(singleMap.one_way == true && singleMap.peak_type == "peak"){
           if(singleMap.economy_avios){
             economyValue = singleMap.economy_avios
           }
@@ -2365,7 +2261,6 @@ checkIfPeakOffPeakDataMonth = () => {
                                 onPress={() => {
                                   this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
-
                                 }}
                               >
                                   <Text style={styles.dateText}>{actualDate[0]}</Text>
@@ -2395,9 +2290,6 @@ checkIfPeakOffPeakDataMonth = () => {
                             : null
                         }
 
-
-
-
                         {
                           economySeat && !firstSeat && !businessSeat && !premiumSeat ?
                             <ImageBackground
@@ -2409,16 +2301,13 @@ checkIfPeakOffPeakDataMonth = () => {
                                 onPress={() => {
                                   this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
-
                                 }}
                               >
                                   <Text style={styles.dateText}>{actualDate[0]}</Text>
                                 <Text style={styles.monthText}>{actualDate[1]}</Text>
                               </TouchableOpacity>
                             </ImageBackground>
-
                             : null
-
                         }
                         {
                           businessSeat && !firstSeat && !economySeat && !premiumSeat ?
@@ -2431,16 +2320,13 @@ checkIfPeakOffPeakDataMonth = () => {
                                 onPress={() => {
                                   this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
-
                                 }}
                               >
                                   <Text style={styles.dateText}>{actualDate[0]}</Text>
                                 <Text style={styles.monthText}>{actualDate[1]}</Text>
                               </TouchableOpacity>
                             </ImageBackground>
-
                             : null
-
                         }
                         {
                           premiumSeat && !firstSeat && !economySeat && !businessSeat ?
@@ -2459,9 +2345,7 @@ checkIfPeakOffPeakDataMonth = () => {
                                 <Text style={styles.monthText}>{actualDate[1]}</Text>
                               </TouchableOpacity>
                             </ImageBackground>
-
                             : null
-
                         }
                         {
                           firstSeat && !premiumSeat && !economySeat && !businessSeat ?
@@ -2474,7 +2358,6 @@ checkIfPeakOffPeakDataMonth = () => {
                                 onPress={() => {
                                   this.setState({peakKey:peakKey,peak:peak})
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
-
                                 }}
                               >
                                   <Text style={styles.dateText}>{actualDate[0]}</Text>
@@ -2561,6 +2444,7 @@ checkIfPeakOffPeakDataMonth = () => {
     this.props.getFlightScheduleAction(flightScheduleData)
     this.props.sendAuditDataAction(auditData);
     this.props.getAirlinesAvailabilityAction(mapSearchData);
+    this.props.getSeatsAvailabilityAction(mapSearchData);
     this.props.getPointsAvailabilityAction(mapSearchData)
 
   }
@@ -2724,7 +2608,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getAirlinesAvailabilityAction: (mapSearchData) =>
-      dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
+    dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
+    getSeatsAvailabilityAction: (mapSearchData) =>
+     dispatch(getSeatsAvailability(mapSearchData, 'MAP')),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
     getCabinClassAction:(data)=> dispatch(getCabinClass(data)),

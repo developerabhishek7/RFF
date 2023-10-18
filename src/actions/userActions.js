@@ -777,16 +777,12 @@ export function getUserConfigDetails() {
   return async (dispatch, getState) => {
     try {
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
-      // console.log("yes pint user id here #######       ",userId,     accesstoken)
       const res = await secureGetForUser(
         `/v1/settings?ConfigTypeGUID=isAppReviewed,appBuildVersion`,
         authToken
       );
-
-      // console.log("yes check here res before action  - -  -   - - - - - - - -",res)
-
+      // console.log("yes check hre resposnse - - - - - -",res)      
       if (res) {
-        // console.log("yes check here res - -  - - - - -",res)
         // await dispatch({
         //   type: SET_BADGE_COUNT,
         //   badgeCount: res.data.unread_notifications_count,      
@@ -824,7 +820,6 @@ export function getZendeskCategoryData() {
     try {
       const authToken = API_CONST.AUTH0RIZATION_TOKEN;
       const accesstoken = await getAccessToken();
-      // console.log("yes pint user id here #######       ",userId,     accesstoken)
       const res = await secureGetForUser(
         `/v1/supports/categories?user[access_token]=${accesstoken}`,
         authToken
