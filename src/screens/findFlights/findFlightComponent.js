@@ -204,7 +204,7 @@ export default class FindFlightComponent extends Component {
     setTimeout(async () => {
       // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
       // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
-      if (this.props.isLoggedIn && Object.keys(userData).length !== 0) {
+      if (this.props.isLoggedIn && userData && Object.keys(userData).length !== 0) {
         await PostHog.identify(this.props.userData.email, {
           email: this.props.userData.email,
           deviceName: deviceName,
@@ -226,27 +226,14 @@ export default class FindFlightComponent extends Component {
 
   componentDidMount = async () => {
 
-
     this.renderIdentifierForPosthog()
     let userData = this.props.userData
 
-
-    let deviceName = await DeviceInfo.getDeviceName()
-    let deviecBrand = await DeviceInfo.getBrand()
-    let isTablet = await DeviceInfo.isTablet()
-    let isEmulator = await DeviceInfo.isEmulator()
     let trackData = {}
     let isNewSignUp = await AsyncStorage.getItem("isNewSignUp");
 
-    await NativeModules.DevSettings.reload();
-
     setTimeout(() => {
       if (userData && Object.keys(userData).length !== 0 && isNewSignUp) {
-
-        console.log("yes check on newSignup screen - - - - - -", userData.admin)
-        console.log("yes check on newSignup screen - - - - - -", isNewSignUp)
-
-
         trackData = {
           planName: "Bronze",
           chargeBeePlanId: "bronze-trial-plan",
@@ -606,8 +593,6 @@ export default class FindFlightComponent extends Component {
   getClassText() {
 
     const { userData } = this.props;
-
-    // console.log("yes check here user data - - - - - - -",userData)
 
     let bronzeMember
     if(userData && Object.keys(userData).length != 0){
@@ -1499,7 +1484,6 @@ export default class FindFlightComponent extends Component {
 
   showEmailVerify() {
     const { userData, isLoggedIn } = this.props;
-    // let isLoggedIn = this.props.isLoggedIn
     return (
       <View>
         {

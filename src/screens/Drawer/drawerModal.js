@@ -70,7 +70,7 @@ class DrawerComponentComponent extends Component {
     setTimeout(async() => {
       // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
       // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
-        if(this.props.isLoggedIn && Object.keys(userData).length !== 0){
+        if(this.props.isLoggedIn && userData && Object.keys(userData).length !== 0){
          await PostHog.identify(this.props.userData.email, {
             email: this.props.userData.email,
             deviceName: deviceName,
@@ -168,11 +168,11 @@ class DrawerComponentComponent extends Component {
   }
   getMembershipText(userData){
     let member = ''
-    if (userData.gold_member) {
+    if (userData && userData.gold_member) {
       member = STR_CONST.GOLD_MEMBER;
-    } else if (userData.silver_member) {
+    } else if (userData && userData.silver_member) {
       member = STR_CONST.SILVER_MEMBER;
-    } else if(userData.bronze_member){
+    } else if(userData && userData.bronze_member){
       member = STR_CONST.BRONZE_MEMBER;
     }
     else {

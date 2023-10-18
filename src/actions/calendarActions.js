@@ -20,7 +20,9 @@ import {
   GET_PEAK_OFFPEAK,
   GET_PEAK_OFFPEAK_SUCCESS,
   GET_PEAK_OFFPEAK_ERROR,
-  RESET_CALENDAR_DATA
+  RESET_CALENDAR_DATA,
+  CHECK_SEATS_AVAILABLE_SUCCESS,
+  CHECK_SEATS_AVAILABLE_FAIL
 
 } from "../constants/ActionConst";
 import {BASE_NODE_URL} from '../helpers/config'
@@ -89,6 +91,9 @@ export function getAirlinesAvailability(propsData,type) {
         authToken
       );
      if (res) {
+
+      console.log("yes getting response accordingly on availability data ......",)
+
         await dispatch({
           type: GET_AIRLINES_AVAILABILITY_SUCCESS,
           payload: { airlinesDetail: res, screenType: type },
@@ -104,6 +109,50 @@ export function getAirlinesAvailability(propsData,type) {
     } 
     catch (e) {    
       console.log("yes check here on airline availability error ###### ",e)
+      // Alert.alert("ERROR",JSON.stringify(e))     
+      dispatch(CommonActions.stopLoader());
+      if(e.status == 401)	
+
+      { await dispatch({	
+         type: SESSION_EXPIRED,	
+         payload: { sessionExpired: true},	
+       });}else if(e == NETWORK_ERROR){
+         await dispatch(CommonActions.setNetworkStatus(''));}else{
+        alert(e)
+      }
+    }
+  };
+}
+
+
+export function getSeatsAvailability(propsData,type) {
+  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${1}`   
+  console.log("NEW URL   ‹‹‹‹‹‹‹‹ ",NEW_URL)
+    return async (dispatch, getState) => {
+    try {
+      dispatch(CommonActions.startLoader()); // To start Loader 
+      const authToken = API_CONST.AUTH0RIZATION_TOKEN;
+      const res = await nodeSecureGet(
+        `${NEW_URL}`,
+        authToken
+      );
+     if (res) {
+        // console.log("yes getting response accordingly on seats data ......",res)
+        await dispatch({
+          type: CHECK_SEATS_AVAILABLE_SUCCESS,
+          payload: { calendarSeats: res, screenType: type },
+        });
+        dispatch(CommonActions.stopLoader());
+      } else {
+        await dispatch({
+          type: CHECK_SEATS_AVAILABLE_FAIL,
+          payload: { calendarSeatsError: res.error, screenType: type },
+        });
+        dispatch(CommonActions.stopLoader());
+      }
+    } 
+    catch (e) {    
+      console.log("yes check here on airline seats error ###### ",e)
       // Alert.alert("ERROR",JSON.stringify(e))     
       dispatch(CommonActions.stopLoader());
       if(e.status == 401)	

@@ -99,14 +99,14 @@ class MembershipComponent extends Component{
 
     let featureArray = [];
     let member = "";
-    console.log("yes check here - - - - - ",userData.gold_member)
 
 
-    if (userData.gold_member) {
+
+    if (userData && userData.gold_member) {
       featureArray = getGoldFeatures();
       // member = STRING_CONST.GOLD_MEMBER;
       member = "Gold";
-    } else if (userData.silver_member) {
+    } else if (userData && userData.silver_member) {
       featureArray = getSilverFeatures();
       member = "Silver"
       // member = STRING_CONST.SILVER_MEMBER;
@@ -225,7 +225,6 @@ class MembershipComponent extends Component{
     let current_plan =  ""
     let txt = ""
     let PeriodUnit = ""
-    console.log("yes check here future plan ((   " , userData.future_plan)
 
      if(userData && Object.keys(userData).length !== 0){
        currentPlan = userData.current_plan;
@@ -257,8 +256,8 @@ class MembershipComponent extends Component{
     //   'free-elite-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Active' },
     //   'free-elite-trial-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Trial' }
     // }
-    let silver_member = userData.silver_member
-    let gold_member = userData.gold_member
+    let silver_member = userData && userData.silver_member
+    let gold_member = userData && userData.gold_member
 
     const {member} = this.state;
     const today = moment().format('DD-MM-YYYY')
@@ -273,7 +272,7 @@ class MembershipComponent extends Component{
     }
     if(cancelled_subscription && current_subscription_expiry) {
       //  txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" : null }  `
-        txt = ` Scheduled  ${gold_member ?  "Gold" : silver_member ? "Silver" : userData.bronze_member ? "Bronze" : null} ${PeriodUnit && PeriodUnit == "month" ? "Monthly":"Yerly"} Downgrade on ${expireTime} `
+        txt = ` Scheduled  ${gold_member ?  "Gold" : silver_member ? "Silver" : userData && userData.bronze_member ? "Bronze" : null} ${PeriodUnit && PeriodUnit == "month" ? "Monthly":"Yerly"} Downgrade on ${expireTime} `
     }
   
 
@@ -472,8 +471,8 @@ class MembershipComponent extends Component{
     if(cancelled_subscription && current_subscription_expiry) {
        txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" :"Bronze (free plan)"} Downgrade on ${expireTime}`
     }
-    let silver_member = userData.silver_member
-    let gold_member = userData.gold_member
+    let silver_member = userData && userData.silver_member
+    let gold_member = userData && userData.gold_member
     return (
       <Fragment>
         {isAppReviewSuccess == false || buildVersion == 0 ?
@@ -537,7 +536,7 @@ class MembershipComponent extends Component{
             <View style={{ marginHorizontal: scale(20) }}>
               {this.membershipViewList()}
               {this.featureList()}
-              {!userData.gold_member && this.upgradeView()}
+              {userData && !userData.gold_member && this.upgradeView()}
               {/* {this.upgradeView()} */}
             </View>
           </ScrollView>

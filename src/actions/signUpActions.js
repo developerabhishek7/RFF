@@ -10,7 +10,7 @@ import { SIGN_UP_SUCCESS, SIGNUP_ERROR, CLEAR_SIGNUP_ERROR, LOGIN_SUCCESS } from
 import * as CommonActions from './commonActions';
 import {NETWORK_ERROR} from '../constants/StringConst'
 import { getUserInfo } from "./userActions";
-
+import {Alert} from 'react-native'
 export default function createUser(body) {
   console.log("check here on user singup action ####### ",body)
   return async (dispatch, getState) => {
@@ -41,12 +41,18 @@ export default function createUser(body) {
         });
         dispatch(CommonActions.stopLoader()); // To stop Loader
       } else {
-        // console.log("on else  -=----=-=-===-=-=")
         let response = await res
-        await dispatch({
-          type: SIGNUP_ERROR,
-          payload: { signUpError: response.error },
-        });
+        console.log("on else  -=----=-=-===-=-=",response)
+        if(response.error == "Email has already been taken"){
+          Alert.alert("Email has already been taken")
+        }
+        else{
+          await dispatch({
+            type: SIGNUP_ERROR,
+            payload: { signUpError: response.error },
+          });
+        }
+       
         dispatch(CommonActions.stopLoader()); // To stop Loader
       }
     } catch (e) {

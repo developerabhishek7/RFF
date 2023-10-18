@@ -198,7 +198,7 @@ import * as RootNavigation from '../router/RouteNavigation';
          });
          await dispatch({
           type: GET_USER_DETAIL_SUCCESS,
-          payload: { userData:{} },
+          payload: { userData:"" },
         });
 
 

@@ -12,8 +12,6 @@
  } from "../../actions/userActions";
  import * as CONST from '../../constants/StringConst'
  import { Alert } from "react-native";
- import * as STR_CONST from "../../constants/StringConst";
- import {View, Text,TouchableOpacity,} from 'react-native'
  import {
   getFlightSchedule,
   getMultipleFlightSchedule
@@ -25,6 +23,7 @@ import moment from "moment";
      this.state = {
        userInfo: this.props.userInfo,
        airLinesDetailsObject: this.props.airlinesDetails,
+       calendarSeatsObject:this.props.calendarSeats,
        airlinesDetailPoints:this.props.airlinesDetailPoints,
        cabinClassData:this.props.cabinClassData,
        searchData:this.props.route.params.searchData,
@@ -43,20 +42,20 @@ import moment from "moment";
        {
          Alert.alert(CONST.ALERT_CREATED)
          this.props.resetCreateAlertDataAction()
-        //  if(bronze_member == true){
-           // Alert.alert(CONST.ALERT_CREATED, null, [
-           //   {
-           //     text: 'OK',
-           //     onPress: () => {
-           //       alert(STR_CONST.BRONZE_ALERT_INFO)
-           //     },
-           //   },
-           // ]);
-          //  Alert.alert(STR_CONST.BRONZE_ALERT_INFO)
-        //  }              
+                  //  if(bronze_member == true){
+                  // Alert.alert(CONST.ALERT_CREATED, null, [
+                  //   {
+                  //     text: 'OK',
+                  //     onPress: () => {
+                  //       alert(STR_CONST.BRONZE_ALERT_INFO)
+                  //     },
+                  //   },
+                  // ]);
+                  //  Alert.alert(STR_CONST.BRONZE_ALERT_INFO)
+                  //  }              
        }
        else if (this.props.createAlertError) {
-         alert(this.props.createAlertError)
+         Alert.alert(this.props.createAlertError)
          this.props.resetCreateAlertDataAction()
        }
      }
@@ -67,6 +66,7 @@ import moment from "moment";
        <CalenderComponent
          userInfo={this.props.userInfo}
          airLinesDetailsObject={this.state.airLinesDetailsObject}
+         calendarSeatsObject={this.state.calendarSeatsObject}
          navigation = {this.props.navigation}
          onSubmitAlertPress = {(alertData)=>this.props.createAlertAction(alertData)}        
          searchData={this.props.route.params.searchData}
@@ -89,15 +89,16 @@ import moment from "moment";
    }
  }
 
- 
+
  const mapStateToProps = (state) => {
-   const { calendar,userInfo,logIn, findFlight,alerts } = state; 
-   return {
+    const { calendar,userInfo,logIn, findFlight,alerts } = state; 
+    return {
      userInfo: userInfo.userData,
      alertsArray: alerts.alertsArray,
      createAlertSuccess: calendar.createAlertSuccess,
      createAlertError: calendar.createAlertError,
      airlinesDetails: calendar.airlinesDetail,
+     calendarSeats:calendar.calendarSeats.calendarSeats,
      airlinesDetailPoints:calendar.airlinesDetailPoints,
      isLoggedIn: logIn.isLoggedIn,
      airlinesMembershipDetails: findFlight.airlinesMembershipDetails,

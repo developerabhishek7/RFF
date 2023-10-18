@@ -579,7 +579,7 @@ class LoginComponent extends Component {
             onSubmitEditing={() => {
               this.secondTextInput.focus();
             }}
-            maxLength={30}
+            maxLength={25}
             blurOnSubmit={false}
             returnKeyType="next"
             underlineColorAndroid={'#FFFFFF'}
@@ -639,7 +639,7 @@ class LoginComponent extends Component {
             onChangeText={(password) => {
               this.setState({ password });
             }}
-            maxLength={20}
+            maxLength={25}
             secureTextEntry={this.state.isHidePassword}
             value={this.state.password}
             returnKeyType="done"

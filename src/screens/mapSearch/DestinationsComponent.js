@@ -190,7 +190,6 @@ export default class DestinationsComponent extends Component {
       const isReversed = (sortType === 'asc') ? 1 : -1;
       return isReversed * a.city_name.localeCompare(b.city_name)
     })
-    // console.log("check here what we are getting in sorted array data ######## ",JSON.stringify(sortedArray))                                                                             
     return (
       <SafeAreaView style={[styles.container,{
         backgroundColor:"#FFF"
@@ -209,7 +208,6 @@ export default class DestinationsComponent extends Component {
          
           {
             sortedArray.map((singleMap, index) => {
-              // console.log("yes chec k on destination list commponent  ####### ",singleMap)
               let pointsDataSS = []
               let pointsDatBA = []
               pointsDatBA = singleMap.points.BA

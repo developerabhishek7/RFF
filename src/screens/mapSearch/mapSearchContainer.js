@@ -10,7 +10,7 @@ import {
   getAvailableDestinations,
   resetData,
 } from "../../actions/mapSearchActions";
-import { getAirlinesAvailability,getPointsAvailability } from "../../actions/calendarActions";
+import { getAirlinesAvailability,getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 
 import {updateGuestUserPostHog,updateLoggedInUserPostHog,getUserConfigDetails} from '../../actions/userActions'
 
@@ -126,6 +126,7 @@ class MapSearchContainer extends Component {
             auditData: auditData,
           });
           this.props.getAirlinesAvailabilityAction(mapSearchData);
+          this.props.getSeatsAvailabilityAction(mapSearchData);
         }}
         // guestUserPostHogFunc = {(guestUserPostHog)=>{this.props.updateGuestUserPostHogAction(guestUserPostHog)}}
         // loggedinUserPostHogFun = {(loggedInUserPostHog)=>{this.props.updateLoggedInUserPostHogAction(loggedInUserPostHog)}}
@@ -158,6 +159,8 @@ const mapDispatchToProps = (dispatch) => {
       getPointsAvailabilityAction:(searchData)=>dispatch(getPointsAvailability(searchData)),
       getAirlinesAvailabilityAction: (mapSearchData) =>
       dispatch(getAirlinesAvailability(mapSearchData, "MAP")),
+      getSeatsAvailabilityAction: (mapSearchData) =>
+      dispatch(getSeatsAvailability(mapSearchData, "MAP")),
     resetDataAction: (searchData) => dispatch(resetData(searchData)),
     getUserConfigDetailsAction:() => dispatch(getUserConfigDetails()),
 

@@ -14,7 +14,7 @@ import {
   sendAuditData,
   getFlightSchedule
 } from "../../actions/findFlightActions";
-import { getAirlinesAvailability } from "../../actions/calendarActions";
+import { getAirlinesAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 import { setLoginStatus } from "../../actions/loginActions";
 import { getUserInfo,getCountryList,
   getStateList,
@@ -157,20 +157,14 @@ class FlightDetailsContainer extends Component {
           airlinesPossileRoutesList={this.state.airlinesPossileRoutesList}
           locationsObject={this.state.locationsObject}
           navigation={this.props.navigation}
-          // onSearchPressed={(searchData, auditData) => {
-          //   this.setState({
-          //     searchData: searchData,
-          //   });
-          //   this.props.getAirlinesAvailabilityAction(searchData);
-          //   this.props.sendAuditDataAction(auditData);
-            
-          // }}
+        
 
           onSearchPressed={(searchData, auditData) => {
             this.setState({
               searchData: searchData,
             });
             this.props.getAirlinesAvailabilityAction(searchData);
+            this.props.getSeatsAvailabilityAction(searchData);
             this.props.sendAuditDataAction(auditData);
             let flightScheduleData = {
               airline :searchData.airline,
@@ -228,6 +222,8 @@ const mapDispatchToProps = (dispatch) => {
     getPossibleRouteAction: ()=>dispatch(getPossibleRoutes()),
     getLocationsAction: ()=>dispatch(getLocations()),
     getAirlinesAvailabilityAction:(searchData)=>dispatch(getAirlinesAvailability(searchData, 'MAP')),
+    getSeatsAvailabilityAction:(searchData)=>dispatch(getSeatsAvailability(searchData, 'MAP')),
+   
     sendAuditDataAction:(auditData)=>dispatch(sendAuditData(auditData)),
     // resetSessionAction: ()=>dispatch(resetSession()),
     getNotificationSettingsAction: () => dispatch(getNotificationSettings()),

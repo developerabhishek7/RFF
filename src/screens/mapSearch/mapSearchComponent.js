@@ -941,6 +941,15 @@ export default class FindFlightComponent extends Component {
       
     } = this.state;
     let travel_classes = getBAClassesString(classSelected);
+
+
+
+    // console.log("yes check here state value ------ locaiton  ",selectedSource)
+    // console.log("yes check here state value ------ departureData  ",departStartDate,   departEndDate )
+    // console.log("yes check here state value ------ departureData  ",returnStartDate,   returnEndDate )
+
+
+
     return (
       <View style={styles.informationContainer}>
         {this.tabView()}
@@ -1147,6 +1156,10 @@ export default class FindFlightComponent extends Component {
         countryName = selectedSource.country_name;
       }
     }
+
+    console.log("yes check the placeHolder text = = = = = = =",this.state.travelTo)
+
+
     return (
       <TouchableOpacity
         style={[
@@ -1165,7 +1178,7 @@ export default class FindFlightComponent extends Component {
             returnType:this.state.selectedIndex,
             travelTo:this.state.travelTo,
             locationsObject: getMapSearchData(),
-            placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
+            placeholderTitle: this.state.travelTo ? STRING_CONST.WHERE_ARE_YOU_FLYING_TO : STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
             allLocations: this.props.locationsObject,
             sourceSelected: null,
             onSourceSelected: (selectedSource) => {
@@ -1181,8 +1194,6 @@ export default class FindFlightComponent extends Component {
           style={[styles.infoIcon, { marginRight: scale(7) }]}
         />
         <View style={{}}>
-          {
-            this.state.selectedIndex == 0 ?
               <Fragment>
                 {
                   this.state.travelTo ?
@@ -1217,27 +1228,6 @@ export default class FindFlightComponent extends Component {
                     </Text>
                 }
               </Fragment>
-              :
-              <Fragment>
-                {
-                  <Text
-                    style={[
-                      styles.airlineMembershipTextStyle,
-                      {
-                        color:
-                          isSearchClicked && !selectedSource
-                            ? colours.errorColor
-                            : colours.lightGreyish,
-                        fontSize: selectedSource ? scale(10) : scale(14),
-                      },
-                    ]}
-                  >
-                    {"Where From"}/{STRING_CONST.AIRPORT_TEXT}
-                  </Text>
-                }
-              </Fragment>
-          }
-
           {selectedSource && (
             <Text
               numberOfLines={1}

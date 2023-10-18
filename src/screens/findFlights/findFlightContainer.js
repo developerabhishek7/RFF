@@ -28,7 +28,7 @@ import {
   getTimeFromMins,
 } from "../../utils/commonMethods";
 import scale, { verticalScale } from "../../helpers/scale";
-import { getAirlinesAvailability, getPointsAvailability, getPeakOffPeakData } from "../../actions/calendarActions";
+import { getAirlinesAvailability, getSeatsAvailability,getPointsAvailability, getPeakOffPeakData } from "../../actions/calendarActions";
 import { setLoginStatus } from "../../actions/loginActions";
 import { getAlerts, cancelAlerts } from "../../actions/alertActions";
 import {
@@ -420,6 +420,7 @@ class FindFlightContainer extends Component {
               isLoader: true
             });
             this.props.getAirlinesAvailabilityAction(searchData);
+            this.props.getSeatsAvailabilityAction(searchData);
             this.props.sendAuditDataAction(auditData);
             let flightScheduleData = {
               airline: searchData.airline,
@@ -479,6 +480,7 @@ const mapDispatchToProps = (dispatch) => {
     getPossibleRouteAction: () => dispatch(getPossibleRoutes()),
     getLocationsAction: () => dispatch(getLocations()),
     getAirlinesAvailabilityAction: (searchData) => dispatch(getAirlinesAvailability(searchData, 'FIND_FLIGHT')),
+    getSeatsAvailabilityAction: (searchData) => dispatch(getSeatsAvailability(searchData, 'FIND_FLIGHT')),
     getPointsAvailabilityAction: (searchData) => dispatch(getPointsAvailability(searchData)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
     resetSessionAction: () => dispatch(resetSession()),
