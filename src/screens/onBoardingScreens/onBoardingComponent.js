@@ -142,8 +142,8 @@
 
 
 
-import React, { Component,useState } from "react";
-import { View, Text, ScrollView, Image,PixelRatio,ImageBackground,SafeAreaView ,StyleSheet,StatusBar, Platform} from "react-native";
+import React, { Component,useState, useEffect } from "react";
+import { BackHandler, View, Text, ScrollView, Image,PixelRatio,ImageBackground,SafeAreaView ,StyleSheet,StatusBar, Platform} from "react-native";
 import styles from "./onboardingStyles";
 import { Dimensions } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
@@ -164,7 +164,7 @@ import * as RootNavigation from '../../router/RouteNavigation';
 
 const App = () => {
   const [sliderState, setSliderState] = useState({ currentPage: 0 });
-
+  
   const setSliderPage = (event: any) => {
     const { currentPage } = sliderState;
 
@@ -178,6 +178,25 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    const handleValidateClose = () => {
+      console.log('comment useEffect');
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const handler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleValidateClose,
+    );
+
+    return () => handler.remove();
+  }, [0]);
+
+  const handleValidateClose = () => {
+    console.log('comment');
+    return true;
+  };
 
    function onButtonPress() {
     

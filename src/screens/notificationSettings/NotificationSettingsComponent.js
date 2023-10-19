@@ -417,22 +417,13 @@ export default class NotificationSettingsComponent extends Component {
         </View>
         {/* <View style={styles.line} /> */}
 
-
-
-
-
-
         {/* <View style={styles.line} /> */}
-
-
         <View style={styles.containerView}>
           <View style={styles.availabilityAlertInnerView}>
-
             <Image source={IMG_CONST.LOGO}
               resizeMode="contain"
               style={{ height: scale(30), width: scale(30), marginStart: scale(20), marginRight: scale(5) }}
             />
-
             <Text style={[styles.notificationTitle, { fontWeight: "700" }]}>
               {STR_CONST.PUSH_NOTIFICATION}
             </Text>
@@ -450,12 +441,13 @@ export default class NotificationSettingsComponent extends Component {
             </Text> */}
               <Switch
                 value={
-                  notificationSettings && notificationSettings.push_notification
+                  userData && userData.gold_member ?
+                  notificationSettings && notificationSettings.push_notification : false
                 }
                 onValueChange={async (val) => {
                   await this.onNotificationSettingsChange(val);
                 }}
-                disabled={false}
+                disabled={userData && userData.gold_member ? false : true}
                 circleSize={scale(16)}
                 barHeight={scale(20)}
                 circleBorderWidth={0}

@@ -28,7 +28,7 @@ import {
     submitHelpForm,
 } from "../../actions/userActions";
 import MyStatusBar from "../../components/statusbar";
-
+import * as STR_CONST from "../../constants/StringConst";
 class HelpComponent extends Component {
 
     constructor(props) {
@@ -57,7 +57,12 @@ class HelpComponent extends Component {
         //      }
         // }, 1000);
     }
-
+    goToNotifications() {
+        const { navigation } = this.props;
+        navigation.navigate(STR_CONST.NOTIFICATIONS_SCREEN, {
+          fromAlertScreen: false,
+        });
+      }
     renderHeader() {
         return (
             <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(100), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(0) }}>
