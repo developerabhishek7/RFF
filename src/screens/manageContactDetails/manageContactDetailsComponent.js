@@ -711,31 +711,32 @@ export default class ProfileScreenComponent extends Component {
           />
 
           {
-            goldMember ?
-              <View
-                style={[
-                  styles.statusStyle,
-                  {
-                    backgroundColor:
-                      this.props.userData.phone && !isNumberVerified
-                        ? colours.lightYellow
-                        : colours.white,
-                  },
-                ]}
-              >
-                <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
-                  {STR_CONST.UNVERIFIED_TEXT}
-                </Text>
-              </View>
-              :
-              <View
-                style={[
-                  styles.statusStyle1,
-                ]}
-              >
-                <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
-                </Text>
-              </View>
+            goldMember && isNumberVerified ?
+            <View
+              style={[
+                styles.statusStyle,
+                {
+                  backgroundColor:
+                    this.props.userData.phone && !isNumberVerified
+                      ? colours.lightYellow
+                      : colours.lightGreen,
+                      borderRadius:scale(15)
+                },
+              ]}
+            >
+              <Text style={[styles.statuTextStyle, { fontWeight: "600",marginStart:isNumberVerified ? scale(6) : scale(1),alignSelf:"center",margin:scale(1),width:scale(45),}]}>
+                {isNumberVerified ? "Verified" : STR_CONST.UNVERIFIED_TEXT}
+              </Text>
+            </View>
+            :
+            <View
+              style={[
+                styles.statusStyle1,
+              ]}
+            >
+              <Text style={[styles.statuTextStyle, { fontWeight: "600" }]}>
+              </Text>
+            </View>
           }
           {this.props.userData.phone ? (
             <Menu

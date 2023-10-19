@@ -55,9 +55,7 @@ import * as CommonActions from "./commonActions";
 import {getAccessToken, getUserId} from '../constants/DataConst'
 import { Alert,  } from "react-native";
 import navigationService from "../utils/NavigationService";
-
 import * as RootNavigation from '../router/RouteNavigation';
-
 export function setPassword(password) {
   return async (dispatch, getState) => {
     try {
@@ -310,15 +308,28 @@ export function getUserInfo() {
         authToken
       );
       if (res) {
-        await dispatch({
-          type: SET_BADGE_COUNT,
-          badgeCount: res.data.unread_notifications_count,
-        });
-        await dispatch({
-          type: GET_USER_DETAIL_SUCCESS,
-          payload: { userData: res.data },
-        });
-        dispatch(CommonActions.stopLoader());
+        console.log("yes check here reponse  - - - - - -- - ",res)
+        if(res.error == "Session expired."){
+          await dispatch({
+            type: SESSION_EXPIRED,
+            payload: { sessionExpired: true },
+          });
+          await dispatch({
+            type: GET_USER_DETAIL_SUCCESS,
+            payload: { userData:"" },
+          });
+        }
+         else{
+          await dispatch({
+            type: SET_BADGE_COUNT,
+            badgeCount: res.data.unread_notifications_count,
+          });
+          await dispatch({
+            type: GET_USER_DETAIL_SUCCESS,
+            payload: { userData: res.data },
+          });
+          dispatch(CommonActions.stopLoader());
+         }
       } else {
         dispatch(CommonActions.stopLoader());
         await dispatch({

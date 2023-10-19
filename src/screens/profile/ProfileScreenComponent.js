@@ -53,7 +53,6 @@ export default class ProfileScreenComponent extends Component {
 
   async componentDidMount() {
     const { navigation, userData } = this.props;
-    console.log("yes check here on the profile did update ####### ", this.state.emailId)
     let socialLogin = await AsyncStorage.getItem("socialLogin")
     this.setState({
       socialLogin: socialLogin

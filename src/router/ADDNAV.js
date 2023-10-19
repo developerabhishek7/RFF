@@ -150,15 +150,15 @@ const drawerViewModel = (navigation) => {
             headerShown: false
           }}
         />
-
         <Stack.Screen
                 name="Onboard"
                 component={OnboardingContainer}
                 options={{
-                    headerShown: false,
-                    gestureEnabled:false
+                  headerShown: false,
+                  gestureEnabled:false,
+                  fullScreenGestureEnabled:false
                 }}
-                /> 
+        /> 
     </Stack.Navigator>
   );
 

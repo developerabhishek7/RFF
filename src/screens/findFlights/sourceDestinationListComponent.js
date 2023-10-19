@@ -212,7 +212,7 @@ export default class SourceDestinationListComponent extends Component {
                 color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
                 alignSelf: 'flex-start', marginTop: verticalScale(9), marginBottom: verticalScale(1),
               }}
-            >CIties with multiple airports</Text>
+            >Cities with multiple airports</Text>
           <FlatList
             keyboardShouldPersistTaps='always'
             showsVerticalScrollIndicator={false}
