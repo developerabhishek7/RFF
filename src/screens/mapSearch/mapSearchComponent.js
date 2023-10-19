@@ -1156,10 +1156,6 @@ export default class FindFlightComponent extends Component {
         countryName = selectedSource.country_name;
       }
     }
-
-    console.log("yes check the placeHolder text = = = = = = =",this.state.travelTo)
-
-
     return (
       <TouchableOpacity
         style={[

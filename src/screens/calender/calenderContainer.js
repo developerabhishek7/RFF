@@ -6,7 +6,7 @@
  import React, { Component } from "react";
  import { connect } from "react-redux";
  import CalenderComponent from "./calenderComponent";
- import { createAlert, resetCreateAlertData,getPeakOffPeakData,resetCalendarData } from '../../actions/calendarActions'
+ import { createAlert, resetCreateAlertData,getPeakOffPeakData,resetCalendarData,getSeatsAvailability } from '../../actions/calendarActions'
  import {
    updateAirlineTier,updateGuestUserPostHog,updateLoggedInUserPostHog
  } from "../../actions/userActions";
@@ -32,7 +32,6 @@ import moment from "moment";
        finalData:{}
      };
    }
-
  
    componentDidUpdate(prevProps){
     //  let bronze_member = this.props.userInfo.bronze_member
@@ -66,7 +65,7 @@ import moment from "moment";
        <CalenderComponent
          userInfo={this.props.userInfo}
          airLinesDetailsObject={this.state.airLinesDetailsObject}
-         calendarSeatsObject={this.state.calendarSeatsObject}
+         calendarSeatsObject={this.props.calendarSeats}
          navigation = {this.props.navigation}
          onSubmitAlertPress = {(alertData)=>this.props.createAlertAction(alertData)}        
          searchData={this.props.route.params.searchData}
@@ -92,13 +91,14 @@ import moment from "moment";
 
  const mapStateToProps = (state) => {
     const { calendar,userInfo,logIn, findFlight,alerts } = state; 
+    console.log("print seats data on map state to props data - - -- - - - --",calendar.calendarSeats)
     return {
      userInfo: userInfo.userData,
      alertsArray: alerts.alertsArray,
      createAlertSuccess: calendar.createAlertSuccess,
      createAlertError: calendar.createAlertError,
      airlinesDetails: calendar.airlinesDetail,
-     calendarSeats:calendar.calendarSeats.calendarSeats,
+     calendarSeats:calendar.calendarSeats,
      airlinesDetailPoints:calendar.airlinesDetailPoints,
      isLoggedIn: logIn.isLoggedIn,
      airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
@@ -111,6 +111,7 @@ import moment from "moment";
  
  const mapDispatchToProps = (dispatch) => {
    return {
+     getSeatsAvailabilityAction: (searchData) => dispatch(getSeatsAvailability(searchData)),
      updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
      updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
      createAlertAction: (alertData) => dispatch(createAlert(alertData)),

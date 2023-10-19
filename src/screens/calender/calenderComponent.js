@@ -118,7 +118,7 @@ export default class CalenderComponent extends Component {
       classSelected: this.props.searchData.classSelected,
       showCreateAlertModal: false,
       airLinesDetailsObject: this.props.airLinesDetailsObject,
-      calendarSeatsObject:  this.props.calendarSeatsObject  && this.props.calendarSeatsObject,
+      calendarSeatsObject:this.props.calendarSeatsObject && this.props.calendarSeatsObject,
       showTicketDetailModal: false,
       Alert_Visibility2: false,
       noFlightScheduleDate: "",
@@ -223,8 +223,7 @@ export default class CalenderComponent extends Component {
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
       if (
-        this.props.airLinesDetailsObject !== prevProps.airLinesDetailsObject
-      ) {
+        this.props.airLinesDetailsObject !== prevProps.airLinesDetailsObject) {
         this.setState({
           airLinesDetailsObject: this.props.airLinesDetailsObject,
         });
@@ -335,8 +334,12 @@ export default class CalenderComponent extends Component {
     const today = moment();
     let data = this.props.searchData.classSelected;
 
+    // let availability = this.state.calendarSeatsObject;
 
-    let availability = this.state.airLinesDetailsObject.availability;
+    let avail = {"business": true, "economy": true, "first": true, "premium": true}
+    var availability = await this.props.calendarSeatsObject && this.props.calendarSeatsObject ? this.props.calendarSeatsObject :avail
+
+    console.log("yes check here availavility data on did mount -- - - - - ",availability)
 
     let economy = data[0]
     let premium = data[1]
@@ -462,7 +465,7 @@ export default class CalenderComponent extends Component {
 
   formatPrice = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
-  seatAvailabilityModal(day) {
+  seatAvailabilityModal = (day) => {
     const firstDay = moment().startOf('month')
     const nextThreeMonth = moment(firstDay).add(3, 'months').format("YYYY-MM-DD")
     let clickDate
@@ -488,8 +491,7 @@ export default class CalenderComponent extends Component {
 
     }
 
-    const { searchData, offPeakKey,showModelDropdownForBA,calendarSeatsObject, airLinesDetailsObject, } = this.state;
-
+    const { searchData, offPeakKey,showModelDropdownForBA, airLinesDetailsObject, } = this.state;
 
     let airline = searchData.airline
     let destination = searchData.destinationCode
@@ -524,15 +526,22 @@ export default class CalenderComponent extends Component {
 
     let seatsAvailableOutBoundData = {}
     let seatsAvailableInBoundData = {}
-    availableOutBoundDate = airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0 && airLinesDetailsObject.outbound_availability;
 
-    seatsAvailableOutBoundData = calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0 && calendarSeatsObject.outbound_availability;
+    if(airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0){
+      availableOutBoundDate = airLinesDetailsObject.outbound_availability;
+    }
+    // if(calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0){
+    //   seatsAvailableOutBoundData =  calendarSeatsObject.outbound_availability;
+    // }
+    // if(calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0){
+    //   seatsAvailableInBoundData = calendarSeatsObject.inbound_availability
+    // }
 
-
-    seatsAvailableInBoundData = calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0 && calendarSeatsObject.inbound_availability;
-
-    availableInBoundDate = airLinesDetailsObject && Object.keys(calendarSeatsObject).length !== 0 && airLinesDetailsObject.inbound_availability;
-
+    if(airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0){
+      availableInBoundDate = airLinesDetailsObject.inbound_availability;
+    }
+    
+  
     let availavleClassesData = this.state.airLinesDetailsObject.availability
 
     let data = this.state.seatsAvailabilityData;
@@ -544,10 +553,10 @@ export default class CalenderComponent extends Component {
    
    let pointsSS = []
    
-   pointsSS = this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS : []
+   pointsSS = this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS && this.props.airlinesDetailPoints.airlinesDetailPoints.points.SS 
    
    let pointsBA = []
-   pointsBA = this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA ? this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA : []
+   pointsBA = this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA && this.props.airlinesDetailPoints.airlinesDetailPoints.points.BA 
   
     let points = []
 
@@ -569,10 +578,10 @@ export default class CalenderComponent extends Component {
       dateExpire = false
       let obj
       if (this.state.selectedIndex == 0) {
-        obj = seatsAvailableOutBoundData &&  Object.entries(seatsAvailableOutBoundData) 
+        obj = seatsAvailableOutBoundData &&  Object.entries(availableOutBoundDate) 
       }
       else {
-        obj = seatsAvailableInBoundData &&  Object.entries(seatsAvailableInBoundData)
+        obj = seatsAvailableInBoundData &&  Object.entries(availableInBoundDate)
       }
       if (day) {
         clickDate = day.dateString
@@ -624,10 +633,10 @@ export default class CalenderComponent extends Component {
     dateExpire = false
     let obj
     if (this.state.selectedIndex == 0) {
-      obj = seatsAvailableOutBoundData &&  Object.entries(seatsAvailableOutBoundData) 
+      obj = seatsAvailableOutBoundData &&  Object.entries(availableOutBoundDate) 
     }
     else {
-      obj = seatsAvailableInBoundData &&  Object.entries(seatsAvailableInBoundData) 
+      obj = seatsAvailableInBoundData &&  Object.entries(availableInBoundDate) 
     }
     if (day) {
       clickDate = day.dateString
@@ -673,10 +682,7 @@ export default class CalenderComponent extends Component {
       }
     })
   }
-  console.log("yes check seats of economy - - - - - -",economySeats)
-  console.log("yes check seats of premium - - - - - -",premiumSeats)
-  console.log("yes check seats of business - - - - - -",businessSeats)
-  console.log("yes check seats of first - - - - - -",firstSeats)
+  
 
 
 
@@ -4579,8 +4585,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             {/* {this.renderLoader()} */}
             {this.renderLoginPopup()}
             <View style={{borderWidth:0}}>
-             {/* {this.state.airLinesDetailsObject ? this.ticketClass() : null} */}
-             {this.ticketClass()}
+             {this.state.airLinesDetailsObject ? this.ticketClass() : null}
+             {/* {this.ticketClass()} */}
                 {this.fareView()}
                 {this.state.searchData.isReturn
                   ? this.tabView()

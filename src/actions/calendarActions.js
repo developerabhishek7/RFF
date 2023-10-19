@@ -80,7 +80,7 @@ export function createAlert(body) {
 }
 
 export function getAirlinesAvailability(propsData,type) {
-  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}`   
+  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${1}`   
   console.log("NEW URL   ‹‹‹‹‹‹‹‹ ",NEW_URL)
     return async (dispatch, getState) => {
     try {
@@ -91,9 +91,6 @@ export function getAirlinesAvailability(propsData,type) {
         authToken
       );
      if (res) {
-
-      console.log("yes getting response accordingly on availability data ......",)
-
         await dispatch({
           type: GET_AIRLINES_AVAILABILITY_SUCCESS,
           payload: { airlinesDetail: res, screenType: type },
@@ -126,8 +123,8 @@ export function getAirlinesAvailability(propsData,type) {
 
 
 export function getSeatsAvailability(propsData,type) {
-  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${1}`   
-  console.log("NEW URL   ‹‹‹‹‹‹‹‹ ",NEW_URL)
+  let NEW_URL = `${API_CONST.BASE_NODE_URL}/${propsData.airline}/v2/calendar-availability?source_code=${propsData.sourceCode}&destination_code=${propsData.destinationCode}&tier=${"gold"}&number_of_passengers=${propsData.passengerCount}`   
+  console.log("NEW URL  for get seat availability  - - - - - - ‹‹‹‹‹‹‹‹ ",NEW_URL)
     return async (dispatch, getState) => {
     try {
       dispatch(CommonActions.startLoader()); // To start Loader 
@@ -137,10 +134,10 @@ export function getSeatsAvailability(propsData,type) {
         authToken
       );
      if (res) {
-        // console.log("yes getting response accordingly on seats data ......",res)
-        await dispatch({
+      console.log("yes getting response accordingly on seats data ......",res.availability)
+      await dispatch({
           type: CHECK_SEATS_AVAILABLE_SUCCESS,
-          payload: { calendarSeats: res, screenType: type },
+          payload: { calendarSeats: res.availability, screenType: type },
         });
         dispatch(CommonActions.stopLoader());
       } else {
@@ -173,8 +170,6 @@ export function getSeatsAvailability(propsData,type) {
 export function getPointsAvailability(searchData) {  
     let URL = `${API_CONST.BASE_NODE_URL}/points/${searchData.airline}?source_code=${searchData.sourceCode}&destination_code=${searchData.destinationCode}`
 
-    console.log("yes check here points availability data #######   ",URL)
-   
     return async (dispatch, getState) => {
       try {
         dispatch(CommonActions.startLoader()); // To start Loader

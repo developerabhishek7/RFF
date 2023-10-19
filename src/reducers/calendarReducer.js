@@ -41,23 +41,10 @@ CHECK_SEATS_AVAILABLE_FAIL
           ...state,
           airlinesDetailError: action.payload.airlinesDetailError,
         };
-
-        case GET_AVAILABLE_CALENDAR_POINTS_SUCESS:{
+        case CHECK_SEATS_AVAILABLE_SUCCESS:{
           return {
            ...state,
-           airlinesDetailPoints: action.payload,
-          //  screenType:action.payload.screenType
-         };}
-       case GET_AVAILABLE_CALENDAR_POINTS_ERROR:
-         return {
-           ...state,
-           airlinesDetailPointsError: action.payload.airlinesDetailPointsError,
-         };
-
-         case CHECK_SEATS_AVAILABLE_SUCCESS:{
-          return {
-           ...state,
-           calendarSeats: action.payload,
+           calendarSeats: action.payload.calendarSeats,
          };}
        case CHECK_SEATS_AVAILABLE_FAIL:
          return {
@@ -65,11 +52,20 @@ CHECK_SEATS_AVAILABLE_FAIL
            calendarSeatsError: action.payload.calendarSeatsError,
          };
 
+        case GET_AVAILABLE_CALENDAR_POINTS_SUCESS:{
+          return {
+           ...state,
+           airlinesDetailPoints: action.payload,
+         };}
+       case GET_AVAILABLE_CALENDAR_POINTS_ERROR:
+         return {
+           ...state,
+           airlinesDetailPointsError: action.payload.airlinesDetailPointsError,
+         };
          case GET_PEAK_OFFPEAK_SUCCESS:{
           return {
            ...state,
            peakOffpeakData: action.payload,
-          //  screenType:action.payload.screenType
          };}
        case GET_PEAK_OFFPEAK_ERROR:
          return {
@@ -103,14 +99,14 @@ CHECK_SEATS_AVAILABLE_FAIL
             airlinesDetailError: "",
             airlinesDetail: null,
             airlinesDetailPoints:null,
+            calendarSeats:null,
+            calendarSeatsError:"",
             airlinesDetailPointsError:"",
             createAlertSuccess:null,
             createAlertError:"",
             screenType:'',
             peakOffpeakData:"",
             peakOffpeakError:"",
-            calendarSeats:null,
-            calendarSeatsError:""
           }
          }
       default:
