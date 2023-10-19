@@ -249,6 +249,7 @@
      flightSchedule: findFlight.flightSchedule,
      airlinesPossileRoutes: findFlight.airlinesPossileRoutes,
      airlinesDetail:calendar.airlinesDetail,
+     calendarSeats:calendar.calendarSeats,
      screenType:calendar.screenType,
      isNetworkFailed:common.isNetworkFailed,
      sessionExpired: common.sessionExpired,

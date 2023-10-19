@@ -1331,9 +1331,9 @@ class AlertsScreen extends React.Component {
                   this.setState({
                     startDate: item.startDate
                   })
-                  let auditData = await this.getAuditData(searchData);   
-                  this.props.getAirlinesAvailabilityAction(searchData);
+                  let auditData = await this.getAuditData(searchData);
                   this.props.getSeatsAvailabilityAction(searchData);
+                  this.props.getAirlinesAvailabilityAction(searchData);
                   this.props.sendAuditDataAction(auditData);
                   this.props.getPointsAvailabilityAction(searchData)
                   this.props.getFlightScheduleAction(flightScheduleData)
@@ -1428,6 +1428,7 @@ const mapStateToProps = (state) => {
     notiifcationSettingsData: notification.notiifcationSettingsData,
     badgeCount: notification.badgeCount,
     airlinesDetail: calendar.airlinesDetail,
+    calendarSeats:calendar.calendarSeats,
     screenType: calendar.screenType,
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,

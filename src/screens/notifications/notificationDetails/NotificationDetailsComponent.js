@@ -965,6 +965,7 @@ const mapStateToProps = (state) => {
     airlinesMembershipDetails: findFlight.airlinesMembershipDetails,
     locations: findFlight.locations,
     airlinesDetail: calendar.airlinesDetail,
+    calendarSeats:calendar.calendarSeats,
     screenType: calendar.screenType,
     peakOffpeakData: calendar.peakOffpeakData,
   };

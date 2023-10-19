@@ -202,6 +202,7 @@ const mapStateToProps = (state) => {
     flightSchedule: findFlight.flightSchedule,
     airlinesPossileRoutes: findFlight.airlinesPossileRoutes,
     airlinesDetail:calendar.airlinesDetail,
+    calendarSeats:calendar.calendarSeats,
     screenType:calendar.screenType,
     isNetworkFailed:common.isNetworkFailed,
     sessionExpired: common.sessionExpired,
@@ -223,7 +224,6 @@ const mapDispatchToProps = (dispatch) => {
     getLocationsAction: ()=>dispatch(getLocations()),
     getAirlinesAvailabilityAction:(searchData)=>dispatch(getAirlinesAvailability(searchData, 'MAP')),
     getSeatsAvailabilityAction:(searchData)=>dispatch(getSeatsAvailability(searchData, 'MAP')),
-   
     sendAuditDataAction:(auditData)=>dispatch(sendAuditData(auditData)),
     // resetSessionAction: ()=>dispatch(resetSession()),
     getNotificationSettingsAction: () => dispatch(getNotificationSettings()),

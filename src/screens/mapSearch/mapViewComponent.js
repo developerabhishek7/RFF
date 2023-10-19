@@ -666,6 +666,7 @@ const mapStateToProps = (state) => {
     userInfo: userInfo.userData,
     isLoggedIn: logIn.isLoggedIn,
     airlinesDetail: calendar.airlinesDetail,
+    calendarSeats:calendar.calendarSeats,
     screenType: calendar.screenType,
     
   };

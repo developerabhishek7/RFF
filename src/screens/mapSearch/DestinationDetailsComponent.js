@@ -2600,6 +2600,7 @@ const mapStateToProps = (state) => {
   const { calendar } = state;
   return {
     airlinesDetail: calendar.airlinesDetail,
+    calendarSeats:calendar.calendarSeats,
     screenType: calendar.screenType,
     peakOffpeakData:calendar.peakOffpeakData
   };
