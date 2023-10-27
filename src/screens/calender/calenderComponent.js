@@ -2362,7 +2362,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         },
         () => {
           setTimeout(() => {
-            alert(STRING_CONST.VERIFY_EMAIL);
+            Alert.alert(STRING_CONST.VERIFY_EMAIL);
           }, 100);
         }
       );

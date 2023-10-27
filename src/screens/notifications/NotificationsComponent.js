@@ -19,7 +19,7 @@ import scale from "../../helpers/scale";
 import moment from "moment";
 import FastImage from 'react-native-fast-image';
 import MyStatusBar from "../../components/statusbar";
-
+import { getUserInfo } from "../../actions/userActions";
 export default class NotificationsComponent extends Component {
   constructor(props) {
     super(props);
@@ -115,6 +115,7 @@ export default class NotificationsComponent extends Component {
         notificationList: notificationList
       })
     }
+    this.props.getUserInfoAction()
     this.props.navigation.navigate(STRING_CONST.NOTIFICATION_DETAIL_SCREEN, {
       notifData, notification_id: notifData.id
     });
@@ -154,8 +155,44 @@ export default class NotificationsComponent extends Component {
     );
   }
 
-  _renderNotif(notifications) {
+  // _renderNotif(notifications) {
 
+  //   if (a.unread && !b.unread) {
+  //     return 1;
+  //   } else if (!a.unread && b.unread) {
+  //     return -1;
+  //   } else {
+  //     return 0;
+  //   }
+
+  //   return (
+  //     <FlatList
+  //       keyExtractor={(item, index) => index.toString()}
+  //       data={notifications}
+  //       renderItem={item => this.renderCell(item)}
+  //       extraData={this.state}
+  //       onRefresh={() => this.onRefresh()}
+  //       refreshing={false}
+  //       showsVerticalScrollIndicator={false}
+  //       onEndReached={this.handleLoadMore}
+  //       onEndReachedThreshold={0.1}
+  //       onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+  //     />
+  //   );
+  // }
+
+  
+  _renderNotif(notifications) {
+    notifications = notifications.sort((a, b) => {
+      // Unread messages (isRead: false) come before read messages (isRead: true)
+      if (a.unread && !b.unread) {
+        return 1;
+      } else if (!a.unread && b.unread) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
     return (
       <FlatList
         keyExtractor={(item, index) => index.toString()}
@@ -171,6 +208,7 @@ export default class NotificationsComponent extends Component {
       />
     );
   }
+
 
   /**
    * Custom Header for Notifications screen

@@ -74,7 +74,7 @@ import * as RootNavigation from '../router/RouteNavigation';
      } catch (e) {
        console.log("yes check here on the socail Login API #######√ ",e)
        dispatch(CommonActions.stopLoader()); // To stop Loader
-       alert(e);
+       Alert.alert(e);
      }
    };
  }
@@ -235,7 +235,7 @@ import * as RootNavigation from '../router/RouteNavigation';
        } else if (e == NETWORK_ERROR) {
          await dispatch(CommonActions.setNetworkStatus("LOG_IN"));
        } else {
-         alert(e);
+         Alert.alert(e);
        }
        dispatch(CommonActions.stopLoader());
      }

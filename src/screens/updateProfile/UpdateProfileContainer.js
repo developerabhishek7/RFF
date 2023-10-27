@@ -45,17 +45,17 @@ class ProfileScreenContainer extends Component {
           userData: this.props.userData,
         });
       } else if (this.props.userError  && this.props.userError !== prevProps.userError) {
-        alert(this.props.userError);
+        Alert.alert(this.props.userError);
         this.props.resetUserDataErrorAction()
       }
       if (
         this.props.passwordUpdated !== prevProps.passwordUpdated &&
         this.props.passwordUpdated
       ) {
-        alert(STR_CONST.PASSWORD_CHANGE);
+        Alert.alert(STR_CONST.PASSWORD_CHANGE);
         this.props.resetPasswordUpdateAction();
       } else if (this.props.passwordError) {
-        alert(this.props.passwordError);
+        Alert.alert(this.props.passwordError);
         this.props.resetPasswordUpdateAction();
       }
 
@@ -63,13 +63,13 @@ class ProfileScreenContainer extends Component {
         this.props.presignedUrlError &&
         this.props.presignedUrlError !== prevProps.presignedUrlError
       ) {
-        alert(STR_CONST.IMAGE_UPLOAD_FAILED);
+        Alert.alert(STR_CONST.IMAGE_UPLOAD_FAILED);
       }
       if (
         this.props.uploadImageError &&
         this.props.uploadImageError !== prevProps.uploadImageError
       ) {
-        alert(STR_CONST.IMAGE_UPLOAD_FAILED);
+        Alert.alert(STR_CONST.IMAGE_UPLOAD_FAILED);
       }
       if (
         this.props.notiifcationSettingsData !==

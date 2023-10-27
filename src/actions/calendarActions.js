@@ -72,7 +72,7 @@ export function createAlert(body) {
         await dispatch(CommonActions.setNetworkStatus(''));
         }else{
           console.log("yes check here on catch section of alert creat #########")
-        alert(e)
+        Alert.alert(e)
       }
       console.log("catch of Create Alert",e);
     }
@@ -159,7 +159,7 @@ export function getSeatsAvailability(propsData,type) {
          payload: { sessionExpired: true},	
        });}else if(e == NETWORK_ERROR){
          await dispatch(CommonActions.setNetworkStatus(''));}else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -201,7 +201,7 @@ export function getPointsAvailability(searchData) {
          });}else if(e == NETWORK_ERROR){
           dispatch(CommonActions.stopLoader());
            await dispatch(CommonActions.setNetworkStatus(''));}else{
-          alert(e)
+          Alert.alert(e)
         }
       }
     };
@@ -244,7 +244,7 @@ export function getPeakOffPeakData() {
          payload: { sessionExpired: true},	
        });}else if(e == NETWORK_ERROR){
          await dispatch(CommonActions.setNetworkStatus(''));}else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };

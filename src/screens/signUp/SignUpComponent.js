@@ -238,10 +238,10 @@ class SignUpComponent extends Component {
     let email = this.state.email.trim();
     let password = this.state.password.trim();
     let confirmPassword = this.state.confirmPassword.trim();
-    if (!Validators.validName(firstName)) {
+    if (!this.validateName(firstName)) {
       this.validateArray.push(FIRST);
       return;
-    } else if (!Validators.validName(lastName)) {
+    } else if (!this.validateName(lastName)) {
       this.validateArray.push(LAST);
       return;
     } else
@@ -566,7 +566,7 @@ class SignUpComponent extends Component {
     );
   }
   validateName(name) {
-    if (name.length < 2 || !Validators.validName(name)) {
+    if (name.length < 3 || !Validators.validName(name)) {
       return false;
     }
     return true;
@@ -741,7 +741,7 @@ class SignUpComponent extends Component {
                     isSignUpPressed && Utils.isEmptyString(password)
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
-                      width:scale(240),borderWidth:0
+                      width:scale(240),               
                 },
               ]}
               placeholder={STR_CONST.EMAIL}
@@ -891,7 +891,7 @@ class SignUpComponent extends Component {
               onChangeText={(password) => {
                 this.setState({ password });
               }}
-              maxLength={25}
+              maxLength={20}
               secureTextEntry={this.state.isHidePassword}
               value={this.state.password}
               underlineColorAndroid={'#FFFFFF'}
@@ -1046,7 +1046,7 @@ class SignUpComponent extends Component {
               secureTextEntry={isHideConfirmPassword}
               value={confirmPassword}
               blurOnSubmit={false}
-              maxLength={25}
+              maxLength={20}
               onSubmitEditing={() => {
                 Keyboard.dismiss(), this.validation();
               }}

@@ -64,9 +64,7 @@ export default StyleSheet.create({
     justifyContent:'center',
   },
   input: {
-    // borderBottomWidth: scale(1),
     alignItems: "center",
-    // borderBottomColor: colours.borderBottomLineColor,
     fontSize: scale(16),
     color: colours.darkBlueTheme,
     fontWeight: '400',

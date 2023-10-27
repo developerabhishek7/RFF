@@ -13,7 +13,7 @@ import {
 import { getAirlinesAvailability,getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 
 import {updateGuestUserPostHog,updateLoggedInUserPostHog,getUserConfigDetails} from '../../actions/userActions'
-
+import { Alert } from "react-native";
 class MapSearchContainer extends Component {
   constructor(props) {
     super(props);    
@@ -86,7 +86,7 @@ class MapSearchContainer extends Component {
             WhereFrom:this.state.WhereFrom
           });
         } else {
-          alert(this.props.availableDestinationsError);
+          Alert.alert(this.props.availableDestinationsError);
         }
         this.props.resetDataAction();
       }

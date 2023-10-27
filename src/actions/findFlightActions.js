@@ -27,6 +27,7 @@ import {
 import {BASE_NODE_URL} from '../helpers/config'
 import * as CommonActions from './commonActions';
 import {NETWORK_ERROR} from '../constants/StringConst'
+import { Alert } from "react-native";
 export function resetCreateAlertData(){
   return async (dispatch, getState) =>{
     dispatch({
@@ -187,7 +188,7 @@ export function sendAuditData(auditData) {
         dispatch(CommonActions.stopLoader());
         await dispatch(CommonActions.setNetworkStatus(''));
         }else{
-        alert(e)
+        Alert.alert(e)
       }     
     }
   };
@@ -309,7 +310,7 @@ export function getCabinClass(data) {
          payload: { sessionExpired: true},	
        });}else if(e == NETWORK_ERROR){
          await dispatch(CommonActions.setNetworkStatus(''));}else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };

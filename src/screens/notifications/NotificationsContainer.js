@@ -15,7 +15,7 @@ import {
 import NotificationsComponent from "./NotificationsComponent";
 import { RECORDS_PER_PAGE } from "../../constants/StringConst";
 import Utils from "../../utils/commonMethods";
-
+import {getUserInfo} from '../../actions/userActions'
 class NotificationsContainer extends Component {
   constructor(props) {
     super(props);
@@ -93,6 +93,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   getNotifications: (pageNo, recordsPerPage) =>
     dispatch(getNotifications(pageNo, recordsPerPage)),
+  getUserInfoAction: () => dispatch(getUserInfo()),
   markNotificationAsRead: notifID => dispatch(markNotificationAsRead(notifID)),
   resetNotificationDataAction: () => dispatch(resetNotificationData()),
   getAlertNotifications: (alertId, pageNo, recordsPerPage) =>

@@ -940,7 +940,7 @@ export default class FindFlightComponent extends Component {
 
 
 
-        {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{ color: colours.redColor, alignSelf: 'center', marginBottom: verticalScale(5), fontSize: scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>}
+        {/* {isSearchClicked && (!selectedSource || !selectedDestination) && <Text style={{ color: colours.redColor, alignSelf: 'center', marginBottom: verticalScale(5), fontSize: scale(12), fontFamily: STRING_CONST.appFonts.INTER_REGULAR, }}>Please choose all fields</Text>} */}
         {this.renderBottomButton1("Search", colours.lightBlueTheme, () => {
           this.validateFindFlightData();
         })}
@@ -1275,7 +1275,6 @@ export default class FindFlightComponent extends Component {
               });
             }
           }}
-
           style={{ borderWidth: 0, width: scale(40), alignSelf: 'flex-end' }}
         >
           <FastImage resizeMode="contain" source={IMAGE_CONST.RETURN_ICON}
@@ -1288,7 +1287,7 @@ export default class FindFlightComponent extends Component {
             {
               paddingBottom: verticalScale(8),
               borderBottomColor:
-                isSearchClicked && !selectedSource
+                isSearchClicked && !selectedDestination
                   ? colours.errorColor
                   : colours.borderBottomLineColor,
             },
@@ -1317,8 +1316,7 @@ export default class FindFlightComponent extends Component {
               marginRight: scale(12)
             }]}
           />
-          <View style={{}}>
-
+          <View>
 
             {/* <Text
             style={[
@@ -1339,7 +1337,7 @@ export default class FindFlightComponent extends Component {
                 styles.airlineMembershipTextStyle,
                 {
                   color:
-                    isSearchClicked && !selectedSource
+                    isSearchClicked && !selectedDestination
                       ? colours.errorColor
                       : colours.lightGreyish,
                   fontSize: selectedDestination ? scale(12) : scale(14),
@@ -1351,6 +1349,9 @@ export default class FindFlightComponent extends Component {
             </Text>
 
             {selectedDestination && (
+              <View
+              style={{flexDirection:'row'}}
+              >
               <Text
                 numberOfLines={1}
                 style={
@@ -1368,7 +1369,20 @@ export default class FindFlightComponent extends Component {
                 }
               >
                 {this.getFullDestinationName(selectedDestination)}
-              </Text>)}
+              </Text>
+              
+              <TouchableOpacity onPress={() => {
+                this.onDestinationSelected(null);
+              }}
+                style={{
+                  alignSelf:'flex-end'
+                }}
+              >
+                {IMAGE_CONST.GREY_CROSS}
+              </TouchableOpacity>
+
+              </View>
+              )}
           </View>
         </TouchableOpacity>
       </Fragment>

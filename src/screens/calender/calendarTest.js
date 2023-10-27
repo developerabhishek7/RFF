@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Animated,
   Linking,
+  Alert
 } from "react-native";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
@@ -480,7 +481,7 @@ export default class CalenderComponent extends Component {
             },
             () => {
               setTimeout(() => {
-                alert(STRING_CONST.CREATE_ALERT_LIMIT_GOLD);
+                Alert.alert(STRING_CONST.CREATE_ALERT_LIMIT_GOLD);
               }, 100);
             }
           );
@@ -506,7 +507,7 @@ export default class CalenderComponent extends Component {
         },
         () => {
           setTimeout(() => {
-            alert(STRING_CONST.VERIFY_EMAIL);
+            Alert.alert(STRING_CONST.VERIFY_EMAIL);
           }, 100);
         }
       );

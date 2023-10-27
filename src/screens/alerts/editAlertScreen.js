@@ -93,11 +93,11 @@ class EditAlertComponent extends Component {
         this.props.editAlertSuccess !== prevProps.editAlertSuccess &&
         this.props.editAlertSuccess
       ) {
-        alert(STRING_CONST.ALERT_UPDATED);
+        Alert.alert(STRING_CONST.ALERT_UPDATED);
         this.props.resetAlertUpdateAction();
         this.props.navigation.goBack();
       } else if (this.props.editAlertSuccess == false) {
-        alert(this.props.editAlertError);
+        Alert.alert(this.props.editAlertError);
         this.props.resetAlertUpdateAction();
       }
     }

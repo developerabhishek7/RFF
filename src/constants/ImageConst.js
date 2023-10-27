@@ -40,7 +40,7 @@ export const PROFILE_IMG = require('../assets/common/profile.png');
 export const SUBSCRIPTION = require('../assets/common/subscription.png');
 // export const PRICE = require('../assets/common/price.png');
 
-
+export const CROSS = require('../assets/common/close1.png');
 
 export const CHANGE_PASSWORD_BG = require('../assets/changePassword/BG.png');
 export const CHANGE_PASSWORD_LOGO = require('../assets/changePassword/logo.png');

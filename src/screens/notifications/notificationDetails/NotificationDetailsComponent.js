@@ -10,7 +10,8 @@ import {
   BackHandler,
   Modal,
   Dimensions,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
@@ -189,7 +190,7 @@ class NotificationDetailComponent extends Component {
       ) {
         this.setData(this.props.notificationDetails);
       } else if (this.props.notificationDetailsError !== "") {
-        alert(notificationDetailsError);
+        Alert.alert(notificationDetailsError);
       }
       this.props.resetNotificationDetailsAction();
       if (

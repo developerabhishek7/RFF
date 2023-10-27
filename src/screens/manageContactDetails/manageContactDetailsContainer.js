@@ -78,9 +78,7 @@ const mapDispatchToProps = dispatch => {return({
   resetManageContactAction:()=>dispatch(resetManageContact()),
   getUserInfoAction: () => dispatch(getUserInfo()),
  
-});}
-;
-
+});};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -25,7 +25,7 @@ import {
   SMSNotificationToggle,
 } from "../../actions/notificationActions";
 import * as STR_CONST from "../../constants/StringConst";
-
+import {Alert} from 'react-native'
 class NotificationSettingsContainer extends Component {
   constructor(props) {
     super(props);
@@ -44,20 +44,20 @@ class NotificationSettingsContainer extends Component {
           userData: this.props.userData,
         });
       } else if (this.props.userError  && this.props.userError !== prevProps.userError) {
-        alert(this.props.userError);
+        Alert.alert(this.props.userError);
         this.props.resetUserDataErrorAction()
       }
       if (
         this.props.presignedUrlError &&
         this.props.presignedUrlError !== prevProps.presignedUrlError
       ) {
-        alert(STR_CONST.IMAGE_UPLOAD_FAILED);
+        Alert.alert(STR_CONST.IMAGE_UPLOAD_FAILED);
       }
       if (
         this.props.uploadImageError &&
         this.props.uploadImageError !== prevProps.uploadImageError
       ) {
-        alert(STR_CONST.IMAGE_UPLOAD_FAILED);
+        Alert.alert(STR_CONST.IMAGE_UPLOAD_FAILED);
       }
       if (
         this.props.notiifcationSettingsData !==
