@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Reward Flight Finder</string>
+
+    <string name="facebook_app_id">547320892866347</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">388c6b8628c2187ee7d936d81e09c43b</string>
+
 </resources>

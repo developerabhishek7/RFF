@@ -97,7 +97,7 @@ export function setPassword(password) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(e)
+        Alert.alert(e)
       }
       await dispatch({
         type: UPDATE_PASSWORD_ERROR,
@@ -141,7 +141,7 @@ export function deleteProfileImage() {
     } catch (e) {
       console.log("cath error Update USer Info", e);
       dispatch(CommonActions.stopLoader()); // To stop Loader
-      alert(e);
+      Alert.alert(e);
     }
   };
 }
@@ -173,7 +173,7 @@ export function uploadUserImage(preSignedUrl, imageObject) {
     } catch (e) {
       console.log("cath error Update Image", e);
       dispatch(CommonActions.stopLoader()); // To stop Loader
-      alert(e);
+      Alert.alert(e);
     }
   };
 }
@@ -226,7 +226,7 @@ export function updateUserProfile(imageData) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(STR_CONST.SOMETHING_WENT_WRONG )
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };
@@ -291,7 +291,7 @@ export function getPresignedURL(extension, imageOject) {
           payload: { sessionExpired: true },
         });
       } else {
-        alert(STR_CONST.SOMETHING_WENT_WRONG);
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG);
       }
     }
   };
@@ -308,7 +308,6 @@ export function getUserInfo() {
         authToken
       );
       if (res) {
-        console.log("yes check here reponse  - - - - - -- - ",res)
         if(res.error == "Session expired."){
           await dispatch({
             type: SESSION_EXPIRED,
@@ -452,7 +451,7 @@ export function updateUserInfo(userInfo,addingUserDetail) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(STR_CONST.SOMETHING_WENT_WRONG )
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };
@@ -730,7 +729,7 @@ export function updateGuestUserPostHog(userInfo) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(STR_CONST.SOMETHING_WENT_WRONG )
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };
@@ -776,7 +775,7 @@ export function updateLoggedInUserPostHog(userInfo) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(STR_CONST.SOMETHING_WENT_WRONG )
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };
@@ -906,7 +905,7 @@ export function submitHelpForm(postData) {
       } else if(e == STR_CONST.NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus(''));
       }else{
-        alert(STR_CONST.SOMETHING_WENT_WRONG )
+        Alert.alert(STR_CONST.SOMETHING_WENT_WRONG )
       }
     }
   };

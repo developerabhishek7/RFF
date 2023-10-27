@@ -33,6 +33,8 @@ import {
 } from "../../utils/commonMethods";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
+
+// var pendingOutBoundCount = 0
 import moment from "moment";
 let monthKey = ""
 let dateForPoints = ""
@@ -75,7 +77,6 @@ class DestinationsComponent extends Component {
   
 checkIfPeakOffPeakDataMonth = () => {
   let month =  new Date().getMonth()
-  // console.log("yes check month key ====== month     ",typeof month)
 
   if(month === 0){
     monthKey = 23
@@ -149,14 +150,76 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
     var start = moment(auditData.search_data.arrival_date_from);
-      var end = moment(auditData.search_data.arrival_date_to);
-      let returnDaysDiff =   end.diff(start, "days")
+    var end = moment(auditData.search_data.arrival_date_to);
+    let returnDaysDiff =   end.diff(start, "days")
     
 
     let WhereFrom = this.props.route.params.WhereFrom
     let data1 = JSON.parse(this.props.route.params.singleMap)
 
-    this.setState({ WhereFrom,departureDaysDiff,returnDaysDiff })
+    let outboundData = data1.availability.outbound
+    let inboundData = data1.availability.inbound && data1.availability.inbound
+
+    console.log('outboundData >>> /// ',outboundData)
+
+    let outboundLength = outboundData && Object.keys(outboundData).length
+    let inboundLength = 0
+
+
+    console.log('outboundLength >>> /// ',outboundLength)
+
+    let outboundDiff = parseInt(outboundLength) - parseInt(departureDaysDiff) 
+    var pendingOutBoundCount = 0
+    let pendingInBoundCount = 0
+
+ 
+      if(this.state.tripType == "return"){
+       // Outbound 
+       if(outboundLength > 20 ){
+          pendingOutBoundCount = outboundLength - 10
+        }
+        if(outboundLength < 10) {
+          pendingOutBoundCount = 0
+        }
+        if(outboundLength > 10 && outboundLength < 20){
+           pendingOutBoundCount = outboundLength - 10
+        }
+      
+        let firstOutboundDataKey =  Object.keys(outboundData)[0]
+        let inboundData1 = Object.keys(inboundData)
+
+        inboundData1.map((singleMap, index) => {
+          if(singleMap >= firstOutboundDataKey){
+            inboundLength++
+          }
+        })  
+
+        // console.log(' inboud length ..... ', inboundLength)
+        // Inbound 
+        if(inboundLength > 20 ){
+          pendingInBoundCount = inboundLength - 10
+         }
+         if(inboundLength < 10) {
+          pendingInBoundCount = 0
+         }
+         if(inboundLength > 10 && inboundLength < 20){
+           pendingInBoundCount = inboundLength - 10
+        }
+      }
+
+      if(this.state.tripType == "one_way"){
+        if(outboundLength > 20 ){
+          pendingOutBoundCount = outboundLength - 10
+        }
+        if(outboundLength < 10) {
+          pendingOutBoundCount = 0
+        }
+      }
+
+
+    
+  
+    this.setState({ WhereFrom,departureDaysDiff:pendingOutBoundCount,returnDaysDiff:pendingInBoundCount })
 
     this.checkIfPeakOffPeakDataMonth()
     this.props.getPeakOffPeakDataAction()
@@ -165,10 +228,6 @@ checkIfPeakOffPeakDataMonth = () => {
       "source": auditData.search_data.source,
      "destination": data1.code
     }
-
-
-
-    console.log("yes check here data - - - - --  ",    this.state.tripType)
 
     setTimeout(() => {
       this.getDates()
@@ -341,20 +400,20 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
   showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints) {
+    const { tripType } = this.state;
     let dates = JSON.parse(this.props.route.params.singleMap)
     let pointsDatBA  = this.props.route.params.pointsDatBA
     let pointsDataSS  = this.props.route.params.pointsDataSS
 
-
-
-
-    // console.log("yes check here poi ts data  - - - - - - ",this.state.peak)
-
-
-      if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
-        if(this.state.peak  == false){ 
+    economyValue = ""
+    premiumValue =  ""
+    businessValue = ""
+    firstValue = ""
+   
+     if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
+        if(this.state.peak  === false){ 
               pointsDatBA.map((singleMap)=>{
-                if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
+                if(singleMap.one_way === true && singleMap.peak_type === "offpeak"){
                   if(singleMap.economy_avios){
                     economyValue = singleMap.economy_avios
                   }
@@ -372,7 +431,7 @@ checkIfPeakOffPeakDataMonth = () => {
         }
         else{
               pointsDatBA.map((singleMap)=>{
-                  if(singleMap.one_way == true && singleMap.peak_type == "peak"){
+                  if(singleMap.one_way === true && singleMap.peak_type === "peak"){
                   if(singleMap.economy_avios){
                     economyValue = singleMap.economy_avios
                   }
@@ -389,7 +448,7 @@ checkIfPeakOffPeakDataMonth = () => {
               })
         }
 
-  }
+    }
 
 
 
@@ -404,7 +463,7 @@ checkIfPeakOffPeakDataMonth = () => {
   
       pointsDataSS.map((singleMap)=>{
   
-        if(singleMap.one_way == true && singleMap.peak_type == "offpeak" ){
+        if(singleMap.one_way === true && singleMap.peak_type === "offpeak"){
           if(singleMap.economy_avios){
             economyValue = singleMap.economy_avios
           }
@@ -423,7 +482,7 @@ checkIfPeakOffPeakDataMonth = () => {
     else{
       pointsDataSS.map((singleMap)=>{
   
-        if(singleMap.one_way == true && singleMap.peak_type == "peak"){
+        if(singleMap.one_way === true && singleMap.peak_type === "peak"){
           if(singleMap.economy_avios){
             economyValue = singleMap.economy_avios
           }
@@ -448,6 +507,87 @@ checkIfPeakOffPeakDataMonth = () => {
     let premiumClass = dates.available_classes.premium;
     let businessClass = dates.available_classes.business;
     let firstClass = dates.available_classes.first;
+
+      let economyInbound = false
+      let premiumInbound = false
+      let businessInbound = false
+      let firstInbound = false
+
+      let economyOutbound = false
+      let premiumOutbound = false
+      let businessOutbound = false
+      let firstOutbound = false
+
+    if (tripType == "return") {
+
+      let inboundData = dates.availability.inbound
+      let outboundData = dates.availability.outbound
+
+      economyClass = false
+      premiumClass = false
+      businessClass = false
+      firstClass = false
+
+      for (let i of Object.keys(outboundData)) {
+        if (outboundData[i].economy) {
+          economyOutbound = true
+        }
+        if (outboundData[i].premium) {
+          premiumOutbound = true
+        }
+        if (outboundData[i].business) {
+          businessOutbound = true
+        }
+        if (outboundData[i].first) {
+          firstOutbound = true
+        }
+      }
+
+      for (let i of Object.keys(inboundData)) {
+        if (inboundData[i].economy) {
+          economyInbound = true
+        }
+        if (inboundData[i].premium) {
+          premiumInbound = true
+        }
+        if (inboundData[i].business) {
+          businessInbound = true
+        }
+        if (inboundData[i].first) {
+          firstInbound = true
+        }
+      }
+
+      economyClass = economyOutbound && economyInbound
+      premiumClass = premiumOutbound && premiumInbound
+      businessClass = businessOutbound && businessInbound
+      firstClass = firstOutbound && firstInbound
+
+    }
+    if (tripType == "one_way") {
+
+      let outboundData = dates.availability.outbound
+
+      economyClass = false
+      premiumClass = false
+      businessClass = false
+      firstClass = false
+
+      for (let i of Object.keys(outboundData)) {
+        if (outboundData[i].economy) {
+          economyClass = true
+        }
+        if (outboundData[i].premium) {
+          premiumClass = true
+        }
+        if (outboundData[i].business) {
+          businessClass = true
+        }
+        if (outboundData[i].first) {
+          firstClass = true
+        }
+      }
+    }
 
     if (first || economy || business || premium) {
       first ?
@@ -801,10 +941,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
   renderOutboundDates = () => {
     let dates = JSON.parse(this.props.route.params.singleMap)
-
-
     const { tripType } = this.state;
-
     let isEconomy = false
     let isPremium = false
     let isBusiness = false
@@ -839,7 +976,6 @@ checkIfPeakOffPeakDataMonth = () => {
         }
       }
      
-
       for (let i of Object.keys(inboundData)) {
         if (inboundData[i].economy) {
           economy2 = true
@@ -868,11 +1004,8 @@ checkIfPeakOffPeakDataMonth = () => {
         isFirst = true
       }
     }
-    // let availability2 = {"economy":economy1,"premium":premium1,"business":business1,"first":first1}
 
     let actualDate = Object.entries(dates.availability.outbound)
-    let count 
-
     let DateCount = 9
     if(tripType == "return"){
       DateCount = 9
@@ -880,8 +1013,18 @@ checkIfPeakOffPeakDataMonth = () => {
     else{
       DateCount = 19
     }
+
+
+
+
+
+
+
+
+
+
     return (
-      <View style={{ flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
+      <View style={{ width: scale(340), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
           actualDate.map((singleMap ,index) => {
 
@@ -952,8 +1095,7 @@ checkIfPeakOffPeakDataMonth = () => {
               <Fragment>
                 {
                   index <=  DateCount ?
-
-                  <View style={styles.outboundMainView}>
+                  <View style={ [styles.outboundMainView, { margin: index >= 10 ? scale(7) : scale(4)  } ]}>
                   {
                     peak == true ?
                       <Fragment>
@@ -966,9 +1108,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-
-
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -991,7 +1133,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1012,7 +1156,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1031,7 +1177,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1050,7 +1198,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1069,7 +1219,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1088,7 +1240,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1107,7 +1261,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1126,7 +1282,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1145,7 +1303,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1164,7 +1324,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1183,7 +1345,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1204,7 +1368,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1225,7 +1391,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1246,7 +1414,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1270,7 +1440,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1289,7 +1461,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1308,7 +1482,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1327,7 +1503,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1346,7 +1524,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1365,7 +1545,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1384,7 +1566,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1403,7 +1587,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1422,7 +1608,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1441,7 +1629,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1460,7 +1650,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1480,7 +1672,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1490,7 +1684,6 @@ checkIfPeakOffPeakDataMonth = () => {
                             </ImageBackground>
 
                             : null
-
                         }
                         {
                           businessSeat && !firstSeat && !economySeat && !premiumSeat ?
@@ -1501,7 +1694,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1511,7 +1706,6 @@ checkIfPeakOffPeakDataMonth = () => {
                             </ImageBackground>
 
                             : null
-
                         }
                         {
                           premiumSeat && !firstSeat && !economySeat && !businessSeat ?
@@ -1522,16 +1716,16 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)                                }}
                               >
                                   <Text style={styles.dateText}>{actualDate[0]}</Text>
                                 <Text style={styles.monthText}>{actualDate[1]}</Text>
                               </TouchableOpacity>
                             </ImageBackground>
-
                             : null
-
                         }
                         {
                           firstSeat && !premiumSeat && !economySeat && !businessSeat ?
@@ -1542,7 +1736,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
-                                   this.setState({peakKey:peakKey,peak:peak})
+                                    setTimeout(() => {
+                                  this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -1558,7 +1754,6 @@ checkIfPeakOffPeakDataMonth = () => {
 
                   : null
                 }
-              
               </Fragment>
             )
           })
@@ -1656,16 +1851,16 @@ checkIfPeakOffPeakDataMonth = () => {
     });
 
     return (
-      <View style={{ flexDirection: "row",flexWrap:"wrap",borderWidth:0,alignSelf:"flex-start", flex: 1,marginStart:scale(10),marginEnd:scale(0) }}>
+      <View style={{ width: scale(340), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
           actualDate.length!=0 ? actualDate.map((singleMap, index) => {
+            
 
            let  peakKey =  singleMap[1].peak
              dateForPoints = singleMap[0]
 
             let dates = Object.values(singleMap)[0];
             let dateKeys = Object.values(singleMap)[1]
-            // let actualDate = new Date(dates).getDate()
             let actualDate =  moment(dates).format("DD MMM").split(" ")
             let month = "";
             let businessClass = singleMap[dateKeys]
@@ -1677,12 +1872,10 @@ checkIfPeakOffPeakDataMonth = () => {
             let premium;
             let first;
 
-
             let economySeat;
             let premiumSeat;
             let businessSeat;
             let firstSeat;
-
 
             if (tripType == "return") {
               if (dateKeys.economy && isEconomy) {               
@@ -1721,40 +1914,11 @@ checkIfPeakOffPeakDataMonth = () => {
               }
             }
 
-            // if (tripType == "return") {
-            //   if (dateKeys.business && isBusiness) {
-            //     business = dateKeys.business.points
-            //   }
-            //   if (dateKeys.economy && isEconomy) {
-            //     economy = dateKeys.economy.points
-            //   }
-            //   if (dateKeys.premium && isPremium) {
-            //     premium = dateKeys.premium.points
-            //   }
-            //   if (dateKeys.first && isFirst) {
-            //     first = dateKeys.first.points
-            //   }
-            // }
-            // if (tripType == "one_way") {
-            //   if (dateKeys.business) {
-            //     business = dateKeys.business.points
-            //   }
-            //   if (dateKeys.economy) {
-            //     economy = dateKeys.economy.points
-            //   }
-            //   if (dateKeys.premium) {
-            //     premium = dateKeys.premium.points
-            //   }
-            //   if (dateKeys.first) {
-            //     first = dateKeys.first.points
-            //   }
-            // }
-
             return (
               <Fragment>
                 {
                   index <= 9 ?
-                  <View style={styles.outboundMainView}>
+                  <View style={ [styles.outboundMainView, { margin: index >= 10 ? scale(7) : scale(4) }]}>
                   {
                     peak == true ?
                       <Fragment>
@@ -1767,7 +1931,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1788,7 +1954,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1808,7 +1976,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1828,7 +1998,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1848,7 +2020,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1868,7 +2042,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1888,7 +2064,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1908,7 +2086,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1928,7 +2108,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1948,7 +2130,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1968,7 +2152,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -1988,7 +2174,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2010,7 +2198,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2032,7 +2222,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2054,7 +2246,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2079,7 +2273,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2099,7 +2295,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2119,7 +2317,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2139,7 +2339,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2159,7 +2361,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2179,7 +2383,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2199,7 +2405,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2219,7 +2427,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2239,7 +2449,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2259,7 +2471,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2278,7 +2492,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
 
                                 }}
@@ -2299,7 +2515,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2318,7 +2536,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2337,7 +2557,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2356,7 +2578,9 @@ checkIfPeakOffPeakDataMonth = () => {
                             >
                               <TouchableOpacity style={styles.offpeakbg}
                                 onPress={() => {
+                                   setTimeout(() => {
                                   this.setState({peakKey:peakKey,peak:peak})
+                                  }, 300);
                                   this.showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints)
                                 }}
                               >
@@ -2502,6 +2726,9 @@ checkIfPeakOffPeakDataMonth = () => {
       isInBoundTrue = Object.entries(destinationData.availability.inbound)
     }
     const {tripType, departureDaysDiff, returnDaysDiff} = this.state
+
+
+    // console.log("yes check here inside render - - - - - -  - -   ",pendingOutBoundCount)
    
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
@@ -2537,9 +2764,8 @@ checkIfPeakOffPeakDataMonth = () => {
                     <TouchableOpacity onPress={() => { this.gotoCalender() }} style={{
                       alignItems: "flex-end", alignSelf: "flex-end", justifyContent: "center", marginRight: scale(30), margin: scale(10)
                       , marginTop: this.state.month ? scale(7) : scale(7),
-
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{tripType == "one_way" ? departureDaysDiff - 20 : departureDaysDiff - 10} More days </Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{departureDaysDiff} More days </Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null
@@ -2548,9 +2774,9 @@ checkIfPeakOffPeakDataMonth = () => {
               : null
           }
           {
-            isInBoundTrue ?
+              isInBoundTrue ?
               <Fragment>
-                <View style={{ margin: 10, paddingStart: 10 }}>
+                <View style={{ margin: scale(10), paddingStart: scale(10) }}>
                   <Text style={{ fontSize: scale(16), padding: 3, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD }}>Return</Text>
                 </View>
                 {this.renderInboundDates()}
@@ -2568,7 +2794,7 @@ checkIfPeakOffPeakDataMonth = () => {
                       alignItems: "flex-end", alignSelf: "flex-end",
                       marginTop: this.state.returnDateMonth ? scale(7) : scale(7), justifyContent: "center", marginRight: scale(30), margin: scale(10), borderWidth: 0
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnDaysDiff ? returnDaysDiff - 10 : ""} More days</Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnDaysDiff} More days</Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null

@@ -11,7 +11,7 @@ import {
 } from "../../actions/userActions";
 import ChangePasswordComponent from "./ChangePasswordComponent";
 import * as STR_CONST from "../../constants/StringConst";
-
+import {Alert} from 'react-native'
 class ChangePasswordContainer extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class ChangePasswordContainer extends Component {
         this.props.navigation.navigate("ProfileScreen")
         this.props.resetPasswordUpdateAction();
       } else if (this.props.passwordError) {
-        alert(this.props.passwordError);
+        Alert.alert(this.props.passwordError);
         this.props.resetPasswordUpdateAction();
       }
     }

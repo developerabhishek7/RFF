@@ -17,7 +17,7 @@ import {
 import * as CommonActions from "./commonActions";
 import {NETWORK_ERROR, SOMETHING_WENT_WRONG} from '../constants/StringConst'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import { Alert } from "react-native";
 import {BASE_NODE_URL} from '../helpers/config'
 
 export function resetCreateAlertData() {
@@ -74,7 +74,7 @@ export function resetData() {
       if (e == NETWORK_ERROR) {
         await dispatch(CommonActions.setNetworkStatus(''));
       } else {
-        alert(e);
+        Alert.alert(e);
       }
     }
   };

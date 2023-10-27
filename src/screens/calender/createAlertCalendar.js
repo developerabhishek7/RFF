@@ -6,7 +6,8 @@ import {
   Image,
   SafeAreaView,
   Platform,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
@@ -214,7 +215,7 @@ export default class CalenderComponent extends Component {
             );
             this.props.navigation.goBack();
           } else {
-            alert(STRING_CONST.CHOOSE_DATE);
+            Alert.alert(STRING_CONST.CHOOSE_DATE);
           }
         }}
         activeOpacity={.6}

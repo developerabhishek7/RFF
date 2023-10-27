@@ -82,7 +82,7 @@ export function sendOTP() {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -140,7 +140,7 @@ export function addContact(userInfo,metaData) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -197,7 +197,7 @@ export function verifyOTP(code,metaData) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -237,7 +237,7 @@ export function deleteNumber() {
       }else if(e == NETWORK_ERROR || e[0] == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -277,7 +277,7 @@ export function deleteEmail(emailId) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -328,7 +328,7 @@ export function setSecondaryAsPrimaryEmail(emailId) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -420,7 +420,7 @@ export function setPrimaryEmail(emailId) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -465,7 +465,7 @@ export function resendSecondaryVerification(emailId) {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };
@@ -507,7 +507,7 @@ export function resendPrimaryVerification() {
       } else if(e[0] == NETWORK_ERROR || e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('')); 
       }else{
-        alert(e)
+        Alert.alert(e)
       }
     }
   };

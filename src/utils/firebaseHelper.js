@@ -7,7 +7,7 @@ import Dropdown from "./dropdown";
 import { SET_BADGE_COUNT } from "../constants/ActionConst";
 import { Platform } from "react-native";
 import * as RootNavigation from '../router/RouteNavigation';
-
+import {Alert} from 'react-native'
 class FcmService {
   constructor() {
     this._initialized = false;
@@ -88,7 +88,7 @@ class FcmService {
         const newStatus = await messaging().requestPermission();
         switch (newStatus) {
           case firebase.messaging.AuthorizationStatus.DENIED:
-            alert("You will not receive push notifications.");
+            Alert.alert("You will not receive push notifications.");
             result = false;
             break;
           case firebase.messaging.AuthorizationStatus.AUTHORIZED:
@@ -100,7 +100,7 @@ class FcmService {
             }
             break;
           case firebase.messaging.AuthorizationStatus.PROVISIONAL:
-            alert("You will receive notifications silently.");
+            Alert.alert("You will receive notifications silently.");
             result = true;
             break;
         }

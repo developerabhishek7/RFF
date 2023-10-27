@@ -129,7 +129,8 @@
            notification_setting: notificationData,
          }
        );
-       if (res && res.status == 204) {
+       console.log('setNotificationSettings >>> /++ ',res);
+       if (res && res.status == 200) {
          await dispatch({
            type: UPDATE_NOTIFICATIONS_SETTINGS_SUCCESS,
            payload: { notificationsSettingsData: notificationData },
@@ -251,7 +252,8 @@
            notificationData[i].unread = false;
          }
        }
-       if (res && res.status == 201) {
+       
+       if (res) {
          await dispatch({
            type: MARK_NOTIFICATION_AS_READ_SUCCESS,
            payload: notificationData,
@@ -260,6 +262,7 @@
            type: SET_BADGE_COUNT,
            badgeCount: badgeCount - 1,
          });
+         dispatch(getUserInfo())
        } else {
          await dispatch({
            type: MARK_NOTIFICATION_AS_READ_ERROR,

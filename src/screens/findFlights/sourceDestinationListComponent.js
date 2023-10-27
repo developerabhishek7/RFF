@@ -144,7 +144,7 @@ export default class SourceDestinationListComponent extends Component {
 
   renderListItem = (itemObject, index) => {
     let countryName = ''
-    if (itemObject && itemObject.airports && itemObject.airports.length > 1) {
+    if (itemObject && itemObject.airports && itemObject.airports.length > 0) {
       countryName = itemObject.airports.map((item, index) => {
         return item.code
       }).join(', ')

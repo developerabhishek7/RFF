@@ -423,16 +423,11 @@ class MapComponent extends Component {
                 business = item.available_classes.business
                 first = item.available_classes.first
               } 
-              // let lat_long = `[${item.longitude},${item.latitude}]`
-              // let coordinatesValue = JSON.parse(lat_long)
               let lat = `${item.latitude}`
               let long = `${item.longitude}`
-
-
-
               return(
                 <Marker
-                  draggable={false}
+                  draggable
                   key={index}
                   coordinate = {{latitude: parseFloat(lat),longitude: parseFloat(long)}}
                   tracksViewChanges={true}
@@ -467,23 +462,18 @@ class MapComponent extends Component {
                       source: mapSearchData.sourceCode,
                       destination: mapSearchData.destinationCode
                     }
-                    // destinations && destinations.map((singleMap)=>{
-                    //   pointsData = singleMap.points.BA
-                    // })
                     this.props.getFlightScheduleAction(flightScheduleData)
                     this.props.sendAuditDataAction(auditData);
                     this.props.getAirlinesAvailabilityAction(mapSearchData);
                     this.props.getSeatsAvailabilityAction(mapSearchData);
                     this.props.getPointsAvailabilityAction(mapSearchData)
-                    
                   }}
-
                 >
-                      <Fragment>
-                    {
-                      this.state.isShowMarker ?
-                        <Fragment>
-                    {
+                <Fragment>
+                  {
+                    this.state.isShowMarker ?
+                    <Fragment>
+                  {
                     economy && premium && business && first ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
                         <Image resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
@@ -567,7 +557,6 @@ class MapComponent extends Component {
                       </View>
                       : null
                   }
-
                   {
                     business && !first && !economy && !premium ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
@@ -582,7 +571,6 @@ class MapComponent extends Component {
                       </View>
                       : null
                   }
-
                   {
                     first && !premium && !economy && !business ?
                       <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
@@ -590,7 +578,6 @@ class MapComponent extends Component {
                       </View>
                       : null
                   }
-
                         </Fragment>
                       : null
                     }

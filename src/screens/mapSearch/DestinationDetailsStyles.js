@@ -65,7 +65,7 @@ export default StyleSheet.create({
     peakFairImg: { height: scale(60), width: scale(60), margin: scale(1), justifyContent: 'center', alignItems: 'center' },
     peakFairTxt: { fontSize: scale(15), padding: scale(1), marginRight:scale(7),paddingTop: scale(2), fontFamily: appFonts.INTER_SEMI_BOLD, textAlign: 'left', color: "#132C52" },
     showClassDataView: { flexDirection: "row", justifyContent: "space-around", width: "96%", marginStart: scale(10), marginEnd: scale(10), marginTop: scale(10), marginBottom: -scale(7) },
-    outboundMainView: { flexDirection: "column",borderWidth:0,marginStart:scale(5),marginEnd:scale(5),flexWrap:"wrap",margin:scale(6) },
+    outboundMainView: { flexDirection: "column",borderWidth:0,flexWrap:"wrap"},
     outboundbgImg: { height: scale(50), width: scale(60), justifyContent: 'center', alignItems: 'center',padding:scale(2), },
     outBoundTxt: { fontSize: scale(13), width: scale(21), height: scale(21), textAlign: 'center', color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, padding: scale(2),paddingRight:scale(3) },
     offpeakbg:{

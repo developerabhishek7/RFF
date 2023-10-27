@@ -195,7 +195,6 @@ export default class NotificationSettingsComponent extends Component {
                   "plateform": "Mobile",
                 }
               }
-              // this.postHogAnalytics(loggedInUserPostHog)
             }
             else {
               let uuid_Key = uuid.v4()
@@ -211,15 +210,12 @@ export default class NotificationSettingsComponent extends Component {
                   "plateform": "Mobile",
                 }
               }
-              // this.postHogAnalytics(guestUserPostHog)
             }
-
-
             this.props.SMSNotificationToggleAction(this.state.sendSMS);
           }
         );
       } else {
-        alert(STRING_CONST.VERIFY_NUMBER);
+        Alert.alert(STRING_CONST.VERIFY_NUMBER);
       }
     } else {
       this.setState(
@@ -445,9 +441,27 @@ export default class NotificationSettingsComponent extends Component {
                   notificationSettings && notificationSettings.push_notification : false
                 }
                 onValueChange={async (val) => {
+                  if(userData && userData.gold_member){
                   await this.onNotificationSettingsChange(val);
+                  }else{
+                    Alert.alert(
+                      '',
+                      'Upgrade to Gold membership to get App Alert Notifications',
+                      [
+                        {  
+                          text: 'Cancel',  
+                          onPress: () =>  this.setState({isLoader:false}),  
+                          style: 'Cancel',  
+                      }, 
+                        {text: 'Upgrade',onPress: ()=>{ 
+                        this.gotoMembershipScreen()
+                      }}
+                    ],
+                      {cancelable: false},
+                    );
+                  }
                 }}
-                disabled={userData && userData.gold_member ? false : true}
+                // disabled={userData && userData.gold_member ? false : true}
                 circleSize={scale(16)}
                 barHeight={scale(20)}
                 circleBorderWidth={0}
@@ -582,6 +596,10 @@ export default class NotificationSettingsComponent extends Component {
         <View style={styles.line} />
       </View>
     );
+  }
+
+  gotoMembershipScreen = () => {
+    this.props.navigation.navigate("MembershipContainerScreen")
   }
 
   render() {

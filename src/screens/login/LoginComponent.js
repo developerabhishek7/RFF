@@ -45,7 +45,12 @@ import { appleAuth } from "@invertase/react-native-apple-authentication";
 import jwt_decode from "jwt-decode";
 import { getCountryList } from "../../actions/userActions";
 import SvgUri from 'react-native-svg-uri';
-
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 import { GenerateUUID } from "react-native-uuid"
 // import crashlytics from "@react-native-firebase/crashlytics";
 class LoginComponent extends Component {
@@ -116,7 +121,7 @@ class LoginComponent extends Component {
   _isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();
     if (isSignedIn) {
-      alert("User is already signed in");
+      Alert.alert("User is already signed in");
       //Get the User details as user is already signed in
       this._getCurrentUserInfo();
     } else {
@@ -130,9 +135,9 @@ class LoginComponent extends Component {
       this.setState({ userInfo: userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        alert("User has not signed in yet");
+        Alert.alert("User has not signed in yet");
       } else {
-        alert("Something went wrong. Unable to get user's info");
+        Alert.alert("Something went wrong. Unable to get user's info");
         console.log("Something went wrong. Unable to get user's info");
       }
     }
@@ -546,6 +551,7 @@ class LoginComponent extends Component {
         <View style={styles.passContainer1}>
 
           <TextInput
+            numberOfLines={1}
             ref={(input) => {
               this.secondTextInput = input;
             }}
@@ -556,6 +562,7 @@ class LoginComponent extends Component {
                   isLoginPressed && Utils.isEmptyString(password)
                     ? colours.errorColor
                     : colours.borderBottomLineColor,
+                    width:scale(260),
               },
             ]}
             placeholder={STR_CONST.EMAIL}
@@ -579,7 +586,7 @@ class LoginComponent extends Component {
             onSubmitEditing={() => {
               this.secondTextInput.focus();
             }}
-            maxLength={25}
+       
             blurOnSubmit={false}
             returnKeyType="next"
             underlineColorAndroid={'#FFFFFF'}
@@ -639,12 +646,10 @@ class LoginComponent extends Component {
             onChangeText={(password) => {
               this.setState({ password });
             }}
-            maxLength={25}
             secureTextEntry={this.state.isHidePassword}
             value={this.state.password}
             returnKeyType="done"
             underlineColorAndroid={'#FFFFFF'}
-
             onSubmitEditing={() => {
               this.validation();
 
@@ -743,17 +748,17 @@ class LoginComponent extends Component {
           </TouchableOpacity>
 
 
-          {/* <TouchableOpacity
-            onPress={() => this.onPressFBSocialLogin()}
+          <TouchableOpacity
+           onPress={() => this.handleFacebookLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.fbButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-            <Text
+            {/* <Text
             style={styles.iconTxt}
           > Facebook</Text>
-          
+           */}
          
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
           {!Utils.isAndroid() && (
             <TouchableOpacity
@@ -804,6 +809,29 @@ class LoginComponent extends Component {
       </View>
     );
   }
+
+  handleFacebookLogin = async () => {
+    try {
+      LoginManager.setLoginBehavior('native');
+      const PERMISSIONS = [ 'public_profile', 'email' ];
+      const result = await LoginManager.logInWithPermissions(PERMISSIONS);
+  
+      if (result.isCancelled) {
+        console.log('Facebook login was canceled.');
+      } else {
+        const tokenData = await AccessToken.getCurrentAccessToken();
+        if (tokenData) {
+          const accessToken = tokenData.accessToken.toString();
+          // You can use the access token for making Facebook Graph API requests.
+          console.log('Facebook login successful. Access Token:', accessToken);
+          this.fetchUserProfile(accessToken);
+        }
+      }
+    } catch (error) {
+      console.error('Facebook login error:', error);
+    }
+  };
+
 
   render() {
     return (

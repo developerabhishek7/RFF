@@ -61,7 +61,7 @@ export default function createUser(body) {
       if(e == NETWORK_ERROR){
         await dispatch(CommonActions.setNetworkStatus('SIGN_UP'));
         }else{
-        alert(e)
+          Alert.alert(e)
       }
     }
   };
