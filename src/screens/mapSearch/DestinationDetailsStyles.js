@@ -6,7 +6,6 @@ import { Dimensions } from "react-native";
 const { height, width } = Dimensions.get("window");
 import { appFonts } from "../../constants/StringConst";
 import { Platform } from "react-native";
-// import * as CONST from "../../../constants/StringConst";
 const circleRadius = scale(1.3);
 export default StyleSheet.create({
     container: {

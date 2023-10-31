@@ -43,7 +43,7 @@ export const STRETCH = "stretch";
 export const CONTAIN = "contain";
 export const BOLD = "bold";
 export const JUSTIFY = "justify";
-
+export const NO_ALERT_YET = "No Alert Yet" 
 // Login and SignUp screen
 export const EMAIL = "Email";
 export const COUNTRY = "Country";
@@ -381,9 +381,6 @@ export const GET_REWARDS = `Get the reward seats you deserve`
 export const GET_REWARDS_DES = `Increase your chances with Reward Flight Finder`
 
 
-
-
-
 //Membership Page
 export const DAILY_ALERTS = "Alert Notifications";
 export const EMAIL_ALERTS = "Email Alerts";
@@ -510,6 +507,7 @@ export const FROM = "FROM";
 export const ON = "On";
 export const OFF = "Off";
 export const IGNORE = "Ignore";
+export const SORT_BY = "Sort By";
 export const BRITISH_AIRWAYS = "British Airways";
 export const AMERICAN_AIRLINES = "American Airlines";
 export const AIRLINE_MEMBERSHIP_TIERS = "Airline Membership Tier";

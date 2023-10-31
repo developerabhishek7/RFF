@@ -11,6 +11,20 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: colours.white,
   },
+  subContainer: {
+    backgroundColor: "#FFF",
+    flex: 1
+  },
+  scrollViewStyle:{
+    flex: 1,
+  },
+  calendarList: {
+    backgroundColor:"#E4E4E4",
+    marginBottom:scale(35),
+  },
+  listFooter:{
+    height: verticalScale(70),
+  },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",

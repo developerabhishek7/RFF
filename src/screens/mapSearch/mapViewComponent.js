@@ -11,7 +11,6 @@ import scale, { verticalScale } from "../../helpers/scale";
 import { getAirlinesAvailability, getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 // import {getMapKey} from '../../actions/mapSearchActions'
 import PopUpComponent from '../../shared/popUpComponent'
-import * as CONFIG from "../../helpers/config";
 import  Entypo from 'react-native-vector-icons/Entypo';
 const { height, width } = Dimensions.get("window");
 import * as IMAGE_CONST from "../../constants/ImageConst";

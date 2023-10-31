@@ -16,7 +16,6 @@ import { CommonActions } from '@react-navigation/native';
 import * as RootNavigation from '../../router/RouteNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
-import FontAwesome from "react-native-vector-icons/Feather";
 import { Dimensions } from "react-native";
 import Modal from "react-native-modal";
 const { height, width } = Dimensions.get("window");
@@ -33,12 +32,10 @@ import { resetSession } from "../../actions/commonActions";
 import { getUserInfo } from "../../actions/userActions";
 import { sendFCMToken } from "../../actions/notificationActions";
 import ScreenHeader from "../../components/header/Header";
-import CustomButton from "../../components/customComponents/CustomButton";
 import { getAirlinesAvailability ,getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 import moment from "moment";
 import { getStoreData, getUserId } from "../../constants/DataConst";
 import * as IMAGE_CONST from "../../constants/ImageConst";
-import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 import MyStatusBar from "../../components/statusbar";
 
 import {
@@ -75,7 +72,6 @@ const classToBGColorForBorder = {
 
 const formatDate = (date) => {
   return moment(date).format("DD.MM.YYYY");
-  // return new Date(date).
 };
 
 const presentAlert = (alert) => ({
@@ -102,22 +98,21 @@ const ListFooterWithNoAlerts = () => (
   <View
     style={[
       sharedStyles.card,
-      { alignSelf: "center", flex: 1, justifyContent: "center" },
+      { alignSelf: STR_CONST.CENTER, flex: 1, justifyContent: STR_CONST.CENTER,},
     ]}
   >
     <TouchableOpacity
-      style={{ alignItems: "center", justifyContent: "center" }}
+      style={{ alignItems:  STR_CONST.CENTER, justifyContent:  STR_CONST.CENTER, }}
     >
       <FastImage
         source={IMG_CONST.NO_ALERTS1}
-        style={{ height: scale(190), width: scale(190) }}
+        style={styles.noAlertImage}
         resizeMode="contain"
       />
-      <Text style={{alignSelf:"center",fontSize:scale(20),fontWeight:"600",color:"#132C52",margin:scale(10),marginTop:scale(25)}}>No Alert Yet</Text>
+      <Text style={styles.noAlertTxt}>{STR_CONST.NO_ALERT_YET}</Text>
       <ReactNativeText
         style={[
           sharedStyles.listFooter,
-          
           {
             fontFamily: STR_CONST.appFonts.INTER_REGULAR,
             fontSize: scale(13),marginBottom:scale(10),fontWeight:"500",
@@ -130,14 +125,13 @@ const ListFooterWithNoAlerts = () => (
         {STR_CONST.CREATE_ALERT_MSG}
       </ReactNativeText>
       <TouchableOpacity 
-        style={{ justifyContent:"center",alignItems:"center",backgroundColor:"#03B2D8",borderRadius:scale(10),width:scale(160),height:scale(45)}}
+        style={styles.createAlertView}
         onPress={()=>{
-          // this.props.navigation.navigate("FindFlightContainerScreen")
-          RootNavigation.navigationRef.navigate(STR_CONST.FIND_FLIGHT_SCREEN)
+              RootNavigation.navigationRef.navigate(STR_CONST.FIND_FLIGHT_SCREEN)
         }}
     >
-        <Text style={{color:"#FFFFFF",textAlign:"center",fontSize:scale(14),fontWeight:"700",}}>
-            {"Create Alert"}
+        <Text style={styles.createAlertTxt}>
+            {STR_CONST.CREATE_ALERT}
         </Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -194,46 +188,32 @@ function travelClassView(travelClass) {
               })
             }
           >
-            {/* {
-              cabinClass == "economy" ?
-              <Image source={IMG_CONST.ECONOMYC_SEAT} 
-              resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
-              /> : null
-            } */}
-            {/* {
-             cabinClass == "premium_economy" || "premium" ?
-              <Image source={IMG_CONST.PREMIUM_SEAT} 
-              resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
-              /> : null
-            } */}
             {
              cabinClass == "economy" ?
               <Image source={IMG_CONST.ECONOMYC_SEAT} 
               resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              style={styles.traveClass}
               /> : null
             }
             {
              cabinClass == "premium" || cabinClass == "premium_economy" ?
               <Image source={IMG_CONST.PREMIUM_SEAT} 
               resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              style={styles.traveClass}
               /> : null
             }
             {
              cabinClass == "business" ?
               <Image source={IMG_CONST.BUSINESS_SEAT} 
               resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              style={styles.traveClass}
               /> : null
             }
              {
              cabinClass == "first" ?
               <Image source={IMG_CONST.FIRST_SEAT} 
               resizeMode="contain"
-              style={{height:scale(20),width:scale(20),marginTop:scale(6)}}
+              style={styles.traveClass}
               /> : null
             }
             <Text
@@ -241,7 +221,7 @@ function travelClassView(travelClass) {
                 color: classToColor[cabinClass],
                 padding: scale(4),
                 margin:scale(1),
-                textAlign:"center",
+                textAlign:STR_CONST.CENTER,
                 fontSize: scale(12),
               }}
             >
@@ -272,33 +252,9 @@ function buttonView(props) {
         {
           paddingBottom:
             travel_classes.length > 3 ? verticalScale(10) : verticalScale(10),
-            // paddingTop:travel_classes.length > 3 ? verticalScale(10) : verticalScale(10)
-        },
+           },
       ]}
     >
-      {/* <TouchableOpacity
-        style={[
-          styles.buttonStyle,
-          {
-            backgroundColor: colours.white,
-            borderColor: colours.lightBlueTheme,
-          },
-        ]}
-        onPress={() => {
-          props.onEditPress(props);
-        }}
-      >
-        <Text
-          style={[
-            styles.buttonTextStyle,
-            {
-              color: colours.lightBlueTheme,
-            },
-          ]}
-        >
-          {STR_CONST.EDIT_TEXT}
-        </Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
         style={[
           styles.buttonStyle,
@@ -319,7 +275,7 @@ function buttonView(props) {
             },
           ]}
         >         
-          View Availability
+         {STR_CONST.VIEW_AVAILABILITY}
         </Text>
       </TouchableOpacity>
     </View>
@@ -369,27 +325,7 @@ const AlertCard = (props) => {
   } = props;
   let travel_classes = props.travelClass.split(",");
   return (  
-    //   <ImageBackground
-    //   resizeMode={"contain"}
-    //   style={[
-    //     styles.cellContainer,
-    //     {
-    //       height:
-    //         arrivalStartDate && arrivalEndDate
-    //           ? width - scale(75)
-    //           : width - scale(105),
-    //     }
-    //   ]}
-    //   source={
-    //     arrivalStartDate && arrivalEndDate
-    //       ? IMG_CONST.RETURN_LARGE
-    //       : IMG_CONST.FRAME_ONEWAY_SINGLE
-    //   }
-    // >    
-      <View style={{flex:1,backgroundColor:"#FFF",
-        borderWidth:scale(1.3),borderStyle:"dashed",borderColor: "#45a7b5",borderRadius:scale(20),
-        width:width*0.9,alignSelf:"center",margin:scale(10),alignSelf:"center",
-    }}>
+      <View style={styles.alertCardView}>
         <View style={styles.alertHeaderContainer}>
             <Text style={styles.cellHeaderText}>
               {getLocationName(source)}{ ` (${source})`} to {getLocationName(destination)}{ ` (${destination})`} 
@@ -411,105 +347,18 @@ const AlertCard = (props) => {
             </View>
           </TouchableOpacity>
         
-          <View style={{alignSelf:"flex-end",marginRight:scale(10),padding:scale(1),}}> 
+          <View style={styles.alertImgView}> 
               <TouchableOpacity
                   onPress={() => {
                     props.onEditPress(props);
                   }}
-                style={{height:scale(40),width:scale(40),margin:scale(4)}}
+                style={styles.alertImg}
               >
-              {/* <FontAwesome name="more-vertical" 
-                  color={colours.darkBlueTheme}
-                  size={scale(22)} /> */}
-              
-              <FastImage source={require("../../assets/profile/pencil.png")} resizeMode="contain" style={{
-                position:"absolute",
-                height:scale(40),width:scale(30),
-                right:scale(30),top:scale(6)
-                
-                }} />
+              <FastImage source={require("../../assets/profile/pencil.png")} resizeMode="contain" style={
+                styles.editImg
+                } />
               </TouchableOpacity>
-                {/* {
-                  showMenu && AlertId == id ?
-                  <Fragment>
-                  <View style={{
-                    position:"absolute",
-                    right:scale(25),
-                    top:scale(30),
-                    backgroundColor:"#FFF",
-                    height:scale(70),
-                    width:scale(100),
-                    borderWidth:scale(0.6),
-                    borderColor:"gray",
-                    borderRadius:scale(2),
-                    alignSelf:"center",justifyContent:"center"
-                  }}>
-                      <TouchableOpacity 
-                      onPress={() => {
-                          props.onEditPress(props);
-                      }}
-                      >
-                      <Text style={{fontSize:scale(14),textAlign:'center',fontWeight:"600",color:"#22395d",}}>Edit Alert</Text>
-                      </TouchableOpacity>
-                      
-                      <View style={{height:scale(0.6),width:scale(100),marginTop:scale(6),backgroundColor:"gray"}}/>
-                      <TouchableOpacity 
-                      onPress={() => {
-                        props.onEditPress(props);
-                    }}
-                        >
-                      <Text style={{fontSize:scale(14),textAlign:'center',fontWeight:"600",color:"#22395d",padding:scale(6)}}>Delete Alert</Text>
-                      </TouchableOpacity>
-                   </View>
-                   </Fragment>
-                  : null
-                } */}
           </View>
-
-          {/* <Menu 
-            visible={true}
-            ref={this.setMenuRef}
-            button={
-              <TouchableOpacity
-                onPress={() => {
-                  this.showMenu();
-                }}
-              >
-              <FontAwesome name="more-vertical" 
-                  color={colours.darkBlueTheme}
-                  size={scale(22)} />
-              </TouchableOpacity>
-            }
-          >
-            <MenuItem
-              onPress={() => {
-                this.hideMenu();
-               
-              }}
-              style={styles.menuStyle}
-              textStyle={styles.menuTextStyle}
-            >
-              
-
-              {"Edit"}
-            </MenuItem>
-
-            <MenuItem
-              onPress={() => {
-                this.hideMenu();
-               
-              }}
-              style={styles.menuStyle}
-              textStyle={styles.menuTextStyle}
-            >
-             
-                {"Delete"}
-
-            </MenuItem>
-
-          </Menu> */}
-
-
         </View>
   
         <View style={styles.rowContainer}>
@@ -517,31 +366,18 @@ const AlertCard = (props) => {
             <FastImage style={styles.infoIcon} source={IMG_CONST.AIRWAYS_ICON} />
           </View>
           <Text style={styles.rightValueText}>
-            {/* {getAirways(airlineName)} */}
-            {"British Airways"}
-            {/* <Text
-              style={{
-                fontStyle: "italic",
-                fontSize: scale(14),
-                color: colours.lightGreyish,
-              }}
-            >
-              {" "}
-              {membershipType.charAt(0).toUpperCase() +
-                membershipType.slice(1)}{" "}
-              {STR_CONST.MEMBER_TEXT}
-            </Text> */}
+            {STR_CONST.BRITISH_AIRWAYS}
           </Text>
         </View>
         <View style={styles.line} />
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: STR_CONST.ROW }}>
           <View style={[styles.rowContainer]}>
             <View style={styles.iconContainer}>
               <FastImage source={IMG_CONST.USER_ICON} style={styles.infoIcon} />
             </View>
             <Text style={styles.rightValueText}>
               {numberOfPassengers}{" "}
-              {Number(numberOfPassengers) > 1 ? "Passengers" : "Passenger"}
+              {Number(numberOfPassengers) > 1 ? STR_CONST.PASSENGERS : STR_CONST.PASSENGER }
             </Text>
           </View>
           <View
@@ -601,15 +437,10 @@ const AlertCard = (props) => {
            
           ]}
         >
-          {/* <View style={styles.iconContainer}>
-            <FastImage style={styles.infoIcon} source={IMG_CONST.ECONOMY_ICON} />
-          </View> */}
-          {travelClassView(travelClass.split(","))}
+               {travelClassView(travelClass.split(","))}
         </View>
         {buttonView(props)}
       </View>
-     
-    // </ImageBackground>
   );
 };
 
@@ -744,9 +575,6 @@ class AlertsScreen extends React.Component {
 
   async componentWillReceiveProps(nextProps) {
     const { navigation } = this.props;
-
-    
-
     if (this.props.alertsArray !== nextProps.alertsArray) {
       this.setState({
         isLoading: false,
@@ -836,8 +664,6 @@ class AlertsScreen extends React.Component {
 
 
   componentWillUnmount() {
-    // this.willFocusSubscription.remove();
-
     BackHandler.removeEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
   );
@@ -912,40 +738,12 @@ class AlertsScreen extends React.Component {
       alerts: sortedArray.reverse()
     });
   }
-// renderHeader(alertLength) {
-
-//     const {alertCount} = this.state;
-
-//     return (
-//       <View style={{ paddingHorizontal: scale(16) }}>
-//         <ScreenHeader
-//           {...this.props}
-//           left
-//           setting
-//           title={`${STR_CONST.ALERT_SCREEN_TITLE} ${ (alertLength)? `(${alertLength})` :""} `}
-//           right
-//           showSort={alertLength > 1 ? true : false}
-//           notifCount={this.props.badgeCount}
-//           clickOnRight={() => this.goToNotifications()}
-//           clickOnSort={() => {
-//             this.setState({
-//               showSortModal: true,
-//             });
-//           }}
-//         />
-//       </View>
-//     );
-//   }
-
   renderHeader(alertLength){
     const {alerts} = this.state;
-    // console.log("yes check here alert count value - - - - - - ",alerts)
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",
-      height:alerts && alerts.length > 0  ? scale(280) : Platform.OS == "android" ? scale(80) : scale(100),width:"100%",marginTop:
-      Platform.OS == "ios"? scale(-60) :
-      scale(-20)
-      ,borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)}}>
+      <View style={[styles.renderHeaderStyles,{
+        height:alerts && alerts.length > 0  ? scale(280) : Platform.OS == "android" ? scale(80) : scale(100),
+      }]}>
         <View style={{marginTop:Platform.OS == "android" ? scale(16):scale(40),}}>
         <ScreenHeader
           {...this.props}
@@ -1067,15 +865,9 @@ class AlertsScreen extends React.Component {
             <View style={{ margin: scale(20) }}>
               <View style={styles.createAlertText}>
                 <Text
-                  style={{
-                    fontFamily: STR_CONST.appFonts.INTER_BOLD,
-                    fontSize: scale(16),
-                    color: colours.darkBlueTheme,
-                    fontWeight: "bold",
-                  }}
+                  style={styles.sortView}
                 >
-                  {/* {STR_CONST.CREATE_ALERT} */}
-                  Sort By
+                  {STR_CONST.SORT_BY}
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
@@ -1088,8 +880,8 @@ class AlertsScreen extends React.Component {
               <View style={{ margin: scale(5) }}>
                 <TouchableOpacity
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    flexDirection: STR_CONST.ROW,
+                    alignItems: STR_CONST.CENTER,
                     backgroundColor:
                       selectedSortOption == STR_CONST.DEPARTURE_DATE
                         ? colours.dimLightBlueTheme
@@ -1137,8 +929,8 @@ class AlertsScreen extends React.Component {
               <View style={{ margin: scale(5) }}>
                 <TouchableOpacity
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    flexDirection: STR_CONST.ROW,
+                    alignItems: STR_CONST.CENTER,
                     backgroundColor:
                       selectedSortOption == STR_CONST.ORIGIN
                         ? colours.dimLightBlueTheme
@@ -1157,7 +949,7 @@ class AlertsScreen extends React.Component {
                       },
                       () => {
                         this.getSortedByLocation(
-                          "origin",
+                          STR_CONST.ORIGIN,
                           this.state.showReverseList
                         );
                       }
@@ -1186,8 +978,8 @@ class AlertsScreen extends React.Component {
               <View style={{ margin: scale(5) }}>
                 <TouchableOpacity
                   style={{
-                    flexDirection: "row",
-                    alignItems: "center",
+                    flexDirection: STR_CONST.ROW,
+                    alignItems: STR_CONST.CENTER,
                     backgroundColor:
                       selectedSortOption == STR_CONST.DESTINATION
                         ? colours.dimLightBlueTheme
@@ -1206,7 +998,7 @@ class AlertsScreen extends React.Component {
                       },
                       () => {
                         this.getSortedByLocation(
-                          "destination",
+                         STR_CONST.DESTINATION,
                           this.state.showReverseList
                         );
                       }
@@ -1246,27 +1038,10 @@ class AlertsScreen extends React.Component {
         animationType={'none'}     
         visible={this.state.isLoader}                
       >
-        <View style={{flex:1,justifyContent:'center',  
-        backgroundColor: 'rgba(52, 52, 52, 0.4)',
-        alignItems:'center',
-        width:width+36,height:height,
-        marginStart:-scale(38),
-        marginEnd:-scale(27),
-        marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
-        marginBottom:-scale(20),
-        // borderWidth:3,borderColor:"green"
-      }}>
-        <View style={{             
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          alignItems: 'center',
-          justifyContent: 'center',          
-        }}>
-          <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-            <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
+        <View style={styles.loaderStyle}>
+        <View style={styles.loaderSubStyle}>
+          <View style={styles.loaderImg}>
+            <FastImage source={IMAGE_CONST.LOADER} style={styles.loaderIMG1} />
           </View>
         </View>
         </View>
@@ -1278,8 +1053,8 @@ class AlertsScreen extends React.Component {
     const {alerts} = this.state
     let alertCountValue  = alerts.length
     return(
-      <View style={{width:scale(200),height:Platform.OS == "ios" ? scale(40) : scale(20),marginTop:scale(-200),marginBottom:scale(-10)}}>
-        <Text style={{fontSize:scale(16),fontWeight:"700",paddingTop:Platform.OS == "ios" ? scale(20) : scale(1),padding:scale(1),marginStart:scale(20),color:"#FFFFFF"}}> {alertCountValue} Alerts</Text>
+      <View style={styles.alertCountView}>
+        <Text style={styles.alertCountTxt}> {alertCountValue} {STR_CONST.ALERT}</Text>
       </View>
     )
   }
@@ -1290,20 +1065,13 @@ class AlertsScreen extends React.Component {
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
         <MyStatusBar />
         {this.renderHeader(alertLength)}
-
         {this.renderLoader()}
         {alerts && alerts.length > 1 && this.alertCountFunc()}
         {errorMessage ? (
-          <View >
+          <View>
             {errorMessage ? (
               <Text
-                style={{
-                  color: colours.white,
-                  fontSize: 16,
-                  backgroundColor: "#ff3860",
-                  padding: "5%",
-                  margin: "5%",
-                }}
+                style={styles.errortxt}
               >
                 {errorMessage}
               </Text>

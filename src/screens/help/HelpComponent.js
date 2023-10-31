@@ -122,7 +122,7 @@ class HelpComponent extends Component {
                         ]}
                         dropdownStyle={{
                             width: scale(312),
-                            height: scale(180),
+                            height: scale(240),
                             borderTopWidth: 0.5,
                             borderBottomWidth: 0.5,
                             marginTop: Platform.OS == "android" ? scale(-42) : scale(1),
@@ -141,7 +141,7 @@ class HelpComponent extends Component {
                             ]}
                         >
                             {subject ? (
-                                <Text style={styles.subjectDetailText}>{subject}</Text>
+                                <Text style={styles.subjectDetailText} numberOfLines={1}>{subject}</Text>
                             ) : (
                                 <Text style={styles.subjectText}>
                                     {"Select Subject"}
@@ -177,7 +177,7 @@ class HelpComponent extends Component {
         } else {
 
             const data = new FormData();
-            data.append('subject', subject);
+            data.append('subject','Mobile - '+subject);
             data.append('description', description);
             data.append('type', "incident");
             data.append('priority', "normal");
