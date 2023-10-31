@@ -73,8 +73,8 @@ let isAlertExpireDays2 = ""
 
 var requiredKey = false
 
-
 export default class CalenderComponent extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -190,11 +190,14 @@ export default class CalenderComponent extends Component {
       originalOutBoundObj:{},
       maximumSliderPoints:0,
       minimumSliderPoints:0,
-      classTypeArray:[]
+      classTypeArray:[],
+      startDate: this.props.startDate
     };
     getCalendarLocals();
     LocaleConfig.defaultLocale = "us";
     this.refreshScreen = this.refreshScreen.bind(this)
+    this.scrollView = React.createRef();
+    this._refCalendarList = React.createRef();
   }
 
   refreshScreen = () => {
@@ -443,9 +446,11 @@ export default class CalenderComponent extends Component {
       this.setState({ isLoader: false })   
     }, 1000);
 
+    setTimeout(() => {
+      this.setState({ startDate: null })
+    }, 3000);
 
 
-  
       BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -530,12 +535,6 @@ export default class CalenderComponent extends Component {
     if(airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0){
       availableOutBoundDate = airLinesDetailsObject.outbound_availability;
     }
-    // if(calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0){
-    //   seatsAvailableOutBoundData =  calendarSeatsObject.outbound_availability;
-    // }
-    // if(calendarSeatsObject && Object.keys(calendarSeatsObject).length !== 0){
-    //   seatsAvailableInBoundData = calendarSeatsObject.inbound_availability
-    // }
 
     if(airLinesDetailsObject && Object.keys(airLinesDetailsObject).length !== 0){
       availableInBoundDate = airLinesDetailsObject.inbound_availability;
@@ -3171,9 +3170,10 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         >
         <TouchableOpacity
           onPress={() => { 
+            setTimeout(() => {
             this.props.navigation.goBack() 
-            // RootNavigation.navigationRef.navigate("FindFlightContainerScreen")
-          }}
+            }, 700);
+        }}
         >
            {IMAGE_CONST.IOS_BACK_ARROW}
         </TouchableOpacity>
@@ -4461,7 +4461,6 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   }}
                     onPress={() => {
                       this.setState({
-                        // showTicketDetailModal: false,
                         bounceValue: new Animated.Value(250),
                         isHidden: true,
                         selectedDate: {},
@@ -4569,22 +4568,30 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
       showCreateAlertModal,
       showUpgradePopUp,
       showLoginPopup,
-      searchData
+      startDate,
+      isRenderAll
     } = this.state;
     const today = moment().format("YYYY-MM-DD");
-    let userInfo  =  this.props.userInfo
     let isLoggedIn = this.props.isLoggedIn
-    let classData = searchData.classSelected
-    let startDate = this.props.startDate
+
+    setTimeout(() => {
+      if (startDate && this.scrollView && isRenderAll && this._refCalendarList) { 
+        let scrollY = 0
+        scrollY =  this._refCalendarList.current.getMonthScrollOffset(startDate)
+        if(scrollY !== 0){
+          this.scrollView.current.scrollTo({ y: scrollY, animated: true });
+         }
+      }
+    }, 700);
 
      return (
-        <SafeAreaView style={[styles.container]}  >
+        <SafeAreaView style={styles.container}>
           <MyStatusBar />
            {this.renderHeader()}
-          <View style={{ backgroundColor: "#FFF", flex: 1}}>
-            {/* {this.renderLoader()} */}
+          <View style={ styles.subContainer }>
+            {this.renderLoader()}
             {this.renderLoginPopup()}
-            <View style={{borderWidth:0}}>
+            <View>
              {this.state.airLinesDetailsObject ? this.ticketClass() : null}
              {/* {this.ticketClass()} */}
                 {this.fareView()}
@@ -4592,7 +4599,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   ? this.tabView()
                   : this.singleTabView()}      
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{  flex: 1,}}
+            <ScrollView showsVerticalScrollIndicator={false} style={ styles.scrollViewStyle }
               onMomentumScrollEnd={()=>{
                 if(!isLoggedIn){
                   this.setState({ showLoginCnfmPopup: true }, () => {
@@ -4600,7 +4607,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                   })
                 }
               }}
-              ref={ref => this.scrollView = ref}
+              ref={this.scrollView}
             >
               <View style={[styles.calendarContainer,{
                 backgroundColor:"#E4E4E4"
@@ -4608,19 +4615,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
                  onStartShouldSetResponder={() => true}
               >
           <CalendarList
-            ref={(ref) => {
-              this._refCalendarList = ref;
-            }}
+            ref={this._refCalendarList}
             calendarStyle={styles.calendarStyle}
-            style={{
-              backgroundColor:"#E4E4E4",marginBottom:scale(35)
-            }}
-            onMonthChange={(months)=>{
-              // console.log("yes check on scrolling throught month  - - - - - ",months)
-            }}
-            onVisibleMonthsChange={(months)=>{
-              // console.log("yes chc on visible month change - - - - - - - -",months)
-            }}
+            style={ styles.calendarList }
             showScrollIndicator={false}
             onDayPress={(day) => {
               let onPressDate = day
@@ -4632,10 +4629,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               this._toggleSubview();
               this.seatAvailabilityModal(day, isOffPeakValue1)
             }}
-            current={startDate ? startDate : today}
-            // key={startDate ? startDate : today}
+            current={today}
             pastScrollRange={0}
-            minDate={startDate ? startDate : today}
+            minDate={today}
             futureScrollRange={ isLoggedIn ? 12 : 3}
             scrollEnabled={true}
             calendarWidth={scale(330)}
@@ -4673,7 +4669,9 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
               },
             }}
             listFooterComponent={() => {
-              return <View style={{ height: verticalScale(70) }} />;
+              return <View style={
+                styles.listFooter
+              } />;
             }}
           />
         </View>

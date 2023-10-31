@@ -1,11 +1,12 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions,Platform } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import * as CONST from "../../constants/StringConst";
 import { appFonts } from "../../constants/StringConst";
-import { Platform } from "react-native";
 const { height, width } = Dimensions.get("window");
 
+import * as IMG_CONST from "../../constants/ImageConst";
+import * as STR_CONST from "../../constants/StringConst";
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -91,7 +92,46 @@ export default StyleSheet.create({
     height:scale(230),
     borderWidth:1,
   },
+  loaderStyle:{
+    flex:1,justifyContent:'center',  
+        backgroundColor: 'rgba(52, 52, 52, 0.4)',
+        alignItems:'center',
+        width:width+36,height:height,
+        marginStart:-scale(38),
+        marginEnd:-scale(27),
+        marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
+        marginBottom:-scale(20),
+  },
+  loaderSubStyle:{
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',    
+  },
+  loaderImg:{
+    height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden'
+  },
+  loaderIMG1:{
+    height: verticalScale(200), width: verticalScale(200)
+  },
 
+  alertCountView:{
+    width:scale(200),height:Platform.OS == "ios" ? scale(40) : scale(20),marginTop:scale(-200),marginBottom:scale(-10)
+  },alertCountTxt:{
+    fontSize:scale(16),fontWeight:"700",paddingTop:Platform.OS == "ios" ? scale(20) : scale(1),padding:scale(1),marginStart:scale(20),color:"#FFFFFF"
+  },
+  errortxt:
+    {
+      color: colours.white,
+      fontSize: 16,
+      backgroundColor: "#ff3860",
+      padding: "5%",
+      margin: "5%",
+    
+  },
   cellHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -174,6 +214,9 @@ export default StyleSheet.create({
     marginTop:Platform.OS === "android" ? -scale(2): -scale(0),
 
   },
+  traveClass:{
+    height:scale(20),width:scale(20),marginTop:scale(6)
+  },
   travelClassInnerView: {
     borderRadius: verticalScale(5),
     marginLeft: scale(5),
@@ -183,7 +226,18 @@ export default StyleSheet.create({
     padding: 5,
     fontSize: scale(12),
   },
-
+noAlertImage:{
+  height: scale(190), width: scale(190)
+},
+noAlertTxt:{
+  alignSelf: STR_CONST.CENTER,fontSize:scale(20),fontWeight:"600",color:"#132C52",margin:scale(10),marginTop:scale(25)
+},
+createAlertView:{
+  justifyContent:"center",alignItems:"center",backgroundColor:"#03B2D8",borderRadius:scale(10),width:scale(160),height:scale(45)
+},
+createAlertTxt:{
+  color:"#FFFFFF",textAlign:"center",fontSize:scale(14),fontWeight:"700"
+},
   buttonViewContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -203,6 +257,29 @@ export default StyleSheet.create({
     alignSelf:"center",
     justifyContent:'center',
 
+  },
+  alertCardView:{
+    flex:1,backgroundColor:"#FFF",
+        borderWidth:scale(1.3),borderStyle:"dashed",borderColor: "#45a7b5",borderRadius:scale(20),
+        width:width*0.9,alignSelf:"center",margin:scale(10),alignSelf:"center",
+
+  },
+  alertImgView:{
+    alignSelf:"flex-end",marginRight:scale(10),padding:scale(1),
+  },
+  alertImg:{
+    height:scale(40),width:scale(40),margin:scale(4)
+  },
+  editImg:{
+    position:"absolute",
+    height:scale(40),width:scale(30),
+    right:scale(30),top:scale(6)
+    
+  },
+  renderHeaderStyles:{
+    alignItems:"center",backgroundColor:"#03B2D8",
+  width:"100%",marginTop:
+      Platform.OS == "ios"? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30)
   },
   buttonTextStyle: {
     fontSize: scale(15),
@@ -286,5 +363,11 @@ export default StyleSheet.create({
     height: scale(28),
     width: scale(28),
   },
+  sortView:{
+    fontFamily: STR_CONST.appFonts.INTER_BOLD,
+    fontSize: scale(16),
+    color: colours.darkBlueTheme,
+    fontWeight: "bold",
+  }
   
 });

@@ -4,6 +4,9 @@
 #import <RNBranch/RNBranch.h>
 #import <React/RCTLinkingManager.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -33,6 +36,12 @@
 // -------------------------OR---------------------
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+
+  if([[FBSDKApplicationDelegate sharedInstance]application:app
+                                                       openURL:url
+                                                       options:options]){
+                                                        return YES;
+                                                       }
   [[Branch getInstance] application:app openURL:url options:options];
   return YES;
 }
@@ -57,5 +66,26 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                         openURL:url
+                                               sourceApplication:sourceApplication
+                                                      annotation:annotation];
+}
+
+// - (BOOL)application:(UIApplication *)application
+//    openURL:(NSURL *)url
+//    options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+// {
+//   NSString *fbScheme = [NSString stringWithFormat:@"fb%@", NSBundle.mainBundle.infoDictionary[@"FacebookAppID"]];
+//   if ([[url scheme] isEqualToString:fbScheme]) {
+//       return [super application:application openURL:url options:options];
+//   }
+//   return [RCTLinkingManager application:application openURL:url options:options];
+// }
 
 @end

@@ -42,7 +42,12 @@ import * as CONFIG from "../../helpers/config";
 import { Platform } from "react-native";
 import { v4 as uuid } from 'uuid';
 import SvgUri from 'react-native-svg-uri';
-
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 const FIRST = 1;
 const LAST = 2;
 const EMAIL = 3;
@@ -431,9 +436,91 @@ class SignUpComponent extends Component {
   };
 
 
+  handleFacebookLogin = async () => {
+    try {
+      let behavior = Platform.OS === 'ios' ? 'Native' : 'NATIVE_ONLY';
+      if (behavior === 'native') {
+        LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'native' : 'NATIVE_ONLY');
+      } else if (behavior === 'web') {
+        LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'browser' : 'WEB_ONLY');
+      }
+      // LoginManager.setLoginBehavior(behavior);
+      const PERMISSIONS = [ 'public_profile', 'email' ];
+      const result = await LoginManager.logInWithPermissions(PERMISSIONS);
+  
+      if (result.isCancelled) {
+        console.log('Facebook login was canceled.');
+      } else {
+        const tokenData = await AccessToken.getCurrentAccessToken();
+        if (tokenData) {
+          const accessToken = tokenData.accessToken.toString();
+          // You can use the access token for making Facebook Graph API requests.
+          console.log('Facebook login successful. Access Token:', accessToken);
+          this.fetchUserProfile(accessToken);
+        }else{
+          console.log('Facebook login Token Null ', ' -------- ');
+        }
+      }
+    } catch (error) {
+      console.error('Facebook login error:', error);
+    }
+  };
+  
+  fbLoginAction = async (result, accessToken) => {
 
+    console.log('fbLoginAction >>> ',' --------------- fbLoginAction');
+    const { id, email, name, picture } = result;
+    const userInfo = {};
+    let imageObject = {};
 
+    const image = await Utils.getImageInfo(picture.data.url);
+            imageObject["uri"] = picture.data.url  ?  picture.data.url : 
+            imageObject["type"] =  image._data.type.split("/")[1] ? image._data.type.split("/") : "jpg"
+            imageObject["fileName"] = "RFFUser";
 
+    let userName = name.split(" ");
+    userInfo.auth_uid = id;
+    userInfo.auth_token = accessToken;
+    userInfo.provider = "facebook";
+    userInfo.platform = "mobile";
+    userInfo.email = email;
+    userInfo.image = "";
+    userInfo.first_name = userName[0];
+    userInfo.last_name = userName[1];
+
+    this.setState({ isLoading: true });
+    await AsyncStorage.setItem("socialLogin", "true")
+    this.props.socialLoginAction(
+      { user: userInfo },
+      (res) => this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_IN_FB_EVENT),
+      (res) => this.socialLoginFailureCallBack(res),
+      imageObject ? imageObject : null,
+      imageObject.type ? imageObject.type : null
+    );
+  }
+  fetchUserProfile = async (accessToken) => {
+    console.log('fetchUserProfile >>> ',' --------------- fetchUserProfile');
+    const request = new GraphRequest(
+      '/me',
+      {
+        parameters: {
+          fields: {
+            string: 'id,name,email,picture.type(large)',
+          },
+        },
+      },
+      (error, result) => {
+        if (error) {
+          CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
+        } else {
+          console.log('Result >>> ',result);
+          this.fbLoginAction(result, accessToken);
+        }
+      }
+    );
+
+    new GraphRequestManager().addRequest(request).start();
+  };
   onPressGoogleSocialLogin = async () => {
     this.setState({ isLoading: true });
     try {
@@ -741,7 +828,7 @@ class SignUpComponent extends Component {
                     isSignUpPressed && Utils.isEmptyString(password)
                       ? colours.errorColor
                       : colours.borderBottomLineColor,
-                      width:scale(240),               
+                      width:scale(230),               
                 },
               ]}
               placeholder={STR_CONST.EMAIL}
@@ -765,7 +852,6 @@ class SignUpComponent extends Component {
               onSubmitEditing={() => {
                 this.fourthTextInput.focus();
               }}
-              maxLength={35}
               blurOnSubmit={false}
               returnKeyType="next"
               underlineColorAndroid={'#FFFFFF'}
@@ -1179,15 +1265,13 @@ class SignUpComponent extends Component {
 
           </TouchableOpacity>
 
-          {/* <TouchableOpacity
-            onPress={() => this.onPressFBSocialLogin()}
+          <TouchableOpacity
+            onPress={() => this.handleFacebookLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.googleButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-            <Text
-            style={styles.iconTxt}
-          > Facebook</Text>
-          </TouchableOpacity> */}
+       
+          </TouchableOpacity>
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}

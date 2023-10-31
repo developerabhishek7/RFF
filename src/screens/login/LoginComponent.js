@@ -10,6 +10,7 @@ import {
   Keyboard,
   Alert,
   Linking,
+  Platform,
   ImageBackground
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -562,7 +563,7 @@ class LoginComponent extends Component {
                   isLoginPressed && Utils.isEmptyString(password)
                     ? colours.errorColor
                     : colours.borderBottomLineColor,
-                    width:scale(260),
+                    width:scale(240),
               },
             ]}
             placeholder={STR_CONST.EMAIL}
@@ -810,9 +811,72 @@ class LoginComponent extends Component {
     );
   }
 
+  fbLoginAction = async (result, accessToken) => {
+
+    console.log('fbLoginAction >>> ',' --------------- fbLoginAction');
+    const { id, email, name, picture } = result;
+    const userInfo = {};
+    let imageObject = {};
+
+    const image = await Utils.getImageInfo(picture.data.url);
+            imageObject["uri"] = picture.data.url  ?  picture.data.url : 
+            imageObject["type"] =  image._data.type.split("/")[1] ? image._data.type.split("/") : "jpg"
+            imageObject["fileName"] = "RFFUser";
+
+    let userName = name.split(" ");
+    userInfo.auth_uid = id;
+    userInfo.auth_token = accessToken;
+    userInfo.provider = "facebook";
+    userInfo.platform = "mobile";
+    userInfo.email = email;
+    userInfo.image = "";
+    userInfo.first_name = userName[0];
+    userInfo.last_name = userName[1];
+
+    this.setState({ isLoading: true });
+    await AsyncStorage.setItem("socialLogin", "true")
+    this.props.socialLoginAction(
+      { user: userInfo },
+      (res) => this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_IN_FB_EVENT),
+      (res) => this.socialLoginFailureCallBack(res),
+      imageObject ? imageObject : null,
+      imageObject.type ? imageObject.type : null
+    );
+  }
+
+  fetchUserProfile = async (accessToken) => {
+    console.log('fetchUserProfile >>> ',' --------------- fetchUserProfile');
+    const request = new GraphRequest(
+      '/me',
+      {
+        parameters: {
+          fields: {
+            string: 'id,name,email,picture.type(large)',
+          },
+        },
+      },
+      (error, result) => {
+        if (error) {
+          CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
+        } else {
+          console.log('Result >>> ',result);
+          this.fbLoginAction(result, accessToken);
+        }
+      }
+    );
+
+    new GraphRequestManager().addRequest(request).start();
+  };
+
   handleFacebookLogin = async () => {
     try {
-      LoginManager.setLoginBehavior('native');
+      let behavior = Platform.OS === 'ios' ? 'Native' : 'NATIVE_ONLY';
+      if (behavior === 'native') {
+        LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'native' : 'NATIVE_ONLY');
+      } else if (behavior === 'web') {
+        LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'browser' : 'WEB_ONLY');
+      }
+      // LoginManager.setLoginBehavior(behavior);
       const PERMISSIONS = [ 'public_profile', 'email' ];
       const result = await LoginManager.logInWithPermissions(PERMISSIONS);
   
@@ -825,13 +889,14 @@ class LoginComponent extends Component {
           // You can use the access token for making Facebook Graph API requests.
           console.log('Facebook login successful. Access Token:', accessToken);
           this.fetchUserProfile(accessToken);
+        }else{
+          console.log('Facebook login Token Null ', ' -------- ');
         }
       }
     } catch (error) {
       console.error('Facebook login error:', error);
     }
   };
-
 
   render() {
     return (

@@ -439,7 +439,6 @@ function MainStack() {
     return (
       <NavigationContainer
           ref={navigationRef}
-          
       >
          <Drawer.Navigator 
          drawerContent={drawerViewModel}
