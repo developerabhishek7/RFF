@@ -433,12 +433,8 @@ class LoginComponent extends Component {
         }
 
         let sessionId = uuid.v4()
-
-
         console.log("yes chek here session id - - - - -", sessionId)
-
         const userInfo = {};
-
         userInfo.membership_type = "month"
         userInfo.currency = "GBP"
         userInfo.referralCoupon = null
@@ -491,13 +487,12 @@ class LoginComponent extends Component {
     const { navigation } = this.props;
     this.setState({ isLoading: false });
     navigation.navigate("FindFlightContainerScreen");
-    // trackEventDetails(eventText, null, this.props.userData)
   }
 
   // Social Login Failure Call Back
   socialLoginFailureCallBack(res) {
     this.setState({ isLoading: false });
-    alert(res.error);
+    Alert.alert(res.error);
   }
 
   renderLogoContainer() {
@@ -512,45 +507,7 @@ class LoginComponent extends Component {
     const { isLoginPressed, password, email, isInvalidEmail } = this.state;
     return (
       <View style={styles.inputFieldContainer}>
-
-        {/* <View style={styles.emailContainer}>
-         
-          <TextInput
-            style={[
-              styles.input,
-              // {
-              //   borderBottomColor:
-              //     isLoginPressed && Utils.isEmptyString(email)
-              //       ? colours.errorColor
-              //       : colours.borderBottomLineColor,
-              // },
-            ]}
-            placeholder=""
-            autoCapitalize="none"
-            onChangeText={(email) => {
-              this.setState({ email });
-            }}
-            keyboardType={"email-address"}
-            value={this.state.email}
-            onSubmitEditing={() => {
-              this.secondTextInput.focus();
-            }}
-            blurOnSubmit={false}
-            returnKeyType="next"
-            underlineColorAndroid={'#FFFFFF'}
-
-          />
-
-          {isInvalidEmail && !Validators.validEmail(email) && (
-            <Text style={styles.errorText}>
-              {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
-            </Text>
-          )}
-        </View> */}
-
-
         <View style={styles.passContainer1}>
-
           <TextInput
             numberOfLines={1}
             ref={(input) => {
@@ -587,7 +544,6 @@ class LoginComponent extends Component {
             onSubmitEditing={() => {
               this.secondTextInput.focus();
             }}
-       
             blurOnSubmit={false}
             returnKeyType="next"
             underlineColorAndroid={'#FFFFFF'}
@@ -595,11 +551,6 @@ class LoginComponent extends Component {
           <TouchableOpacity
             style={styles.emailContainer}
           >
-            {/* <SvgUri
-              width={scale(20)}
-              height={scale(20)}
-              source={IMG_CONST.EMAIL_LOGO_SVG}
-            /> */}
             <FastImage
               style={
                 { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
@@ -651,9 +602,9 @@ class LoginComponent extends Component {
             value={this.state.password}
             returnKeyType="done"
             underlineColorAndroid={'#FFFFFF'}
+            maxLength={20}
             onSubmitEditing={() => {
               this.validation();
-
             }}
           />
           <TouchableOpacity
@@ -662,17 +613,6 @@ class LoginComponent extends Component {
             }
             style={styles.eyeContainer}
           >
-
-            {/* <SvgUri
-              width= {scale(20)}
-              height= {scale(20)}
-             source={
-                this.state.isHidePassword
-                  ? IMG_CONST.PASSWORD_HIDDEN
-                  : IMG_CONST.PASSWORD_SHOW
-              } 
-            /> */}
-
             <FastImage
               style={
                 this.state.isHidePassword
@@ -698,9 +638,7 @@ class LoginComponent extends Component {
   }
 
   renderButtonContainer() {
-
     const { email, password } = this.state;
-
     return (
       <Fragment>
         {
@@ -716,17 +654,15 @@ class LoginComponent extends Component {
             </TouchableOpacity>
             :
             <TouchableOpacity
-              // onPress={() => this.validation()}
+              onPress={() => this.validation()}
               style={[styles.signInButton, {
-                backgroundColor: !email && !password ? colours.gray : colours.lightBlueTheme,
+                backgroundColor: !email || !password ? colours.gray : colours.lightBlueTheme,
               }]}
               activeOpacity={0.7}
             >
-
               <Text style={styles.signInText}>{STR_CONST.SIGN_IN}</Text>
             </TouchableOpacity>
         }
-
       </Fragment>
     );
   }
@@ -870,6 +806,9 @@ class LoginComponent extends Component {
 
   handleFacebookLogin = async () => {
     try {
+      if(AccessToken.getCurrentAccessToken() != null){
+        LoginManager.logOut();
+      }
       let behavior = Platform.OS === 'ios' ? 'Native' : 'NATIVE_ONLY';
       if (behavior === 'native') {
         LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'native' : 'NATIVE_ONLY');

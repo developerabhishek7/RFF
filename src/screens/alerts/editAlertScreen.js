@@ -872,28 +872,21 @@ class EditAlertComponent extends Component {
     let bronzeExpireDate = moment(this.state.departStartDate).add(19, 'days').format("YYYY-MM-DD")
     let silverExpireDate = moment(this.state.departStartDate).add(44, 'days').format("YYYY-MM-DD")
     let goldExpireDate = moment(this.state.departStartDate).add(89, 'days').format("YYYY-MM-DD")
-
-
     let bronzeExpirertnDate = moment(this.state.returnStartDate).add(19, 'days').format("YYYY-MM-DD")
     let silverExpirertnDate = moment(this.state.returnStartDate).add(44, 'days').format("YYYY-MM-DD")
     let goldExpirertnDate = moment(this.state.returnStartDate).add(89, 'days').format("YYYY-MM-DD")
-
     // expireDate = new Date(goldExpireDate).getTime()
     let txtForPopup = ""
     let alertDate = moment(this.state.departEndDate).format("YYYY-MM-DD")
     let rtnEndDate = moment(this.state.returnEndDate).format("YYYY-MM-DD")
-
     let expireDate = ""
     let departureEndDate = ""
     let returnEndDate = ""
     let returnExpireDate = ""
     let days = 0
-
     let d1 = moment().format("YYYY-MM-DD")
     let d2 = this.state.departStartDate
-
     let d3 = this.state.returnStartDate
-
     let date1 = new Date(d1).getTime()
     let date2 = new Date(d2).getTime()
     let date3 = new Date(d3).getTime()
@@ -902,7 +895,6 @@ class EditAlertComponent extends Component {
       Alert.alert("Date should be greater than today!")
       return false
     }
-
     if(date1 > date3){
       Alert.alert("Date should be greater than today!")
       return false
@@ -915,12 +907,12 @@ class EditAlertComponent extends Component {
       returnExpireDate = new Date(goldExpirertnDate)
 
       if (returnExpireDate < returnEndDate) {
-        txtForPopup = `You are allowed a maximum date range of 60 days.`
+        txtForPopup = STRING_CONST.GOLD_DATE_RANGE
         inbounddateRange = true
         days = 90
       }
       else {
-        txtForPopup = `You are allowed a maximum date range of 60 days.`
+        txtForPopup = STRING_CONST.GOLD_DATE_RANGE
         days = 90
         outbounddateRange = true
       }
@@ -934,13 +926,13 @@ class EditAlertComponent extends Component {
       returnExpireDate = new Date(silverExpirertnDate)
       if (returnExpireDate < returnEndDate) {
         days = 45
-        txtForPopup = `You are allowed a maximum date range of 45 days.`
+        txtForPopup = STRING_CONST.SILVER_DATE_RANGE
         inbounddateRange = true
       }
       else {
         days = 45
         outbounddateRange = true
-        txtForPopup = `You are allowed a maximum date range of 45 days.`
+        txtForPopup = STRING_CONST.SILVER_DATE_RANGE
       }
     }
     else {
@@ -952,12 +944,12 @@ class EditAlertComponent extends Component {
       if (returnExpireDate < returnEndDate) {
         days = 20
         inbounddateRange = true
-        txtForPopup = `You are allowed a maximum date range of 20 days.`
+        txtForPopup = STRING_CONST.BRONZE_DATE_RANGE
       }
       else {
         days = 20
         outbounddateRange = true
-        txtForPopup = `You are allowed a maximum date range of 20 days.`
+        txtForPopup = STRING_CONST.BRONZE_DATE_RANGE
       }
     }
     if (expireDate === departureEndDate) {

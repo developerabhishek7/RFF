@@ -135,6 +135,8 @@ export default class DestinationsComponent extends Component {
   }
 
   renderClasses() {
+
+    
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
         <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>

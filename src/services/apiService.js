@@ -25,25 +25,6 @@ function secureFetch(type, token, body = '', contentType = undefined) {
 	return headers;
 }
 
-// function secureFetchForImage(type, token, body = '', contentType = undefined) {
-// 	let headers = {
-// 		method: 'put',
-// 		headers: {
-// 			 Accept: 'application/json',
-// 			'authorization': token,
-// 			'Content-Type': 'multipart/form-data'
-// 		},
-// 		body: contentType ? body : JSON.stringify(body)
-// 	};
-// 	if (type === 'GET' || type === 'DELETE' || body === '') {
-// 		delete headers['body'];
-// 	}
-// 	if (token === '') {
-// 		delete headers.headers['Authorization'];
-// 	}
-// 	return headers;
-// }
-
 export async function securePost(path, token, body, wantAuthorizationToken = false) {
 	return await fetch(`${API_CONST.BASE_URL}${path}`, secureFetch('POST', token, body)).then((res) => {
 		if(res.status === 200 || 201 || 204)
@@ -61,30 +42,6 @@ export async function securePost(path, token, body, wantAuthorizationToken = fal
 		// return res.json();
 	});
 }
-
-// create fun for user module .......
-// export async function securePostForUser(path, token, body, wantAuthorizationToken = false) {
-// 	return await fetch(`${API_CONST.NODE_USER_API}${path}`, secureFetch('POST', token, body)).then((res) => {
-// 		if(res.status === 200 || 201 || 204)
-// 			return res.json()
-// 		else if (res.status === 401) {
-// 			throw (expiredTokenObj);
-// 		}
-// 		else if (res.status === 403) {
-// 			return (res.json());
-// 		}
-// 		else if (wantAuthorizationToken) {
-// 			return res;
-// 		}
-// 		else{
-// 			RootNavigation.navigationRef.navigate("SignIn")
-// 			Alert.alert("Error Server Error Try Again!")
-// 		}
-// 	});
-// }
-
-
-
 export async function securePostForUser(path, token, body, wantAuthorizationToken = false) {
 	return await fetch(`${API_CONST.NODE_USER_API}${path}`, secureFetch('POST', token, body)).then((res) => {
 		if (res.status === 401) {
@@ -102,26 +59,6 @@ export async function securePostForUser(path, token, body, wantAuthorizationToke
 
 	});
 }
-
-// export async function securePut(path, token, body) {
-// 	return await fetch(`${API_CONST.NODE_USER_API}${path}`, secureFetch('PUT', token, body)).then((res) => {
-// 		if(res.status === 200 || 201 || 204)
-// 			return res
-// 		else if (res.status === 401)
-// 			throw (expiredTokenObj);
-// 		else if (res.status === 403) {
-// 				// return (res.json());
-// 			throw (suspendUserObj);
-// 		}
-// 		else{
-// 			RootNavigation.navigationRef.navigate("SignIn")
-// 			Alert.alert("Error Server Error Try Again!")
-// 		}
-// 	});
-// }
-
-// secure put function for user Module......
-
 export async function securePutForUser(path, token, body) {
 	return await fetch(`${API_CONST.NODE_USER_API}${path}`, secureFetch('PUT', token, body)).then((res) => {
 		if(res.status === 200 || 201 || 204)
@@ -137,18 +74,6 @@ export async function securePutForUser(path, token, body) {
 		}
 	});
 }
-
-// export async function securePutForUserProfile(path, token, body) {
-// 	return await fetch(`${API_CONST.NODE_USER_API}${path}`, secureFetchForImage('PUT', token, body)).then((res) => {
-// 		if (res.status === 401)
-// 			throw (expiredTokenObj);
-// 		else
-// 			return res;
-// 	});
-// }
-// secure put for alerts 
-
-
 
 export async function securePatch(path, token, body) {
 	return await fetch(`${API_CONST.BASE_URL}${path}`, secureFetch('PATCH', token, body)).then((res) => {
@@ -183,26 +108,6 @@ export async function securePatchForUser(path, token, body) {
 		}
 	});
 }
-
-
-
-// export async function securePostForAlert(path, token, body, wantAuthorizationToken = false) {
-// 	return await fetch(`${API_CONST.NODE_ALERT}${path}`, secureFetch('POST', token, body)).then((res) => {
-// 		if(res.status === 200 || 201 || 204)
-// 			return res
-// 		else if (res.status === 401)
-// 			throw (expiredTokenObj);
-// 		else if (res.status === 403) {
-// 			throw (suspendUserObj);
-// 		}
-// 		else{
-// 			RootNavigation.navigationRef.navigate("SignIn")
-// 			Alert.alert("Error Server Error Try Again!")
-// 		}
-
-// 		// return res.json();
-// 	});
-// }
 
 export async function secureGet(path, token) {
 	return await fetch(`${API_CONST.BASE_URL}${path}`, secureFetch('GET', token)).then((res) => {
@@ -318,8 +223,6 @@ export async function securePostMultiPart(path, token, body) {
 			RootNavigation.navigationRef.navigate("SignIn")
 			Alert.alert("Error Server Error Try Again!")
 		}
-	
-			// return JSON.parse(JSON.stringify(res))
 	});
 }
 

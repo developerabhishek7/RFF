@@ -34,7 +34,13 @@ import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
 let buildVersion = 0
 import DeviceInfo from "react-native-device-info";
-
+import {fcm} from '../../utils/firebaseHelper';
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 class DrawerComponentComponent extends Component {
   constructor(props) {
     super(props);
@@ -267,30 +273,6 @@ class DrawerComponentComponent extends Component {
           }
         </View>
         </View>
-        {/* {
-            buildVersion  == 0  || isAppReviewSuccess == false ?
-              <Fragment>
-              {
-              isLoggedIn ?
-              <TouchableOpacity
-                style={{ marginBottom:scale(0),marginTop:isLoggedIn && Platform.OS == 'ios' ? scale(20):scale(8),marginLeft:scale(20),alignSelf:"center"}}
-                onPress={async()=>{
-                  const accesstoken = await getAccessToken();
-                  const userId = await getUserId()
-                  let url = `${Config.WEB_BASE_URL}/${silver_member || gold_member ? "change-plan" :"pricing"}?token=${accesstoken}&id=${userId}&redirect=${APP_LINK}`
-                  this.reloaderApp()
-                  Linking.openURL(url)
-                }}
-              >
-              <Text style={styles.membershipText1}>
-              {isAppReviewSuccess == false || buildVersion == 0? "Change Membership" : ""}
-              </Text>
-              </TouchableOpacity>
-              : null
-            }              
-            </Fragment>
-            : null
-           } */}
       </View>
       </View>
     );
@@ -299,10 +281,16 @@ class DrawerComponentComponent extends Component {
   bindLogoutAndSocialLogin = () => {
     let allKeys = ['guestId','socialLogin','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin','isNewSignUp']
     setTimeout(async() => {
-      PostHog.reset()     
+      PostHog.reset()        
+      if(AccessToken.getCurrentAccessToken() != null){
+        await LoginManager.logOut();
+      }
       this.props.logoutUserAction()     
       await AsyncStorage.multiRemove(allKeys) 
     }, 300);
+    setTimeout(async() => {
+      await fcm.initAlways();
+    }, 2000);
   }
 
   confirmSignOut = () => {
@@ -450,7 +438,7 @@ class DrawerComponentComponent extends Component {
           </TouchableOpacity>
           <View style={styles.lineStyle} />
           {
-            isLoggedIn && this.state.userData && this.state.userData.gold_member &&
+            isLoggedIn &&
             <TouchableOpacity
               style={styles.screenButtonStyle}
               onPress={() => {

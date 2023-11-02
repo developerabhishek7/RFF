@@ -191,19 +191,14 @@ export default class FindFlightComponent extends Component {
 
   renderIdentifierForPosthog = async () => {
 
-
-
-
     let deviceName = await DeviceInfo.getDeviceName()
     let deviecBrand = await DeviceInfo.getBrand()
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
 
-
     let userData = this.props.userData
+
     setTimeout(async () => {
-      // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
-      // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
       if (this.props.isLoggedIn && userData && Object.keys(userData).length !== 0) {
         await PostHog.identify(this.props.userData.email, {
           email: this.props.userData.email,
@@ -225,10 +220,10 @@ export default class FindFlightComponent extends Component {
 
 
   componentDidMount = async () => {
-
+    setTimeout(() => {
     this.renderIdentifierForPosthog()
+    }, 700);
     let userData = this.props.userData
-
     let trackData = {}
     let isNewSignUp = await AsyncStorage.getItem("isNewSignUp");
 
@@ -255,7 +250,7 @@ export default class FindFlightComponent extends Component {
       } else {
         this.renderIdentifierForPosthog()
       }
-    }, 2000);
+    }, 2000); 
 
     // setTimeout(async() => {
     //   if(isNewSignUp){
@@ -267,76 +262,11 @@ export default class FindFlightComponent extends Component {
       this.handleBackButton(this.props.navigation),
     );
   };
-  // }
+ 
 
-
-
-
-  // componentDidUpdate = async (prevProps) => {
-  //   let userId = await AsyncStorage.getItem("userId");
-  //   if (this.props !== prevProps) {
-  //     if (
-  //       this.props.airlinesPossileRoutesList &&
-  //       this.props.airlinesPossileRoutesList !==
-  //       prevProps.airlinesPossileRoutesList
-  //     ) {
-  //       this.setState({
-  //         airlinesPossileRoutesList: this.props.airlinesPossileRoutesList,
-  //       });
-  //     }
-  //     if (
-  //       this.props.locationsObject !== prevProps.locationsObject
-  //     ) {
-  //       this.setState({
-  //         locationsObject: this.props.locationsObject,
-  //       });
-  //     }
-  //     // if (userId == null) {
-  //     //   this.setState({
-  //     //     airlineSelected: this.props.airLinesMembershipDetailsObject[0].airline.replace(" ", "_").toLowerCase(),
-  //     //     tierSelected: this.props.airLinesMembershipDetailsObject[0].memberships[0].value,
-  //     //     airLinesMembershipDetailsObject: this.props.airLinesMembershipDetailsObject
-  //     //   });
-  //     // }
-
-  //     if (this.props.userData !== prevProps.userData) {
-  //       if (Object.keys(this.props.userData).length !== 0 && !this.props.userData.airline_memberships) {          
-  //         this.setState({
-  //           showAirlineModal: true
-  //         })
-  //       } else {
-  //         this.setState({
-  //           airlineSelected: this.props.userData.airline_memberships[0].airline,
-  //           tierSelected: this.props.userData.airline_memberships[0].membership,
-  //           airlinesMembershipDetails: this.props.airLinesMembershipDetailsObject
-  //         });
-  //       }
-  //     }
-  //     if (
-  //       this.props.airLinesMembershipDetailsObject &&
-  //       this.props.airLinesMembershipDetailsObject !==
-  //       prevProps.airLinesMembershipDetailsObject
-  //     ) {
-  //       this.setState({
-  //         airlineSelected: this.props.airLinesMembershipDetailsObject[0],
-  //         tierSelected: this.props.airLinesMembershipDetailsObject[0].memberships[0],
-  //         airlinesMembershipDetails: this.props.airLinesMembershipDetailsObject
-  //       });
-  //     }
-  //     if (this.props.nearestAirports && this.props.nearestAirports !== prevProps.nearestAirports) {
-  //       this.setState({
-  //         nearestAirports: this.props.nearestAirports,
-  //       });
-  //     }
-  //     if (this.props.currentLatitude && this.props.currentLongitude && this.props.locationsObject) {
-  //       this.getNearestCity(this.props.locationsObject)
-  //     }
-  //   }
-  // }
 
 
   componentDidUpdate = async (prevProps) => {
-
     let userId = await AsyncStorage.getItem("userId");
     if (this.props !== prevProps) {
       if (
@@ -376,7 +306,6 @@ export default class FindFlightComponent extends Component {
               airlinesMembershipDetails: this.props.airLinesMembershipDetailsObject
             });
           }
-
         }
       }
       if (
@@ -405,7 +334,6 @@ export default class FindFlightComponent extends Component {
 
   goToNotifications() {
     const { navigation } = this.props;
-    // Alert.alert("YES CALLING THIS ON FINDFLIGHT!")
     this.props.navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN, { fromAlertScreen: false });
   }
 
@@ -425,7 +353,6 @@ export default class FindFlightComponent extends Component {
 
   renderBottomButton(buttonText, backgroundColor, onButtonPress) {
     return (
-
       <TouchableOpacity
         style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
         activeOpacity={.6}
@@ -438,7 +365,6 @@ export default class FindFlightComponent extends Component {
 
   renderBottomButton1(buttonText, backgroundColor, onButtonPress) {
     return (
-
       <TouchableOpacity
         style={[styles.buttonStyle, { backgroundColor: backgroundColor }]}
         activeOpacity={.6}
@@ -448,71 +374,7 @@ export default class FindFlightComponent extends Component {
     );
   }
 
-  // tabView() {
-  //   return (
-  //     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-  //       <TouchableOpacity
-  //         style={[
-  //           styles.tabViewStyle,
-  //           {
-  //             borderBottomColor:
-  //               this.state.selectedIndex == 0
-  //                 ? colours.lightBlueTheme
-  //                 : colours.white,
-  //           },
-  //         ]}
-  //         onPress={() => {
-  //           this.setState({ selectedIndex: 0 });
-  //         }}
-  //       >
-  //         <Text
-  //           style={[
-  //             styles.tabTextStyle,
-  //             {
-  //               color:
-  //                 this.state.selectedIndex == 0
-  //                   ? colours.darkBlueTheme
-  //                   : colours.lightGreyish,
-  //             },
-  //           ]}
-  //         >
-  //           {STRING_CONST.ONE_WAY}
-  //         </Text>
-  //       </TouchableOpacity>
-
-  //       <TouchableOpacity
-  //         style={[
-  //           styles.tabViewStyle,
-  //           {
-  //             borderBottomColor:
-  //               this.state.selectedIndex !== 0
-  //                 ? colours.lightBlueTheme
-  //                 : colours.white,
-  //           },
-  //         ]}
-  //         onPress={() => {
-  //           this.setState({ selectedIndex: 1 });
-  //         }}
-  //       >
-  //         <Text
-  //           style={[
-  //             styles.tabTextStyle,
-  //             {
-  //               color:
-  //                 this.state.selectedIndex !== 0
-  //                   ? colours.darkBlueTheme
-  //                   : colours.lightGreyish,
-  //             },
-  //           ]}
-  //         >
-  //           {STRING_CONST.RETURN}
-  //         </Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // }
-
-
+  
   tabView() {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between", backgroundColor: "#e1f2f1", height: scale(50), borderRadius: scale(10), alignItems: 'center' }}>
