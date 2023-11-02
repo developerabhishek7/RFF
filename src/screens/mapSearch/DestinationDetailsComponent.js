@@ -160,8 +160,6 @@ checkIfPeakOffPeakDataMonth = () => {
     let outboundData = data1.availability.outbound
     let inboundData = data1.availability.inbound && data1.availability.inbound
 
-    console.log('outboundData >>> /// ',outboundData)
-
     let outboundLength = outboundData && Object.keys(outboundData).length
     let inboundLength = 0
 
@@ -1015,16 +1013,8 @@ checkIfPeakOffPeakDataMonth = () => {
     }
 
 
-
-
-
-
-
-
-
-
     return (
-      <View style={{ width: scale(340), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
+      <View style={{ width: scale(350), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
           actualDate.map((singleMap ,index) => {
 
@@ -1095,7 +1085,7 @@ checkIfPeakOffPeakDataMonth = () => {
               <Fragment>
                 {
                   index <=  DateCount ?
-                  <View style={ [styles.outboundMainView, { margin: index >= 10 ? scale(7) : scale(4)  } ]}>
+                  <View style={ [styles.outboundMainView, { margin: (index >= 10 && tripType == "return")? scale(7) : scale(4)  } ]}>
                   {
                     peak == true ?
                       <Fragment>
@@ -1851,7 +1841,7 @@ checkIfPeakOffPeakDataMonth = () => {
     });
 
     return (
-      <View style={{ width: scale(340), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
+      <View style={{ width: scale(350), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
           actualDate.length!=0 ? actualDate.map((singleMap, index) => {
             

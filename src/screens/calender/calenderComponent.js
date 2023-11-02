@@ -3163,7 +3163,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
 
   renderHeader() {
     return (
-      <TouchableOpacity
+      <View
         style={
           styles.headerContainer
         }
@@ -3192,7 +3192,7 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
             }
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 
@@ -4234,38 +4234,40 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
     );
   }
 
-  renderLoader() {
+  renderLoader () {
     return (
       <Modal
         transparent={true}
         animationType={'none'}
-        visible={this.state.isLoader}
+        visible={this.state.isLoader}             
       >
-        <View style={{
-          flex: 1, justifyContent: 'center',
-          backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        <View style={{flex:1,justifyContent:'center',  
+        backgroundColor: 'rgba(52, 52, 52, 0.4)',
+        alignItems:'center',
+        width:width+scale(30),
+        height:height,
+        marginStart:-scale(20),
+        marginEnd:-scale(7),
+        marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
+        marginBottom:-scale(20),
+        // borderWidth:3,borderColor:"green"
+      }}>
+        <View style={{             
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
           alignItems: 'center',
-          width: width + 4, height: height,
-          marginStart: Platform.OS == "ios" ? -scale(20) : scale(-30),
-          marginEnd: -scale(27),
-          marginTop: -scale(20),
-          marginBottom: -scale(20),
+          justifyContent: 'center',          
         }}>
-          <View style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
-              <Image source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
-            </View>
+          <View style={{ marginEnd: scale(25),height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
+            <Image source={IMG_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
           </View>
         </View>
+        </View>
       </Modal>
+    
     )
   }
 
@@ -4588,8 +4590,8 @@ if (pointsSS && Object.keys(pointsSS).length !== 0 && this.props.isLoggedIn == f
         <SafeAreaView style={styles.container}>
           <MyStatusBar />
            {this.renderHeader()}
-          <View style={ styles.subContainer }>
             {this.renderLoader()}
+          <View style={ styles.subContainer }>
             {this.renderLoginPopup()}
             <View>
              {this.state.airLinesDetailsObject ? this.ticketClass() : null}

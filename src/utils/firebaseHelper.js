@@ -117,14 +117,12 @@ class FcmService {
   }
 
   _registerMessageHandlers() {
-    // Assume a message-notification contains a "type" property in the data payload of the screen to open
     this._unsubscriptionCallbacks.push(
       messaging().onNotificationOpenedApp((remoteMessage) => {
         console.warn(
           "*** Notification caused app to open from background state:",
           remoteMessage.notification
         );
-        // this.handleNotification(remoteMessage)
       })
     );
 
@@ -135,7 +133,6 @@ class FcmService {
           "*** Notification caused app to open from background state:",
           remoteMessage.notification
         );
-        // this.handleNotification(remoteMessage)
       })
     );
 
@@ -204,11 +201,6 @@ class FcmService {
       unread: false,
       created_at: Platform.OS === 'android' ?  remoteMessage.sentTime : new Date().getTime(),
     };
-
-    // NavigationService.navigate("NotificationDetailScreen", {
-    //   notifData,
-    //   notification_id: remoteMessage.data.notification_id,
-    // });
     RootNavigation.navigationRef.navigate("NotificationDetailScreen", {
       notifData,
       notification_id: remoteMessage.data.notification_id,

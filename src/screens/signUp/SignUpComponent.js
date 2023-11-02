@@ -438,6 +438,9 @@ class SignUpComponent extends Component {
 
   handleFacebookLogin = async () => {
     try {
+      if(AccessToken.getCurrentAccessToken() != null){
+        LoginManager.logOut();
+      }
       let behavior = Platform.OS === 'ios' ? 'Native' : 'NATIVE_ONLY';
       if (behavior === 'native') {
         LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'native' : 'NATIVE_ONLY');

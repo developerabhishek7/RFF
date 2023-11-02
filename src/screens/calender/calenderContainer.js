@@ -16,7 +16,10 @@
   getFlightSchedule,
   getMultipleFlightSchedule
 } from "../../actions/findFlightActions";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import moment from "moment";
+import { getStoreData } from "../../constants/DataConst";
+import { sendFCMToken } from "../../actions/notificationActions";
  class CalenderContainer extends Component {
    constructor(props) {
      super(props);
@@ -32,7 +35,19 @@ import moment from "moment";
        finalData:{}
      };
    }
- 
+   
+   componentDidMount = async() => {
+    const Device_Token = await AsyncStorage.getItem("Device_Token");
+    const isLoggedIn = this.props.isLoggedIn
+    console.log("yes  is logged in - - -  - - - -",isLoggedIn)
+    console.log("yes Device_Token on calendar - - -  - - - -",Device_Token)
+    if (isLoggedIn) { 
+          this.props.sendFCMTokenAction(Device_Token);
+     }
+   }
+
+
+
    componentDidUpdate(prevProps){
     //  let bronze_member = this.props.userInfo.bronze_member
      if( this.props !== prevProps){
@@ -91,7 +106,6 @@ import moment from "moment";
 
  const mapStateToProps = (state) => {
     const { calendar,userInfo,logIn, findFlight,alerts } = state; 
-    console.log("print seats data on map state to props data - - -- - - - --",calendar.calendarSeats)
     return {
      userInfo: userInfo.userData,
      alertsArray: alerts.alertsArray,
@@ -115,6 +129,7 @@ import moment from "moment";
      updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
      updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
      createAlertAction: (alertData) => dispatch(createAlert(alertData)),
+     sendFCMTokenAction: (fcmToken) => dispatch(sendFCMToken(fcmToken)),
      resetCreateAlertDataAction: () => dispatch(resetCreateAlertData()),    
      getPeakOffPeakDataAction:() => dispatch(getPeakOffPeakData()),
      getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),

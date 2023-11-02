@@ -85,8 +85,7 @@
  
  export function sendFCMToken(fcmToken) {
 
-  // console.log("yes checking the fcm is sending or not - - - - - ",fcmToken)
-
+  console.log("yes checking the fcm is sending or not on api action - - - - - ",fcmToken)
 
    return async (dispatch, getState) => {
      try {
@@ -94,7 +93,6 @@
        const accesstoken = await getAccessToken();
        const userId = await getUserId();
        let userData = {};
-
        userData["access_token"] = accesstoken;
        const res = await securePutForUser(`/v1/users/${userId}/fcm_tokens`, authToken, {
          user: userData,
