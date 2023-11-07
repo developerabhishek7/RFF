@@ -14,13 +14,9 @@ import {
   ImageBackground
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-// import * as WebBrowser from "expo-web-browser";
 import scale, { verticalScale } from "../../helpers/scale";
 import { connect } from "react-redux";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-// import TransLoader from "trans-loader";
-// import * as Facebook from "expo-facebook";
 import Validators from "../../helpers/Validator";
 import styles from "./LoginComponent_Style";
 import * as STR_CONST from "../../constants/StringConst";
@@ -29,8 +25,6 @@ import * as KEY_CONST from "../../helpers/config";
 import 'react-native-get-random-values'
 import FastImage from 'react-native-fast-image'
 import { v4 as uuid } from 'uuid'
-// import { trackEventDetails } from "../../helpers/segmentMethods";
-// import { CheckoutCart, CBCheckoutParams, CBCheckoutProps } from "@chargebee/react-native-chargebee";
 import {
   socialLogin,
   signIn,
@@ -45,7 +39,6 @@ import { resetNetworkStatus } from "../../actions/commonActions";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import jwt_decode from "jwt-decode";
 import { getCountryList } from "../../actions/userActions";
-import SvgUri from 'react-native-svg-uri';
 import {
   AccessToken,
   LoginManager,
@@ -53,7 +46,6 @@ import {
   GraphRequestManager,
 } from 'react-native-fbsdk';
 import { GenerateUUID } from "react-native-uuid"
-// import crashlytics from "@react-native-firebase/crashlytics";
 class LoginComponent extends Component {
   constructor(props) {
     super(props);
@@ -75,8 +67,6 @@ class LoginComponent extends Component {
       showNetworkPopUp: false,
       isOnFocus: false,
       isOnFocusPassword: false,
-      // emailProps:this.props.route.params.email ? this.props.route.params.email : "",
-      // passwordProps:this.props.route.params.password ? this.props.route.params.password : ""
     };
   }
 
@@ -85,10 +75,7 @@ class LoginComponent extends Component {
   });
 
   async componentDidMount() {
-    // console.log("yes check here uuid  - - - - -",uuid())
-
-    // crashlytics().log("App mounted.............................");
-    await GoogleSignin.configure()
+     await GoogleSignin.configure()
     this.props.getCountryListAction()
     await this.componentWillFocus();
 
@@ -101,15 +88,6 @@ class LoginComponent extends Component {
       this.handleBackPress
     );
     await AsyncStorage.setItem("navigateToLogin", "true");
-
-    // console.log("check param on did mount #########",this.props.navigation.getParam("email"))
-    // if(this.props.route.params && this.props.route.params.email != undefined && this.props.route.params.email != "" && this.props.route.params.email != null){
-    //   console.log("check param on did mount 111111 #########",this.props.route.params.email)    
-    // }
-
-
-
-
   }
 
   async componentWillFocus() {
@@ -139,7 +117,6 @@ class LoginComponent extends Component {
         Alert.alert("User has not signed in yet");
       } else {
         Alert.alert("Something went wrong. Unable to get user's info");
-        console.log("Something went wrong. Unable to get user's info");
       }
     }
   };
@@ -169,43 +146,6 @@ class LoginComponent extends Component {
       }
     }
   };
-
-
-  // checkPaymentWithChargebee()  {
-
-  //   console.log("yes inside the chargebee payment fucntion - - - ")
-
-  //   let hostedPageId = "1212"
-  //   let stepName = "detailsView"
-
-  //   Chargebee.configure({
-  //     site: "SITE_NAME",
-  //     publishableApiKey: "API-KEY",
-  //     androidSdkKey: "Android SDK Key",
-  //     iOsSdkKey: "iOS SDK Key",
-  //   });
-
-
-  //   return (
-  //     <CheckoutCart
-  //       onSuccess={(hostedPageId) => console.log("yes hostedPageId -   - -")}
-  //       onEachStep={(stepName) => 
-  //         console.log("yes on step name - - - - - - ")
-  //        }
-  //       site={"https://rewardflightfinder-test.chargebee.com"}
-  //       planId={"gold-plan-gbp-yearly"}
-  //       couponIds={"couponIds"}
-  //       addons={"addons"}
-  //       customer={"customer"}
-  //       subscription={"subscription"}
-  //       billingAddress={"billingAddress"}
-  //     // items={"gold-plan-gbp-yearly"} // Only for V2
-  //     />
-  //   )
-  // }
-
-
-
 
 
   async onAppleButtonPress() {
@@ -241,9 +181,7 @@ class LoginComponent extends Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.userData) {
 
       let userDetails = nextProps.userData;
-      // this.props.navigation.navigate("Authenticated");
-      // ------------- Commented for now only------------------
-      if (
+       if (
         userDetails &&
         userDetails.first_name &&
         userDetails.last_name &&
@@ -273,12 +211,9 @@ class LoginComponent extends Component {
           email:"",
           password:""
         })
-        // this.props.signInAction(userData)                   
-        // this.props.navigation.navigate("UpdateProfileScreen");      
         this.props.navigation.navigate("FindFlightContainerScreen");
       }
-      // trackEventDetails(STR_CONST.SIGN_IN_EVENT, null, userDetails)
-    }
+      }
     if (
       nextProps.loginError &&
       this.props.loginError !== nextProps.loginError
@@ -298,9 +233,6 @@ class LoginComponent extends Component {
     }
   }
 
-  /**
-   * clearLoginError will clean last login error
-   */
   clearLoginError() {
     this.props.clearLoginError();
   }
@@ -332,10 +264,7 @@ class LoginComponent extends Component {
           password,
           sessionId: sessionId
         },
-      };
-      console.log("yes pring here email and password - - - - - -",email)
-      console.log("yes pring here email and password - - - - - -",password)
-      
+      };     
       if(email && password){
         this.props.signInAction(userData);
       }
@@ -343,89 +272,23 @@ class LoginComponent extends Component {
   }
 
   openResetPasswordPage = () => {
-    // WebBrowser.openBrowserAsync(KEY_CONST.FORGET_PASSWORD_URL);
     Linking.openURL(KEY_CONST.FORGET_PASSWORD_URL)
   };
 
-  // onPressFBSocialLogin = async () => {
-  //   try {
-  //     let imageObject = {};
-  //     await Facebook.initializeAsync(KEY_CONST.FACEBOOK_APP_ID);
-  //     const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-  //       permissions: ["public_profile", "email"],
-  //       behavior: "standalone",
-  //     });
-  //     if (type === "success") {
-  //       // Get the user's name using Facebook's Graph API
-  //       const response = await fetch(`${KEY_CONST.FACEBOOK_URL}${token}`);
-  //       const responseBody = await response.json();
-  //       const { id, email, name, picture } = responseBody;
-  //       let userName = name.split(" ");
-
-  //       const image = await Utils.getImageInfo(picture.data.url);
-  //         imageObject["uri"] = picture.data.url  ?  picture.data.url : 
-  //         imageObject["type"] =  image._data.type.split("/")[1] ? image._data.type.split("/") : "jpg"
-  //         imageObject["fileName"] = "RFFUser";
-
-  //       const userInfo = {};
-  //       userInfo.auth_uid = id;
-  //       userInfo.auth_token = token;
-  //       userInfo.provider = "facebook";
-  //       userInfo.platform = "mobile";
-  //       userInfo.email = email;
-  //       userInfo.image = "";
-  //       userInfo.first_name = userName[0];
-  //       userInfo.last_name = userName[1];
-
-  //       this.setState({ isLoading: true });
-  //       await AsyncStorage.setItem("socialLogin", "true")
-  //       this.props.socialLoginAction(
-  //         { user: userInfo },
-  //         (res) => this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_IN_FB_EVENT),
-  //         (res) => this.socialLoginFailureCallBack(res),
-  //         imageObject,
-  //         imageObject.type
-  //       );
-  //     } else if (type === "cancel") {
-  //       CustomAlert.showOkAlert(STR_CONST.FACEBOOK_LOGIN_CANCELLED);
-  //       this.setState({ isLoading: false });
-  //     } else {
-  //       CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
-  //     }
-  //   } catch ({ message }) {
-  //     this.setState({ isLoading: false });
-  //     CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
-  //   }
-  // };
 
   onPressGoogleSocialLogin = async () => {
     this.setState({ isLoading: true });
-
-
-
-
     try {
       try {
         let imageObject = {};
         await GoogleSignin.hasPlayServices({
-          //Check if device has Google Play Services installed.
-          //Always resolves to true on iOS.
-          showPlayServicesUpdateDialog: true,
+           showPlayServicesUpdateDialog: true,
         });
         const userGoogleInfo = await GoogleSignin.signIn();
         const tokens = await GoogleSignin.getTokens();
 
         this.setState({ userInfo: userGoogleInfo });
-
-        console.log("yes chekc here  - - - - - - ", userGoogleInfo.user.photo)
-
         const image = await Utils.getImageInfo(userGoogleInfo.user.photo);
-        // imageObject["uri"] = userGoogleInfo.user.photo;
-        // imageObject["type"] = image._data.type.split("/")[1];
-        // imageObject["fileName"] = "RFFUser";
-
-        // console.log("yes check here iomag ##### ",image)
-
         if (userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null) {
           imageObject["uri"] = userGoogleInfo.user.photo ? userGoogleInfo.user.photo : null
           imageObject["type"] = image ? image.type.split("/")[1] : null
@@ -678,25 +541,13 @@ class LoginComponent extends Component {
             style={styles.googleFb}
           >
             <FastImage style={styles.googleButton} resizeMode="contain" source={IMG_CONST.GOOGLE_ICON} />
-            {/* <Text
-            style={styles.iconTxt}
-          > Google</Text> */}
-
           </TouchableOpacity>
-
-
           <TouchableOpacity
            onPress={() => this.handleFacebookLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.fbButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-            {/* <Text
-            style={styles.iconTxt}
-          > Facebook</Text>
-           */}
-         
           </TouchableOpacity>
-
           {!Utils.isAndroid() && (
             <TouchableOpacity
               onPress={() => this.onAppleButtonPress()}
@@ -781,7 +632,6 @@ class LoginComponent extends Component {
   }
 
   fetchUserProfile = async (accessToken) => {
-    console.log('fetchUserProfile >>> ',' --------------- fetchUserProfile');
     const request = new GraphRequest(
       '/me',
       {
@@ -815,7 +665,6 @@ class LoginComponent extends Component {
       } else if (behavior === 'web') {
         LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'browser' : 'WEB_ONLY');
       }
-      // LoginManager.setLoginBehavior(behavior);
       const PERMISSIONS = [ 'public_profile', 'email' ];
       const result = await LoginManager.logInWithPermissions(PERMISSIONS);
   
@@ -839,19 +688,14 @@ class LoginComponent extends Component {
 
   render() {
     return (
-      <View style={{ height: "100%", width: "100%", backgroundColor: colours.lightBlueBackground }}>
+      <View style={styles.loginContainer}>
         {this.renderLogoContainer()}
-
         <FastImage
           source={IMG_CONST.Login_img}
-          style={{ height: scale(180), width: scale(180), alignSelf: 'center' }}
+          style={styles.loginImgLogo}
           resizeMode={FastImage.resizeMode.contain}
         />
-
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          {/* <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}        
-         > */}
-          {/* {this.renderLogoContainer()} */}
+        <View style={{ justifyContent:STR_CONST.CENTER, alignItems: STR_CONST.CENTER }}>
           <KeyboardAwareScrollView
             keyboardShouldPersistTaps={"handled"}
             showsVerticalScrollIndicator={false}
@@ -860,15 +704,10 @@ class LoginComponent extends Component {
             {this.renderButtonContainer()}
             {this.renderGoogleFBButtonContainer()}
           </KeyboardAwareScrollView>
-          <View style={{
-            width: scale(320),
-            flexDirection: "row", borderWidth: 0, justifyContent: "space-around", alignItems: "center", marginTop: scale(1), marginBottom: scale(20)
-          }}>
+          <View style={styles.butoonView}>
             {this.renderBottomTextContainer()}
             {this.skipButton()}
           </View>
-          {/* </KeyboardAwareScrollView> */}
-          {/* <TransLoader isLoading={this.state.isLoading} /> */}
         </View>
       </View>
 

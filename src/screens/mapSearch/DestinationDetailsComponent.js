@@ -12,6 +12,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
 import MyStatusBar from '../../components/statusbar/index';
+import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 
 import { getAirlinesAvailability,getSeatsAvailability ,getPointsAvailability,getPeakOffPeakData } from "../../actions/calendarActions";
 import {
@@ -35,7 +36,7 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 // var pendingOutBoundCount = 0
-import moment from "moment";
+import moment, { isDate } from "moment";
 let monthKey = ""
 let dateForPoints = ""
 let peakKey = ""
@@ -43,6 +44,8 @@ let economyValue = ""
 let premiumValue =  ""
 let businessValue = ""
 let firstValue = ""
+let departureDayCount = 0
+let returnDayCount = 0
 // let peak = ""
 class DestinationsComponent extends Component {
   constructor(props) {
@@ -59,10 +62,6 @@ class DestinationsComponent extends Component {
       WhereFrom: "",
       peakKey:"",
       staticDateArray:[],
-      // economyClass: false,
-      // premiumClass: false,
-      // businessClass: false,
-      // firstClass: false,
       isLoader:false,
       peak: "",
       mapSearchData: {},
@@ -70,46 +69,17 @@ class DestinationsComponent extends Component {
       returnDaysDiff:0,
       tripType: this.props.route.params.tripType,
       sourceCode: this.props.route.params.sourceCode,
-      destination:this.props.route.params.destination
+      destination:this.props.route.params.destination,
+      selectedClass:this.props.route.params.classSelected ? this.props.route.params.classSelected : [true,true,true,true] ,
     }
   }
 
   
-checkIfPeakOffPeakDataMonth = () => {
-  let month =  new Date().getMonth()
-
-  if(month === 0){
-    monthKey = 23
-  }else if(month === 1){
-    monthKey = 22
-  } else if(month === 2){
-    monthKey = 21
-  } else if(month === 3){
-    monthKey = 20
-  } else if(month === 4){
-    monthKey = 19
-  } else if(month === 5){
-    monthKey = 18
-  } else if(month === 6){
-    monthKey = 17
-  } else if(month === 7){
-    monthKey = 16
-  } else if(month === 8){
-    monthKey = 15
-  } else if(month === 9){
-    monthKey = 14
-  } else if(month === 10){
-    monthKey = 13
-  } else if(month === 11){
-    monthKey = 22
-  }
- 
-}
 
   componentDidUpdate(prevProps) {
   let auditData =   this.props.route.params.auditData  
   let searchData = this.props.route.params.searchData
-  let  tripType =  this.props.route.params.tripType
+  let tripType =  this.props.route.params.tripType
      
       if (this.props !== prevProps) {
       if (
@@ -128,7 +98,8 @@ checkIfPeakOffPeakDataMonth = () => {
           tripType:tripType,
           newSearchData:searchData,
           focusedDate: null,
-          staticDateArray:this.state.staticDateArray
+          staticDateArray:this.state.staticDateArray,
+          selectedClass: this.state.selectedClass
         });
       }
     }
@@ -162,9 +133,6 @@ checkIfPeakOffPeakDataMonth = () => {
 
     let outboundLength = outboundData && Object.keys(outboundData).length
     let inboundLength = 0
-
-
-    console.log('outboundLength >>> /// ',outboundLength)
 
     let outboundDiff = parseInt(outboundLength) - parseInt(departureDaysDiff) 
     var pendingOutBoundCount = 0
@@ -213,15 +181,9 @@ checkIfPeakOffPeakDataMonth = () => {
           pendingOutBoundCount = 0
         }
       }
-
-
-    
   
     this.setState({ WhereFrom,departureDaysDiff:pendingOutBoundCount,returnDaysDiff:pendingInBoundCount })
-
-    this.checkIfPeakOffPeakDataMonth()
     this.props.getPeakOffPeakDataAction()
-   
     const data = {
       "source": auditData.search_data.source,
      "destination": data1.code
@@ -394,11 +356,33 @@ checkIfPeakOffPeakDataMonth = () => {
 
   }
 
+  getIcon(icon, color) {
+    return <MaterialIcon name={icon} size={scale(16)} color={color} />;
+  }
 
+  updateSelectedClass(index){
+    const { tripType, selectedClass } = this.state;
 
+    let shouldUpdate = false;
+
+    selectedClass.forEach((value, position) => {
+      if(value && position != index){
+        shouldUpdate = value
+      }
+    });
+
+    if(shouldUpdate){
+      let newClassArray = selectedClass;
+      newClassArray[index] = !newClassArray[index];
+      this.setState({
+        selectedClass: newClassArray
+      });  
+    }
+
+  }
 
   showClassesData(first, economy, business, premium, peak, month, returnDateMonth, actualDate,peakKey,dateForPoints) {
-    const { tripType } = this.state;
+    const { tripType, selectedClass } = this.state;
     let dates = JSON.parse(this.props.route.params.singleMap)
     let pointsDatBA  = this.props.route.params.pointsDatBA
     let pointsDataSS  = this.props.route.params.pointsDataSS
@@ -408,7 +392,7 @@ checkIfPeakOffPeakDataMonth = () => {
     businessValue = ""
     firstValue = ""
    
-     if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
+    if (pointsDatBA && Object.keys(pointsDatBA).length !== 0 ) {
         if(this.state.peak  === false){ 
               pointsDatBA.map((singleMap)=>{
                 if(singleMap.one_way === true && singleMap.peak_type === "offpeak"){
@@ -448,13 +432,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
     }
 
-
-
-
-
-
-
-  if (pointsDataSS && Object.keys(pointsDataSS).length !== 0 ) {
+    if (pointsDataSS && Object.keys(pointsDataSS).length !== 0 ) {
    
   
     if(this.state.peak === false){
@@ -499,8 +477,6 @@ checkIfPeakOffPeakDataMonth = () => {
      
     }
     
-
-
     let economyClass = dates.available_classes.economy;
     let premiumClass = dates.available_classes.premium;
     let businessClass = dates.available_classes.business;
@@ -585,6 +561,19 @@ checkIfPeakOffPeakDataMonth = () => {
           firstClass = true
         }
       }
+    }
+
+    if(!economyClass){
+      selectedClass[0] = false
+    }
+    if(!premiumClass){
+      selectedClass[1] = false
+    }
+    if(!businessClass){
+      selectedClass[2] = false
+    }
+    if(!firstClass){
+      selectedClass[3] = false
     }
 
     if (first || economy || business || premium) {
@@ -687,12 +676,20 @@ checkIfPeakOffPeakDataMonth = () => {
         <View style={{ flexDirection: "row", justifyContent: "space-between", margin: scale(9), marginTop: scale(10), alignContent: "center", }}>
         {
           economyClass ?
-            <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF",height:scale(30), justifyContent: 'center', alignItems: 'center', borderRadius: scale(6)}}>
+            <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#FFFFFF",height:scale(30), justifyContent: 'center', alignItems: 'center', borderRadius: scale(6)}}
+            onPress={() => { this.updateSelectedClass(0) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{color:"#2044FF",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
+              {!this.state.selectedClass[0]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.blue
+                  )}
                  <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             
@@ -703,14 +700,22 @@ checkIfPeakOffPeakDataMonth = () => {
         }
         {
           premiumClass ?
-            <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
+          <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}
+          onPress={() => { this.updateSelectedClass(1) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               
-                    <Text style={{color:"#FEA41D",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
+                {!this.state.selectedClass[1]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.yellow
+                  )}
                 
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               
@@ -722,19 +727,27 @@ checkIfPeakOffPeakDataMonth = () => {
         }
         {
           businessClass ?
-            <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
+            <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}
+            onPress={() => { this.updateSelectedClass(2) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
              
-                    <Text style={{color:"#A905F6",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
+              {!this.state.selectedClass[2]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.purple
+                  )}
              
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
            
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             
-                    <Text style={{color:"#EFEFEF",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
+               <Text style={{color:"#EFEFEF",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
               
                 <Text style={{ fontSize: scale(11),opacity:0.4, textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
               </View>
@@ -742,12 +755,22 @@ checkIfPeakOffPeakDataMonth = () => {
         }
         {
           firstClass ?
-            <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
+            <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}
+            onPress={() => { this.updateSelectedClass(3) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{color:"#EB186F",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
+              
+              {!this.state.selectedClass[3]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.pink
+                  )}
+                
                 <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(3), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}   </Text>
               </View>
-            </View>
+            </TouchableOpacity>
             : <View style={{ flexDirection: "row", backgroundColor: "#FFFFFF", height:scale(30),justifyContent: 'center', alignItems: 'center', marginLeft: -scale(7), borderRadius: scale(6) }}>
               <View style={{ margin: scale(5), borderRadius: scale(7), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{color:"#EFEFEF",fontSize:Platform.OS==="ios" ?scale(7) :scale(13)}}>{'\u2B24'}</Text>
@@ -939,7 +962,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
   renderOutboundDates = () => {
     let dates = JSON.parse(this.props.route.params.singleMap)
-    const { tripType } = this.state;
+    const { tripType, selectedClass, departureDaysDiff } = this.state;
     let isEconomy = false
     let isPremium = false
     let isBusiness = false
@@ -1003,20 +1026,22 @@ checkIfPeakOffPeakDataMonth = () => {
       }
     }
 
-    let actualDate = Object.entries(dates.availability.outbound)
+    let actualDateMap = Object.entries(dates.availability.outbound)
     let DateCount = 9
+    let availableDates = 0
+    let availableDatesVisible = 0
+    
     if(tripType == "return"){
-      DateCount = 9
+      DateCount = 10
     }
     else{
-      DateCount = 19
+      DateCount = 20
     }
 
-
     return (
-      <View style={{ width: scale(350), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
+      <View style={{width: scale(350), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
-          actualDate.map((singleMap ,index) => {
+          actualDateMap.map((singleMap ,index) => {
 
             peakKey =  singleMap[1].peak
             dateForPoints = singleMap[0]
@@ -1045,47 +1070,63 @@ checkIfPeakOffPeakDataMonth = () => {
 
 
             if (tripType == "return") {
-              if (dateKeys.economy && isEconomy) {               
+              if (dateKeys.economy && isEconomy && selectedClass[0]) {               
                 economy = dateKeys.economy.points      
                 economySeat = dateKeys.economy   
               }
-              if (dateKeys.premium && isPremium) {            
+              if (dateKeys.premium && isPremium && selectedClass[1]) {            
                 premium = dateKeys.premium.points
                 premiumSeat = dateKeys.premium
               }
-              if (dateKeys.business && isBusiness) {              
+              if (dateKeys.business && isBusiness && selectedClass[2]) {              
                 business = dateKeys.business.points
                 businessSeat = dateKeys.business
               }
-              if (dateKeys.first && isFirst) {              
+              if (dateKeys.first && isFirst && selectedClass[3]) {              
                 first = dateKeys.first.points;
                 firstSeat = dateKeys.first
               }
             }
             else {
-              if (dateKeys.economy) {              
+              if (dateKeys.economy && selectedClass[0]) {              
                 economy = dateKeys.economy.points
                 economySeat = dateKeys.economy   
               }
-              if (dateKeys.premium) {                
+              if (dateKeys.premium && selectedClass[1]) {                
                 premium = dateKeys.premium.points
                 premiumSeat = dateKeys.premium
               }
-              if (dateKeys.business) {              
+              if (dateKeys.business && selectedClass[2]) {              
                 business = dateKeys.business.points
                 businessSeat = dateKeys.business
               }
-              if (dateKeys.first) {           
+              if (dateKeys.first && selectedClass[3]) {           
                 first = dateKeys.first.points
                 firstSeat = dateKeys.first
               }
             }
+          let isDateAvailable = economySeat || premiumSeat || businessSeat || firstSeat
 
+          if(isDateAvailable) {
+              availableDates++
+              if(availableDates <= DateCount){
+                ++availableDatesVisible
+              }
+          }
+       
+            if(availableDates > DateCount && index == (actualDateMap.length - 1)){
+              let mDates = availableDates - availableDatesVisible;
+              departureDayCount = mDates;             
+            }
+            if(availableDates == availableDatesVisible && index == (actualDateMap.length - 1)){
+              departureDayCount = null;
+            }
+            
             return (
               <Fragment>
                 {
-                  index <=  DateCount ?
-                  <View style={ [styles.outboundMainView, { margin: (index >= 10 && tripType == "return")? scale(7) : scale(4)  } ]}>
+                  (availableDates <=  DateCount) && isDateAvailable ?
+                  <View style={ [styles.outboundMainView, { margin: isDateAvailable ? (index >= 10 && tripType == "return")? scale(4) : scale(4): null } ]}>
                   {
                     peak == true ?
                       <Fragment>
@@ -1308,7 +1349,7 @@ checkIfPeakOffPeakDataMonth = () => {
                         {
                           businessSeat && firstSeat && !economySeat && !premiumSeat ?
                             <ImageBackground
-                              source={require("../../assets/classes/c10.png")}
+                              source={require("../../assets/classes/c11.png")}
                               style={styles.outboundbgImg}
                               resizeMode="contain"
                             >
@@ -1634,7 +1675,7 @@ checkIfPeakOffPeakDataMonth = () => {
                         {
                           businessSeat && firstSeat && !economySeat && !premiumSeat ?
                             <ImageBackground
-                              source={require("../../assets/classes/c10.png")}
+                              source={require("../../assets/classes/c11.png")}
                               style={styles.outboundbgImg}
                               resizeMode="contain"
                             >
@@ -1754,7 +1795,7 @@ checkIfPeakOffPeakDataMonth = () => {
 
   renderInboundDates() {
     let dates = JSON.parse(this.props.route.params.singleMap)
-    const { tripType } = this.state
+    const { tripType, returnDaysDiff } = this.state
 
     let isEconomy = false
     let isPremium = false
@@ -1834,16 +1875,18 @@ checkIfPeakOffPeakDataMonth = () => {
     
     firstOutboundDate = new Date(Object.values(firstOutboundObject)[0]);
 
-    let actualDate = Object.entries(dates.availability.inbound).filter(([key, value])=>{
+    let actualDateMap = Object.entries(dates.availability.inbound).filter(([key, value])=>{
       //const item = dates.availability.inbound[key];
       let itemDate = new Date(key);
       return itemDate>=firstOutboundDate;
     });
+    let availableDates = 0
+    let availableDatesVisible = 0
 
     return (
       <View style={{ width: scale(350), flex:1,flexDirection: "row",flexWrap:"wrap",alignSelf:"flex-start",marginStart:scale(10),marginEnd:scale(10) }}>
         {
-          actualDate.length!=0 ? actualDate.map((singleMap, index) => {
+          actualDateMap.length!=0 ? actualDateMap.map((singleMap, index) => {
             
 
            let  peakKey =  singleMap[1].peak
@@ -1856,7 +1899,7 @@ checkIfPeakOffPeakDataMonth = () => {
             let businessClass = singleMap[dateKeys]
             let returnDateMonth = new Date(dates).getMonth()
 
-           let peak = dateKeys.peak;
+            let peak = dateKeys.peak;
             let business;
             let economy;
             let premium;
@@ -1868,47 +1911,63 @@ checkIfPeakOffPeakDataMonth = () => {
             let firstSeat;
 
             if (tripType == "return") {
-              if (dateKeys.economy && isEconomy) {               
+              if (dateKeys.economy && isEconomy && this.state.selectedClass[0]) {               
                 economy = dateKeys.economy.points      
                 economySeat = dateKeys.economy   
               }
-              if (dateKeys.premium && isPremium) {            
+              if (dateKeys.premium && isPremium && this.state.selectedClass[1]) {            
                 premium = dateKeys.premium.points
                 premiumSeat = dateKeys.premium
               }
-              if (dateKeys.business && isBusiness) {              
+              if (dateKeys.business && isBusiness && this.state.selectedClass[2]) {              
                 business = dateKeys.business.points
                 businessSeat = dateKeys.business
               }
-              if (dateKeys.first && isFirst) {              
+              if (dateKeys.first && isFirst && this.state.selectedClass[3]) {              
                 first = dateKeys.first.points;
                 firstSeat = dateKeys.first
               }
             }
             else {
-              if (dateKeys.economy) {              
+              if (dateKeys.economy && this.state.selectedClass[0]) {              
                 economy = dateKeys.economy.points
                 economySeat = dateKeys.economy   
               }
-              if (dateKeys.premium) {                
+              if (dateKeys.premium && this.state.selectedClass[1]) {                
                 premium = dateKeys.premium.points
                 premiumSeat = dateKeys.premium
               }
-              if (dateKeys.business) {              
+              if (dateKeys.business && this.state.selectedClass[2]) {              
                 business = dateKeys.business.points
                 businessSeat = dateKeys.business
               }
-              if (dateKeys.first) {           
+              if (dateKeys.first && this.state.selectedClass[3]) {           
                 first = dateKeys.first.points
                 firstSeat = dateKeys.first
               }
             }
 
+            let isDateAvailable = economySeat || premiumSeat || businessSeat || firstSeat
+
+            if(isDateAvailable) {
+              ++availableDates
+              if(availableDates <= 10){
+                ++availableDatesVisible
+              }
+            }
+            if(availableDates > 10 && index == (actualDateMap.length - 1)){
+              let mDates = availableDates - availableDatesVisible;              
+              returnDayCount = mDates
+            }
+            if(availableDates == availableDatesVisible && index == (actualDateMap.length - 1)){
+              returnDayCount = 0
+            }
+
             return (
               <Fragment>
                 {
-                  index <= 9 ?
-                  <View style={ [styles.outboundMainView, { margin: index >= 10 ? scale(7) : scale(4) }]}>
+                  availableDates <= 10 && isDateAvailable?
+                  <View style={ [styles.outboundMainView, { margin: isDateAvailable ? scale(4) : null }]}>
                   {
                     peak == true ?
                       <Fragment>
@@ -2136,7 +2195,7 @@ checkIfPeakOffPeakDataMonth = () => {
                         {
                           businessSeat && firstSeat && !economySeat && !premiumSeat ?
                             <ImageBackground
-                              source={require("../../assets/classes/c10.png")}
+                              source={require("../../assets/classes/c11.png")}
                               style={styles.outboundbgImg}
                               resizeMode="contain"
                             >
@@ -2476,7 +2535,7 @@ checkIfPeakOffPeakDataMonth = () => {
                         {
                           businessSeat && firstSeat && !economySeat && !premiumSeat ?
                             <ImageBackground
-                              source={require("../../assets/classes/c10.png")}
+                              source={require("../../assets/classes/c11.png")}
                               style={styles.outboundbgImg}
                               resizeMode="contain"
                             >
@@ -2717,8 +2776,7 @@ checkIfPeakOffPeakDataMonth = () => {
     }
     const {tripType, departureDaysDiff, returnDaysDiff} = this.state
 
-
-    // console.log("yes check here inside render - - - - - -  - -   ",pendingOutBoundCount)
+    console.log(' render() >>> departureDayCount ', departureDayCount,' returnDayCount ', returnDayCount)
    
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>
@@ -2733,7 +2791,9 @@ checkIfPeakOffPeakDataMonth = () => {
 
         {this.showClassesData()}
         {/* {this.renderClasses()} */}
-        <ScrollView scrollEnabled={false}>
+        <ScrollView 
+        style={{marginBottom: scale(60)}}
+        scrollEnabled={true}>
           {
             isOutBoundTrue ?
               <Fragment>
@@ -2755,7 +2815,7 @@ checkIfPeakOffPeakDataMonth = () => {
                       alignItems: "flex-end", alignSelf: "flex-end", justifyContent: "center", marginRight: scale(30), margin: scale(10)
                       , marginTop: this.state.month ? scale(7) : scale(7),
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{departureDaysDiff} More days </Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>{departureDayCount ? `+${departureDayCount} More days` : ''}  </Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null
@@ -2784,7 +2844,7 @@ checkIfPeakOffPeakDataMonth = () => {
                       alignItems: "flex-end", alignSelf: "flex-end",
                       marginTop: this.state.returnDateMonth ? scale(7) : scale(7), justifyContent: "center", marginRight: scale(30), margin: scale(10), borderWidth: 0
                     }}>
-                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>+{returnDaysDiff} More days</Text>
+                      <Text style={{ textAlign: 'right', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '700' : '700',textDecorationLine:"underline" }}>{returnDayCount ? `+${returnDayCount} More days` : ''}</Text>
                       {/* <Text style={{ textAlign: 'center', fontSize: scale(13), color: "#03B2D8", fontFamily: appFonts.INTER_BOLD, fontWeight: Platform.OS === 'ios' ? '100' : '900' }}> </Text> */}
                     </TouchableOpacity>
                     : null

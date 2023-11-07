@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet ,Platform} from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
@@ -12,6 +12,7 @@ module.exports = StyleSheet.create({
     height: scale(200),
     width: scale(241),
   },
+  headerView:{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(100), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(0) },
   title: {
     fontSize: scale(16),
     lineHeight: scale(19),
@@ -67,6 +68,15 @@ module.exports = StyleSheet.create({
     marginTop: verticalScale(8),
     borderColor: colours.borderColor,
   },
+  renderRow:{ padding: scale(15), backgroundColor: "#FFFFFF" },
+  dropDownStyle:{
+    width: scale(312),
+    height: scale(240),
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    marginTop: Platform.OS == "android" ? scale(-42) : scale(1),
+    elevation: 4,
+},
   textInput: {
     alignItems: "center",
     fontSize: scale(16),

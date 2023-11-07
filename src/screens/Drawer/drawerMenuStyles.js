@@ -17,6 +17,10 @@ export default StyleSheet.create({
     // borderWidth:1,
     // borderTopRightRadius:scale(20),borderBottomRightRadius:scale(20)
   },
+  profileSubView:{flexDirection:"column",alignItems:"center",justifyContent:"flex-start",marginStart:scale(10)},
+  profileImgView:{borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100)},
+  profileNameView:{backgroundColor:"#cdf0f7",borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",  },
+  membershipView:{backgroundColor:"#a5e5f1",padding:scale(2),borderRadius:scale(20),margin:scale(4),justifyContent:"center",marginStart:scale(-3)},
   innerView: {
     margin: scale(20),
     justifyContent: "center",

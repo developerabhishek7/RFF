@@ -134,7 +134,6 @@ export default class NotificationsComponent extends Component {
     let actualDate =  moment(date).format("DD-MM-YYYY  HH:mm")
 
     return (
-      // eslint-disable-next-line react/jsx-filename-extension
       <TouchableOpacity
         style={[styles.cellContainer]}
         activeOpacity={0.6}
@@ -147,45 +146,16 @@ export default class NotificationsComponent extends Component {
         </Text>
         </View>
         <Text style={[styles.notifDate, { opacity: !item.unread ? 1 : 0.6 }]}>
-          {/* {Utils.getDateFormate(item.created_at)} */}
           {actualDate}
         </Text>
         <View style={styles.line} />
       </TouchableOpacity>
     );
   }
-
-  // _renderNotif(notifications) {
-
-  //   if (a.unread && !b.unread) {
-  //     return 1;
-  //   } else if (!a.unread && b.unread) {
-  //     return -1;
-  //   } else {
-  //     return 0;
-  //   }
-
-  //   return (
-  //     <FlatList
-  //       keyExtractor={(item, index) => index.toString()}
-  //       data={notifications}
-  //       renderItem={item => this.renderCell(item)}
-  //       extraData={this.state}
-  //       onRefresh={() => this.onRefresh()}
-  //       refreshing={false}
-  //       showsVerticalScrollIndicator={false}
-  //       onEndReached={this.handleLoadMore}
-  //       onEndReachedThreshold={0.1}
-  //       onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-  //     />
-  //   );
-  // }
-
   
   _renderNotif(notifications) {
     notifications = notifications.sort((a, b) => {
-      // Unread messages (isRead: false) come before read messages (isRead: true)
-      if (a.unread && !b.unread) {
+       if (a.unread && !b.unread) {
         return 1;
       } else if (!a.unread && b.unread) {
         return -1;
@@ -210,30 +180,9 @@ export default class NotificationsComponent extends Component {
   }
 
 
-  /**
-   * Custom Header for Notifications screen
-   */
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={STRING_CONST.NOTIFICATONS_SCREEN_TITLE}
-  //         clickOnRight={() => this.goToNotifications()}
-  //         clickOnLeft={() => {
-  //           this.props.navigation.goBack();
-  //           this.props.resetNotificationDataAction();
-  //         }}
-  //       />
-  //     </View>
-  //   );
-  // }
-
-
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS == "ios" ?  scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={styles.notificaitonView}>
         <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}> 
         <ScreenHeader
           {...this.props}
@@ -250,10 +199,6 @@ export default class NotificationsComponent extends Component {
     )
   }
 
-  /**
-   * rendeEmptyListView for showing a message when no data available
-   */
-  // eslint-disable-next-line class-methods-use-this
   rendeEmptyListView() {
     const isAlreadyRead = false;
     return (

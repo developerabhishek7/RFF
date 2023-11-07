@@ -31,26 +31,11 @@ export default class MoreComponent extends Component {
     const { navigation } = this.props;
     navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN, { fromAlertScreen: false });
   }
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         setting
-  //         title={STRING_CONST.MORE_TITLE}
-  //         right
-  //         notifCount={2}
-  //         clickOnRight={() => Alert.alert("YES THIS IS CALLING!")}
-  //       />
-  //     </View>
-  //   );
-  // }
 
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(100),width:"100%",marginTop:Platform.OS == "android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={styles.moreHeaderView}>
         <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
@@ -103,10 +88,6 @@ export default class MoreComponent extends Component {
           style={styles.descritionItemView}
           onPress={() => {
             Linking.openURL(item.link);
-            // this.props.navigation.navigate("webviewcomponent",{
-            //   uri: item.link,
-            //   title:item.title
-            // })           
           }}
         >
           <Text style={styles.screenTitle}>{item.title}</Text>

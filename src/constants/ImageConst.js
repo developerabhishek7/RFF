@@ -45,7 +45,7 @@ export const CROSS = require('../assets/common/close1.png');
 export const CHANGE_PASSWORD_BG = require('../assets/changePassword/BG.png');
 export const CHANGE_PASSWORD_LOGO = require('../assets/changePassword/logo.png');
 
-
+export const PENCIL_EDIT_ICON = require('../assets/profile/pencil.png')
 
 // Login screen.
 

@@ -2,24 +2,56 @@ import { StyleSheet } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import * as STRING_CONST from "../../constants/StringConst";
-import { Dimensions } from "react-native";
+import { Dimensions,Platform } from "react-native";
 const { height, width } = Dimensions.get("window");
-import * as COLOR_CONST from "../../constants/ColorConst";
-
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor:"#FFF"
-
-    // backgroundColor:"#ecfdfd"
   },
-
+  sourceDestinationView:{flexDirection:"row",justifyContent:"center",height:scale(46),borderBottomWidth:0.9,borderBottomColor:"#DDDDDD",margin:scale(0)},
+citiesWithMultipleAirpots:{
+  color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
+  alignSelf: 'flex-start', marginTop: verticalScale(9), marginBottom: verticalScale(1),
+},
+citiesWithSingleAirpots:{
+  color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD,
+  alignSelf: 'flex-start', marginTop: verticalScale(15), marginBottom: verticalScale(1),
+},
+sourceDestinationHeader:{backgroundColor:"#03B2D8",borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
+marginTop:Platform.OS=="ios"?scale(-60):scale(-50)
+},
+headerSubView:{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(50)},
+  baIMGStyle:{ marginRight: scale(10), height: scale(20), width: scale(40) },
   infoIcon: {
     height: scale(22),
     width: scale(22),
     marginStart:scale(18)
   },
+  sourceHeaderSubView:{marginTop: scale(10), backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)},
+  renderListStyle:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchHeader:{height:scale(17),width:scale(17),margin:scale(10)},
+  sourceHeaderInput:{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(210),borderRadius:scale(10),fontWeight:"500",fontSize:scale(14)},
+  noAirlineAvailable:{
+    color: colours.lightGreyish,
+    fontSize: scale(14),
+    fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
+    fontWeight: '500',
+    marginTop: verticalScale(20)
+  },
+  noAirlineAvailableIMG:{
+    justifyContent: "flex-end",
+    height: scale(94), width: scale(106)
+  },
+  membershipView:{
+    justifyContent: 'center', alignItems: 'center',borderWidth:0,
+    margin: scale(9), marginTop: scale(21), marginBottom: -scale(9),
+  },membershipText:{ color: "gray", fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, fontSize: scale(13), alignSelf: "flex-start", paddingStart: scale(42) },
   inputTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
@@ -29,7 +61,7 @@ export default StyleSheet.create({
     color: colours.darkBlueTheme,
     
   },
-
+headerMainView:{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ?  scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) },
   infoIcon1: {
     height: scale(17),
     width: scale(17),
@@ -66,20 +98,6 @@ export default StyleSheet.create({
     fontSize: scale(15),
     fontWeight:'bold'
   },
-
-  // tabViewStyle: {
-  //   width: width / 2 - 40,
-  //   alignItems: "center",
-  //   borderBottomWidth: 1,
-  // },
-
-  // tabTextStyle: {
-  //   fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
-  //   fontSize: scale(13),
-  //   fontWeight: "bold",
-  //   marginBottom: verticalScale(10),
-  // },
-
   tabTextStyle: {
     fontFamily: STRING_CONST.appFonts.INTER_REGULAR,
     // fontSize: scale(14),
@@ -87,8 +105,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     textAlign:'center',
     color:"#FFF"
-    
-    // marginBottom: verticalScale(10),
+
   },
   tickMark: {
     height: scale(18),

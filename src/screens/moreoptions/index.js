@@ -81,10 +81,6 @@ export default class MoreComponent extends Component {
           style={styles.descritionItemView}
           onPress={() => {
             Linking.openURL(item.link);
-            // this.props.navigation.navigate("webviewcomponent",{
-            //   uri: item.link,
-            //   title:item.title
-            // })           
           }}
         >
           <Text style={styles.screenTitle}>{item.title}</Text>

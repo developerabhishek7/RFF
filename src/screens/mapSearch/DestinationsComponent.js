@@ -14,6 +14,7 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
 import MyStatusBar from '../../components/statusbar/index'
 import { StatusBar } from 'native-base';
+import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 
 export default class DestinationsComponent extends Component {
   constructor(props) {
@@ -26,13 +27,16 @@ export default class DestinationsComponent extends Component {
       sortType: 'asc',
       tripType: this.props.route.params.tripType,
       sourceCode: this.props.route.params.sourceCode,
-      isOnFocus:false
+      isOnFocus:false,
+      classSelected:[true, true, true, true],
     }
   }
   searchUpdated(term) {
     this.setState({ searchTerm: term })
   }
   componentDidMount = () => {
+
+
     let destination = this.props.route.params.destinations;
     let searchData = this.props.route.params.searchData
     let auditData = this.props.route.params.auditData
@@ -134,35 +138,93 @@ export default class DestinationsComponent extends Component {
     );
   }
 
-  renderClasses() {
+  updateClassSelected(index){
+    const { classSelected } = this.state;
 
-    
+    let shouldUpdate = false;
+
+    classSelected.forEach((value, position) => {
+      if(value && position != index){
+        shouldUpdate = value
+      }
+    });
+
+    if(shouldUpdate){
+      let newClassArray = classSelected;
+      newClassArray[index] = !newClassArray[index];
+      this.setState({
+        classSelected: newClassArray
+      });
+    }
+
+  }
+
+  getIcon(icon, color) {
+    return <MaterialIcon name={icon} size={scale(16)} color={color} />;
+  }
+
+  renderClasses() {    
+
+    console.log('renderClasses destination Component ', this.state.classSelected);
+
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
-        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}>
+        <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center' }}
+        onPress={() => { this.updateClassSelected(0) }}>
           <View style={{ padding: scale(5), borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <AntDesign name="checkcircle" size={scale(12)} color="#2044FF" />
+            {!this.state.classSelected[0]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.blue
+                  )}
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
           </View>
-        </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}
+        onPress={() => { this.updateClassSelected(1) }}>
           <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <AntDesign name="checkcircle" size={scale(12)} color="#FEA41D" />
+          {!this.state.classSelected[1]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.yellow
+                  )}
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
           </View>
-        </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}
+        onPress={() => { this.updateClassSelected(2) }}>
           <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <AntDesign name="checkcircle" size={scale(12)} color="#A905F6" />
+          {!this.state.classSelected[2]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.purple
+                  )}
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), paddingEnd: 4, color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
           </View>
-        </View>
-        <View style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ flexDirection: "row", backgroundColor: "#f1fbfd",borderRadius:scale(4), borderWidth: 0, justifyContent: 'center', marginBottom: scale(1), alignItems: 'center', justifyContent: 'center', marginLeft: 2 }}
+        onPress={() => { this.updateClassSelected(3) }}>
           <View style={{ padding: scale(5),borderRadius: scale(6), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <AntDesign name="checkcircle" size={scale(12)} color="#EB186F" />
+          {!this.state.classSelected[3]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.pink
+                  )}
             <Text style={{ fontSize: scale(12), textAlign: 'center', paddingStart:scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
       </View>
     );
@@ -184,7 +246,7 @@ export default class DestinationsComponent extends Component {
 
   render() {
 
-    const { destination, sortType, tripType } = this.state;
+    const { destination, sortType, tripType, classSelected } = this.state;
     let searchData = this.props.route.params.searchData
     let auditData = this.props.route.params.auditData
     const filteredDestination = destination.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
@@ -201,13 +263,6 @@ export default class DestinationsComponent extends Component {
 
         {this.renderClasses()}
         <ScrollView style={styles.container}>
-          {/* <SearchInput
-            onChangeText={(term) => { this.searchUpdated(term) }}
-            style={{ height: 45, width: "97%", color: "#132C52", alignSelf: 'center', margin: scale(10), borderBottomWidth: 1, borderColor: "gray", borderRadius: scale(10), paddingStart: scale(16), fontSize: scale(14), fontFamily: appFonts.INTER_SEMI_BOLD }}
-            placeholder="Search Available Routes"
-            placeholderTextColor="#97ADB6"
-          /> */}
-         
           {
             sortedArray.map((singleMap, index) => {
               let pointsDataSS = []
@@ -216,18 +271,15 @@ export default class DestinationsComponent extends Component {
               pointsDataSS = singleMap.points.SS
 
 
-              // console.log("yes checkpoints dSSSS    ",pointsDataSS)
-              // console.log("yes checkpoints pointsDatBA    ",pointsDatBA)
-
               let economy = false
               let premium_economy = false
               let business = false
               let first = false
               if (tripType == "one_way") {
-                economy = singleMap.available_classes.economy;
-                premium_economy = singleMap.available_classes.premium;
-                business = singleMap.available_classes.business;
-                first = singleMap.available_classes.first;
+                economy = singleMap.available_classes.economy && classSelected[0];
+                premium_economy = singleMap.available_classes.premium && classSelected[1];
+                business = singleMap.available_classes.business && classSelected[2];
+                first = singleMap.available_classes.first && classSelected[3];
               }
               else {
                 const processObject = {
@@ -273,23 +325,19 @@ export default class DestinationsComponent extends Component {
                     finalResult[f] = true;
                   }
                 });
-
-                economy = finalResult.economy
-                premium_economy = finalResult.premium
-                business = finalResult.business
-                first = finalResult.first
+                economy = finalResult.economy && classSelected[0]
+                premium_economy = finalResult.premium && classSelected[1]
+                business = finalResult.business && classSelected[2]
+                first = finalResult.first && classSelected[3]
               }
-              // console.log("check her getting data ####### ",JSON.stringify(singleMap))
-              return (
+               return (
                 <Fragment>
             {
               economy || premium_economy || business || first ?
                 <TouchableOpacity onPress={() => {
 
-                  // console.log("yes hcekc here - - - - - - -before send  - - -  -",pointsDatBA)
-
-                  // return false
-
+                  let selectedclass = this.state.classSelected
+                  let classData = [true, true, true, true]
                   this.props.navigation.navigate("destinationdetailscomponent", {
                     singleMap: JSON.stringify(singleMap),
                     searchData: JSON.stringify(searchData),
@@ -299,9 +347,14 @@ export default class DestinationsComponent extends Component {
                     sourceCode: this.state.sourceCode,
                     pointsDataSS:pointsDataSS,
                     pointsDatBA:pointsDatBA,
-                    destination:this.state.destination
-
+                    destination:this.state.destination,
+                    classSelected: selectedclass,
                   })
+                  setTimeout(() => {
+                    this.setState({
+                        classSelected : classData
+                    })
+                  }, 1000);
                 }} style={{ borderWidth:scale(1.5),borderStyle:"dashed",borderColor:"#92C0CA",borderRadius: scale(10), margin: scale(7), alignSelf: 'center', justifyContent: 'center', width: '94%', backgroundColor: "#f1fbfd" }}>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
                
@@ -345,6 +398,11 @@ export default class DestinationsComponent extends Component {
                         // console.log("yes hcekc here - - - - - - -before send  - - -  -",pointsDatBA)
                         // return false
 
+                        let selectedclass = this.state.classSelected
+
+                        let classData = [true, true, true, true]
+                        
+
                         this.props.navigation.navigate("destinationdetailscomponent", {
                           singleMap: JSON.stringify(singleMap),
                           WhereFrom: this.props.route.params.WhereFrom,
@@ -354,8 +412,14 @@ export default class DestinationsComponent extends Component {
                           sourceCode: this.state.sourceCode,
                           pointsDataSS:pointsDataSS,
                           pointsDatBA:pointsDatBA,
-                          destination:this.state.destination
+                          destination:this.state.destination,
+                          classSelected: selectedclass,
                         })
+                        setTimeout(() => {
+                          this.setState({
+                              classSelected : classData
+                          })
+                        }, 1000);
                       }}>
                         {
                               <FastImage resizeMode='contain' source={require("../../assets/common/rightArrow.png")} style={{ height: scale(17), width: scale(17), padding: scale(4), marginStart: scale(5),marginEnd:scale(5) }} />

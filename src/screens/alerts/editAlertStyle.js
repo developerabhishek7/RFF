@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Platform } from 'react-native';
 import scale , {verticalScale} from '../../helpers/scale';
 import { colours } from '../../constants/ColorConst';
 import * as CONST from '../../constants/StringConst';
@@ -14,6 +14,8 @@ export default StyleSheet.create({
     marginBottom:verticalScale(20)
 
   },
+  editAlertHeader:{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:
+  Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)},
 
   deleteButtonStyle: {
     backgroundColor: colours.white,
@@ -187,5 +189,16 @@ export default StyleSheet.create({
   radioButton:{
     height:scale(14), 
     width:scale(14)
-  }
+  },
+  deptIconStyle:{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)},
+  bodyStyle:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: verticalScale(20),
+  },
+  radioBtnView:{
+      flexDirection: "row",
+      alignItems: "center",
+      marginLeft: scale(20),
+  },
 });

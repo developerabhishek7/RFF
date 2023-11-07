@@ -43,7 +43,8 @@ export const STRETCH = "stretch";
 export const CONTAIN = "contain";
 export const BOLD = "bold";
 export const JUSTIFY = "justify";
-export const NO_ALERT_YET = "No Alert Yet" 
+export const NO_ALERT_YET = "No Alerts have been set" 
+export const HELP = "Help"
 // Login and SignUp screen
 export const EMAIL = "Email";
 export const COUNTRY = "Country";
@@ -143,6 +144,7 @@ export const RETURN_DATE_RANGE = `Return Date Range`;
 export const VERIFY_EMAIL = `Please verify your email to create alerts. `;
 export const SELECT_DEPARTURE_DATE = `Please select departure date`;
 export const SELECT_RETURN_DATE = `Please select return date`;
+export const ALERT_REACH_LIMIT = "You have reached your limit of Active Alerts."
 export const CREATE_ALERT_LIMIT = `You have reached your limit of Active Alerts. Upgrade your membership to create more Alerts`;
 export const CREATE_ALERT_LIMIT_IOS = `You have reached your limit of Active Alerts. Upgrade your membership to create more Alerts`;
 export const CREATE_ALERT_LIMIT_GOLD = `You have reached max limit of Active Alerts. Please contact support for more details`;
@@ -188,6 +190,7 @@ export const AIRLINE_MEMBERSHIP_SCREEN = "airlineMembershipScreen";
 export const LOCATION_LIST_SCREEN = "sourceDestinationListScreen";
 export const CALENDAR_SCREEN = "CalenderContainerScreen";
 export const EDIT_ALERT = "EditAlert";
+export const EDIT = "Edit";
 export const MAP_SEARCH_SCREEN = "MapSearchContainerScreen";
 export const MANAGE_CONTACT_SCREEN = "ManageContactDetails";
 export const MORE_SCREEN = "MoreComponentScreen";
@@ -200,6 +203,9 @@ export const USER_PROFILE_DETAIL_SCREEN = "UserProfileScreen";
 export const UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";
 export const HELP_SCREEN = "HelpScreen";
 
+export const UPGRADE_TO_ADD_SECONDARY_EMAIL = "Upgrade to add secondary email addresses"
+
+export const UPDATE_EMAILS = "Update emails"
 // Screen Title Constants
 export const ALERT_SCREEN_TITLE = "My Alerts";
 export const SETTING_SCREEN_TITLE = "Settings";
@@ -232,7 +238,7 @@ export const PASSWORD_CHANGE = "Password Changed Successfully";
 export const ADD_CONTACT = "Please add contact number from manage contact";
 export const VERIFY_NUMBER = `Please verify your Number first`;
 export const EDIT_FIRST_NAME = `Edit Name`;
-export const PASSWORD_NOT_MATCH = `Passwords doesn't match`;
+export const PASSWORD_NOT_MATCH = `Passwords do not match.`;
 export const CHANGE_PASSWORD = `Change Password`;
 export const REMOVE_PHOTO = `Remove Photo`;
 export const NEWSLETTER = `Newsletters`;
@@ -244,10 +250,15 @@ export const STATE = "County/State";
 export const CITY = "City";
 export const POST_CODE = `Postal/Zip Code`;
 export const PREFFERED_DEPARTURE = `My Home Airport`;
+export const AVG_NUMBER_OF_FLIGHT =   "Average number of return fights"
+export const TAKEN_ANNUALLY = "taken annually"
 export const AGE_BAND = `Age Band`;
 export const GENDER = `Gender`;
 export const APPROX_FLIGHT_NUMBER = `Average number of return flights \ntaken annually`;
 export const HOW_LIKELY_TO_TRAVEL_ABROAD = `Do you plan to travel abroad in the next 12 months?`;
+export const DO_YOU_WANT_TO_TRAVEL = "Do you plan to travel abroad in"
+export const NEXT_TWELVE_MONTH = "the next 12 months?"
+
 export const EMAIL_NOTIFICATION_DETAILS = `Keep set to always ‘on’ to ensure you don’t miss any reward flight notifications.`;
 export const SMS_NOTIFICATION_DETAILS = `Always get alerts, even with limited access to mobile data & wifi`;
 export const PUSH_NOTIFICATION_DETAILS = `Always get alert notifications on the app`;
@@ -278,6 +289,8 @@ export const VERIFY_TEXT = `Verify`;
 export const SEND_VERIFICATION_CODE = `Send Verification Code`;
 export const VERIFICATION_CODE = `Verification Code`;
 export const TIMER_LIMIT = 20;
+
+export const DATE_SOULD_BE_GREATER = "Date should be greater than today!"
 
 //PricingPage
 export const SELECT_YEARLY_PLAN = `Select a yearly plan, and get `;
@@ -367,7 +380,7 @@ export const SKIP = "Skip";
 // you deserve`;
 // export const GET_REWARD_SEATS_DESCRIPTION = `Increase your chances with Reward Flight Finder`;
 
-
+export const SELECT_YOUR_AIRLINE_MEMBERSHIP = "Select Your Airline Membership Tier"
 export const QUICKLY = `Quickly & easily search any route`
 export const QUICKLY_DES = `We support all direct BA operated routes`
 
@@ -380,7 +393,20 @@ export const QUICKLY_TRAVLE_DES = `Find all available routes from a given destin
 export const GET_REWARDS = `Get the reward seats you deserve`
 export const GET_REWARDS_DES = `Increase your chances with Reward Flight Finder`
 
+export const CITIES_WITH_MULTIPLE_AIRPOTS =  "Cities with multiple airports"
+export const CITIES_WITH_SINGLE_AIRPOTS = "Cities with one airport"
 
+export const ADD_MOBILE_NO_TO_RECIEVE_SMS_ALERTS = " Add mobile number to receive SMS alerts"
+
+export const DO_YOU_HAVE_SCREENSHOT =  "Do you have a screenshot?"
+export const MAX_DAY_ALLOWED =   "Max 3 allowed"
+export const MESSAGE_ABOUT_ISSUE = "Message about the issue"
+export const PLEASE_WRITE_MESSAGE = "Please enter message"
+export const ATTACH  = "Attach"
+
+export const SELECT_SUBJECT =  "Select Subject"
+export const PLEASE_SELECT_SUBJECT =  "Please Select Subject"
+export const SUBMIT =  "Submit"
 //Membership Page
 export const DAILY_ALERTS = "Alert Notifications";
 export const EMAIL_ALERTS = "Email Alerts";
@@ -391,8 +417,11 @@ export const SMS_ALERTS = "SMS Alerts";
 export const UPGRADE_PLAN =
   "To upgrade or make changes to your subscription, please visit website.";
 export const BRONZE_MEMBER = "Bronze Member";
+export const BRONZE = "Bronze";
 export const SILVER_MEMBER = "Silver Member";
+export const SILVER = "Silver";
 export const GOLD_MEMBER = "Gold Member";
+export const GOLD = "Gold";
 export const VIEW_BILLING_DATA = "View Billing Data";
 export const CANCEL_TRIAL = "Cancel Trial";
 export const CHANGE_PLAN = "Change Plan";
@@ -521,6 +550,13 @@ export const AIRLINE_MEMBERSHIP_TIERS = "Airline Membership Tier";
 export const CONFIRM_AIRLINE_TIERS = "Confirm Your Airline Membership Tier"
 export const AIRLINE_MESSAGE = "We’ve moved this setting away from the search bar.If you need to update it in the future you can do so in your User Dashboard."
 export const BRONZE_ALERT_INFO = "Bronze Member can create alert with Economy Class only."
+export const DD_MM_YYYY_FORMAT = 'DD-MM-YYYY';
+export const YYYY_MM_DD_FORMAT = 'YYYY-MM-DD';
+export const DD_MM_YYYY1 = 'DD/MM/YYYY'
+export const PREMIUM = "Premium"
+export const AIRCRAFT = "Aircraft"
+export const DURATION = "Duration"
+export const CHOOSE_IF_UNSURE = "Choose if Unsure"
 //  If you want to create alert for all cabin class Upgrade now.";
 export const PRICING_OBJECT = [
   {

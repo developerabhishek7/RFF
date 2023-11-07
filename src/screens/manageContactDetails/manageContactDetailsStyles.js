@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions,Platform} from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import { appFonts } from "../../constants/StringConst";
@@ -18,6 +18,7 @@ export default StyleSheet.create({
     backgroundColor: colours.borderBottomLineColor,
     marginTop: scale(4),
   },
+  headerStyleView:{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) },
   addButtonStyle: {
     backgroundColor: colours.lightBlueTheme,
     width: scale(99),

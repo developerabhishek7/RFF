@@ -49,13 +49,7 @@
      };
    }
    async componentDidMount(){
-    //  this.props.getAirlinesMembershipAction()
-    //  this.props.getPossibleRouteAction()
-    //  this.props.getCountryListAction()
-    //  this.props.getStateListAction()
-    //  this.props.getCityListAction()
-    //  this.props.getLocationsAction()
-    //  this.props.getProductPlansAction()
+
     const isLoggedIn = await getStoreData('authorizationHeader')
     const guestId = await getStoreData('guestId')
     if(!guestId){
@@ -68,8 +62,6 @@
      this.loginStatus()
       NetInfo.addEventListener(state => {
        if(state.isConnected && (!this.state.locationsObject || !this.state.airlinesPossileRoutesList)){
-        //  this.props.getPossibleRouteAction()
-        //  this.props.getLocationsAction()
        }
      });
    }
@@ -77,9 +69,6 @@
      const authorizationHeader = await AsyncStorage.getItem(
        "authorizationHeader"
      );
-    //  if(authorizationHeader){
-    //    this.props.setLoginStatusAction(true)
-    //  }
    }
  
    async componentDidUpdate(prevProps) {
@@ -102,7 +91,6 @@
  
        if(this.props.airlinesDetail && this.props.airlinesDetail !== prevProps.airlinesDetail && this.props.screenType == "FIND_FLIGHT"){
          this.props.navigation.navigate(STRING_CONST.CALENDAR_SCREEN, {searchData:this.state.searchData,focusedDate:null })
-        //  trackEventDetails(STRING_CONST.HOME_PAGE_SEARCH_EVENT, null, this.props.userData)
        }
        if(this.props.isNetworkFailed !== prevProps.isNetworkFailed && this.props.isNetworkFailed ){
          this.setState({
@@ -164,14 +152,6 @@
            airlinesPossileRoutesList={this.state.airlinesPossileRoutesList}
            locationsObject={this.state.locationsObject}
            navigation={this.props.navigation}
-           // onSearchPressed={(searchData, auditData) => {
-           //   this.setState({
-           //     searchData: searchData,
-           //   });
-           //   this.props.getAirlinesAvailabilityAction(searchData);
-           //   this.props.sendAuditDataAction(auditData);
-             
-           // }}
            getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
            onSearchPressed={(searchData, auditData) => {
              this.setState({
@@ -193,20 +173,15 @@
            currentLongitude={this.state.currentLongitude}
            nearestAirports={this.props.nearestAirports}
            getNearestAirport = {(lat,long)=>{
-             // this.props.getNearestAirportAction(lat,long)
            }
              }
            userData={this.props.userInfo}
-          //  onAirlineSelected = {(data)=>this.props.updateUserDataAction(data)}
            date = {this.props.route.params.date}
            flightSchedule = {this.props.flightSchedule}
            isLoggedIn={this.props.isLoggedIn}
-          //  multipleFlightScheduleData={this.props.multipleFlightScheduleData}
            seatsAvailabilityData = {this.props.route.params.seatsAvailabilityData}
            dateString= {this.props.route.params.dateString}
            isOutBounded = {this.props.route.params.isOutBounded}
-
-
            classSelected = {this.props.route.params.classSelected}
            selectedDate  = {this.props.route.params.selectedDate}
            passengerCount= {this.props.route.params.passengerCount}
@@ -215,7 +190,6 @@
            premiumPoints= {this.props.route.params.premiumPoints}
            businessPoints= {this.props.route.params.businessPoints}
            firstPoints= {this.props.route.params.firstPoints}
-
            noflightschedule ={this.props.route.params.noflightschedule}
            searchData ={this.props.route.params.searchData}
            multipleFlightScheduleData ={this.props.route.params.multipleFlightScheduleData}
@@ -226,14 +200,10 @@
            destination ={this.props.route.params.destination}
            flightCount ={this.props.route.params.checkFlightCount}
            classDataArray={this.props.route.params.classDataArray}
-
-
-
             economySeats = {this.props.route.params.economySeats}
             premiumSeats = {this.props.route.params.premiumSeats}
             businessSeats = {this.props.route.params.businessSeats}
             firstSeats = {this.props.route.params.firstSeats}
-
          />
        </View>
      );
@@ -259,7 +229,6 @@
      cabinClassData:findFlight.cabinClassData,
      locations: findFlight.locations,
      isLoggedIn: logIn.isLoggedIn,
-    //  multipleFlightScheduleData:findFlight.multipleFlightScheduleData
    };
  };
  
@@ -280,12 +249,9 @@
      getNotificationSettingsAction: () => dispatch(getNotificationSettings()),
      getNearestAirportAction: (lat, long)=>dispatch(getNearestAirport(lat, long)),
      getCountryListAction: () => dispatch(getCountryList()),
-    //  getStateListAction: () => dispatch(getStateList()),
      getCityListAction: () => dispatch(getCityList()),
      updateUserDataAction: (userData) => dispatch(updateUserInfo(userData, false)),
      getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
-    //  getMultipleFlightScheduleAction:(flightScheduleData) => dispatch(getMultipleFlightSchedule(flightScheduleData))
-
    };
  };
  export default connect(

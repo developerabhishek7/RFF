@@ -62,7 +62,6 @@ class PriceDetailsScreen extends Component {
       airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
       passengerCount:this.props.route.params.passengerCount,
       searchData:this.props.route.params.searchData,
-    //screenType:this.props.route.params.screen,
       skyScannerCabinCode:"economy",
       economy:true,
       premium:false,
@@ -89,52 +88,15 @@ class PriceDetailsScreen extends Component {
         setTimeout(() => {
           this.setState({ cabinClassData:this.props.cabinClassData,})
         }, 1000);
-       
       }
-    
     }
   }
-
-//   componentDidMount() {
-//     // data = this.props.route.params.alertData;
-//     // let searchData = this.props.route.params.data;
-
-//     this.setState({
-//       passengerCount: searchData.passengerCount,
-//       selectedIndex: searchData.isReturn ? 1 : 0,
-//       departStartDate: moment(searchData.startDate).format("YYYY-MM-DD"),
-//       departEndDate: moment(searchData.endDate).format("YYYY-MM-DD"),
-//       returnStartDate: searchData.arrivalStartDate
-//         ? moment(searchData.arrivalStartDate).format("YYYY-MM-DD")
-//         : "",
-//       returnEndDate: searchData.arrivalEndDate
-//         ? moment(searchData.arrivalEndDate).format("YYYY-MM-DD")
-//         : "",
-//       classSelectedArray: searchData.classSelected,
-//       id: searchData.alertID,
-//       airline: searchData.airways,
-//       membershipType: searchData.tier,
-//       source: searchData.selectedSource,
-//       destination: searchData.selectedDestination,
-//       availabilityUrl: searchData.availabilityUrl,
-//       availableClasses: searchData.availableClasses.split(","),
-//       isEconomy:searchData.classSelected[0],
-//       isPremium:searchData.classSelected[1],
-//       isBusiness:searchData.classSelected[2],
-//       isFirst:searchData.classSelected[3]
-//     });
-//     BackHandler.addEventListener('hardwareBackPress', () =>
-//     this.handleBackButton(this.props.navigation),
-//   );
-//   }
 
 
 componentDidMount(){
   
   const {selectedSource, selectedDestination,searchData} = this.state
-
   setTimeout(() => {
-
     this.setState({
       airlinesPossileRoutesList: this.props.airlinesPossileRoutes,
       locationsObject: this.props.locations,
@@ -143,9 +105,6 @@ componentDidMount(){
       selectedDate:this.props.route.params.selectedDate,
     })
   }, 300);
-
-
-
 }
 
   handleBackButton = (nav) => {
@@ -201,22 +160,6 @@ componentDidMount(){
     );
   }
 
-  // renderHeader() {
-  //   return (
-  //     <View style={{marginHorizontal:scale(15)}}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={this.state.headerTxt}
-  //         notifCount={2}
-  //         clickOnRight={() => this.goToNotifications()}
-  //         clickOnLeft={() => {
-  //           this.props.navigation.goBack();
-  //         }}
-  //       />
-  //     </View>
-  //   );
-  // }
 
 
   renderHeader(alertLength){
@@ -273,10 +216,7 @@ componentDidMount(){
   }
   originView() {
     const { airlinesPossileRoutesList,searchData,isSearchClicked,selectedSource,selectedDestination,locationsObject,prevSelectedSource } = this.state
-  
-    // console.log("yes check here searh data selectedSource #######   ",selectedSource)
-   
-    return (
+     return (
       <View style={{ marginTop: verticalScale(12) }}>
        
         <View style={{flexDirection:"row",alignItems:"center",marginTop:scale(10)}}>
@@ -287,7 +227,6 @@ componentDidMount(){
                     source={IMG_CONST.TAKEOFF}
                     resizeMode="contain"
                   />
-      
         <Text
           style={[
             styles.headingTextStyle,
@@ -312,7 +251,6 @@ componentDidMount(){
               sourceSelected: selectedDestination,
               onSourceSelected: (selectedSource) => {
                 this.onSourceSelected(selectedSource);
-                // this.props.getNearestAirport(selectedSource.latitude, selectedSource.longitude )
               },
               selectedLocation: selectedSource
             })
@@ -324,36 +262,12 @@ componentDidMount(){
             numberOfLines={1}
             style={[
               styles.getLocationSubTextStyle,
-              // {
-              //   color: selectedSource
-              //     ? colours.darkBlueTheme : !selectedSource && !isSearchClicked ?
-              //       colours.lightGreyish : colours.errorColor,
-              // },
             ]}
           >
             {selectedSource
               ? selectedSource.code
               :prevSelectedSource ? prevSelectedSource : "Select Origin"}
           </Text>
-
-          {/* <TouchableOpacity onPress={()=>{
-            this.setState({
-              selectedSource:null,
-              prevSelectedSource:null
-            })
-          }}
-          style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
-        
-          >
-            <FastImage
-              style={{
-                justifyContent: "flex-end",
-                marginEnd:scale(10),
-                height:scale(15),  width:scale(15) 
-              }}
-              source={IMG_CONST.DARK_BLUE_CROSS_ICON}
-            />
-          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -372,7 +286,6 @@ componentDidMount(){
                     source={IMG_CONST.TAKEOFF}
                     resizeMode="contain"
                   />
-      
         <Text
           style={[
             styles.headingTextStyle,
@@ -400,12 +313,6 @@ componentDidMount(){
             },
             selectedLocation: selectedDestination
             });
-          //   let data = {
-          //     source: selectedSource.airports.code,
-          //    destination: selectedDestination.airports.code
-          //  }
-
-            //  this.props.getCabinClassAction(data)
         }
       
       }
@@ -415,36 +322,12 @@ componentDidMount(){
             numberOfLines={1}
             style={[
               styles.getLocationSubTextStyle,
-              // {
-              //   color: selectedDestination
-              //     ? colours.darkBlueTheme : !selectedDestination && !isSearchClicked ?
-              //       colours.lightGreyish : colours.errorColor,
-              // },
             ]}
           >
              {selectedDestination
               ? selectedDestination.code
               : prevSelectedDestination ? prevSelectedDestination : "Select Destination"}
           </Text>
-
-          {/* <TouchableOpacity onPress={()=>{
-            this.setState({
-              selectedDestination:null,
-              prevSelectedDestination:null
-            })
-          }}
-          style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
-        
-          >
-            <FastImage
-              style={{
-                justifyContent: "flex-end",
-                marginEnd:scale(10),
-                height:scale(15),  width:scale(15) 
-              }}
-              source={IMG_CONST.DARK_BLUE_CROSS_ICON}
-            />
-          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -535,24 +418,6 @@ componentDidMount(){
             : 
             <Text>{"Select Departure Date"}</Text> 
           }
-       
-          {/* <TouchableOpacity onPress={()=>{
-            this.setState({
-              departStartDate:"",
-              selectedDate:""
-            })
-          }}
-            style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
-          >
-            <FastImage
-              style={{
-                justifyContent: "flex-end",
-                marginEnd:scale(10),
-                height:scale(15),  width:scale(15) 
-              }}
-              source={IMG_CONST.DARK_BLUE_CROSS_ICON}
-            />
-          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -611,23 +476,6 @@ componentDidMount(){
                 : "Select Return Date"
             }`}
           </Text>
-          {/* <TouchableOpacity onPress={()=>{
-            this.setState({
-              returnStartDate:""
-            })
-          }}
-          style={{borderWidth:0,borderColor:"red",height:scale(40),width:scale(40),justifyContent:"center",alignItems:"center"}}
-        
-          >
-            <FastImage
-              style={{
-                justifyContent: "flex-end",
-                marginEnd:scale(10),
-                height:scale(15),  width:scale(15) 
-              }}
-              source={IMG_CONST.DARK_BLUE_CROSS_ICON}
-            />
-          </TouchableOpacity> */}
         </TouchableOpacity>
       </View>
     );
@@ -756,7 +604,6 @@ componentDidMount(){
               })
             }}
           >
-            
             { !first ?
               this.getIcon(STRING_CONST.CHECK_EMPTY_CIRCLE, colours.pink):
               this.getIcon(STRING_CONST.CHECK_CIRCLE, colours.pink)
@@ -774,7 +621,6 @@ componentDidMount(){
   }
   travelClassView() {
     const { cabinClassData, classData} = this.state;
-    // console.log("yes check cabinClass data insidert travel class view #######    ",cabinClassData)
     let availableClasses = ["economy","premium","business","first"]
     let classSelectedArray = [true, true, true, true]
     let travelData = []
@@ -803,20 +649,6 @@ componentDidMount(){
     } 
    
 
-        // let travelData =  [economy?"economy",premium?"premium",business?"business",first?"first"]
-        // if(economy){
-        //   economy = "economy"
-        // }
-        //  else if(premium){
-        //   premium = "premium"
-        // }    
-        // else if(business){
-        //   business = "business"
-        // }             
-        // else if(first){
-        //   first = "first"
-        // }
-    
         travelData[0] = economy
         travelData[1] = premium
         travelData[2] = business
@@ -1066,16 +898,13 @@ componentDidMount(){
 
   validateData() {
     const { returnStartDate, classSelectedArray, selectedIndex } = this.state;
-
     if (
       (selectedIndex == 1 && isEmptyString(returnStartDate)) ||
       classSelectedArray.every((data) => data == false)
     ) {
     } else {
       let editAlertData = {};
-    //   let searchData = this.props.route.params.data;
       const url = {
-        // airlineSelected: `${this.state.airline.value}_${this.state.membershipType.value}`,
         airlineSelected:this.state.airline,
         airlineMembership: this.state.membershipType,
         aCode: this.state.airline,
@@ -1201,7 +1030,6 @@ componentDidMount(){
     );
   }
 
-  // this.props.getCabinClassAction(data)
   renderRow(option) {
     return (
       <View style={{ padding: scale(15) }}>
@@ -1219,7 +1047,6 @@ componentDidMount(){
         {ageBand ? (
           <Text style={styles.textInputHeading}>
             {STRING_CONST.AGE_BAND}
-            {/* <Text style={{ color: colours.redColor }}> *</Text> */}
           </Text>
         ) : null}
         <ModalDropdown        
@@ -1311,10 +1138,6 @@ componentDidMount(){
                 this.setState({
                   showPopUp: false,
                 });      
-                //   this.props.cancelAlertAction(this.state.id,screenType)
-                // this.props.route.params.props.cancelAlertAction(
-                //   this.state.id
-                // );
               }}
             />
           )}

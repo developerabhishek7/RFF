@@ -17,8 +17,6 @@
   getMultipleFlightSchedule
 } from "../../actions/findFlightActions";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import moment from "moment";
-import { getStoreData } from "../../constants/DataConst";
 import { sendFCMToken } from "../../actions/notificationActions";
  class CalenderContainer extends Component {
    constructor(props) {
@@ -49,24 +47,12 @@ import { sendFCMToken } from "../../actions/notificationActions";
 
 
    componentDidUpdate(prevProps){
-    //  let bronze_member = this.props.userInfo.bronze_member
      if( this.props !== prevProps){
        this.props
        if(this.props.createAlertSuccess && this.props.createAlertSuccess !== prevProps.createAlertSuccess )
        {
          Alert.alert(CONST.ALERT_CREATED)
          this.props.resetCreateAlertDataAction()
-                  //  if(bronze_member == true){
-                  // Alert.alert(CONST.ALERT_CREATED, null, [
-                  //   {
-                  //     text: 'OK',
-                  //     onPress: () => {
-                  //       alert(STR_CONST.BRONZE_ALERT_INFO)
-                  //     },
-                  //   },
-                  // ]);
-                  //  Alert.alert(STR_CONST.BRONZE_ALERT_INFO)
-                  //  }              
        }
        else if (this.props.createAlertError) {
          Alert.alert(this.props.createAlertError)
@@ -98,6 +84,7 @@ import { sendFCMToken } from "../../actions/notificationActions";
          getMultipleScheduleData = {(flightScheduleData)=>this.props.getMultipleFlightScheduleAction(flightScheduleData)}
          multipleFlightScheduleData={this.props.multipleFlightScheduleData}   
          alertsArray={this.props.alertsArray} 
+         selectedClass={this.props.route.params.selectedClass}
        />
      );
    }

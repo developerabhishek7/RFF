@@ -36,14 +36,11 @@ import * as IMAGE_CONST from "../../constants/ImageConst";
 import { getUserInfo } from "../../actions/userActions";
 import axios from 'axios'
 import { Alert } from "react-native";
-
 import { URL, USER_API_URL } from "../../../env.json";
-
 export default class ProfileScreenComponent extends Component {
   constructor(props) {
     super(props);
     const { userData } = this.props;
-    // console.log("check here userData    #######  ",userData)
     this.state = {
       firstName: userData.first_name ? userData.first_name : "",
       lastName: userData.last_name ? userData.last_name : "",
@@ -53,16 +50,10 @@ export default class ProfileScreenComponent extends Component {
       addressLine2: this.props.userData.address
         ? this.props.userData.address.address2
         : "",
-      // selectedCountry: userData ? this.getCountryObject(userData.country) : "",
       selectedState: userData.address ? userData.address.state : "",
       selectedCity: userData.address ? userData.address.city : "",
       ageBand: this.getDataObject(userData.age_band, STR_CONST.ageBandOption),
       gender: this.getDataObject(userData.gender, STR_CONST.genderOptions),
-      // departureCity: this.props.userData.address && this.props.userData.address.airpot_city
-      //   ? this.getDepartureCityObject(
-      //     JSON.parse(this.props.userData.address.airpot_city)
-      //   )
-      //   : "",
       departureCity: "",
       selectedCountry: "",
       Alert_Visibility2: false,
@@ -109,24 +100,8 @@ export default class ProfileScreenComponent extends Component {
 
   getCountryObject(countryCode) {
     let countryObject = {};
-    // this.props.countryList.map((item) => {
-    //   if (item.sortname == countryCode) {
-    //     countryObject = item;
-    //   }
-    // });
     return countryObject;
   }
-
-  // getStateObject(stateCode) {
-  //   let stateObject = {};
-  //   this.props.stateList &&
-  //     this.props.stateList.map((item) => {
-  //       if (item.id == stateCode) {
-  //         stateObject = item;
-  //       }
-  //     });
-  //   return stateObject;
-  // }
 
   getCityObject(city) {
     let cityObject = {};
@@ -191,28 +166,9 @@ export default class ProfileScreenComponent extends Component {
     } = this.state;
     let userFirstName = firstName.trim();
     let userLastName = lastName.trim();
-    // let userAddressLine1 = addressLine1.trim();
-    // let userPostCode = postCode.trim();
-
-    // -------------- Commented for now Only -----------
-
-    if (
+     if (
       Validators.validName(userFirstName) &&
       Validators.validName(userLastName)
-      // firstName,
-      // lastName,
-      // !isEmptyString(userAddressLine1) &&
-      // !isEmptyString(userAddressLine2) &&
-      // selectedCountry &&
-      // selectedState &&
-      // selectedCity &&
-      // userPostCode &&
-      // postcodeValidator(userPostCode, selectedCountry.sortname) &&
-      // departureCity &&
-      // ageBand &&
-      // gender &&
-      // travellingAbroadInNext12Months &&
-      // flightsTakenAnnually
     ) {
       var userInfo = {};
       userInfo["first_name"] = firstName;
@@ -226,36 +182,16 @@ export default class ProfileScreenComponent extends Component {
       departureCity ? userInfo["airpot_city"] = JSON.stringify({
         name: `${departureCity.city_name} (${departureCity.code})`,
       }) : "";
-      // userInfo["airpot_city"] = "{\"name\":\"Boston (BOS)\",\"value\":\"BOS\"}"
       userInfo["age_band"] = ageBand.value;
       gender ? userInfo["gender"] = gender.value : null;
       userInfo["flights_taken_annually"] = flightsTakenAnnually.value;
       userInfo["travelling_abroad_in_next_12_months"] =
         travellingAbroadInNext12Months.value;
-
-
-      // return false
-
       this.props.updateUserDataAction(userInfo);
       this.setState({
         submitPressed: false,
       });
     }
-
-    // if (
-    //   Validators.validName(userFirstName) &&
-    //   Validators.validName(userLastName) &&
-    //   selectedCountry
-    // ) {
-    //   var userInfo = {};
-    //   userInfo["first_name"] = firstName;
-    //   userInfo["last_name"] = lastName;
-    //   userInfo["country"] = selectedCountry.sortname;
-    //   this.props.updateUserDataAction(userInfo);
-    //   this.setState({
-    //     submitPressed: false,
-    //   });
-    // }
   }
   getPreferedCountryList() {
     let countryList = this.props.countryList;
@@ -274,11 +210,7 @@ export default class ProfileScreenComponent extends Component {
   }
 
   componentDidMount() {
-
-
-    // this.getPreferedCountryList();
     let userData = this.props.userData;
-
     if (userData.image && !isEmptyString(userData.image)) {
       this.setState({
         pickerCustomButton: [{ name: "Remove", title: STR_CONST.REMOVE_PHOTO }, { name: "View", title: "View Image" }],
@@ -302,7 +234,6 @@ export default class ProfileScreenComponent extends Component {
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
-
   }
 
   async componentWillFocus() {
@@ -353,25 +284,6 @@ export default class ProfileScreenComponent extends Component {
       </View>
     );
   }
-
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15),marginTop:scale(40) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={STR_CONST.PERSONAL_INFO}
-  //         notifCount={2}
-  //         clickOnLeft={() => this.props.navigation.goBack()}
-  //       />
-  //     </View>
-  //   );
-  // }
-
-
-
-
-
 
 
   renderLoader() {
@@ -440,12 +352,8 @@ export default class ProfileScreenComponent extends Component {
     let res = await axios(config).then((res) => {
       this.setState({ isLoader: false })
       this.props.getUserInfoAction()
-      // this.props.navigation.goBack()
-
     }).catch((error) => {
       this.isAlert()
-      // this.setState({isLoader:false})
-
     })
   };
 
@@ -470,32 +378,6 @@ export default class ProfileScreenComponent extends Component {
         path: "images",
       },
     };
-
-    // ImagePicker.showImagePicker(options, (response) => { 
-    //   if (response.didCancel) {
-    //     console.log("User cancelled image picker");
-    //   } else if (response.error) {
-    //     console.log("ImagePicker Error: ", response.error);
-    //   } else if (response.customButton) {
-    //     if(response.customButton == "View"){
-    //       this.Show_Custom_Alert2()
-    //       }
-    //     else{
-    //       this.props.deleteProfileImageAction();
-    //     }
-
-    //   } else {
-    //     let url = response.uri
-    //     // let uri = url.split('.jpg').join('.png');
-    //       let imageData = {
-    //     uri:url,
-    //     fileName:response.fileName,
-    //     type:response.type,
-    //   }
-    //     this.uploadImage(imageData)
-
-    //   }
-    // });
   };
 
   profileImage() {
@@ -506,7 +388,6 @@ export default class ProfileScreenComponent extends Component {
         style={styles.imageBackgroundStyle}
       >
         <TouchableOpacity onPress={this.chooseFile.bind(this)}>
-
           <View style={{
             borderColor: "#35c1e0", width: scale(135), height: scale(135),
             backgroundColor: '#35c1e0',
@@ -586,11 +467,6 @@ export default class ProfileScreenComponent extends Component {
   onCountrySelected(selectedCountry) {
     let stateList = this.props.stateList;
     let selectedCountryStateListArray = [];
-    // stateList.map((item) => {
-    //   if (selectedCountry.id == item.country_id) {
-    //     selectedCountryStateListArray.push(item);
-    //   }
-    // });
     this.setState({
       stateListArray: selectedCountryStateListArray,
     });
@@ -650,9 +526,6 @@ export default class ProfileScreenComponent extends Component {
             }}
             underlineColorAndroid="transparent"
             value={addressLine1}
-            // onSubmitEditing={() => {
-            //   this.lastName.focus();
-            // }}
             blurOnSubmit={false}
             maxLength={70}
           />
@@ -691,9 +564,6 @@ export default class ProfileScreenComponent extends Component {
               this.setState({ addressLine2 });
             }}
             value={addressLine2}
-            // onSubmitEditing={() => {
-            //   this.lastName.focus();
-            // }}
             blurOnSubmit={false}
             maxLength={70}
           />
@@ -828,80 +698,6 @@ export default class ProfileScreenComponent extends Component {
       </TouchableOpacity>
     );
   }
-
-  // addUserPreferenceLocation() {
-  //   const { departureLocationList, submitPressed, departureCity, } = this.state;
-
-  //   // console.log("check here departure location list ####### ",departureLocationList)
-
-  //   return (
-  //     <TouchableOpacity
-  //       style={{ marginTop: verticalScale(32) }}
-  //       onPress={() => {
-  //         // if (departureLocationList) {
-  //           this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
-  //             type: "source",
-  //             screenType: "Findflight",
-  //             locationsObject: departureLocationList,
-  //             placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
-  //             allLocations: departureLocationList,
-  //             sourceSelected: departureLocationList,
-  //             onSourceSelected: (selectedSource) => {
-  //               console.log("check   selectedSource   ",selectedSource)
-  //               this.setState({
-  //                 departureCity: selectedSource,
-  //               });
-  //             },
-  //           });
-  //         // }
-  //       }}
-  //     >
-  //       {/* {departureCity ? (
-  //         <Text style={styles.textInputHeading}>
-  //           {STRING_CONST.PREFFERED_DEPARTURE}
-  //         </Text>
-  //        ) : null} */}
-  //       <View
-  //         style={[
-  //           styles.textInputView,
-  //           {
-  //             borderBottomColor: colours.borderBottomLineColor,
-  //           },
-  //         ]}
-  //       >
-  //         {/* {
-  //           departureCity ?  */}
-  //             <View
-  //               style={[
-  //                 styles.countryView,
-  //                 {
-  //                   borderWidth: scale(0),
-  //                   borderBottomWidth: 0,
-  //                   borderTopWidth: 0,
-  //                 },
-  //               ]}
-  //             >
-  //               {departureCity ? (
-  //                 <Text style={styles.countryDetailText}>
-  //                   {/* {`${departureCity.city_name} (${departureCity.code})`} */}
-  //                   {cityName.name}
-  //                 </Text>
-  //               ) : (
-  //                 <Text style={styles.countryText}>
-  //                   {STRING_CONST.PREFFERED_DEPARTURE}
-  //                 </Text>
-  //               )}
-
-  //               {IMG_CONST.DARK_SORT_DOWN}
-  //             </View>
-  //              {/* : null
-  //         }  */}
-
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // }
-
 
   addUserPreferenceLocation() {
     const { departureLocationList, departureCity, cityAddress } = this.state;
@@ -1048,7 +844,6 @@ export default class ProfileScreenComponent extends Component {
             ) : (
               <Text style={styles.countryText}>
                 {STRING_CONST.AGE_BAND}
-                {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
 
@@ -1121,7 +916,6 @@ export default class ProfileScreenComponent extends Component {
                 {STRING_CONST.GENDER}
               </Text>
             )}
-
             {IMG_CONST.DARK_SORT_DOWN}
           </View>
         </ModalDropdown>
@@ -1136,7 +930,6 @@ export default class ProfileScreenComponent extends Component {
         {flightsTakenAnnually ? (
           <Text style={styles.textInputHeading}>
             {STRING_CONST.APPROX_FLIGHT_NUMBER}
-            {/* <Text style={{ color: colours.redColor }}> *</Text> */}
           </Text>
         ) : null}
         <ModalDropdown
@@ -1176,7 +969,6 @@ export default class ProfileScreenComponent extends Component {
             });
           }}
           renderRow={(option, index, isSelected) => {
-            // console.log("check here option ####### ",option)
             return this.renderRow(option);
           }}
         >
@@ -1196,7 +988,6 @@ export default class ProfileScreenComponent extends Component {
             ) : (
               <Text style={styles.countryText}>
                 {STRING_CONST.APPROX_FLIGHT_NUMBER}
-                {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
 
@@ -1224,20 +1015,14 @@ export default class ProfileScreenComponent extends Component {
         }}>
         <View
           style={{
-            // backgroundColor: 'rgba(52, 52, 52, 0.8)',
             backgroundColor: "#000000",
             flex: 1,
-            // justifyContent: 'center',
-            // alignItems: 'center',
             height: height,
             width: width
           }}>
-          {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
-
           <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{ width: scale(20), height: scale(20), marginTop: scale(50), margin: scale(10) }}>
             <FastImage source={require("../../assets/back2.png")} style={{ height: verticalScale(30), width: verticalScale(30) }} />
           </TouchableOpacity>
-
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <FastImage
               style={styles.innerProfileImage1}
@@ -1248,14 +1033,6 @@ export default class ProfileScreenComponent extends Component {
               }}
             />
           </View>
-          {/* <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
-                <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text> */}
-          {/* <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
-                  style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 9, margin: 7, marginTop: 10, }}
-                >
-                  <Text style={{ marginStart: 30, marginEnd: 30, margin: 9, color: "#FFF" }}>OK</Text>
-                </TouchableOpacity> */}
-          {/* </View> */}
         </View>
       </Modal>
     )
@@ -1273,9 +1050,7 @@ export default class ProfileScreenComponent extends Component {
       <TouchableOpacity style={{ marginTop: verticalScale(32) }}>
         {travellingAbroadInNext12Months ? (
           <Text style={[styles.textInputHeading, { width: scale(290) }]}>
-            {/* {STRING_CONST.HOW_LIKELY_TO_TRAVEL_ABROAD} */}
-            Do you plan to travel abroad in the next 12 months?
-            {/* <Text style={{ color: colours.redColor }}> *</Text> */}
+            {STRING_CONST.HOW_LIKELY_TO_TRAVEL_ABROAD}
           </Text>
         ) : null}
         <ModalDropdown
@@ -1335,7 +1110,6 @@ export default class ProfileScreenComponent extends Component {
             ) : (
               <Text style={[styles.countryText, { width: scale(250) }]}>
                 {STRING_CONST.HOW_LIKELY_TO_TRAVEL_ABROAD}
-                {/* <Text style={{ color: colours.redColor }}> *</Text> */}
               </Text>
             )}
 
@@ -1364,25 +1138,14 @@ export default class ProfileScreenComponent extends Component {
   renderHeader() {
     return (
       <View style={{ backgroundColor: "#03B2D8", borderBottomLeftRadius: scale(25), borderBottomRightRadius: scale(25), width: "100%", marginTop: scale(8) }}>
-        <View style={{ justifyContent: "space-between", width: "92%", flexDirection: "row", borderWidth: 0, marginTop: Platform.OS == "android" ? scale(30) : scale(40),  alignSelf: "center" }}>
+        <View style={{ justifyContent: "space-between", width: "92%", flexDirection: "row", borderWidth: 0, marginTop: Platform.OS == "android" ? scale(30) : scale(40), alignSelf: "center" }}>
           <TouchableOpacity onPress={() => {
             this.props.navigation.goBack()
           }}>
             {IMAGE_CONST.IOS_BACK_ARROW}
           </TouchableOpacity>
-
           <Text style={{ fontSize: scale(20), fontWeight: "700", padding: scale(6), marginStart: scale(50), color: "#FFF" }}>Profile</Text>
-
           <Text></Text>
-
-          {/* <TextInput 
-                //  onChangeText={(searchText) => {
-                //   this.onSearch(searchText)
-                // }}
-                placeholder='Search Available Routes'
-                placeholderTextColor="#FFF"
-                onChangeText={(term) => { this.searchUpdated(term) }}
-              style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  /> */}
           <TouchableOpacity style={{}}
             onPress={() => { this.props.navigation.navigate("ProfileDetailsScreen") }}
           >
@@ -1397,79 +1160,62 @@ export default class ProfileScreenComponent extends Component {
   render() {
     const { firstName, cityAddress, lastName, selectedCountry, submitPressed } = this.state;
     const { userData } = this.props
-
     let silver_member = userData.silver_member
     let gold_member = userData.gold_member
     let bronze_member = userData.bronze_member
 
-    let airpotName = ""
-    if (cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0) {
+   
 
-      let airport = userData.address.airpot_city
-      let data = JSON.parse(airport)
-      airpotName = data.name
+    let airport = ""
+    if (userData && userData.address) {
+       airport = userData.address.airpot_city
     }
+    console.log("yes check here airpot - - - -  - - - ---- ",airport)
+
+
     return (
-      <ImageBackground source={IMG_CONST.PROFILE_BG} style={{ justifyContent: 'center', alignItems: "center", width: "100%", height: "100%" }}
-        //   imageStyle={{flex:1,justifyContent:"center",alignItems:'center'}}
+      <ImageBackground source={IMG_CONST.PROFILE_BG} style={styles.profileScreenView}
         resizeMode="cover"
       >
-
-
         {this.renderLoader()}
         {this.renderHeader()}
         <View style={{ flex: 1 }}>
           {this.profileImage()}
-
-          <View style={{ alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
-            {/* <Text style={{ fontSize: scale(14), fontWeight: "500", color: "#FFF" }}>Hello!</Text> */}
-            <View style={{ flexDirection: "row", padding: scale(3), }}>
-              <Text style={{ fontSize: scale(16), fontWeight: "700", color: "#FFFFFF" }}>{userData.first_name}</Text>
-              <Text style={{ fontSize: scale(16), fontWeight: "700", color: "#FFFFFF" }}> {userData.last_name}</Text>
+          <View style={styles.profileSubView}>
+            <View style={styles.firstNameView}>
+              <Text style={styles.firstLastNameStyle}>{userData.first_name}</Text>
+              <Text style={styles.firstLastNameStyle}> {userData.last_name}</Text>
             </View>
-
           </View>
-
           {
             bronze_member || silver_member || gold_member ?
-              <View style={{ backgroundColor: "#5bbfb4", padding: scale(2), borderRadius: scale(20), margin: scale(4), alignSelf: "center" }}>
+              <View style={styles.membershipTxtView}>
                 <Text style={styles.membershipText}>
                   {this.getMembershipText(userData)}
                 </Text>
               </View>
               : null
           }
-
           <View style={styles.informationContainer}>
-
-            <View style={{ flexDirection: "row", }}>
-              <FastImage source={IMG_CONST.AIRPORT} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
-              <View style={{ alignContent: 'center' }}>
-                <Text style={styles.membershipText1}>{airpotName}</Text>
-                <Text style={{
-                  textAlign: "left",
-                  fontSize: scale(14),
-                  fontWeight: '500',
-                  paddingStart: scale(15),
-                  color: "#adb1b1",
-                }}>My Home airport</Text>
+            <View style={{ flexDirection: STRING_CONST.ROW }}>
+              <FastImage source={IMG_CONST.AIRPORT} style={styles.airpotImgStyle} resizeMode="contain" />
+              <View style={{ alignContent: STRING_CONST.CENTER }}>
+                <Text style={styles.membershipText1}>{airport}</Text>
+                <Text style={styles.preferrableStyle}>{STRING_CONST.PREFFERED_DEPARTURE}</Text>
               </View>
             </View>
-
           </View>
-
-
-
-          <View style={{ flexDirection: "row", justifyContent: "space-between", width: scale(340) }}>
+          <View style={styles.genderAgeView}>
             <View style={
-              [styles.informationContainer1,
-              {
+              [styles.informationContainer1, {
                 marginEnd: 9,
               }
               ]
             }>
-              <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                <FastImage source={IMG_CONST.AGE_GRP} style={{ height: scale(60), width: scale(60), marginStart: scale(18) }} resizeMode="contain" />
+              <View style={{ flexDirection: STRING_CONST.ROW, justifyContent: STRING_CONST.CENTER, alignItems: STRING_CONST.CENTER }}>
+                <FastImage source={IMG_CONST.AGE_GRP} style={[styles.ageImg, {
+                  marginStart: scale(18)
+                }]} resizeMode="contain" />
                 <View>
                   <Text style={[styles.membershipText1, {
                     paddingStart: scale(15),
@@ -1478,11 +1224,10 @@ export default class ProfileScreenComponent extends Component {
                   <Text style={[styles.contentTxt, {
                     fontWeight: '500',
                     paddingStart: scale(15)
-                  }]}>Age Band</Text>
+                  }]}>{"Age Band"}</Text>
                 </View>
               </View>
             </View>
-
             <View style={
               [styles.informationContainer1,
               {
@@ -1490,8 +1235,8 @@ export default class ProfileScreenComponent extends Component {
               }
               ]
             }>
-              <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                <FastImage source={IMG_CONST.EQUALITY} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+              <View style={{ flexDirection: STRING_CONST.ROW, justifyContent: STRING_CONST.CENTER, alignItems: STRING_CONST.CENTER }}>
+                <FastImage source={IMG_CONST.EQUALITY} style={styles.ageImg} resizeMode="contain" />
                 <View>
                   <Text style={[styles.membershipText1, {
                     paddingStart: scale(15),
@@ -1500,87 +1245,35 @@ export default class ProfileScreenComponent extends Component {
                   <Text style={[styles.contentTxt, {
                     fontWeight: '500',
                     paddingStart: scale(15)
-                  }]}>Gender</Text>
+                  }]}>{STRING_CONST.GENDER}</Text>
                 </View>
               </View>
             </View>
           </View>
-
-
-
-
           <View style={styles.informationContainer}>
-
-            <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
-              <FastImage source={IMG_CONST.LIKELY} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+            <View style={{ flexDirection: STRING_CONST.ROW, alignSelf: STRING_CONST.FLEX_START }}>
+              <FastImage source={IMG_CONST.LIKELY} style={styles.ageImg} resizeMode="contain" />
               <View style={{}}>
                 <Text style={styles.membershipText1}>
                   {userData.flights_taken_annually}
                 </Text>
-                <Text style={{
-                  textAlign: "left", fontSize: scale(14),
-                  fontWeight: '500',
-                  padding: scale(0),
-                  paddingStart: scale(15),
-                  color: "#adb1b1",
-                }}>Average number of return fights</Text>
-
-                <Text style={{
-                  textAlign: "left", fontSize: scale(14),
-                  fontWeight: '500',
-                  padding: scale(0),
-                  paddingStart: scale(15),
-                  color: "#adb1b1",
-                }}>taken annually</Text>
+                <Text style={styles.avgNoOfFlight}>{STRING_CONST.AVG_NUMBER_OF_FLIGHT}</Text>
+                <Text style={styles.avgNoOfFlight}>{STRING_CONST.TAKEN_ANNUALLY}</Text>
               </View>
             </View>
-
           </View>
-
-
 
           <View style={styles.informationContainer}>
-
-            <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
-              <FastImage source={IMG_CONST.TRAVEL} style={{ height: scale(60), width: scale(60) }} resizeMode="contain" />
+            <View style={{ flexDirection: STRING_CONST.ROW, alignSelf: STRING_CONST.FLEX_START }}>
+              <FastImage source={IMG_CONST.TRAVEL} style={styles.ageImg} resizeMode="contain" />
               <View>
                 <Text style={styles.membershipText1}>{userData.travelling_abroad_in_next_12_months}</Text>
-                <Text style={{
-                  textAlign: "left", fontSize: scale(14),
-                  fontWeight: '500',
-                  padding: scale(0),
-                  paddingStart: scale(15),
-                  color: "#adb1b1",
-                }}>Do you plan to travel abroad in </Text>
-
-                <Text style={{
-                  textAlign: "left", fontSize: scale(14),
-                  fontWeight: '500',
-                  padding: scale(0),
-                  paddingStart: scale(15),
-                  color: "#adb1b1",
-                }}>the next 12 months?</Text>
+                <Text style={styles.avgNoOfFlight}>{STRING_CONST.DO_YOU_WANT_TO_TRAVEL} </Text>
+                <Text style={styles.avgNoOfFlight}>{STRING_CONST.NEXT_TWELVE_MONTH}</Text>
               </View>
             </View>
-
           </View>
-
-
-
-
-          {/* {this.addUserPreferenceLocation()} 
-            {this.addUserAge()}
-            {this.addUserGender()}
-            {this.addUserFlightNumber()}
-            {this.addUserTravelCount()}
-            {this.renderButton(STR_CONST.SAVE_CHANGES, () => {
-              this.submitData();
-            })} */}
-
-
         </View>
-        {/* </KeyboardAwareScrollView> */}
-
       </ImageBackground>
     );
   }

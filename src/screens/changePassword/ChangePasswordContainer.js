@@ -10,7 +10,6 @@ import {
   resetPasswordUpdate,
 } from "../../actions/userActions";
 import ChangePasswordComponent from "./ChangePasswordComponent";
-import * as STR_CONST from "../../constants/StringConst";
 import {Alert} from 'react-native'
 class ChangePasswordContainer extends Component {
   constructor(props) {
@@ -26,8 +25,6 @@ class ChangePasswordContainer extends Component {
         this.props.passwordUpdated !== prevProps.passwordUpdated &&
         this.props.passwordUpdated
       ) {
-        // alert(STR_CONST.PASSWORD_CHANGE);
-        // this.props.navigation.goBack()
         this.props.navigation.navigate("ProfileScreen")
         this.props.resetPasswordUpdateAction();
       } else if (this.props.passwordError) {

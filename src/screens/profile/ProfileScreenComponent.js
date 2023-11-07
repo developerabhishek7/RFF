@@ -90,24 +90,6 @@ export default class ProfileScreenComponent extends Component {
       fromAlertScreen: false,
     });
   }
-
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         setting
-  //         title={STRING_CONST.PROFILE_SCREEN_TITLE}
-  //         right
-  //         notifCount={2}
-  //         clickOnRight={() => this.goToNotifications()}
-  //       />
-  //     </View>
-  //   );
-  // }
-
-
   renderHeader() {
     return (
       <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height:  scale(200), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
@@ -160,18 +142,14 @@ export default class ProfileScreenComponent extends Component {
                 userInfo["membership_type"] = tierSelected.value;
                 userInfo["airline_code"] = "BA";
                 this.props.updateAirlineTierAction(userInfo)
-
-                // this.props.updateUserDataAction(userInfo);
-              },
+                },
               airlineSelected: this.state.airlineSelected,
               tierSelected: this.state.tierSelected
             });
           }
           else if (itemObject.text == "Delete Your \nAccount" || itemObject.text ==  "Delete Account") {
             this.showAlert1()
-            // this.props.deleteUserAccountAction(this.state.emailId)
-            // Alert.alert("Account deleted successfully!")
-          }
+               }
           else {
             this.props.navigation.navigate(itemObject.navigationScreen);
           }
