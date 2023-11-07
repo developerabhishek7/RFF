@@ -1,11 +1,11 @@
-import {API_URL, WEB_URL, NODE_URL,USER_API_URL,NODE_URL_ALERT} from '../../env.json'
+import {API_URL, NODE_URL,USER_API_URL,URL} from '../../env.json'
 
 export const BASE_URL = API_URL;
-export const WEB_BASE_URL = WEB_URL;
+export const WEB_BASE_URL = URL;
 
 export const NODE_USER_API = USER_API_URL
 
-export const NODE_ALERT = NODE_URL_ALERT
+export const NODE_ALERT = USER_API_URL
 
 
 

@@ -110,7 +110,6 @@ export default class ProfileScreenComponent extends Component {
       deviecBrand, deviceName, isTablet, isEmulator
     })
 
-    // this.refs.nameref.focus()
     if (this.props.userData.alternate_emails[0].is_primary == true) {
       let email = this.props.userData.alternate_emails[0].email
       this.setState({ primaryEmail: email })
@@ -319,7 +318,7 @@ export default class ProfileScreenComponent extends Component {
 
   renderHeader() {
     return (
-      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+      <View style={styles.headerStyleView}>
         <View style={{ marginTop: Platform.OS == "android" ? scale(16) : scale(40) }}>
           <ScreenHeader
             {...this.props}
@@ -342,8 +341,7 @@ export default class ProfileScreenComponent extends Component {
           {STR_CONST.ADD_MOBILE_NO}
         </Text>
         <Text style={{ color: "#132C52", fontSize: scale(12), fontWeight: '400', padding: 1, paddingTop: 7, fontFamily: STR_CONST.appFonts.INTER_REGULAR }}>
-          {/* Add mobile number to receive SMS availability alerts */}
-          Add mobile number to receive SMS alerts
+          {STR_CONST.ADD_MOBILE_NO_TO_RECIEVE_SMS_ALERTS}
         </Text>
 
         {this.contactNumberView()}
@@ -394,14 +392,12 @@ export default class ProfileScreenComponent extends Component {
                 value={this.state.primaryEmail}
                 onChangeText={(primaryEmail) => this.setState({ primaryEmail })}
               >
-                {/* {this.state.primaryEmail} */}
               </TextInput>
               :
               <Text
                 style={styles.singleEmailView}
                 ellipsizeMode={"tail"}
                 numberOfLines={1}
-                // disabled={true}
                 autoFocus={isFocuesOnEmail}
               >
                 {item.email}
@@ -497,7 +493,7 @@ export default class ProfileScreenComponent extends Component {
                   style={{ height: verticalScale(50) }}
                   textStyle={{ color: colours.black, fontSize: scale(12) }}
                 >
-                  Edit
+                  {STR_CONST.EDIT}
                 </MenuItem>
               ) : null
             }
@@ -537,9 +533,7 @@ export default class ProfileScreenComponent extends Component {
               <MenuItem
                 onPress={() => {
                   this.hideMenu(index);
-                  // console.log("checl email on delete ####### ",item.id)
-                
-                  Alert.alert(
+                    Alert.alert(
                     'Delete Email',
                     'Are you sure you want to delete email ?',
                     [
@@ -836,11 +830,11 @@ export default class ProfileScreenComponent extends Component {
         {
           alternateEmails.length > 1 ?
             <Text style={[styles.infoTitle, { fontWeight: "600" }]}>
-              Update emails
+             {STR_CONST.UPDATE_EMAILS}
             </Text>
             :
             <Text style={[styles.infoTitle, { fontWeight: "600" }]}>
-              Update email
+            {STR_CONST.UPDATE_EMAIL}
             </Text>
         }
         {alternateEmails &&
@@ -964,39 +958,6 @@ export default class ProfileScreenComponent extends Component {
                   }}>
                   <Text style={{ color: colours.white, fontWeight: "700", fontSize: scale(16) }}>Add</Text>
                 </TouchableOpacity>
-
-                // <CustomButton
-                //   textSize={scale(18)}
-                //   textOnButton={STR_CONST.ADD_TEXT}
-                //   onButtonPress={async () => {
-                //     const { addEmail } = this.state;
-                //     Keyboard.dismiss();
-                //     if (this.checkEmail(addEmail)) {
-                //       alert(STR_CONST.EMAIL_EXIST);
-                //     } else {
-                //       this.setState({
-                //         isAddEmailPressed: true,
-                //       });
-                //       if (Validators.validEmail(addEmail)) {
-                //         const accesstoken = await getAccessToken();
-                //         var body = {
-                //           user: {
-                //             access_token: accesstoken,
-                //           },
-                //           notification_email: { email: addEmail },
-                //         };
-                //         this.props.createAlternateEmailAction(body);
-                //         this.setState({
-                //           addEmail: "",
-                //           isAddEmailPressed: false,
-                //         });
-                //       }
-                //     }
-                //   }}
-                //   buttonColor={colours.lightBlueTheme}
-                //   buttonStyle={styles.addButtonStyle}
-                //   textColor={colours.white}
-                // /> 
                 : null}
             </Fragment>
         }
@@ -1004,7 +965,7 @@ export default class ProfileScreenComponent extends Component {
           bronzeMember ?
             <View style={styles.upgradetxtView}>
               <Text style={styles.upgradTxt}>
-                {" Upgrade to add secondary email addresses"}
+                {STR_CONST.UPGRADE_TO_ADD_SECONDARY_EMAIL}
               </Text>
             </View>
             : null
@@ -1140,9 +1101,7 @@ export default class ProfileScreenComponent extends Component {
         "isTablet": this.state.isTablet,
         "plateform": "Mobile",
       }
-      console.log("yes check here meta data inside compomnent", metaData)
-      this.props.addContactAction(userInfo, metaData)
-      // this.props.updateUserDataAction(userInfo);          
+      this.props.addContactAction(userInfo, metaData)      
     }
   }
 
@@ -1160,7 +1119,6 @@ export default class ProfileScreenComponent extends Component {
           style={{ flex: 1 }}
           behavior={Platform.OS == "android" ? "" : "padding"}
         >
-
           <MyStatusBar />
           {this.renderHeader()}
           <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
@@ -1171,19 +1129,6 @@ export default class ProfileScreenComponent extends Component {
                 showSendOTPView && userData.gold_member ? (
                   showSendOTPButton ? (
                     null
-                    // <CustomButton
-                    //   textOnButton={"Send OTP"}
-                    //   textSize={scale(17)}
-                    //   onButtonPress={() => {
-                    //     this.props.sendOTPAction();
-                    //   }}
-                    //   buttonColor={colours.lightBlueTheme}
-                    //   buttonStyle={[
-                    //     styles.addButtonStyle,
-                    //     { width: scale(300) },
-                    //   ]}
-                    //   textColor={colours.white}
-                    // />
                   ) : (
                     this.showSendOTPView()
                   )
@@ -1215,7 +1160,6 @@ export default class ProfileScreenComponent extends Component {
       </SafeAreaView>
     );
   }
-
   componentWillUnmount() {
     if (this.counter) {
       clearInterval(this.counter)

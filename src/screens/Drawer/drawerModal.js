@@ -28,7 +28,6 @@ import {DrawerActions,NavigationContainer} from '@react-navigation/native';
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { getAccessToken ,getUserId} from "../../constants/DataConst";
-import * as Config from "../../helpers/config";
 import { getUserConfigDetails,getUserInfo } from "../../actions/userActions";
 import * as RootNavigation from '../../router/RouteNavigation';
 let isAppReviewSuccess  = false
@@ -50,8 +49,6 @@ class DrawerComponentComponent extends Component {
       accesstoken:"",
       userId:"",
       userConfigDetails:this.props.userConfigDetails,
-      // isAppReviewSuccess:false,
-      // buildVersion:0,
     };
   }
 
@@ -71,12 +68,9 @@ class DrawerComponentComponent extends Component {
     let isTablet = await DeviceInfo.isTablet()
     let isEmulator = await DeviceInfo.isEmulator()
 
-
     let userData = this.state.userData
     setTimeout(async() => {
-      // console.log("yes check inside the identry seTTimout - - - - - - - -",userData)
-      // console.log("yes check inside the identry seTTimout - - - - - - - -",this.props.isLoggedIn)
-        if(this.props.isLoggedIn && userData && Object.keys(userData).length !== 0){
+       if(this.props.isLoggedIn && userData && Object.keys(userData).length !== 0){
          await PostHog.identify(this.props.userData.email, {
             email: this.props.userData.email,
             deviceName: deviceName,
@@ -92,35 +86,14 @@ class DrawerComponentComponent extends Component {
 
 
    componentDidMount = async() => {
-
-
-    // console.log("yes insdie the did mount ######     ",this.state.userConfigDetails)
-   
     const accesstoken = await getAccessToken();
     const userId = await getUserId()
     this.props.getUserConfigDetailsAction()
 
     let isNewSignUp =  await AsyncStorage.getItem("isNewSignUp");
-
-
-  // setTimeout(async() => {
-    //   if(isNewSignUp){
-    //    await AsyncStorage.removeItem('isNewSignUp')
-    //   }
-    // }, 2000);
-
     this.setState({
       accesstoken,userId,
     })
-  
-    let userData = this.props.userData
-
-    let deviceName = await DeviceInfo.getDeviceName()
-    let deviecBrand = await DeviceInfo.getBrand()
-    let isTablet = await DeviceInfo.isTablet()
-    let isEmulator = await DeviceInfo.isEmulator()
-
-
     setTimeout(() => {
       this.renderIdentifierForPosthog()
     }, 1500);
@@ -136,7 +109,6 @@ class DrawerComponentComponent extends Component {
 
 
   getBuildVersionData = () => {
-   
 
     const {userConfigDetails} = this.state
       if(userConfigDetails && userConfigDetails.length > 0 ){
@@ -206,19 +178,12 @@ class DrawerComponentComponent extends Component {
        gold_member = userData.gold_member
        bronze_member = userData.bronze_member
     } 
-
-    // console.log("yes check on gold membership = = =  = = = ",gold_member)
-    // console.log("yes check on silver membership = = =  = = = ",silver_member)
-    // console.log("yes check on bronze_member  = = =  = = = ",bronze_member)
-   
-    // let isAppReviewSuccess = ""
-
     return (
       <View >
       <View style={styles.profileView}>
-          <View style={{flexDirection:"column",alignItems:"center",justifyContent:"flex-start",marginStart:scale(10)}}>
+          <View style={styles.profileSubView}>
             {this.state.userData && this.state.userData.image ? (
-              <View style={{borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100)}}>
+              <View style={styles.profileImgView}>
               <FastImage
                 style={styles.innerProfileImage}
                 source={
@@ -234,7 +199,7 @@ class DrawerComponentComponent extends Component {
                </View>
             ) : isLoggedIn ? (
               userData && userData.first_name ? 
-              <View style={{backgroundColor:"#cdf0f7",borderColor:"#d7f3f8",borderWidth:scale(6),borderRadius:scale(100),height:scale(80),width:scale(80),justifyContent:"center",alignItems:"center",  }}>
+              <View style={styles.profileNameView}>
               <Text style={[styles.nameInitialsStyle,{
               }]}
                 numberOfLines={1}
@@ -254,17 +219,14 @@ class DrawerComponentComponent extends Component {
               />
             )}
         <View style={styles.greetingsView}>
-          {/* <Text style={styles.nameStyle}>
-            {isLoggedIn ? STR_CONST.HELLO : STR_CONST.RFF}
-          </Text> */}
-          <Text numberOfLines={1} style={[styles.nameStyle,{
-            width:verticalScale(210),borderWidth:0,textAlign:"center",alignSelf:"center"
+           <Text numberOfLines={1} style={[styles.nameStyle,{
+            width:verticalScale(210),borderWidth:0,textAlign:STR_CONST.CENTER,alignSelf:STR_CONST.CENTER
           }]}>
             { `${userData && this.getCapitalName(userData.first_name)} ${userData && this.getCapitalName(userData.last_name)}`} 
           </Text>
           {
             bronze_member || silver_member || gold_member  ?
-            <View style={{backgroundColor:"#a5e5f1",padding:scale(2),borderRadius:scale(20),margin:scale(4),justifyContent:"center",marginStart:scale(-3)}}>
+            <View style={styles.membershipView}>
             <Text style={styles.membershipText}>
               {this.getMembershipText(userData)}
             </Text>
@@ -334,11 +296,7 @@ class DrawerComponentComponent extends Component {
     let isLoggedIn = this.props.isLoggedIn;
     return (
       <View style={styles.mainView}>
-        {/* <Image
-          source={IMAGE_CONST.MENU_HEADER}
-          style={{ height:isPad() ?  verticalScale(380) : verticalScale(320), width:isPad() ?  width - scale(90) : scale(310) }}
-          resizeMode="stretch"
-        /> */}
+      
         {this.profileImage()}
         <ScrollView scrollEnabled={false} style={{ 
           marginTop: isLoggedIn ? verticalScale(215) : verticalScale(200), marginLeft: scale(0),}}>
@@ -411,18 +369,6 @@ class DrawerComponentComponent extends Component {
             </TouchableOpacity>
           )}
           {isLoggedIn && <View  style={styles.lineStyle} /> }
-          {/* <TouchableOpacity
-            style={styles.screenButtonStyle}
-            onPress={() => {
-              navigation.navigate(STR_CONST.PRICING_SCREEN);
-              navigation.dispatch(DrawerActions.closeDrawer());
-            }}
-          >
-            {this.getMenuOptionImage(IMAGE_CONST.PRICE_TAG)}      
-            <Text style={styles.screenTitle}>
-              {STR_CONST.PRICING_SCREEN_TITLE}
-            </Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             style={styles.screenButtonStyle}
             onPress={() => {
@@ -431,7 +377,6 @@ class DrawerComponentComponent extends Component {
             }}
           >
             {this.getMenuOptionImage(IMAGE_CONST.MORE_ICON)}      
-
             <Text style={styles.screenTitle}>
               {STR_CONST.MORE_TITLE}
             </Text>
@@ -448,7 +393,7 @@ class DrawerComponentComponent extends Component {
             >
               {this.getMenuOptionImage(IMAGE_CONST.HELP_ICON)}
               <Text style={styles.screenTitle}>
-                {"Help"}
+                {STR_CONST.HELP}
               </Text>
             </TouchableOpacity>
           }
@@ -473,7 +418,6 @@ class DrawerComponentComponent extends Component {
               this.confirmSignOut();
             } else {
               RootNavigation.navigationRef.navigate("SignIn")  
-              // this.props.navigation.navigate("SignIn");
             }
           }}
         >
@@ -500,16 +444,7 @@ class DrawerComponentComponent extends Component {
               },
             ]}
             onPress={() => {
-              // const keys = await AsyncStorage.getAllKeys();
-              // const result = await AsyncStorage.multiGet(keys);
-              // let allKeys = ['guestId','NotificationDisbledFromPhone','Device_Token','userId','authorizationHeader','navigateToLogin']
-              // if (isLoggedIn) {
-              //   AsyncStorage.multiRemove(allKeys) 
-              //   this.confirmSignOut();
-              // } else {
-              //   this.props.navigation.navigation.navigate("Anonymous");
-              // }
-              this.props.navigation.navigation.navigate("SignUp");
+                this.props.navigation.navigation.navigate("SignUp");
             }}
           >
             <Text

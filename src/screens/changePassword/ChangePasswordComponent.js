@@ -148,7 +148,6 @@ export default class ChangePasswordComponent extends Component {
                 }}
                 value={this.state.oldPassword}
                 blurOnSubmit={false}
-                // secureTextEntry={true}
                 secureTextEntry={this.state.oldPswdEye}
               />
               <TouchableOpacity
@@ -188,7 +187,7 @@ export default class ChangePasswordComponent extends Component {
               ]}
             >
               {STRING_CONST.NEW_PASSWORD}
-              <Text style={{ color: "red" }}>*</Text>
+              <Text style={{ color: colours.redColor }}>*</Text>
             </Text>
             <View
               style={[
@@ -255,7 +254,7 @@ export default class ChangePasswordComponent extends Component {
               ]}
             >
               {STRING_CONST.CONFIRM_PASSWORD}
-              <Text style={{ color: "red" }}>*</Text>
+              <Text style={{ color: colours.redColor }}>*</Text>
             </Text>
             <View
               style={[
@@ -343,28 +342,11 @@ export default class ChangePasswordComponent extends Component {
     );
   }
 
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={STR_CONST.CHANGE_PASSWORD}
-  //         notifCount={2}
-  //         clickOnLeft={() =>
-  //           // this.props.navigation.goBack()
-  //           this.props.navigation.navigate("ProfileScreen")
-  //         }
-  //       />
-  //     </View>
-  //   );
-  // }
-
 
   renderHeader(alertLength) {
     const { alertCount } = this.state;
     return (
-      <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "ios" ? scale(-60) : scale(-20), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }}>
+      <View style={styles.headerMainView}>
         <View style={{ marginTop: Platform.OS == "android"? scale(16) : scale(40) }}>
           <ScreenHeader
             {...this.props}
@@ -372,7 +354,6 @@ export default class ChangePasswordComponent extends Component {
             title={STR_CONST.CHANGE_PASSWORD}
             notifCount={2}
             clickOnLeft={() =>
-              // this.props.navigation.goBack()
               this.props.navigation.navigate("ProfileScreen")
             }
           />
@@ -402,27 +383,15 @@ export default class ChangePasswordComponent extends Component {
 
   render() {
     return (
-      // <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_BG} resizeMode="cover" style={{height:"100%",width:"100%",justifyContent:"center",alignItems:"center"}}>
       <SafeAreaView style={{ flex: 1 }}>
-
         <MyStatusBar />
         {this.renderHeader()}
         <KeyboardAwareScrollView enableOnAndroid={false} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}  >
-          {/* <FastImage source={IMAGE_CONST.CHANGE_PASSWORD_LOGO} resizeMode="contain" style={{ height: scale(250), marginTop: scale(-30), alignSelf: "center", width: scale(200), justifyContent: "center", alignItems: "center" }} /> */}
-
-          {/* <ScrollView style={{ flex: 1 ,marginTop:scale(-10)}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"> */}
-          {/* <Text style={{fontSize:scale(18),fontWeight:"700",padding:scale(10),marginStart:scale(30),}}>{STRING_CONST.CHANGE_PASSOWRD}</Text> */}
-
-          <View style={{ flex: 1, borderWidth: 0, borderColor: "green", justifyContent: "center", alignItems: 'center' }}>
+          <View style={{ flex: 1, justifyContent: STRING_CONST.CENTER, alignItems: STRING_CONST.CENTER}}>
             {this.editPasswordView()}
           </View>
-
-          {/* </ScrollView> */}
-        </KeyboardAwareScrollView>
-
+          </KeyboardAwareScrollView>
       </SafeAreaView>
-      // </FastImage>
-
     );
   }
 }

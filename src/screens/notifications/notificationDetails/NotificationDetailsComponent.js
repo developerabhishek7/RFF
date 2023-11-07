@@ -154,7 +154,6 @@ class NotificationDetailComponent extends Component {
 
   checkIfPeakOffPeakDataMonth = () => {
     let month =  new Date().getMonth()
-    console.log("yes check month key ====== month     ",typeof month)
     if(month === 0){
       monthKey = 23
     }else if(month === 1){
@@ -515,7 +514,6 @@ class NotificationDetailComponent extends Component {
     return ( 
       <View style={styles.classView}>
         {classArray.map((cabinClass) => {
-          console.log("yes check here cabin class -=  - - - - -",cabinClass)
           return (
             <View style={styles.travelClassInnerView}>
               <Octicons
@@ -653,36 +651,6 @@ class NotificationDetailComponent extends Component {
             {STRING_CONST.VIEW_CALENDAR_PAGE}
           </Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={[
-            styles.buttonStyle,
-            {
-              backgroundColor: colours.white,
-              borderColor: colours.lightBlueTheme,
-              width: scale(120),
-            },
-          ]}
-          onPress={() => {
-            let data = this.getSearchData(alert);
-            this.props.navigation.navigate(STR_CONST.EDIT_ALERT, {
-              alertData: alert,
-              props: this.props,
-              data: data,
-              screen:"Notification"
-            });
-          }}
-        >
-          <Text
-            style={[
-              styles.buttonTextStyle,
-              {
-                color: colours.lightBlueTheme,
-              },
-            ]}
-          >
-            {STRING_CONST.EDIT_ALERT_TEXT}
-          </Text>
-        </TouchableOpacity> */}
       </View>
     );
   }
@@ -881,35 +849,15 @@ class NotificationDetailComponent extends Component {
     );
   }
 
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={STRING_CONST.NOTIFICATONS_SCREEN_TITLE}
-  //         clickOnLeft={() => {
-  //           // NavigationService.navigate("NotificationsScreen")
-  //           this.props.navigation.goBack();
-  //         }}
-  //       />
-  //     </View>
-  //   );
-
-  // }
-
-  
-
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS =="android" ? scale(-20):scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={styles.headerStyleView}>
         <View style={{marginTop:Platform.OS =="android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
           left
           title={STRING_CONST.NOTIFICATONS_SCREEN_TITLE}
           clickOnLeft={() => {
-            // NavigationService.navigate("NotificationsScreen")
             this.props.navigation.goBack();
           }}
         />

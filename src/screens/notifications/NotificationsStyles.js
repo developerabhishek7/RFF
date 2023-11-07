@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Platform } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import * as CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
@@ -13,6 +13,9 @@ module.exports = StyleSheet.create({
   cellContainer: {
     margin: scale(20),
     marginBottom: 0
+  },
+  notificaitonView:{
+    alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS == "ios" ?  scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)
   },
 
   notifTitle: {

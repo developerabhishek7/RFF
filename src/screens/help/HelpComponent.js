@@ -47,16 +47,6 @@ class HelpComponent extends Component {
         };
     }
 
-    componentDidMount = async () => {
-        // setTimeout(() => {
-        //     console.log('inside component zendesk cat res ', this.state.zendeskCategory.zendeskCategory);
-        //     if(this.props.zendeskCategory){
-        //         this.setState({
-        //          zendeskCategory: this.props.zendeskCategory,
-        //         });     
-        //      }
-        // }, 1000);
-    }
     goToNotifications() {
         const { navigation } = this.props;
         navigation.navigate(STR_CONST.NOTIFICATIONS_SCREEN, {
@@ -65,7 +55,7 @@ class HelpComponent extends Component {
       }
     renderHeader() {
         return (
-            <View style={{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(100), width: "100%", marginTop: Platform.OS == "android" ? scale(-20) : scale(-60), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(0) }}>
+            <View style={styles.headerView}>
                 <View style={{ marginTop: Platform.OS == "android" ? scale(16) : scale(40) }}>
                     <ScreenHeader
                         {...this.props}
@@ -80,9 +70,9 @@ class HelpComponent extends Component {
         )
     }
 
-    renderRow(rowData, rowID, highlighted) {
+    renderRow(rowData,) {
         return (
-            <View style={{ padding: scale(15), backgroundColor: "#FFFFFF" }}>
+            <View style={styles.renderRow}>
                 <Text style={{ fontSize: scale(14), color: colours.darkBlueTheme, }}>
                     {rowData}
                 </Text>
@@ -106,7 +96,7 @@ class HelpComponent extends Component {
                     style={{ marginTop: verticalScale(14) }}>
 
                     {subject ? (
-                        <Text style={styles.textInputHeading}>{"Select Subject"}</Text>
+                        <Text style={styles.textInputHeading}>{STRING_CONST.SELECT_SUBJECT}</Text>
                     ) : (
                         null
                     )}
@@ -120,14 +110,7 @@ class HelpComponent extends Component {
                                 borderBottomColor: colours.borderBottomLineColor,
                             },
                         ]}
-                        dropdownStyle={{
-                            width: scale(312),
-                            height: scale(240),
-                            borderTopWidth: 0.5,
-                            borderBottomWidth: 0.5,
-                            marginTop: Platform.OS == "android" ? scale(-42) : scale(1),
-                            elevation: 4,
-                        }}
+                        dropdownStyle={styles.dropDownStyle}
                         onSelect={(index, value) => {
                             this.setState({
                                 subject: categories[index],
@@ -144,10 +127,9 @@ class HelpComponent extends Component {
                                 <Text style={styles.subjectDetailText} numberOfLines={1}>{subject}</Text>
                             ) : (
                                 <Text style={styles.subjectText}>
-                                    {"Select Subject"}
+                                  {STRING_CONST.SELECT_SUBJECT}
                                 </Text>
                             )}
-
                             <FastImage source={IMG_CONST.ARROW_DOWN_PNG}
                                 resizeMode="contain"
                                 style={{ height: scale(16), width: scale(16), marginEnd: scale(6), marginTop: scale(4) }} />
@@ -155,7 +137,7 @@ class HelpComponent extends Component {
                     </ModalDropdown>
                 </TouchableOpacity>
                 {submitPressed && !subject &&
-                    <Text style={{ color: 'red' }}>{"Please select subject"}</Text>}
+                    <Text style={{ color: 'red' }}>{STRING_CONST.PLEASE_SELECT_SUBJECT}</Text>}
             </View>
         );
     }
@@ -168,7 +150,7 @@ class HelpComponent extends Component {
     }
 
     validataForm() {
-        const { subject, description, imageArray, image1, image2, image3 } = this.state;
+        const { subject, description, image1, image2, image3 } = this.state;
 
         if (!subject) {
             return;
@@ -206,20 +188,6 @@ class HelpComponent extends Component {
                 }
                );
             }
-
-            // if(imageArray.length > 0){
-            //     imageArray.forEach(imageData => {
-            //         const data = new FormData();
-            //         data.append('image', {
-            //         uri: imageData,
-            //         name: 'image.jpg',
-            //         type: imageData.type
-            //         }
-            //        );
-            //        postData['image'] = data;
-            //       });
-            // }
-
             this.props.submitHelpFormAction(data);
         }
     }
@@ -230,23 +198,19 @@ class HelpComponent extends Component {
             <View style={styles.attachView}>
 
                 <View style={{ flexDirection: "column" }}>
-
                     <Text style={styles.attachText}>
-                        Do you have a screenshot?
+                        {STRING_CONST.DO_YOU_HAVE_SCREENSHOT}
                     </Text>
-
                     <Text style={styles.textBelowAttach}>
-                        (Max 3 allowed)
+                        ({STRING_CONST.MAX_DAY_ALLOWED})
                     </Text>
-
                 </View>
-
                 <TouchableOpacity style={styles.attachButton}
                     activeOpacity={.6}
                     onPress={this.chooseFile.bind(this)}
                 >
                     <Icon name="plus" size={16} color="#FFFFFF" />
-                    <Text style={styles.buttonTextStyle}>Attach</Text>
+                    <Text style={styles.buttonTextStyle}>{STRING_CONST.ATTACH}</Text>
                 </TouchableOpacity>
 
             </View>
@@ -266,7 +230,7 @@ class HelpComponent extends Component {
                     });
                     this.validataForm()
                 }}>
-                <Text style={styles.buttonTextStyle}>Submit</Text>
+                <Text style={styles.buttonTextStyle}>{STRING_CONST.SUBMIT}</Text>
             </TouchableOpacity>
         );
     }
@@ -326,10 +290,6 @@ class HelpComponent extends Component {
                               }
                         });
                     }
-
-                    console.log('image 1 ', image1.uri)
-                    console.log('image 2 ', image2.uri)
-                    console.log('image 3 ', image2.uri)
                     this.setState((prevState) => ({
                         imageArray: [...prevState.imageArray, response.assets[0].uri],
                     }));
@@ -352,7 +312,6 @@ class HelpComponent extends Component {
 
     deleteImage = (index) => {
         const { imageArray, image1, image2, image3 } = this.state;
-
         if(!image1 && (imageArray[index] == image1.uri)){
             this.setState({
                 image1: {} 
@@ -404,11 +363,9 @@ class HelpComponent extends Component {
                         }
                         {this.addSubjectDropdown()}
                         <Text style={styles.textInputHeading}>
-                            Message about the issue
+                           {STRING_CONST.MESSAGE_ABOUT_ISSUE}
                         </Text>
-                        <View
-                            style={styles.textInputMessageView}
-                        >
+                        <View style={styles.textInputMessageView}>
                             <TextInput
                                 style={styles.textInput}
                                 placeholder="Tell us a bit more about your issue"
@@ -422,7 +379,7 @@ class HelpComponent extends Component {
                             />
                         </View>
                         {submitPressed && !description &&
-                            <Text style={{ color: 'red' }}>{"Please enter message"}</Text>}
+                            <Text style={{ color: 'red' }}>{STRING_CONST.PLEASE_WRITE_MESSAGE}</Text>}
                         {this.addAttachImages()}
                         {this.renderImageList()}
                         {this.renderSubmitButton()}

@@ -354,7 +354,7 @@ const AlertCard = (props) => {
                   }}
                 style={styles.alertImg}
               >
-              <FastImage source={require("../../assets/profile/pencil.png")} resizeMode="contain" style={
+              <FastImage source={IMAGE_CONST.PENCIL_EDIT_ICON} resizeMode="contain" style={
                 styles.editImg
                 } />
               </TouchableOpacity>
@@ -497,9 +497,6 @@ class AlertsScreen extends React.Component {
 
 
   async componentDidMount() {
-
-    this.checkIfPeakOffPeakDataMonth()
-    // this.props.getAlertsAction();
     this.getDates()
     setTimeout(() => {
       this.props.getAlertsAction();
@@ -619,37 +616,6 @@ class AlertsScreen extends React.Component {
     }
   }
 
-
-
-  checkIfPeakOffPeakDataMonth = () => {
-    let month =  new Date().getMonth()
-    if(month === 0){
-      monthKey = 23
-    }else if(month === 1){
-      monthKey = 22
-    } else if(month === 2){
-      monthKey = 21
-    } else if(month === 3){
-      monthKey = 20
-    } else if(month === 4){
-      monthKey = 19
-    } else if(month === 5){
-      monthKey = 18
-    } else if(month === 6){
-      monthKey = 17
-    } else if(month === 7){
-      monthKey = 16
-    } else if(month === 8){
-      monthKey = 15
-    } else if(month === 9){
-      monthKey = 14
-    } else if(month === 10){
-      monthKey = 13
-    } else if(month === 11){
-      monthKey = 22
-    }
-  }
- 
   handleBackButton = (nav) => {
     if (!nav.isFocused()) {
       BackHandler.removeEventListener('hardwareBackPress', () =>
@@ -700,9 +666,7 @@ class AlertsScreen extends React.Component {
     this.props.getAlertsAction();
   }
 
-  /**
-   * Custom Header for Alert screen
-   */
+
 
   getSortedByLocation(location, reverse) {
     let sortedArray = [];
@@ -809,11 +773,7 @@ class AlertsScreen extends React.Component {
           destinationLocation = location;
         }
       });                                         
-      // before 
-      // (searchData.airways = airlineObject),
-      // (searchData.tier = tier),
-      // changed
-      (searchData.airways = airlineObject.airline.toLowerCase().replace(" ", "_")),
+        (searchData.airways = airlineObject.airline.toLowerCase().replace(" ", "_")),
       (searchData.tier = tier.value),
       (searchData.selectedSource = sourceLocation);
        searchData.selectedDestination = destinationLocation;
@@ -1060,7 +1020,7 @@ class AlertsScreen extends React.Component {
   }
 
   render() {
-    const { showMenu,alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
+    const {alerts,alertLength, errorMessage, refreshing, showSortModal } = this.state; 
     return (
       <SafeAreaView style={{ backgroundColor: colours.white, flex: 1,}}>
         <MyStatusBar />

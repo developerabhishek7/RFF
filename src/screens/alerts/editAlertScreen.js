@@ -13,7 +13,6 @@ import { getformattedDate, isEmptyString, getLocationNameWithCode } from "../../
 import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
 import moment from "moment";
 import FastImage from 'react-native-fast-image'
-// import PosthogComponent from '../posthog/index'
 import PostHog from 'posthog-react-native';
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 const { height, width } = Dimensions.get("window");
@@ -28,7 +27,6 @@ import {
   resetAlertUpdate,
   getAlerts
 } from "../../actions/alertActions";
-
 const classes = ["economy", "premium_economy", "business", "first"];
 const classes1 = ["Economy","Premium Economy","Business", "First"]
 class EditAlertComponent extends Component {
@@ -55,20 +53,12 @@ class EditAlertComponent extends Component {
       availabilityUrl: "",
       availableClasses: "",
       screenType:this.props.route.params.screen,
-      economy:"",
-      premium:"",
-      business:"",
-      first:"",
-      isEconomy:false,
-      isPremium:false,
-      isBusiness:false,
-      isFirst:false,   
+      economy:"",premium:"",business:"",first:"",
+      isEconomy:false, isPremium:false,isBusiness:false,isFirst:false,   
       isLoader:true,  
       cabinClassData:{}
     };
   }
-
-  submitData() {}
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
@@ -106,14 +96,8 @@ class EditAlertComponent extends Component {
 
 
   renderCabinClass(){
-
-
     let newArray = []
-  
-
     let data = this.state.cabinClassData
-
-
     if(data.economy == true){
        newArray.push("economy")
     }
@@ -126,22 +110,18 @@ class EditAlertComponent extends Component {
     if(data.first == true){
       newArray.push("first")
     }
-
-
     setTimeout(() => {
       this.setState({
         availableClasses:newArray,
   
       })
     }, 1000);
-   
   }
 
   componentDidMount = () => {
       data = this.props.route.params.alertData;
       let searchData = this.props.route.params.data;
- 
-      
+
       this.setState({
         passengerCount: searchData.passengerCount,
         selectedIndex: searchData.isReturn ? 1 : 0,
@@ -173,7 +153,6 @@ class EditAlertComponent extends Component {
         })
       }, 1000);
      
-    
       setTimeout(() => {
         this.renderCabinClass()
       }, 2000);
@@ -181,8 +160,6 @@ class EditAlertComponent extends Component {
       setTimeout(() => {
         this.setState({isLoader:false})   
       }, 3000);
-
-
 
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
@@ -247,31 +224,11 @@ class EditAlertComponent extends Component {
     );
   }
 
-  // renderHeader() {
-  //   return (
-  //     <View style={{marginHorizontal:scale(15)}}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         title={STRING_CONST.EDIT_ALERTS_TITLE}
-  //         notifCount={2}
-  //         clickOnRight={() => this.goToNotifications()}
-  //         clickOnLeft={() => {
-  //           this.props.navigation.goBack();
-  //         }}
-  //       />
-  //     </View>
-  //   );
-  // }
-
-
-
 
   renderHeader(alertLength){
     const {alertCount} = this.state;
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:
-        Platform.OS == "ios" ? scale(-60) : scale(-20),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(20)}}>
+      <View style={styles.editAlertHeader}>
         <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
@@ -291,10 +248,8 @@ class EditAlertComponent extends Component {
     const { departStartDate,departEndDate } = this.state
     return (
       <View style={{ marginTop: verticalScale(25) }}>
-
         <View style={{flexDirection:"row"}}>
-        <Image source={IMG_CONST.DEPT_ICON1} resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
-      
+        <Image source={IMG_CONST.DEPT_ICON1} resizeMode="contain" style={styles.deptIconStyle} />
         <Text
           style={[
             styles.headingTextStyle,
@@ -347,7 +302,7 @@ class EditAlertComponent extends Component {
     return (
       <View style={{ marginTop: verticalScale(18) }}>
         <View style={{flexDirection:"row"}}>
-        <Image source={IMG_CONST.RETURN_ICON1} resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
+        <Image source={IMG_CONST.RETURN_ICON1} resizeMode="contain" style={styles.deptIconStyle} />
       
         <Text
           style={[
@@ -408,13 +363,9 @@ class EditAlertComponent extends Component {
     const {userInfo} = this.state
 
     let bronzeMember = userInfo.bronze_member
-
     let isEconomySelected = this.state.classSelectedArray[0]
-
     let isPremiumSelected = this.state.classSelectedArray[1]
-
     let isBusinessSelected = this.state.classSelectedArray[2]
-
     let isFirstSelected = this.state.classSelectedArray[3]
 
 
@@ -440,16 +391,6 @@ class EditAlertComponent extends Component {
                 }else{
                   this.showAlert1()
                 }
-              //   if(bronzeMember){
-              //     newClassArray[0] = !newClassArray[0];
-              //     // this.setState({
-              //     //   classSelectedArray: newClassArray,
-              //     // });
-              // }
-              // else{
-              
-              
-              // }
               }
             }}
           >
@@ -470,9 +411,7 @@ class EditAlertComponent extends Component {
             }]}
             onPress={() => {
               if(isEconomySelected || isBusinessSelected || isFirstSelected) { 
-                        
               let newClassArray = this.state.classSelectedArray;
-             
               if(!bronzeMember){
                 newClassArray[1] = !newClassArray[1];
                 this.setState({
@@ -500,12 +439,8 @@ class EditAlertComponent extends Component {
               backgroundColor:"#efeafc"
             }]}
             onPress={() => {
-
-
               if(isEconomySelected || isPremiumSelected || isFirstSelected) { 
-                        
               let newClassArray = this.state.classSelectedArray;
-
               if(!bronzeMember)
               {
                 newClassArray[2] = !newClassArray[2];
@@ -516,7 +451,6 @@ class EditAlertComponent extends Component {
               else{
                 this.showAlert1()
               }
-
             }
             }}
           >
@@ -535,9 +469,7 @@ class EditAlertComponent extends Component {
               backgroundColor:"#f5ecf3"
             }]}
             onPress={() => {
-
               if(isEconomySelected || isPremiumSelected || isBusinessSelected) { 
-                         
               let newClassArray = this.state.classSelectedArray;
                if(!bronzeMember){
                 newClassArray[3] = !newClassArray[3];
@@ -661,55 +593,17 @@ class EditAlertComponent extends Component {
 
   renderBody() {
     const { source, destination,passengerCount } = this.state;
-
-    // let PrevSource = JSON.stringify(source)
-    // let prevDestination = JSON.stringify(destination)
-    return (
+   return (
       <View style={{ marginHorizontal: scale(20) }}>
         <Text style={styles.locationTextStyle}>
           {source.city_name} to {destination.city_name}
         </Text>
-        {/* <View style={{ marginTop: verticalScale(16) }}>
-          <Text
-            style={[styles.headingTextStyle]}
-          >{STRING_CONST.MEMBERSHIP_TIER}</Text>
-          <TouchableOpacity
-            style={{
-              marginTop: verticalScale(10),
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-            onPress={() => {
-              this.props.navigation.navigate(STRING_CONST.AIRLINE_MEMBERSHIP_SCREEN, {
-                airLinesMembershipDetailsObject: this.props
-                  .airlinesMembershipDetails,
-                onMembershipSelected: (airlineSelected, tierSelected) => {
-                  this.setState({
-                    airlineSelected: airlineSelected,
-                    tierSelected: tierSelected,
-                    membershipType: tierSelected,
-                  });
-                },
-              });
-            }}
-          >
-            <Text style={[styles.tripTypeTextStyle]}>
-              {this.state.membershipType.title}
-            </Text>
-          </TouchableOpacity>
-          <View style={[styles.lineStyle, { marginTop: verticalScale(10) }]} />
-        </View> */}
         <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: verticalScale(20),
-          }}
+          style={styles.bodyStyle}
         >
           <View style={styles.headingContainerStyle}>
-           
            <View style={{flexDirection:"row",marginTop:scale(4),marginBottom:scale(4)}}>
-            <Image source={IMG_CONST.DEPARTURE_ICON}  resizeMode="contain" style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
+            <Image source={IMG_CONST.DEPARTURE_ICON}  resizeMode="contain" style={styles.deptIconStyle} />
             <Text
               style={[
                 styles.headingTextStyle,
@@ -721,9 +615,9 @@ class EditAlertComponent extends Component {
               {STRING_CONST.FLIGHT_TYPE}
             </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection:STRING_CONST.ROW}}>
               <TouchableOpacity
-                style={{ flexDirection: "row", alignItems: "center" }}
+                style={{ flexDirection:STRING_CONST.ROW, alignItems: STRING_CONST.CENTER }}
                 onPress={() => {
                   this.setState({ selectedIndex: 0 });
                 }}
@@ -742,11 +636,7 @@ class EditAlertComponent extends Component {
                 <Text style={styles.tripTypeTextStyle}>{STRING_CONST.ONE_WAY}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginLeft: scale(20),
-                }}
+                style={styles.radioBtnView}
                 onPress={() => {
                   this.setState({ selectedIndex: 1 });
                 }}
@@ -772,8 +662,7 @@ class EditAlertComponent extends Component {
             ]}
           >  
             <View style={{flexDirection:"row",marginTop:scale(3),marginBottom:scale(6)}}>          
-           <Image source={IMG_CONST.USER_ICON1} style={{height:scale(20),width:scale(20),marginStart:scale(1),marginEnd:scale(6)}} />
-
+           <Image source={IMG_CONST.USER_ICON1} style={styles.deptIconStyle} />
             <Text
               style={[
                 styles.headingTextStyle,
@@ -783,7 +672,6 @@ class EditAlertComponent extends Component {
               ]}
             >
               {passengerCount > 1 ?   "Passengers"   : "Passenger  "}
-              {/* {STRING_CONST.PASSENGER_COUNT} */}
          
             </Text>
             </View>
@@ -892,11 +780,11 @@ class EditAlertComponent extends Component {
     let date3 = new Date(d3).getTime()
 
     if(date1 > date2) {
-      Alert.alert("Date should be greater than today!")
+      Alert.alert(STRING_CONST.DATE_SOULD_BE_GREATER)
       return false
     }
     if(date1 > date3){
-      Alert.alert("Date should be greater than today!")
+      Alert.alert(STRING_CONST.DATE_SOULD_BE_GREATER)
       return false
     }
 
@@ -980,7 +868,6 @@ class EditAlertComponent extends Component {
       let searchData = this.props.route.params.data;
 
       const url = {
-        // airlineSelected: `${this.state.airline.value}_${this.state.membershipType.value}`,
         airlineSelected:this.state.airline,
         airlineMembership: this.state.membershipType,
         aCode: this.state.airline,
@@ -1054,7 +941,6 @@ class EditAlertComponent extends Component {
         }
       const str2 = arr.join(" ");
       var txt = str2.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
-
       if (this.state.selectedIndex == 1) {
         if (isAlertExpireDays && isAlertExpireDays2) {
           const trackData = {
@@ -1106,27 +992,13 @@ class EditAlertComponent extends Component {
           }
           PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
-          // this.setState({
-          //   departStartDate: "",
-          //   departEndDate: "",
-          //   returnStartDate: "",
-          //   returnEndDate: "",
-          //   createAlertPressed: false,
-          // });
         }
         else {
-          // this.setState({
-          //   departStartDate: "",
-          //   departEndDate: "",
-          //   returnStartDate: "",
-          //   returnEndDate: "",
-          //   createAlertPressed: false,
-          // });
           setTimeout(() => {
             Alert.alert(
               'Message',
               `${txtForPopup}`,
-              [{ text: 'OK', onPress: () => { console.log("yes something here #######  ") } }],
+              [{ text: 'OK', onPress: () => { } }],
               { cancelable: false },
             );
           }, 400);
@@ -1183,27 +1055,13 @@ class EditAlertComponent extends Component {
           }
           PostHog.capture('Alert',trackData);
           this.props.editAlertAction(editAlertData, this.state.id);
-          // this.setState({
-          //   departStartDate: "",
-          //   departEndDate: "",
-          //   returnStartDate: "",
-          //   returnEndDate: "",
-          //   createAlertPressed: false,
-          // });
         }
         else {
-          // this.setState({
-          //   departStartDate: "",
-          //   departEndDate: "",
-          //   returnStartDate: "",
-          //   returnEndDate: "",
-          //   createAlertPressed: false,
-          // });
           setTimeout(() => {
             Alert.alert(
               'Message',
               `${txtForPopup}`,
-              [{ text: 'OK', onPress: () => { console.log("yes something here #######  ") } }],
+              [{ text: 'OK', onPress: () => {  } }],
               { cancelable: false },
             );
           }, 400);
@@ -1227,9 +1085,7 @@ class EditAlertComponent extends Component {
      let returnEndDate1  = searchData.arrivalEndDate
         ? moment(searchData.arrivalEndDate).format("YYYY-MM-DD")
         : ""
-    
 
-  
     return (
       <View style={styles.buttonViewContainer}>
         <TouchableOpacity
@@ -1273,17 +1129,10 @@ class EditAlertComponent extends Component {
             ]}
           >
             {STRING_CONST.SAVE}
-            {/* {"Update"} */}
           </Text>
         </TouchableOpacity>
           :   <TouchableOpacity
           style={styles.saveButtonStyle1}
-          // onPress={() => {
-          //   this.setState({
-          //     isSavedPressed: true,
-          //   });
-          //   this.validateData();
-          // }}
         >
           <Text
             style={[
@@ -1294,7 +1143,6 @@ class EditAlertComponent extends Component {
             ]}
           >
             {STRING_CONST.SAVE}
-            {/* {"Update"} */}
           </Text>
         </TouchableOpacity>
         }
@@ -1306,20 +1154,16 @@ class EditAlertComponent extends Component {
 
     let screenType =  this.props.route.params.screen;
     let searchData = this.props.route.params.data;
-
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF"}}>
         <MyStatusBar />
         <View style={{ flex: 1,  }}>
-          
           {this.renderHeader()}
           {this.renderLoader()}
-
           {this.renderBody()}
           {this.state.showPopUp && (
             <PopUpComponent
               isSingleButton={false}
-                // haveCrossIcon={true}
               title={STRING_CONST.DELETE_ALERT}
               message={STRING_CONST.CANCEL_ALERT}
               image={IMG_CONST.DELETE_ALERT}
@@ -1335,7 +1179,6 @@ class EditAlertComponent extends Component {
                   showPopUp: false,
                 });    
                 this.props.getAlertsAction();
-
                 const trackData = {
                   "Alert Type": "Deleted",
                   "Alert Parameters": {   
@@ -1378,13 +1221,8 @@ class EditAlertComponent extends Component {
                     inboundEndDate: 'N/A',
                   }
                 }
-                
                 PostHog.capture('Alert',trackData);
-         
                 this.props.cancelAlertAction(this.state.id,screenType)
-                // this.props.route.params.props.cancelAlertAction(
-                //   this.state.id
-                // );
               }}
             />
           )}

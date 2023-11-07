@@ -18,7 +18,6 @@ LogBox.ignoreAllLogs()
 import PostHog from 'posthog-react-native'
 import { colours } from "./src/constants/ColorConst";
 import NetInfo from "@react-native-community/netinfo";
-
 import DropdownAlert from "react-native-dropdownalert";
 import NoNetworkComponent from './src/screens/noNetwork/NoNetworkComponent';
 
@@ -26,7 +25,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // appState: AppState.currentState,
       store: configureStore(() => {
         console.log("Store persisted !");
       }),
@@ -37,10 +35,6 @@ class App extends React.Component {
   componentDidMount = async () => {
     StatusBar.setHidden(false);
     console.disableYellowBox = true;
-    // setTimeout(() => {
-    //   crashlytics().log("App mounted.------------------------------");
-    // }, 1000)
-    // this.logCrashlytics()
     Orientation.lockToPortrait();
     fcm.setStore(this.state.store);
 
@@ -71,50 +65,9 @@ class App extends React.Component {
     });
   }
 
-  //  logCrashlytics = async () => {
-  //   crashlytics().log("Dummy Details Added");
-  //   await Promise.all([
-  //     crashlytics().setUserId("101"),
-  //     crashlytics().setAttribute("credits", String(50)),
-  //     crashlytics().setAttributes({
-  //       email: "aboutreact11@gmail.com",
-  //       username: "aboutreact11",
-  //     }),
-  //   ]);
-  // };
-
-  //  logCrash = async (user) => {
-  //   crashlytics().crash();
-  // };
-
-  //  logError = async (user) => {
-  //   crashlytics().log("Updating user count.");
-  //   try {
-  //     if (users) {
-  //       // An empty array is truthy, but not actually true.
-  //       // Therefore the array was never initialised.
-  //       setUserCounts(userCounts.push(users.length));
-  //     }
-  //   } catch (error) {
-  //     crashlytics().recordError(error);
-  //     console.log(error);
-  //   }
-  // };
-
-  // _handleAppStateChange = async (nextAppState) => {
-  //   if (
-  //     this.state.appState.match(/inactive|background/) &&
-  //     nextAppState === "active"
-  //   ) {
-  //     await fcm.initAlways();
-  //   }
-  //   this.setState({ appState: nextAppState });
-  // };
-
 
   componentWillUnmount() {
     StatusBar.setHidden(false);
-    //  AppState.removeEventListener("change", this._handleAppStateChange);
   }
 
   render() {

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Platform } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import { appFonts } from "../../constants/StringConst";
@@ -33,7 +33,8 @@ export default StyleSheet.create({
     fontWeight: "bold",
     paddingLeft: scale(4),
     height: scale(38),
-    width: scale(250),
+    width: scale(220),
+    borderWidth:0
   },
   innerProfileImage: {
     width: scale(115),
@@ -58,7 +59,6 @@ export default StyleSheet.create({
     borderBottomColor: colours.borderBottomLineColor,
     paddingRight: scale(10),
     height:scale(36),
-    borderWidth:0
   },
   eyeContainer: {
     position: "absolute",
@@ -246,5 +246,6 @@ export default StyleSheet.create({
   editIcon: {
     height:scale(14), 
     width:scale(14)
-  }
+  },
+  headerMainView:{ alignItems: "center", backgroundColor: "#03B2D8", height: Platform.OS == "android" ? scale(80) : scale(110), width: "100%", marginTop: Platform.OS == "ios" ? scale(-60) : scale(-20), borderBottomLeftRadius: scale(30), borderBottomRightRadius: scale(30), marginBottom: scale(20) }
 });

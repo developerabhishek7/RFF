@@ -33,11 +33,7 @@ export default class SourceDestinationListComponent extends Component {
       isOnFocus:false
     }
     const { locationsObject, type, sourceSelected, allLocations,headerTxt,travelTo } = this.props.route.params
-    
-   // console.log("yes check on source destination findflight screen locaiton Object ---------------- ",locationsObject)
-    // console.log("yes check on source destination findflight screen all Location ---------------- ",allLocations)
-  
-    if (locationsObject && allLocations ) {
+     if (locationsObject && allLocations ) {
       if (type === 'destination') {
         let destinationList = Object.keys(locationsObject)
         destinationList.map((item, index) => {
@@ -91,7 +87,7 @@ export default class SourceDestinationListComponent extends Component {
       >
         <FastImage
           style={{
-            justifyContent: "flex-end",
+            justifyContent: STRING_CONST.FLEX_END,
             height: scale(18),
             width: scale(18)
           }}
@@ -158,9 +154,9 @@ export default class SourceDestinationListComponent extends Component {
       <View>
         {itemObject.airports &&
         <Fragment>
-          <View style={{flexDirection:"row",borderWidth:0,justifyContent:"center",height:scale(46),borderBottomWidth:0.9,borderBottomColor:"#DDDDDD",margin:scale(0)}} >
-            <View style={{justifyContent:"center",alignContent:"center",}}> 
-              <View style={{borderWidth:0,borderRadius:scale(40),flexWrap:"wrap"}}>
+          <View style={styles.sourceDestinationView} >
+            <View style={{justifyContent:STRING_CONST.CENTER,alignContent:STRING_CONST.CENTER,}}> 
+              <View style={{borderRadius:scale(40),flexWrap:"wrap"}}>
               <SvgUri
                width={scale(20)}
                height={scale(20)}
@@ -208,11 +204,8 @@ export default class SourceDestinationListComponent extends Component {
           this.state.searchedList && this.state.searchedList.length !== 0 ?
           <Fragment>
               <Text
-              style={{
-                color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-                alignSelf: 'flex-start', marginTop: verticalScale(9), marginBottom: verticalScale(1),
-              }}
-            >Cities with multiple airports</Text>
+              style={styles.citiesWithMultipleAirpots}
+            >{STRING_CONST.CITIES_WITH_MULTIPLE_AIRPOTS}</Text>
           <FlatList
             keyboardShouldPersistTaps='always'
             showsVerticalScrollIndicator={false}
@@ -225,36 +218,21 @@ export default class SourceDestinationListComponent extends Component {
             }}
           /> 
           
-          </Fragment>: <View style={{ justifyContent: 'center', alignItems: 'center',  }}>
+          </Fragment>: <View style={{ justifyContent: STRING_CONST.CENTER, alignItems: STRING_CONST.CENTER }}>
           <Image
               resizeMode="contain"
               style={{
                 marginTop:scale(150),
-                height: scale(220), width: scale(220)
+                height: scale(220), 
+                width: scale(220)
               }}
               source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
             />
-            {/* <Text style={{
-              color: colours.lightGreyish,
-              fontSize: scale(14),
-              fontFamily: appFonts.INTER_REGULAR,
-              fontWeight: '500',
-              marginTop: verticalScale(20)
-            }}>
-              {LOCATION_NOT_AVAILABLE}
-            </Text> */}
-
-
-          
           </View>
-
-          
         }
       </View>
     );
   }
-
-  // for testing purpose only...    
 
   renderList1 = () => {
     return (
@@ -262,12 +240,9 @@ export default class SourceDestinationListComponent extends Component {
         {
           this.state.searchedList && this.state.searchedList.length !== 0 ? 
           <Fragment>
-                <Text
-             style={{
-              color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-              alignSelf: 'flex-start', marginTop: verticalScale(15), marginBottom: verticalScale(1),
-            }}
-          >Cities with one airport</Text>
+            <Text
+             style={styles.citiesWithSingleAirpots}
+            >{STRING_CONST.CITIES_WITH_SINGLE_AIRPOTS}</Text>
              <FlatList
             keyboardShouldPersistTaps='always'
             showsVerticalScrollIndicator={false}
@@ -282,24 +257,6 @@ export default class SourceDestinationListComponent extends Component {
           </Fragment>
           
           : null
-          // <View style={{ justifyContent: 'center',marginBottom:scale(100), alignItems: 'center',}}>
-          //   <Image
-          //     style={{
-          //       justifyContent: "flex-end",
-          //       height: scale(130), width: scale(130)
-          //     }}
-          //     source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
-          //   />
-          //   <Text style={{
-          //     color: colours.lightGreyish,
-          //     fontSize: scale(14),
-          //     fontFamily: appFonts.INTER_REGULAR,
-          //     fontWeight: '500',
-          //     marginTop: verticalScale(20)
-          //   }}>
-          //     {LOCATION_NOT_AVAILABLE}
-          //   </Text>
-          // </View>
         }
       </View>
     );
@@ -328,17 +285,7 @@ export default class SourceDestinationListComponent extends Component {
               }}
               source={IMAGE_CONST.NO_LOCATION_AVAILABLE}
             />
-            {/* <Text style={{
-              color: colours.lightGreyish,
-              fontSize: scale(14),
-              fontFamily: appFonts.INTER_REGULAR,
-              fontWeight: '500',
-              marginTop: verticalScale(20)
-            }}>
-              {LOCATION_NOT_AVAILABLE}
-            </Text> */}
           </View>
-
         }
       </View>
     );
@@ -356,8 +303,8 @@ multipleCitiesTxt (){
               fontSize: scale(14),width:width*0.9,
               fontFamily: appFonts.INTER_REGULAR,
               marginStart:scale(24),
-             alignSelf: 'center',
-             fontWeight:"400",
+              alignSelf: 'center',
+              fontWeight:"400",
               marginTop: verticalScale(10),
               marginBottom: verticalScale(30),
             }}
@@ -371,23 +318,8 @@ multipleCitiesTxt (){
               <Fragment>
               {`We only let you choose airports with BA operated flights ${travelTo ? "to" : "from"} more than one place`}
               </Fragment>
-
             }
-         
-            {/* We only let you choose airports with BA operated flights {} more than one place */}
             </Text>
-            {/* {
-              this.state.searchedList ?
-              <Text
-              style={{
-                color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-                alignSelf: 'flex-start', marginTop: verticalScale(6), marginBottom: verticalScale(1),
-              }}
-            >CIties with multiple airports</Text>
-              : 
-              null
-            } */}
-         
     </View>
   )
 }
@@ -397,12 +329,8 @@ singleCityTxt () {
       {
          this.state.searchedList ?
          <Text
-             style={{
-              color: "#132C52", fontSize: scale(15), marginStart: scale(30), fontFamily: appFonts.INTER_SEMI_BOLD,
-              alignSelf: 'flex-start', marginTop: verticalScale(15), marginBottom: verticalScale(1),
-            }}
-          >Cities with one airport</Text>
-
+             style={styles.citiesWithSingleAirpots}
+          >{STRING_CONST.CITIES_WITH_SINGLE_AIRPOTS}</Text>
          : null
       }
       
@@ -413,13 +341,11 @@ singleCityTxt () {
 renderHeader() {
   const {screenType,searchText} = this.state
   let headerTxt  = this.props.route.params.headerTxt
-
-  console.log("yes pring seatch text  --fv- - - -f-f -b- ",searchText)
   return (
-   <View style={{backgroundColor:"#03B2D8",height:screenType ? scale(180) : scale(210),borderBottomLeftRadius:scale(25),borderBottomRightRadius:scale(25),width:"100%",
-      marginTop:Platform.OS=="ios"?scale(-60):scale(-50)
-   }}>
-      <View style={{justifyContent:"space-between",alignSelf:"center",width:"92%",flexDirection:"row",marginTop:scale(50)}}>
+   <View style={[styles.sourceDestinationHeader,{
+    height:screenType ? scale(180) : scale(210),
+   }]}>
+      <View style={styles.headerSubView}>
       <TouchableOpacity
       style = {{marginTop: scale(10),}}
       onPress={() => {
@@ -429,10 +355,10 @@ renderHeader() {
           <Text style={{marginTop: scale(4), fontSize:scale(20),fontWeight:"700",padding:scale(10),color:"#FFF"}}>{headerTxt ? "My Home Airport" :  "Search Destination"}</Text>
           <Text>    </Text>
          </View>
-         <View style={{marginTop: scale(10), backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
+         <View style={styles.sourceHeaderSubView}>
          <TouchableOpacity style={{width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
             <FastImage source={require("../../assets/findFlight/search.png")}
-            resizeMode="contain" style={{height:scale(17),width:scale(17),margin:scale(10)}} />
+            resizeMode="contain" style={styles.searchHeader} />
             </TouchableOpacity>
             <TextInput 
                onChangeText={(searchText) => {
@@ -446,7 +372,7 @@ renderHeader() {
                 })
               }}
               placeholderTextColor={this.state.isOnFocus ? "gray" : "#FFF"}
-              style={{height:scale(40),paddingStart:scale(0),color:"#FFF",width:scale(210),borderRadius:scale(10),fontWeight:"500",fontSize:scale(14)}}  
+              style={styles.sourceHeaderInput}  
               />
                 {
                   this.state.searchText ? 
@@ -459,9 +385,8 @@ renderHeader() {
                       this.renderList()
                     }, 100);
                   }}
-                 style={{borderWidth:0,borderColor:"red",marginStart:scale(-50),margin:scale(6),marginTop:scale(10)}}>
-                {/* <FastImage source={require("../../assets/mapSearch/close.png")} resizeMode="contain" style={{height:scale(17),width:scale(17),marginStart:scale(10)}} /> */}
-                </TouchableOpacity>
+                 style={{marginStart:scale(-50),margin:scale(6),marginTop:scale(10)}}>
+                 </TouchableOpacity>
                   : 
                   null
                 }  
@@ -489,8 +414,6 @@ renderHeader() {
          showsVerticalScrollIndicator={false}
          showsHorizontalScrollIndicator={false}
          style={styles.outerViewStyle} keyboardShouldPersistTaps={'always'}>
-          {/* {this.renderCrossIcon()} */}
-          {/* {this.renderSearchView()} */}
           {
             screenType ?
             <View >
@@ -499,9 +422,7 @@ renderHeader() {
             : 
             <Fragment>
               <View style={{marginTop:scale(40)}}>
-              {/* {this.multipleCitiesTxt()} */}
               {this.renderList()}
-              {/* {this.singleCityTxt()} */}
               {this.renderList1()}
               </View>
             </Fragment>

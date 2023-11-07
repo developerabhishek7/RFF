@@ -752,5 +752,54 @@ export default StyleSheet.create({
     color: colours.darkBlueTheme,
     textAlign: "center",
     fontSize: scale(14),
+  },
+  popupMainView:{
+    alignItems: "center",marginBottom:scale(-10)
+  },
+  popupClassView:{ alignItems: "center", marginTop: verticalScale(13),marginBottom:scale(-10) },
+  popupDateStyle:{
+    color: colours.lightGreyish,
+    marginTop: verticalScale(5),
+    fontSize: scale(13),
+  },
+  crossstyleView:{ alignSelf: "flex-end",
+  marginTop: scale(-7), marginBottom: scale(9)},
+  singleFlightStyles:{
+    width: scale(340), flexDirection: "row", justifyContent: "space-between", alignItems: "center", alignSelf: "center", margin: scale(1), marginBottom: scale(20), marginRight: scale(10)
+  },
+  singleFlightSubStyles:{
+    backgroundColor: "#E9F8FB", margin: scale(10), justifyContent: "center", alignSelf: "center", alignItems: "center", borderWidth: scale(1), borderRadius: scale(10), borderColor: "#03B2D8", width: scale(155), height: scale(110)
+  },
+  createAlertTxt:{
+    
+      fontFamily: STRING_CONST.appFonts.INTER_BOLD,
+      fontSize: scale(18),
+      color: colours.darkBlueTheme,
+      fontWeight: "600", marginStart: scale(8)
+    
+  },
+  modelViewStyle:{
+    flex: 1, justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.4)',
+    alignItems: 'center',
+    width: width + scale(30),
+    height: height,
+    marginStart: -scale(20),
+    marginEnd: -scale(7),
+    marginTop: Platform.OS == "ios" ? scale(-20) : scale(-40),
+    marginBottom: -scale(20),
+  },
+  modelSubView:{
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  modelStyleSubView:{
+     marginEnd: scale(25), height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' 
   }
+
 });

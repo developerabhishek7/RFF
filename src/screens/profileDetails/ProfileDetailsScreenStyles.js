@@ -324,5 +324,43 @@ export default StyleSheet.create({
   editIcon: {
     height:scale(14), 
     width:scale(14)
-  }
+  },
+  profileScreenView:{
+    justifyContent: 'center', alignItems: "center", width: "100%", height: "100%"
+  },
+  profileSubView:{
+     alignSelf: "center", justifyContent: "center", alignItems: "center" 
+  },
+  firstNameView:{
+     flexDirection: "row", padding: scale(3), 
+  },
+  firstLastNameStyle:{
+     fontSize: scale(16), fontWeight: "700", color: "#FFFFFF" 
+  },
+  membershipTxtView:{
+    backgroundColor: "#5bbfb4", padding: scale(2), borderRadius: scale(20), margin: scale(4), alignSelf: "center" 
+  },
+  airpotImgStyle:{
+     height: scale(60), width: scale(60) 
+  },
+  preferrableStyle:{
+      textAlign: "left",
+      fontSize: scale(14),
+      fontWeight: '500',
+      paddingStart: scale(15),
+      color: "#adb1b1",
+  },
+genderAgeView:{
+   flexDirection: "row", justifyContent: "space-between", width: scale(340) 
+},
+ageImg:{
+  height: scale(60), width: scale(60),
+},
+avgNoOfFlight:{
+  textAlign: "left", fontSize: scale(14),
+  fontWeight: '500',
+  padding: scale(0),
+  paddingStart: scale(15),
+  color: "#adb1b1",
+},
 });

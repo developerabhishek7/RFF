@@ -331,17 +331,6 @@ export default class NotificationSettingsComponent extends Component {
                 switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
                 switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
               />
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: !sendSMS ? colours.greyText : colours.lightBlueTheme,
-                  marginLeft: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.ON}
-            </Text> */}
             </View>
           </View>
           <Text style={styles.notificationDetail}>
@@ -362,17 +351,6 @@ export default class NotificationSettingsComponent extends Component {
             </Text>
             <View style={styles.flexRowContainer}>
 
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: sendEmail ? colours.greyText : colours.lightBlueTheme,
-                  marginRight: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.OFF}
-            </Text> */}
               <Switch
                 value={sendEmail}
                 onValueChange={(val) => this.toggleSwitch(false)}
@@ -393,17 +371,6 @@ export default class NotificationSettingsComponent extends Component {
                 switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
                 switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
               />
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: !sendEmail ? colours.greyText : colours.lightBlueTheme,
-                  marginLeft: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.ON}
-            </Text> */}
             </View>
           </View>
 
@@ -411,9 +378,6 @@ export default class NotificationSettingsComponent extends Component {
             {STR_CONST.EMAIL_NOTIFICATION_DETAILS}
           </Text>
         </View>
-        {/* <View style={styles.line} /> */}
-
-        {/* <View style={styles.line} /> */}
         <View style={styles.containerView}>
           <View style={styles.availabilityAlertInnerView}>
             <Image source={IMG_CONST.LOGO}
@@ -424,17 +388,6 @@ export default class NotificationSettingsComponent extends Component {
               {STR_CONST.PUSH_NOTIFICATION}
             </Text>
             <View style={styles.flexRowContainer}>
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: sendEmail ? colours.greyText : colours.lightBlueTheme,
-                  marginRight: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.OFF}
-            </Text> */}
               <Switch
                 value={
                   userData && userData.gold_member ?
@@ -461,8 +414,7 @@ export default class NotificationSettingsComponent extends Component {
                     );
                   }
                 }}
-                // disabled={userData && userData.gold_member ? false : true}
-                circleSize={scale(16)}
+                 circleSize={scale(16)}
                 barHeight={scale(20)}
                 circleBorderWidth={0}
                 backgroundActive={colours.dimLightBlueTheme}
@@ -478,24 +430,13 @@ export default class NotificationSettingsComponent extends Component {
                 switchWidthMultiplier={2.5} // multipled by the `circleSize` prop to calculate total width of the Switch
                 switchBorderRadius={scale(30)} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
               />
-              {/* <Text
-              style={[
-                styles.onOffText,
-                {
-                  color: !sendEmail ? colours.greyText : colours.lightBlueTheme,
-                  marginLeft: scale(5),
-                },
-              ]}
-            >
-              {STR_CONST.ON}
-            </Text> */}
+             
             </View>
           </View>
           <Text style={styles.notificationDetail}>
             {STR_CONST.PUSH_NOTIFICATION_DETAILS}
           </Text>
         </View>
-        {/* <View style={styles.line} /> */}
 
       </View>
     );
@@ -607,12 +548,9 @@ export default class NotificationSettingsComponent extends Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <MyStatusBar />
         {this.renderHeader()}
-
         <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always">
-
           <View style={{ alignSelf: 'center' }}>
             {this.availabilityAlert()}
-            {/* {this.keepInTouchAlert()} */}
           </View>
         </ScrollView>
       </SafeAreaView>

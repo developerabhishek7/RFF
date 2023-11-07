@@ -14,7 +14,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
 import * as IMAGE_CONST from "../../constants/ImageConst";
-
 import { colours } from "../../constants/ColorConst";
 import * as IMG_CONST from "../../constants/ImageConst";
 import * as STR_CONST from "../../constants/StringConst";
@@ -41,7 +40,6 @@ import scale, { verticalScale } from "../../helpers/scale";
 import * as CONFIG from "../../helpers/config";
 import { Platform } from "react-native";
 import { v4 as uuid } from 'uuid';
-import SvgUri from 'react-native-svg-uri';
 import {
   AccessToken,
   LoginManager,
@@ -130,9 +128,6 @@ class SignUpComponent extends Component {
           sessionId: sessionId
         },
       };
-      console.log("yes print on signup component -- - -  - - -",email)
-      console.log("yes print on signup component -- - -  - - -",password)
-
       if (email && password) {
         this.props.signInAction(userData);
       }
@@ -143,10 +138,7 @@ class SignUpComponent extends Component {
           password:""
         })
       }, 1000);
-     
-      // this.props.navigation.navigate("SignIn", { email: email, password: password });
-      // trackEventDetails(STR_CONST.SIGN_UP_EVENT, null, this.props.userDetails);
-    }
+        }
     if (
       nextProps.signUpError &&
       this.props.signUpError !== nextProps.signUpError
@@ -166,74 +158,12 @@ class SignUpComponent extends Component {
     }
   }
 
-  /**
-   * clearSignupError will clean last login error
-   */
   clearSignupError() {
     this.props.clearSignupError();
   }
 
-  // Check Sign Up form validation
-  // validation() {
-  //   this.validateArray = [];
-  //   this.setState({
-  //     isSignUpPressed: true,
-  //   });
-  //   // let firstName = this.state.firstName.trim();
-  //   // let lastName = this.state.lastName.trim();
-
-
-  //   // let email = `https://apilayer.net/api/check?access_key=${'11af6296a4f704d25f59a41a337ba930'}&email=${this.state.email}`
-  //   let email = this.state.email.trim();
-  //   let password = this.state.password.trim();
-  //   let confirmPassword = this.state.confirmPassword.trim();
-
-  //   // if (!Validators.validName(firstName)) {
-  //   //   this.validateArray.push(FIRST);
-  //   //   return;
-  //   // } else if (!Validators.validName(lastName)) {
-  //   //   this.validateArray.push(LAST);
-  //   //   return;
-  //   // } else 
-
-
-  //   // let email = `https://apilayer.net/api/check?access_key=${'11af6296a4f704d25f59a41a337ba930'}&email=${email}`
-
-
-
-  //   // if (!email) {
-  //   //   this.validateArray.push(EMAIL);
-  //   //   return;
-  //   // }
-  //   // else 
-  //   // if(email) {
-  //   //   // this.validateArray.push(EMAIL);
-  //   //   Alert.alert("Invalid Email !")
-  //   //   return;
-  //   // }
-
-  //   if (!email || !Validators.validEmail(email)) {
-  //     this.validateArray.push(EMAIL);
-  //     return;
-  //   }
-  //   else if (
-  //     !password ||
-  //     password.length < 8 ||
-  //     !Utils.hasLowerCase(password) ||
-  //     !Utils.hasUpperCase(password) ||
-  //     !Utils.hasNumber(password)
-  //   ) {
-  //     this.validateArray.push(PASSWORD);
-  //     return;
-  //   } else if (password !== confirmPassword) {
-  //     this.validateArray.push(CONFIRM_PASSWORD);
-  //     return;
-  //   }
-  //   // Method to send user details for sign up
-  //   this.signUp();
-  // }
+  
   validation = () => {
-    // console.log("yes inside the validation ####### ")
     this.validateArray = [];
     this.setState({
       isSignUpPressed: true,
@@ -312,7 +242,6 @@ class SignUpComponent extends Component {
 
   // Sign Up Success Call Back
   createUserSuccessCallBack() {
-    console.log("yes checke here on the create user succes 0--------------")
     const { navigation } = this.props;
     this.setState({ isLoading: false });
     navigation.navigate("FindFlightContainerScreen");
@@ -320,71 +249,9 @@ class SignUpComponent extends Component {
 
   // Sign Up Failure Call Back
   createUserFailureCallBack(res) {
-    console.log("yes check here user failure call back ---------------")
     this.setState({ isLoading: false });
     alert(res.error);
   }
-
-  // openResetPasswordPage = () => {
-  //   WebBrowser.openBrowserAsync(
-  //     "https://rewardflightfinder.com/users/password/new"
-  //   );
-  // };
-
-  // onPressFBSocialLogin = async () => {
-  //   let imageObject = {};
-  //   try {
-  //     await Facebook.initializeAsync(KEY_CONST.FACEBOOK_APP_ID);
-  //     const {
-  //       type,
-  //       token,
-  //       expires,
-  //       permissions,
-  //       declinedPermissions,
-  //     } = await Facebook.logInWithReadPermissionsAsync({
-  //       permissions: ["public_profile", "email"],
-  //     });
-  //     if (type === "success") {
-  //       // Get the user's name using Facebook's Graph API
-  //       const response = await fetch(`${KEY_CONST.FACEBOOK_URL}${token}`);
-  //       const responseBody = await response.json();
-  //       const { id, email, name, picture, last_name } = responseBody;
-  //       let userName = name.split(" ");
-  //       const image = await Utils.getImageInfo(picture.data.url);
-
-  //       imageObject["uri"] = picture.data.url;
-  //       imageObject["type"] = image._data.type.split("/")[1];
-  //       imageObject["fileName"] = "RFFUser";
-
-  //       const userInfo = {};
-  //       userInfo["auth_uid"] = id;
-  //       userInfo["auth_token"] = token;
-  //       userInfo["provider"] = "facebook";
-  //       userInfo["platform"] = "mobile";
-  //       userInfo["email"] = email;
-  //       userInfo.first_name = userName[0];
-  //       userInfo.last_name = userName[1];
-  //       this.setState({ isLoading: true });
-
-  //       this.props.socialLoginAction(
-  //         { user: userInfo },
-  //         (res) =>
-  //           this.socialLoginSuccessCallBack(res, STR_CONST.SIGN_UP_FB_EVENT),
-  //         (res) => this.socialLoginFailureCallBack(res),
-  //         imageObject,
-  //         imageObject.type
-  //       );
-  //     } else if (type === "cancel") {
-  //       CustomAlert.showOkAlert(STR_CONST.FACEBOOK_LOGIN_CANCELLED);
-  //       this.setState({ isLoading: false });
-  //     } else {
-  //       CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
-  //     }
-  //   } catch ({ message }) {
-  //     this.setState({ isLoading: false });
-  //     CustomAlert.showOkAlert(STR_CONST.SOMETHING_WENT_WRONG);
-  //   }
-  // };
 
   _isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();
@@ -403,20 +270,17 @@ class SignUpComponent extends Component {
       this.setState({ userInfo: userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        alert("User has not signed in yet");
+        Alert.alert("User has not signed in yet");
       } else {
-        alert("Something went wrong. Unable to get user's info");
+        Alert.alert("Something went wrong. Unable to get user's info");
         console.log("Something went wrong. Unable to get user's info");
       }
     }
   };
 
   _signIn = async () => {
-    //Prompts a modal to let the user sign in into your application.
     try {
       await GoogleSignin.hasPlayServices({
-        //Check if device has Google Play Services installed.
-        //Always resolves to true on iOS.
         showPlayServicesUpdateDialog: true,
       });
       const userInfo = await GoogleSignin.signIn();
@@ -447,21 +311,17 @@ class SignUpComponent extends Component {
       } else if (behavior === 'web') {
         LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'browser' : 'WEB_ONLY');
       }
-      // LoginManager.setLoginBehavior(behavior);
       const PERMISSIONS = [ 'public_profile', 'email' ];
       const result = await LoginManager.logInWithPermissions(PERMISSIONS);
-  
       if (result.isCancelled) {
         console.log('Facebook login was canceled.');
       } else {
         const tokenData = await AccessToken.getCurrentAccessToken();
         if (tokenData) {
           const accessToken = tokenData.accessToken.toString();
-          // You can use the access token for making Facebook Graph API requests.
           console.log('Facebook login successful. Access Token:', accessToken);
           this.fetchUserProfile(accessToken);
         }else{
-          console.log('Facebook login Token Null ', ' -------- ');
         }
       }
     } catch (error) {
@@ -542,13 +402,7 @@ class SignUpComponent extends Component {
         console.log("yes chekc here  - - - - - - ", userGoogleInfo.user.photo)
 
         const image = await Utils.getImageInfo(userGoogleInfo.user.photo);
-        // imageObject["uri"] = userGoogleInfo.user.photo;
-        // imageObject["type"] = image._data.type.split("/")[1];
-        // imageObject["fileName"] = "RFFUser";
-
-        // console.log("yes check here iomag ##### ",image)
-
-        if (userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null) {
+           if (userGoogleInfo.user.photo && userGoogleInfo.user.photo !== undefined && userGoogleInfo.user.photo !== null) {
           imageObject["uri"] = userGoogleInfo.user.photo ? userGoogleInfo.user.photo : null
           imageObject["type"] = image ? image.type.split("/")[1] : null
           imageObject["fileName"] = "RFFUser";
@@ -645,7 +499,7 @@ class SignUpComponent extends Component {
   // Social Login Failure Call Back
   socialLoginFailureCallBack(res) {
     this.setState({ isLoading: false });
-    alert(res.error);
+    Alert.alert(res.error);
   }
 
   renderLogoContainer() {
@@ -679,9 +533,6 @@ class SignUpComponent extends Component {
 
         <View style={styles.passContainer1}>
           <TextInput
-            // ref={(input) => {
-            //   this.secondTextInput = input;
-            // }}
             style={[
               styles.input,
               {
@@ -724,50 +575,7 @@ class SignUpComponent extends Component {
             {STR_CONST.PLEASE_ENTER_FIRST_NAME}
           </Text>
         )}
-        {/* <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed && Utils.isEmptyString(lastName)
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.LAST_NAME}
-          </Text>
-          <TextInput
-          underlineColorAndroid='rgba(0,0,0,0)'
-            ref={(input) => {
-              this.secondTextInput = input;
-            }}
-            style={[
-              styles.input,
-              {
-                borderBottomColor:
-                  isSignUpPressed && Utils.isEmptyString(lastName)
-                    ? colours.errorColor
-                    : colours.borderBottomLineColor,
-              },
-            ]}
-            placeholder=""
-            autoCapitalize={"words"}
-            onChangeText={(lastName) => {
-              this.setState({ lastName });
-            }}
-            value={lastName}
-            onSubmitEditing={() => {
-              this.thirdTextInput.focus();
-            }}
-            blurOnSubmit={false}
-            maxLength={15}
-            returnKeyType="next"
-          />
-        </View>  */}
         <View style={styles.fieldContainer}>
-
           <View style={styles.passContainer1}>
             <TextInput
               ref={(input) => {
@@ -859,17 +667,7 @@ class SignUpComponent extends Component {
               returnKeyType="next"
               underlineColorAndroid={'#FFFFFF'}
             />
-            <TouchableOpacity
-              // onPress={() =>
-              //   this.setState({ isHidePassword: !this.state.isHidePassword })
-              // }
-              style={styles.emailContainer}
-            >
-              {/* <SvgUri
-                width={scale(20)}
-                height={scale(20)}
-                source={IMG_CONST.EMAIL_LOGO_SVG}
-              /> */}
+            <TouchableOpacity style={styles.emailContainer}>
               <FastImage
                 style={
                   { height: scale(20), width: scale(20), marginBottom: scale(4), marginRight: scale(5) }
@@ -886,65 +684,6 @@ class SignUpComponent extends Component {
             {STR_CONST.PLEASE_ENTER_VALID_EMAIL}
           </Text>
         )}
-        {/* <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed &&
-                    (Utils.isEmptyString(password) ||
-                      this.verifyValidation(PASSWORD))
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.PASSWORD}
-          </Text>
-          <TextInput
-          underlineColorAndroid='rgba(0,0,0,0)'
-            ref={(input) => {
-              this.fourthTextInput = input;
-            }}
-            style={[
-              styles.input,
-              {
-                borderBottomColor:
-                  isSignUpPressed &&
-                    (Utils.isEmptyString(password) ||
-                      this.verifyValidation(PASSWORD))
-                    ? colours.errorColor
-                    : colours.borderBottomLineColor,
-              },
-            ]}
-            placeholder=""
-            autoCapitalize={"none"}
-            onChangeText={(password) => {
-              this.setState({ password });
-            }}
-            textContentType={"password"}
-            secureTextEntry={isHidePassword}
-            value={password}
-            onSubmitEditing={() => {
-              this.fivethTextInput.focus();
-            }}
-            blurOnSubmit={false}
-            returnKeyType="next"
-          />
-          <TouchableOpacity
-            onPress={() => this.setState({ isHidePassword: !isHidePassword })}
-            style={styles.eyeContainer}
-          >
-            <FastImage
-              style={isHidePassword ? styles.visibleEye : styles.inVisibleEye}
-              source={
-                isHidePassword ? IMG_CONST.EYE_INVISIBLE : IMG_CONST.EYE_VISIBLE
-              }
-            />
-          </TouchableOpacity>
-        </View> */}
-
 
         <View style={styles.fieldContainer}>
 
@@ -986,7 +725,6 @@ class SignUpComponent extends Component {
               underlineColorAndroid={'#FFFFFF'}
               returnKeyType="next"
               onSubmitEditing={() => {
-                // this.validation();
                 this.fivethTextInput.focus()
               }}
             />
@@ -996,15 +734,6 @@ class SignUpComponent extends Component {
               }
               style={styles.eyeContainer}
             >
-              {/* <SvgUri
-                width={scale(20)}
-                height={scale(20)}
-                source={
-                  this.state.isHidePassword
-                    ? IMG_CONST.PASSWORD_HIDDEN
-                    : IMG_CONST.PASSWORD_SHOW
-                }
-              /> */}
               <FastImage
                 style={
                   this.state.isHidePassword
@@ -1025,76 +754,6 @@ class SignUpComponent extends Component {
         <View style={{ marginStart: Platform.OS === "android" ? scale(10) : scale(0) }}>
           {password.length !== 0 && <PasswordCheckView password={password} />}
         </View>
-        {/* <View style={styles.fieldContainer}>
-          <Text
-            style={[
-              styles.emailText,
-              {
-                color:
-                  isSignUpPressed &&
-                    (Utils.isEmptyString(confirmPassword) ||
-                      this.verifyValidation(CONFIRM_PASSWORD))
-                    ? colours.errorColor
-                    : colours.lightGreyish,
-              },
-            ]}
-          >
-            {STR_CONST.CONFIRM_PASSWORD}
-          </Text>
-          <TextInput
-          underlineColorAndroid='rgba(0,0,0,0)'
-            ref={(input) => {
-              this.fivethTextInput = input;
-            }}
-            style={[
-              styles.input,
-              {
-                borderBottomColor:
-                  isSignUpPressed &&
-                    (Utils.isEmptyString(confirmPassword) ||
-                      this.verifyValidation(CONFIRM_PASSWORD))
-                    ? colours.errorColor
-                    : colours.borderBottomLineColor,
-              },
-            ]}
-            placeholder=""
-            autoCapitalize={"none"}
-            onChangeText={(confirmPassword) => {
-              this.setState({ confirmPassword });
-            }}
-            textContentType={"password"}
-            secureTextEntry={isHideConfirmPassword}
-            value={confirmPassword}
-            blurOnSubmit={false}
-            onSubmitEditing={() => {
-              Keyboard.dismiss(), this.validation();
-            }}
-            returnKeyType="done"
-          />
-          <TouchableOpacity
-            onPress={() =>
-              this.setState({
-                isHideConfirmPassword: !isHideConfirmPassword,
-              })
-            }
-            style={styles.eyeContainer}
-          >
-            <FastImage
-              style={
-                isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
-              }
-              source={
-                isHideConfirmPassword
-                  ? IMG_CONST.EYE_INVISIBLE
-                  : IMG_CONST.EYE_VISIBLE
-              }
-            />
-          </TouchableOpacity>
-        </View> */}
-
-
-
-
         <View style={styles.fieldContainer}>
 
           <View style={styles.passContainer1}>
@@ -1149,15 +808,6 @@ class SignUpComponent extends Component {
               }
               style={styles.eyeContainer}
             >
-              {/* <SvgUri
-                width={scale(20)}
-                height={scale(20)}
-                source={
-                  this.state.isHideConfirmPassword
-                    ? IMG_CONST.PASSWORD_HIDDEN
-                    : IMG_CONST.PASSWORD_SHOW
-                }
-              /> */}
               <FastImage
                 style={
                   isHideConfirmPassword ? styles.visibleEye : styles.inVisibleEye
@@ -1170,14 +820,12 @@ class SignUpComponent extends Component {
               />
             </TouchableOpacity>
           </View>
-
         </View>
-
         {isSignUpPressed &&
           confirmPassword !== "" &&
           confirmPassword !== password && (
             <Text style={styles.errorMessageTextStyle}>
-              Password does not match{" "}
+              {STR_CONST.PASSWORD_NOT_MATCH} {" "}
             </Text>
           )}
       </View>
@@ -1185,10 +833,7 @@ class SignUpComponent extends Component {
   }
 
   renderButtonContainer = () => {
-
     const { firstName, lastName, email, password, confirmPassword } = this.state
-
-
     return (
       <Fragment>
         {
@@ -1204,7 +849,6 @@ class SignUpComponent extends Component {
             </TouchableOpacity>
             :
             <TouchableOpacity
-              // onPress={() => this.validation()}
               style={[styles.signUpButton, {
                 backgroundColor: "gray"
               }]}
@@ -1212,43 +856,10 @@ class SignUpComponent extends Component {
             >
               <Text style={styles.signInText}>{STR_CONST.SIGN_UP_TEXT}</Text>
             </TouchableOpacity>
-
         }
-
       </Fragment>
     );
   }
-
-  // renderGoogleFBButtonContainer() {
-  //   return (
-  //     <View style={styles.googleFBContainer}>
-  //       <Text style={styles.orSignInText}>{STR_CONST.OR_SIGN_UP}</Text>
-  //       <View style={styles.buttonContainer}>
-  //         <TouchableOpacity
-  //           onPress={() => this.onPressGoogleSocialLogin()}
-  //           style={styles.google}
-  //         >
-  //           <FastImage style={styles.googleButton} source={IMG_CONST.GOOGLE_ICON} />
-  //         </TouchableOpacity>
-  //         <TouchableOpacity
-  //           // onPress={() => this.onPressFBSocialLogin()}
-  //           style={styles.fb}
-  //         >
-  //           <FastImage style={styles.fbButton} source={IMG_CONST.FB_ICON} />
-  //         </TouchableOpacity>
-  //         {!Utils.isAndroid() && (
-  //           <TouchableOpacity
-  //             onPress={() => this.onAppleButtonPress()}
-  //             style={styles.fb}
-  //           >
-  //             <FastImage style={styles.fbButton} source={IMG_CONST.APPLE_ICON} />
-  //           </TouchableOpacity>
-  //         )}
-  //       </View>
-  //     </View>
-  //   );
-  // }
-
 
 
 
@@ -1262,18 +873,12 @@ class SignUpComponent extends Component {
             style={styles.googleFb}
           >
             <FastImage style={styles.googleButton} resizeMode="contain" source={IMG_CONST.GOOGLE_ICON} />
-            {/* <Text
-            style={styles.iconTxt}
-          > Google</Text> */}
-
           </TouchableOpacity>
-
           <TouchableOpacity
             onPress={() => this.handleFacebookLogin()}
             style={styles.googleFb}
           >
             <FastImage style={styles.googleButton} resizeMode="contain"  source={IMG_CONST.FB_ICON} />
-       
           </TouchableOpacity>
           {!Utils.isAndroid() && (
             <TouchableOpacity
@@ -1297,24 +902,17 @@ class SignUpComponent extends Component {
             onPress={() => this.props.navigation.navigate("SignIn")}
             style={styles.signUpText}
           >
-            {"Sign In"}
-            {/* {STR_CONST.SIGN_IN} */}
+            {STR_CONST.SIGN_IN}
           </Text>
         </Text>
       </View>
     );
   }
 
-
-
-
   render() {
     return (
       <FastImage source={IMAGE_CONST.SIGN_UP_BG} resizeMode="cover" style={{ height: "100%", width: "100%", justifyContent: "center", alignItems: "center" }}>
-
-        {/* <SafeAreaView style={styles.container}> */}
-
-        <KeyboardAwareScrollView
+       <KeyboardAwareScrollView
           keyboardShouldPersistTaps={"handled"}
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
@@ -1352,7 +950,6 @@ class SignUpComponent extends Component {
           {this.renderBottomTextContainer()}
         </KeyboardAwareScrollView>
         <TransLoader isLoading={this.state.isLoading} />
-        {/* </SafeAreaView> */}
       </FastImage>
     );
   }

@@ -130,27 +130,6 @@ export default class CalenderComponent extends Component {
     }
   }
 
-  // renderHeader() {
-  //   return (
-  //     <View>
-  //       <TouchableOpacity
-  //         onPress={() => {
-  //           this.props.navigation.goBack();
-  //         }}
-  //         style={styles.createCalendarHeader}
-  //       >
-  //         <Image
-  //           style={{
-  //             justifyContent: "flex-end",
-  //            height:scale(18),  width:scale(18) 
-  //           }}
-  //           source={IMG_CONST.DARK_BLUE_CROSS_ICON}
-  //         />
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // }
-
 
   renderHeader() {
     const headingText = this.props.route.params.headingText;
@@ -165,21 +144,6 @@ export default class CalenderComponent extends Component {
             <Text style={{fontSize:scale(20),fontWeight:"700",padding:scale(10),paddingStart:scale(-10),color:"#FFF"}}>{headingText}</Text>
                 <Text>     </Text>
            </View>
-           {/* <View style={{marginTop:scale(20),backgroundColor:"#42c5e2",width:scale(330),alignSelf:"center",flexDirection:"row",borderWidth:0,borderRadius:scale(10)}}>
-              <TextInput 
-                 onChangeText={(searchText) => {
-                  this.onSearch(searchText)
-                }}
-              style={{height:scale(40),paddingStart:scale(10),color:"#FFF",width:scale(280),borderRadius:scale(10),fontWeight:"700"}}  />
-              <TouchableOpacity style={{backgroundColor:"#FFF",width:scale(42),borderEndEndRadius:scale(10),borderTopRightRadius:scale(10),marginStart:scale(10),borderBottomEndRadius:scale(10),alignSelf:"flex-end"}}>
-              <FastImage source={require("../../assets/findFlight/search.png")} resizeMode="contain" style={{height:scale(25),width:scale(25),margin:scale(10)}} />
-              </TouchableOpacity>
-           </View> */}
-  
-  
-  
-  
-  
      </View>
     );
   }

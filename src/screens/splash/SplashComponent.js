@@ -25,8 +25,7 @@ import FastImage from 'react-native-fast-image';
     return (
       <View
         style={{
-          flex: 1,
-        //   backgroundColor: '#fff',          
+          flex: 1,         
         }}>
           <StatusBar hidden={false} />
         <FastImage
@@ -37,8 +36,6 @@ import FastImage from 'react-native-fast-image';
             justifyContent:'center'
           }}
           source={require('../../assets/splash.png')}
-          
-          // source={require('../../assets/splash.png')}
         > 
         </FastImage>
       </View>

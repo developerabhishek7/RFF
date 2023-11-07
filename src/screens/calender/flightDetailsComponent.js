@@ -62,9 +62,6 @@ class FlightDetailsCompoent extends Component {
       premiumPoints: this.props.premiumPoints,
       businessPoints: this.props.businessPoints,
       firstPoints: this.props.firstPoints,
-      // businessSeats:this.props.businessSeats,
-      // economySeats:this.props.economySeats,
-      // premiumSeats:this.props.premiumSeats,
       noflightschedule: this.props.noflightschedule,
       searchData: this.props.searchData,
       multipleFlightScheduleData: this.props.multipleFlightScheduleData,
@@ -367,12 +364,10 @@ class FlightDetailsCompoent extends Component {
     let premiumPoints = this.props.premiumPoints
     let businessPoints = this.props.businessPoints
     let firstPoints = this.props.firstPoints
-
     let economySeats = this.props.economySeats
     let premiumSeats = this.props.premiumSeats
     let businessSeats = this.props.businessSeats
     let firstSeats = this.props.firstSeats
-
     let economy = this.state.classSelected[0]
     let premium = this.state.classSelected[1]
     let business = this.state.classSelected[2]
@@ -392,9 +387,6 @@ class FlightDetailsCompoent extends Component {
     if (first) {
       classSelectedArray.push(first)
     }
-
-    console.log("yes check here class selected length #######   ", classSelectedArray.length)
-
     return (
       <View style={styles.availabiltyView}>
         <View style={{ marginLeft: classSelectedArray.length > 2 ? scale(0) : scale(70) }}>
@@ -414,9 +406,6 @@ class FlightDetailsCompoent extends Component {
             </Text>
           </View>
           <View style={{ marginTop: verticalScale(16) }}>
-            {/* <Text style={styles.pointSeatsText}>
-                Taxes
-              </Text> */}
           </View>
         </View>
         <View style={{
@@ -427,7 +416,6 @@ class FlightDetailsCompoent extends Component {
               <View>
                 <View style={{ alignItems: "center", marginTop: verticalScale(20) }}>
                   <View style={{ alignItems: "center", }}>
-                 
                     <View style={{paddingStart:scale(15)}}>
                     <Ionicons
                       name="ios-radio-button-on"
@@ -435,7 +423,6 @@ class FlightDetailsCompoent extends Component {
                       color={colours.economySeatColor}
                     />
                     </View>
-                   
                     <Text
                       style={[styles.classText, { color: colours.economySeatColor }]}
                     >
@@ -448,9 +435,6 @@ class FlightDetailsCompoent extends Component {
                   <Text style={styles.seatNumberText}>
                     {economyPoints ? this.getPointsText(economyPoints) : "-"}
                   </Text>
-                  {/* <Text style={styles.seatNumberText}>
-                    {economyTax ? economyTax.toLocaleString() : "-"}
-                  </Text> */}
                 </View>
               </View>
               : null
@@ -476,7 +460,7 @@ class FlightDetailsCompoent extends Component {
                         },
                       ]}
                     >
-                      Premium
+                      {"Premium"}
                     </Text>
                   </View>
                   <Text style={styles.seatNumberText}>
@@ -485,14 +469,9 @@ class FlightDetailsCompoent extends Component {
                   <Text style={styles.seatNumberText}>
                     {premiumPoints ? this.getPointsText(premiumPoints) : "-"}
                   </Text>
-                  {/* <Text style={styles.seatNumberText}>
-                    {premiumTax ? premiumTax.toLocaleString() : "-"}
-                  </Text> */}
                 </View>
               </View>
-
               : null
-
           }
           {
             business ?
@@ -506,7 +485,6 @@ class FlightDetailsCompoent extends Component {
                       color={colours.purple}
                     />
                     </View>
-                   
                     <Text
                       style={[
                         styles.classText,
@@ -524,12 +502,8 @@ class FlightDetailsCompoent extends Component {
                   <Text style={styles.seatNumberText}>
                     {businessPoints ? this.getPointsText(businessPoints) : "-"}
                   </Text>
-                  {/* <Text style={styles.seatNumberText}>
-                    {businessTax ? businessTax.toLocaleString() : "-"}
-                  </Text> */}
                 </View>
               </View>
-
               : null
           }
           {
@@ -561,9 +535,6 @@ class FlightDetailsCompoent extends Component {
                   <Text style={styles.seatNumberText}>
                     {firstPoints ? this.getPointsText(firstPoints) : "-"}
                   </Text>
-                  {/* <Text style={styles.seatNumberText}>
-                    {firstTax ? firstTax.toLocaleString() : "-"}
-                  </Text> */}
                 </View>
               </View>
               : null
@@ -574,8 +545,6 @@ class FlightDetailsCompoent extends Component {
   }
 
   renderCell({ item, index }) {
-
-
     return (
       <TouchableOpacity
         style={[styles.cellContainer]}
@@ -612,7 +581,6 @@ class FlightDetailsCompoent extends Component {
   }
 
   _renderFlightList() {
-
     const { multipleFlightScheduleData, isOutBounded } = this.state
     let flightData = []
     if (multipleFlightScheduleData) {
@@ -741,15 +709,10 @@ class FlightDetailsCompoent extends Component {
 
 
   handleSkyScannerRedirection = () => {
-    // const { dId, aId, numberOfPassengers, jType, date, cabinCode, returnDate } = data || {}  
-
     const { selectedIndex, trip_type, passengerCount, dateString, skyScannerCabinCode, source, destination, selectedDestination, numberOfLines } = this.state;
-
-
 
     let sourceCode = source.code.toLowerCase()
     let destinationCode = destination.code.toLowerCase()
-
     let numberOfPassengers = passengerCount
     const dDate = moment(dateString).format('DD')
     const dYear = moment(dateString).format('YYMM')
@@ -773,13 +736,9 @@ class FlightDetailsCompoent extends Component {
   }
 
   handleBaRedirection = () => {
-    // const { dId, aId,  jType, date, returnDate } = data || {}   
-
     const { selectedIndex, trip_type, passengerCount, dateString, cabinCode, returnStartDate, source, destination } = this.state;
-
     let sourceCode = source.code.toLowerCase()
     let destinationCode = destination.code.toLowerCase()
-
     let numberOfPassengers = passengerCount
     let oneWay = selectedIndex == 0 ? true : false
     const departInputDate = moment(dateString).format('DD/MM/YYYY')
@@ -799,7 +758,6 @@ class FlightDetailsCompoent extends Component {
 
   noflightDataFunction() {
     const { flightCount } = this.state
-    console.log("yes check here flight count - - - - - - - -",flightCount)
     return (
       <FastImage
         source={require('../../assets/calendar/flightdetail.png')}
@@ -827,9 +785,7 @@ class FlightDetailsCompoent extends Component {
 
 
   render() {
-
     const { cabinClassData, classDataArray, showModelDropdownForBA, showModelDropdownForSS } = this.state
-
     let data = Object.entries(cabinClassData)
     let economy
     let premium
@@ -841,20 +797,16 @@ class FlightDetailsCompoent extends Component {
       if (cabinClassData.economy) {
         economy = cabinClassData.economy ? "Economy" : ""
       }
-
       if (cabinClassData.premium_economy) {
         premium = cabinClassData.premium_economy ? "Premium" : ""
       }
-
       if (cabinClassData.business) {
         business = cabinClassData.business ? "Business" : ""
       }
-
       if (cabinClassData.first) {
         first = cabinClassData.first ? "First" : ""
       }
     }
-
     if (economy) {
       travelData[0] = economy
     }
@@ -867,7 +819,6 @@ class FlightDetailsCompoent extends Component {
     if (first) {
       travelData[3] = first
     }
-
     const userData = this.props.userData
     let bronzeMember = userData.bronze_member
 
@@ -877,19 +828,8 @@ class FlightDetailsCompoent extends Component {
         <MyStatusBar />
         <View style={styles.outerViewStyle}>
           {this.renderHeader()}
-          {/* {this.addUserAge()} */}
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              {/* <View style={{ marginVertical: verticalScale(15) }}>
-                <CalendarDate
-                  selectedDate={this.state.dateString}
-                  classSelected={this.state.classSelected}
-                  day={this.state.selectedDate.day}
-                  passengerCount={this.state.passengerCount}
-                  availabilityData={this.state.seatsAvailabilityData}
-                  isOffPeakValue={this.state.isOffPeakValue}
-                />
-              </View> */}
               <View style={styles.innerContainer}>
                 <Text style={styles.titleText}>{`${STRING_CONST.SEAT_AVAILABILITY
                   } (${!this.state.isOffPeakValue
@@ -942,7 +882,6 @@ class FlightDetailsCompoent extends Component {
                           </Fragment>
                           : <Fragment>
                             {this.noflightDataFunction()}
-
                           </Fragment>
                       }
                     </Fragment>
@@ -986,7 +925,6 @@ class FlightDetailsCompoent extends Component {
                           onPress={() => {
                             if(this.props.isLoggedIn){
                               if (singleMap == "Economy") {
-
                                 this.setState({
                                   skyScannerCabinCode: "economy",
                                   cabinCode: "M",
@@ -1002,7 +940,7 @@ class FlightDetailsCompoent extends Component {
                                   skyScannerCabinCode: "business",
                                   cabinCode: "C"
                                 })
-  
+
                               } if (singleMap == "First") {
                                 this.setState({
                                   cabinCode: "F",
@@ -1018,9 +956,6 @@ class FlightDetailsCompoent extends Component {
                             else{
                               this.props.navigation.navigate(STRING_CONST.LOGIN)
                             }
-
-
-                           
                           }}
                           style={{
                             justifyContent: 'center', alignItems: 'center', paddingTop: classDataArray.length > 2 ? scale(6) : scale(2),
@@ -1038,85 +973,11 @@ class FlightDetailsCompoent extends Component {
                     })}
                   </View>
                 }
-                {/* <TouchableOpacity
-                  style={styles.checkOnAirlineButton1}
-                  onPress={() => {
-                    if(this.state.trip_type == "one_way"){
-                      this.setState({
-                        showModelDropdownForSS:true,
-                        showModelDropdownForBA:false
-                      })
-                    }
-                    else{
-                        this.props.navigation.navigate("priceDetails",{
-                        cabinClassData:this.state.cabinClassData,
-                        trip_type:this.state.trip_type,
-                        headerTxt:"See Cash Prices",
-                        searchData:this.state.searchData,
-                        selectedDate: this.state.selectedDate,
-                      })
-                    }
-                  }}
-                >
-                  <Text style={styles.bookOnBAText}>
-                    {"Prices"}
-                  </Text>
-                </TouchableOpacity> 
-                  {/* {
-                    showModelDropdownForSS && 
-                      <View style={{height:classDataArray.length > 2  ? scale(124):scale(70),backgroundColor:"#FFFFFF",borderColor:"grey",alignSelf:"center",width:scale(270),marginTop:scale(-6),marginBottom:scale(10)}}>
-                        {travelData.map((singleMap)=>{
-                          return( 
-                            <TouchableOpacity  
-                              onPress={()=>{
-                                if(singleMap == "Economy"){
-                                  this.setState({
-                                    skyScannerCabinCode:"economy",
-                                    cabinCode:"M"
-                                  })
-                                }
-                                if(singleMap == "Premium"){
-                                  this.setState({
-                                    skyScannerCabinCode:"premiumeconomy",
-                                    cabinCode:"W"
-                                  })
-                                }if(singleMap == "Business"){
-                                  this.setState({
-                                    skyScannerCabinCode:"business",
-                                    cabinCode:"C"
-                                  })
-                                }if(singleMap == "First"){
-                                  this.setState({
-                                    cabinCode:"F",
-                                    skyScannerCabinCode:"first"
-                                  })
-                                }
-                                this.setState({
-                                  showModelDropdownForBA:false,
-                                  showModelDropdownForSS:false
-                                })
-                                this.handleSkyScannerRedirection()
-                              }}
-                              style={{justifyContent:'center',alignItems:'center',paddingTop:classDataArray.length > 2 ? scale(6):scale(2),
-                              backgroundColor:singleMap=="Economy" ? "#dee3ff" : singleMap == "Premium" ? "#fef1dd" : singleMap == "Business" ? "#f1d9fc" : singleMap == "First" ? "#fcddea" : null
-                              }}>
-                           <Text style={[styles.classTxt,{
-                              color:singleMap=="Economy" ? "#2044FF" : singleMap == "Premium" ? "#FEA41D" : singleMap == "Business" ? "#A400F1" : singleMap == "First" ? "#F31973" : null
-                            }]}>
-                              {singleMap}
-                            </Text>
-                          </TouchableOpacity>
-                          )
-                        })}
-                      </View> 
-                  } */}
               </View>
             </View>
           </ScrollView>
           {this.state.showDetailsModal && this.flightDetailsModal()}
         </View>
-
-        {/* {this.state.Alert_Visibility3 && this.renderLocationList()} */}
       </SafeAreaView>
     );
   }

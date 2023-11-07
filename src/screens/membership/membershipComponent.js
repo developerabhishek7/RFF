@@ -104,16 +104,13 @@ class MembershipComponent extends Component{
 
     if (userData && userData.gold_member) {
       featureArray = getGoldFeatures();
-      // member = STRING_CONST.GOLD_MEMBER;
-      member = "Gold";
+      member = STRING_CONST.GOLD;
     } else if (userData && userData.silver_member) {
       featureArray = getSilverFeatures();
-      member = "Silver"
-      // member = STRING_CONST.SILVER_MEMBER;
+      member = STRING_CONST.SILVER;
     } else {
       featureArray = getBronzeFeatures();
-      // member = STRING_CONST.BRONZE_MEMBER;
-      member = "Bronze"
+      member = STRING_CONST.BRONZE;
     }
     this.setState({
       featureArray,
@@ -150,27 +147,12 @@ class MembershipComponent extends Component{
     const { navigation } = this.props;
     navigation.navigate(STRING_CONST.NOTIFICATIONS_SCREEN,{fromAlertScreen:false});
   }
-  // renderHeader() {
-  //   return (
-  //     <View style={{ marginHorizontal: scale(15) }}>
-  //       <ScreenHeader
-  //         {...this.props}
-  //         left
-  //         setting
-  //         title={STRING_CONST.MEMBERSHIP_TITLE}
-  //         right
-  //         notifCount={2}
-  //         clickOnRight={() => this.goToNotifications()}
-  //       />
-  //     </View>
-  //   );
-  // }
 
 
 
   renderHeader(){
     return(
-      <View style={{alignItems:"center",backgroundColor:"#03B2D8",height:Platform.OS == "android" ? scale(80) : scale(110),width:"100%",marginTop:Platform.OS == "android" ? scale(-20) : scale(-60),borderBottomLeftRadius:scale(30),borderBottomRightRadius:scale(30),marginBottom:scale(0)}}>
+      <View style={styles.headerStyleView}>
         <View style={{marginTop:Platform.OS == "android" ? scale(16) : scale(40)}}>
         <ScreenHeader
           {...this.props}
@@ -244,18 +226,6 @@ class MembershipComponent extends Component{
      
     }
 
-    // console.log("yes check here userData - - -  -- ",userData)
-
-    //  const planType = {
-    //   'bronze-trial-plan': { PLAN_NAME: 'Bronze' , VALUE: 'bronze', PLAN_TYPE: 'Bronze Trial' },
-    //   'bronze-plan': { PLAN_NAME: 'Bronze' , VALUE: 'bronze', PLAN_TYPE: 'Bronze Active' },
-    //   'elite-plan-pound-monthly': { PLAN_NAME: 'Silver' , VALUE: 'silver' },
-    //   'elite-plan-pound-yearly': { PLAN_NAME: 'Silver' , VALUE: 'silver' },
-    //   'gold-plan-gbp-monthly-launch': { PLAN_NAME: 'Gold' , VALUE: 'gold' },
-    //   'gold-plan-gbp-yearly': { PLAN_NAME: 'Gold' , VALUE: 'gold' },
-    //   'free-elite-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Active' },
-    //   'free-elite-trial-membership-for-airline-employees': { PLAN_NAME: 'Silver' , VALUE: 'silver', PLAN_TYPE: 'Silver Airline Trial' }
-    // }
     let silver_member = userData && userData.silver_member
     let gold_member = userData && userData.gold_member
 
@@ -271,7 +241,6 @@ class MembershipComponent extends Component{
       txt = `${daysLeft} days left of free trial`
     }
     if(cancelled_subscription && current_subscription_expiry) {
-      //  txt = `Scheduled ${gold_to_silver_downgrade ? "Silver" : null }  `
         txt = ` Scheduled  ${gold_member ?  "Gold" : silver_member ? "Silver" : userData && userData.bronze_member ? "Bronze" : null} ${PeriodUnit && PeriodUnit == "month" ? "Monthly":"Yerly"} Downgrade on ${expireTime} `
     }
   
@@ -446,11 +415,9 @@ class MembershipComponent extends Component{
     if(userData && Object.keys(userData).length !== 0){
        currentPlan = userData.current_plan;
        userId = userData.id;
-      // let daysLeft = this.getFreeTrialRemainingDays(expiryTime)
        yearly = userData.current_plan.period_unit
        bronze_member = userData.bronze_member
   
-      // code here for showing text after this.........
        txt = ""
        current_subscription_expiry = userData.current_subscription_expiry
        current_plan = userData.current_plan.on_trial
@@ -511,9 +478,7 @@ class MembershipComponent extends Component{
             Linking.openURL(
               url
             );
-            // console.log("yes update this after all the changes.")
-            // this.props.navigation.navigate(STRING_CONST.PRICING_SCREEN)
-          }}
+         }}
           buttonColor={colours.lightBlueTheme}
           buttonStyle={styles.subscriptionButtonStyle}
           textColor={colours.white}
@@ -537,7 +502,6 @@ class MembershipComponent extends Component{
               {this.membershipViewList()}
               {this.featureList()}
               {userData && !userData.gold_member && this.upgradeView()}
-              {/* {this.upgradeView()} */}
             </View>
           </ScrollView>
         </SafeAreaView>

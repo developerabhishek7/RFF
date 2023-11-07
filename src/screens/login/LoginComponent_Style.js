@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions,Platform } from "react-native";
 import scale, { verticalScale } from "../../helpers/scale";
 import { colours } from "../../constants/ColorConst";
 import * as CONST from "../../constants/StringConst";
@@ -10,16 +10,20 @@ export default StyleSheet.create({
     justifyContent:"center",
     alignItems:"center"
   },
+  loginContainer:{ height: "100%", width: "100%", backgroundColor: colours.lightBlueBackground },
   inputFieldContainer:{
     marginTop:scale(25),
   },
-
+  loginImgLogo:{ height: scale(180), width: scale(180), alignSelf: 'center' },
   logoContainer: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginTop:scale(12),
   },
-
+  butoonView:{
+    width: scale(320),
+    flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginTop: scale(1), marginBottom: scale(20)
+  },
   rffLogo: {
     marginTop: verticalScale(40),
     width: scale(214),

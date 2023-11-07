@@ -23,7 +23,6 @@ import CountryListComponent from "../screens/profileDetails/countryListComponent
 import MembershipContainer from "../screens/membership/membershipContainer";
 import CalenderContainer from "../screens/calender/calenderContainer";
 import FindFlightContainer from "../screens/findFlights/findFlightContainer";
-// import PricingContainerScreen from "../screens/pricingPage/pricingPageContainer";
 import MapSearchContainer from "../screens/mapSearch/mapSearchContainer";
 import airlineMembershipComponent from "../screens/findFlights/airlineMembershipComponent";
 import sourceDestinationListComponent from "../screens/findFlights/sourceDestinationListComponent";
@@ -35,13 +34,11 @@ import OnboardingContainer from "../screens/onBoardingScreens/onBoardingContaine
 import ManageContactDetailsContainer from "../screens/manageContactDetails/manageContactDetailsContainer";
 import UpdateProfileContainer from "../screens/updateProfile/UpdateProfileContainer";
 import UpdateCountryListComponent from "../screens/updateProfile/countryListComponent";
-import FlightDetailsContainer from "../screens/flightDetails/flightDetailsContainer";
 import DestinationsComponent from "../screens/mapSearch/DestinationsComponent";
 import DestinationDetailsComponent from "../screens/mapSearch/DestinationDetailsComponent"
 import findFlightDetails1 from '../screens/calender/flightDetailsContainer'
 import PriceDetailsScreen from '../screens/calender/PriceDetailScreen'
 import DrawerView from '../screens/Drawer/drawerModal'
-// import Test from '../../Test'
 import * as IMAGE_CONST from "../constants/ImageConst";
 import FlightDetailsCompoent from '../screens/calender/flightDetailsContainer'
 import SplashComponent from '../screens/splash/SplashComponent'
@@ -50,20 +47,10 @@ import { connect } from "react-redux";
 import scale, { verticalScale } from '../helpers/scale'
 import FindFlightComponent from '../screens/findFlights/findFlightComponent';
 import HelpComponent from '../screens/help/HelpComponent'
-
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-import NavigationService from "../utils/NavigationService";
 import { navigationRef } from './RouteNavigation';
-
-import calendarTest from '../screens/calender/calendarTest';
-
-
-// const Drawer = createDrawerNavigator();
-// const Stack = createStackNavigator();
-
-{/* Add Drawer.Navigation to a function.*/ }
 
 componentDidMount = async() => {
   StatusBar.setHidden(false);
@@ -234,15 +221,6 @@ const drawerViewModel = (navigation) => {
         <Stack.Screen
           name="MapComponentScreen"
           component={MapComponent}
-          options={{
-            headerShown: false
-          }}
-        />
-
-
-      <Stack.Screen
-          name="calendarTest"
-          component={calendarTest}
           options={{
             headerShown: false
           }}
