@@ -141,6 +141,8 @@ getTimeFromMins(mins){
       STR_CONST.SMS_ALERTS,
       STR_CONST.PUSH_NOTIF_ALERTS,
       STR_CONST.IOS_ANDROID,
+      STR_CONST.ADVANCE_ALERT_SETTING,
+      STR_CONST.POINTS_AND_TAX_PRICING_INFO
     ];
   },
   getSilverFeatures() {

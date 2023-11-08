@@ -57,10 +57,16 @@ export default class ProfileScreenComponent extends Component {
       addressLine2: this.props.userData.address
         ? this.props.userData.address.address2
         : "",
+      // selectedCountry: userData ? this.getCountryObject(userData.country) : "",
       selectedState: userData.address ? userData.address.state : "",
       selectedCity: userData.address ? userData.address.city : "",
       ageBand: this.getDataObject(userData.age_band, STR_CONST.ageBandOption),
       gender: this.getDataObject(userData.gender, STR_CONST.genderOptions),
+      // departureCity: this.props.userData.address && this.props.userData.address.airpot_city
+      //   ? this.getDepartureCityObject(
+      //     JSON.parse(this.props.userData.address.airpot_city)
+      //   )
+      //   : "",
       departureCity: "",
       selectedCountry: "",
       Alert_Visibility2: false,
@@ -107,8 +113,24 @@ export default class ProfileScreenComponent extends Component {
 
   getCountryObject(countryCode) {
     let countryObject = {};
+    // this.props.countryList.map((item) => {
+    //   if (item.sortname == countryCode) {
+    //     countryObject = item;
+    //   }
+    // });
     return countryObject;
   }
+
+  // getStateObject(stateCode) {
+  //   let stateObject = {};
+  //   this.props.stateList &&
+  //     this.props.stateList.map((item) => {
+  //       if (item.id == stateCode) {
+  //         stateObject = item;
+  //       }
+  //     });
+  //   return stateObject;
+  // }
 
   getCityObject(city) {
     let cityObject = {};
@@ -173,29 +195,29 @@ export default class ProfileScreenComponent extends Component {
     } = this.state;
     let userFirstName = firstName.trim();
     let userLastName = lastName.trim();
+    // let userAddressLine1 = addressLine1.trim();
+    // let userPostCode = postCode.trim();
+
     // -------------- Commented for now Only -----------
 
     if (
       Validators.validName(userFirstName) &&
       Validators.validName(userLastName)
-    
-    ) 
-    {
-
-      let code = "";
-      departureCity.airports.map((item, index, arrayRef) => {
-        if (arrayRef.length == 1) {
-          code = code.concat(`${item.code}`)
-        } else if (index == (arrayRef.length - 1)) {
-          code = code.concat(`${item.code}`)
-        }
-        else {
-          code = code.concat(`${item.code}, `)
-        }
-      })
-      let fullName = `${departureCity.city_name} (${code})`;
-     
-
+      // firstName,
+      // lastName,
+      // !isEmptyString(userAddressLine1) &&
+      // !isEmptyString(userAddressLine2) &&
+      // selectedCountry &&
+      // selectedState &&
+      // selectedCity &&
+      // userPostCode &&
+      // postcodeValidator(userPostCode, selectedCountry.sortname) &&
+      // departureCity &&
+      // ageBand &&
+      // gender &&
+      // travellingAbroadInNext12Months &&
+      // flightsTakenAnnually
+    ) {
       var userInfo = {};
       userInfo["first_name"] = firstName;
       userInfo["last_name"] = lastName;
@@ -205,7 +227,10 @@ export default class ProfileScreenComponent extends Component {
       selectedState ? userInfo["state"] = selectedState : null;
       userInfo["city"] = selectedCity;
       userInfo["postal_code"] = postCode;
-      departureCity ? userInfo["airpot_city"] = fullName : "";
+      departureCity ? userInfo["airpot_city"] = JSON.stringify({
+        name: `${departureCity.city_name} (${departureCity.code})`,
+      }) : "";
+      // userInfo["airpot_city"] = "{\"name\":\"Boston (BOS)\",\"value\":\"BOS\"}"
       userInfo["age_band"] = ageBand.value;
       gender ? userInfo["gender"] = gender.value : null;
       userInfo["flights_taken_annually"] = flightsTakenAnnually.value;
@@ -257,7 +282,6 @@ export default class ProfileScreenComponent extends Component {
 
     // this.getPreferedCountryList();
     let userData = this.props.userData;
-
 
     if (userData.image && !isEmptyString(userData.image)) {
       this.setState({
@@ -815,32 +839,88 @@ export default class ProfileScreenComponent extends Component {
     );
   }
 
-  getFullDestinationName(destinationObject) {
-    let code = "";
-    destinationObject.airports.map((item, index, arrayRef) => {
-      if (arrayRef.length == 1) {
-        code = code.concat(`${item.code}`)
-      } else if (index == (arrayRef.length - 1)) {
-        code = code.concat(`${item.code}`)
-      }
-      else {
-        code = code.concat(`${item.code}, `)
-      }
-    })
-    let fullName = `${destinationObject.city_name} (${code})`;
-    return fullName;
-  }
+  // addUserPreferenceLocation() {
+  //   const { departureLocationList, submitPressed, departureCity, } = this.state;
+
+  //   // console.log("check here departure location list ####### ",departureLocationList)
+
+  //   return (
+  //     <TouchableOpacity
+  //       style={{ marginTop: verticalScale(32) }}
+  //       onPress={() => {
+  //         // if (departureLocationList) {
+  //           this.props.navigation.navigate(STRING_CONST.LOCATION_LIST_SCREEN, {
+  //             type: "source",
+  //             screenType: "Findflight",
+  //             locationsObject: departureLocationList,
+  //             placeholderTitle: STRING_CONST.WHERE_ARE_YOU_FLYING_FROM,
+  //             allLocations: departureLocationList,
+  //             sourceSelected: departureLocationList,
+  //             onSourceSelected: (selectedSource) => {
+  //               console.log("check   selectedSource   ",selectedSource)
+  //               this.setState({
+  //                 departureCity: selectedSource,
+  //               });
+  //             },
+  //           });
+  //         // }
+  //       }}
+  //     >
+  //       {/* {departureCity ? (
+  //         <Text style={styles.textInputHeading}>
+  //           {STRING_CONST.PREFFERED_DEPARTURE}
+  //         </Text>
+  //        ) : null} */}
+  //       <View
+  //         style={[
+  //           styles.textInputView,
+  //           {
+  //             borderBottomColor: colours.borderBottomLineColor,
+  //           },
+  //         ]}
+  //       >
+  //         {/* {
+  //           departureCity ?  */}
+  //             <View
+  //               style={[
+  //                 styles.countryView,
+  //                 {
+  //                   borderWidth: scale(0),
+  //                   borderBottomWidth: 0,
+  //                   borderTopWidth: 0,
+  //                 },
+  //               ]}
+  //             >
+  //               {departureCity ? (
+  //                 <Text style={styles.countryDetailText}>
+  //                   {/* {`${departureCity.city_name} (${departureCity.code})`} */}
+  //                   {cityName.name}
+  //                 </Text>
+  //               ) : (
+  //                 <Text style={styles.countryText}>
+  //                   {STRING_CONST.PREFFERED_DEPARTURE}
+  //                 </Text>
+  //               )}
+
+  //               {IMG_CONST.DARK_SORT_DOWN}
+  //             </View>
+  //              {/* : null
+  //         }  */}
+
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // }
+
 
   addUserPreferenceLocation() {
-    const { departureLocationList, departureCity, cityAddress, } = this.state;
-    let userData = this.props.userData
+    const { departureLocationList, departureCity, cityAddress } = this.state;
     let airpotName = ""
-    if (userData && userData.address) {
-      airpotName = userData.address.airpot_city
+    if (cityAddress && cityAddress !== 'null' && cityAddress !== undefined && Object.keys(cityAddress).length !== 0) {
+
+      let data = JSON.parse(cityAddress.airpot_city)
+      airpotName = data.name
     }
-
-
-
     return (
       <TouchableOpacity
         style={{ marginTop: verticalScale(32) }}
@@ -883,20 +963,17 @@ export default class ProfileScreenComponent extends Component {
               {
                 borderWidth: scale(0),
                 borderBottomWidth: 0,
+                borderTopWidth: 0,
               },
             ]}
           >
             {departureCity ?
-              <Text numberOfLines={1} style={[styles.countryDetailText,{
-               width:scale(250)
-              }]}>
-                  {this.getFullDestinationName(departureCity)}
-                </Text>
+              <Text style={styles.countryDetailText}>
+                {`${departureCity.city_name} (${departureCity.code})`}
+              </Text>
               :
               airpotName ?
-                <Text numberOfLines={1} style={[styles.countryDetailText,{
-                  width:scale(250)
-                }]}>
+                <Text style={styles.countryDetailText}>
                   {airpotName}
                 </Text>
                 :
@@ -1141,12 +1218,17 @@ export default class ProfileScreenComponent extends Component {
         }}>
         <View
           style={{
+            // backgroundColor: 'rgba(52, 52, 52, 0.8)',
             backgroundColor: "#000000",
             flex: 1,
+            // justifyContent: 'center',
+            // alignItems: 'center',
             height: height,
             width: width
           }}>
-              <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{ width: scale(20), height: scale(20), marginTop: scale(50), margin: scale(10) }}>
+          {/* <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: scale(450), width: scale(400), borderWidth: 1, borderRadius: 12, borderColor: "gray" }}> */}
+
+          <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }} style={{ width: scale(20), height: scale(20), marginTop: scale(50), margin: scale(10) }}>
             <FastImage source={require("../../assets/back2.png")} style={{ height: verticalScale(30), width: verticalScale(30) }} />
           </TouchableOpacity>
 
@@ -1160,6 +1242,14 @@ export default class ProfileScreenComponent extends Component {
               }}
             />
           </View>
+          {/* <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
+                <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text> */}
+          {/* <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
+                  style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 9, margin: 7, marginTop: 10, }}
+                >
+                  <Text style={{ marginStart: 30, marginEnd: 30, margin: 9, color: "#FFF" }}>OK</Text>
+                </TouchableOpacity> */}
+          {/* </View> */}
         </View>
       </Modal>
     )
@@ -1249,6 +1339,15 @@ export default class ProfileScreenComponent extends Component {
   render() {
     const { firstName, lastName, selectedCountry, submitPressed } = this.state;
     return (
+      // <SafeAreaView style={{ flex: 1, }}>
+
+      // <ImageBackground source={IMG_CONST.EDIT_BG} style={{
+      //   justifyContent: 'center', alignItems: "center",
+      //   width: "100%", height: "100%"
+      // }}
+      //   imageStyle={{ flex: 1, justifyContent: "center", alignItems: 'center' }}
+      //   resizeMode="cover"
+      // >
       <View
       style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}
       >
@@ -1257,6 +1356,7 @@ export default class ProfileScreenComponent extends Component {
       paddingBottom:scale(20),
    }}>
         {this.renderHeader()}
+        {/* <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="always"> */}
         {this.renderLoader()}
         {this.profileImage()}
         </View>
@@ -1356,6 +1456,70 @@ export default class ProfileScreenComponent extends Component {
                 </TouchableOpacity>
               </View>
             </View>
+            {/* {this.addressLineOne()}
+            {this.addressLineTwo()} */}
+
+            {/* <TouchableOpacity
+              style={{ marginTop: verticalScale(32) }}
+              onPress={() => {
+                this.props.navigation.navigate(STR_CONST.COUNTRY_LIST_SCREEN, {
+                  onCountrySelected: (selectedCountry) => {
+                    this.onCountrySelected(selectedCountry);
+                    this.setState({
+                      selectedCountry,
+                      selectedState: "",
+                      selectedCity: "",
+                    });
+                  },
+                  selectedCountry: selectedCountry,
+                  locationObject: this.state.countryListArray,
+                });
+              }}
+            >
+              {selectedCountry ? (
+                <Text style={styles.textInputHeading}>
+                  {STRING_CONST.COUNTRY}
+                  <Text style={{ color: colours.redColor }}> *</Text>
+                </Text>
+              ) : null}
+              <View
+                style={[
+                  styles.textInputView,
+                  {
+                    borderBottomColor:
+                      submitPressed && Object.keys(selectedCountry).length === 0
+                        ? colours.redColor
+                        : colours.borderBottomLineColor,
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.countryView,
+                    {
+                      borderWidth: scale(0),
+                      borderBottomWidth: 0,
+                      borderTopWidth: 0,
+                    },
+                  ]}
+                >
+                  {selectedCountry ? (
+                    <Text style={styles.countryDetailText}>
+                      {selectedCountry.name}
+                    </Text>
+                  ) : (
+                    <Text style={styles.countryText}>
+                      {STRING_CONST.COUNTRY}
+                      <Text style={{ color: colours.redColor }}> *</Text>
+                    </Text>
+                  )}
+                  {IMG_CONST.DARK_SORT_DOWN}
+                </View>
+              </View>
+            </TouchableOpacity> */}
+            {/* {this.addUserState()} */}
+            {/* {this.addUserCity()} */}
+            {/* {this.addUserPostCode()} */}
             {this.addUserPreferenceLocation()}
             {this.addUserAge()}
             {this.addUserGender()}
@@ -1366,8 +1530,36 @@ export default class ProfileScreenComponent extends Component {
             })}
           </View>
           {this.renderImage()}
+          {/* <Modal
+            visible={this.state.Alert_Visibility2}
+            animationType={"none"}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: "#FFFFFF", height: height / 3.6, width: width * 0.84, borderWidth: 1, borderRadius: 12, borderColor: "gray" }}>
+                <Image source={require('../../assets/sad_imogi.png')} style={{ height: 90, width: 90, margin: scale(10) }} resizeMode="contain" />
+                <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD, }}>{noFlightScheduleDate}</Text>
+                <Text style={{ fontSize: scale(14), color: colours.gray, padding: 4, fontFamily: STRING_CONST.appFonts.INTER_SEMI_BOLD }}>{this.state.noFlightScheduleAlertTxt}</Text>
+                <TouchableOpacity onPress={() => { this.Hide_Custom_Alert2() }}
+                  style={{ backgroundColor: colours.lightBlueTheme, borderRadius: 9, margin: 7, marginTop: 10, }}
+                >
+                  <Text style={{ marginStart: 30, marginEnd: 30, margin: 9, color: "#FFF" }}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal> */}
+          {/* </ScrollView> */}
         </KeyboardAwareScrollView>
       </View>
+      // </SafeAreaView>
     );
   }
 }
