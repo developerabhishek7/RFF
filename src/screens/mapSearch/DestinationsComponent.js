@@ -28,7 +28,7 @@ export default class DestinationsComponent extends Component {
       tripType: this.props.route.params.tripType,
       sourceCode: this.props.route.params.sourceCode,
       isOnFocus:false,
-      classSelected:[true, true, true, true],
+      classSelected:this.props.route.params.classSelected ? this.props.route.params.classSelected :  [true, true, true, true],
     }
   }
   searchUpdated(term) {
@@ -41,8 +41,11 @@ export default class DestinationsComponent extends Component {
     let searchData = this.props.route.params.searchData
     let auditData = this.props.route.params.auditData
 
-    // console.log("check on source ######## ",this.state.sourceCode)
-    
+
+    console.log("yes from the map screen - - - -  -",this.state.classSelected)
+    console.log("yes from the map screen - - - -  -",this.props.route.params.classSelected)
+
+
     if (this.state.sourceCode == "LON") {
       let objIndex = destination.findIndex((obj => obj.code == "SLU"));
       if (objIndex != -1) {
@@ -165,7 +168,7 @@ export default class DestinationsComponent extends Component {
 
   renderClasses() {    
 
-    console.log('renderClasses destination Component ', this.state.classSelected);
+    // console.log('renderClasses destination Component ', this.state.classSelected);
 
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-evenly", margin: scale(10), marginTop: scale(15), alignContent: "center", width: "96%" }}>
@@ -395,14 +398,8 @@ export default class DestinationsComponent extends Component {
                       }
                       <TouchableOpacity onPress={() => {
 
-                        // console.log("yes hcekc here - - - - - - -before send  - - -  -",pointsDatBA)
-                        // return false
-
                         let selectedclass = this.state.classSelected
-
                         let classData = [true, true, true, true]
-                        
-
                         this.props.navigation.navigate("destinationdetailscomponent", {
                           singleMap: JSON.stringify(singleMap),
                           WhereFrom: this.props.route.params.WhereFrom,

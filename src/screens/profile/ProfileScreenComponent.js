@@ -8,7 +8,8 @@ import {
   FlatList,
   Alert,
   SafeAreaView,
-  BackHandler
+  BackHandler,
+  Platform
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import FastImage from 'react-native-fast-image'
@@ -19,7 +20,7 @@ import scale, { verticalScale } from "../../helpers/scale";
 import styles from "./ProfileScreenStyles";
 import * as STR_CONST from "../../constants/StringConst";
 import { colours } from "../../constants/ColorConst";
-import { Platform } from "react-native";
+
 import MyStatusBar from "../../components/statusbar";
 
 export default class ProfileScreenComponent extends Component {
@@ -123,6 +124,9 @@ export default class ProfileScreenComponent extends Component {
       ]
     );
   }
+
+
+  
   renderListItem(itemObject, index) {
     return (
       <TouchableOpacity

@@ -1,6 +1,6 @@
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import React, { Component, Fragment } from "react";
-import { StyleSheet, View, ImageBackground,Image, Text, Modal,TouchableOpacity, BackHandler,Dimensions, Platform } from "react-native";
+import { StyleSheet, View, ImageBackground, Image, Text, Modal, TouchableOpacity, BackHandler, Dimensions, Platform } from "react-native";
 import { connect } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -11,14 +11,13 @@ import scale, { verticalScale } from "../../helpers/scale";
 import { getAirlinesAvailability, getPointsAvailability, getSeatsAvailability } from "../../actions/calendarActions";
 // import {getMapKey} from '../../actions/mapSearchActions'
 import PopUpComponent from '../../shared/popUpComponent'
-import  Entypo from 'react-native-vector-icons/Entypo';
+import Entypo from 'react-native-vector-icons/Entypo';
 const { height, width } = Dimensions.get("window");
 import * as IMAGE_CONST from "../../constants/ImageConst";
 import FastImage from 'react-native-fast-image'
-
 var uuid = require("react-native-uuid");
 import { getAccessToken } from "../../constants/DataConst";
-import {updateGuestUserPostHog,updateLoggedInUserPostHog} from '../../actions/userActions'
+import {  updateLoggedInUserPostHog } from '../../actions/userActions'
 import DeviceInfo from "react-native-device-info";
 import {
   getAirlinesMembership,
@@ -29,6 +28,9 @@ import {
   getFlightSchedule
 } from "../../actions/findFlightActions";
 import styles from "./masSearchStyles";
+import MaterialIcon from "react-native-vector-icons/dist/MaterialCommunityIcons";
+import { appFonts } from "../../constants/StringConst";
+
 const coordinates = [];
 class MapComponent extends Component {
   constructor(props) {
@@ -38,74 +40,76 @@ class MapComponent extends Component {
       centerCoordinate: [-73.98330688476561, 40.76975180901395],
       mapSearchData: {},
       showPopUp: false,
-      WhereFrom:this.props.route.params.WhereFrom,
-      tripType:this.props.route.params.searchData.tripType,
-      isMarkerClick: false,      
-      isShowMarker:true,
-      isLoader:true,
-      sourceCode:"",accesstoken:"",deviceName:"",deviecBrand:"",isEmulator:"",isTablet:"",
-      zoomLevel:0
+      WhereFrom: this.props.route.params.WhereFrom,
+      tripType: this.props.route.params.searchData.tripType,
+      isMarkerClick: false,
+      isShowMarker: true,
+      isLoader: true,
+      sourceCode: "", accesstoken: "", deviceName: "", deviecBrand: "", isEmulator: "", isTablet: "",
+      zoomLevel: 0,
+      selectedClass: [true, true, true, true],
+      filterVisible: false,
     };
     this.markerRef = null;
   }
 
 
   postHogAnalytics = (body) => {
-    if(this.props.isLoggedIn){
+    if (this.props.isLoggedIn) {
       this.props.updateLoggedInUserPostHogAction(body)
     }
-    else{
+    else {
       this.props.updateGuestUserPostHogAction(body)
     }
   }
-  
+
   async componentDidMount() {
     // setTimeout(() => {
     //   MapToken = this.props.mapBoxToken.token     
     // }, 100);
-    
 
-      const accesstoken = await getAccessToken();
-       setTimeout(() => {
-        this.setState({isLoader:false,})
-      }, 2000);
 
-      let MAP_TOKEN = await AsyncStorage.getItem("MAP_TOKEN")
-    
-      let deviceName = await DeviceInfo.getDeviceName()
-      let deviecBrand = await DeviceInfo.getBrand()
-      let isTablet = await DeviceInfo.isTablet()
-      let isEmulator = await DeviceInfo.isEmulator()
-      
+    const accesstoken = await getAccessToken();
+    setTimeout(() => {
+      this.setState({ isLoader: false, })
+    }, 2000);
 
-      this.setState({
-        deviecBrand,deviceName,isTablet,isEmulator
-      })
-    
+    let MAP_TOKEN = await AsyncStorage.getItem("MAP_TOKEN")
+
+    let deviceName = await DeviceInfo.getDeviceName()
+    let deviecBrand = await DeviceInfo.getBrand()
+    let isTablet = await DeviceInfo.isTablet()
+    let isEmulator = await DeviceInfo.isEmulator()
+
+
+    this.setState({
+      deviecBrand, deviceName, isTablet, isEmulator
+    })
+
     let uuid_Key = uuid.v4()
     let userId = this.props.userInfo.id
     // if(!MAP_TOKEN){
     //   this.props.getMapKeyAction(uuid_Key,userId)
     // }
-    
-    let sourceCode  = this.props.route.params.searchData.sourceCode.code
+
+    let sourceCode = this.props.route.params.searchData.sourceCode.code
     let auditData = this.props.route.params.auditData
-    let searchData =  this.props.route.params.searchData
+    let searchData = this.props.route.params.searchData
     // console.log("yes check here search Data #######     ",searchData.classesSelected)
     let cabinClasses = []
     // let economy = ""
     // let premium_economy = ""
     // let business =""
     // let first = ""
-    if(searchData.classesSelected[0] == true){
+    if (searchData.classesSelected[0] == true) {
       cabinClasses.push("economy")
-    }if(searchData.classesSelected[1] == true){
+    } if (searchData.classesSelected[1] == true) {
       cabinClasses.push("premium")
     }
-    if(searchData.classesSelected[2] == true){
+    if (searchData.classesSelected[2] == true) {
       cabinClasses.push("business")
     }
-    if(searchData.classesSelected[3] == true){
+    if (searchData.classesSelected[3] == true) {
       cabinClasses.push("first")
     }
     let loggedInUserPostHog = {}
@@ -124,19 +128,19 @@ class MapComponent extends Component {
       "inbound_end_date": searchData.inboundEndDate,
       "source": searchData.sourceCode.code,
       "destination": "",
-      "cabin_class":cabinClasses,
-      "metaData" : {
-        "deviecBrand":this.state.deviecBrand,
-        "deviceName":this.state.deviceName,
-        "isEmulator":this.state.isEmulator,
-        "isTablet":this.state.isTablet,
+      "cabin_class": cabinClasses,
+      "metaData": {
+        "deviecBrand": this.state.deviecBrand,
+        "deviceName": this.state.deviceName,
+        "isEmulator": this.state.isEmulator,
+        "isTablet": this.state.isTablet,
         "plateform": "Mobile",
       }
     }
     setTimeout(() => {
-           this.setState({
-          sourceCode:sourceCode
-        })
+      this.setState({
+        sourceCode: sourceCode
+      })
     }, 1000);
 
     var destinations = this.props.route.params.destinations;
@@ -150,9 +154,9 @@ class MapComponent extends Component {
       centerCoordinate: coordinates[0],
       showPopUp
     });
-      BackHandler.addEventListener('hardwareBackPress', () =>
-            this.handleBackButton(this.props.navigation),
-          );
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      this.handleBackButton(this.props.navigation),
+    );
   }
   componentDidUpdate(prevProps) {
 
@@ -160,9 +164,9 @@ class MapComponent extends Component {
     let auditData = this.props.route.params.auditData
     let searchData = this.props.route.params.searchData;
     let singleMap = this.state.mapSearchData.selectedDestination
-  
-    let destinations =  (this.props.route.params.destinations)
-   
+
+    let destinations = (this.props.route.params.destinations)
+
     let pointsData1 = []
     let pointsData2 = []
     // let pointsData = []
@@ -175,35 +179,36 @@ class MapComponent extends Component {
     // console.log("yes check here point s data ###### ",JSON.stringify(singleMap))
 
     let data1 = JSON.stringify(singleMap)
-    let pointsDatBA =  []
+    let pointsDatBA = []
     let pointsDataSS = []
 
-    if(data1 && Object.keys(data1).length !== 0){
+    if (data1 && Object.keys(data1).length !== 0) {
       let data = JSON.parse(data1)
-      pointsDatBA =  data.points.BA
+      pointsDatBA = data.points.BA
       pointsDataSS = data.points.SS
-   
-     
+
+
     }
 
-  
+
     if (this.state.isMarkerClick) {
       if (this.props !== prevProps) {
         if (
           this.props.airlinesDetail &&
           this.props.airlinesDetail !== prevProps.airlinesDetail && this.props.screenType == 'MAP'
         ) {
-          this.setState({isLoader:false})   
+          this.setState({ isLoader: false })
 
           this.props.navigation.navigate("destinationdetailscomponent", {
             singleMap: JSON.stringify(singleMap),
-            WhereFrom: JSON.stringify(WhereFrom),          
+            WhereFrom: JSON.stringify(WhereFrom),
             searchData: JSON.stringify(searchData),
-            auditData: JSON.stringify(auditData),    
-            tripType:this.state.tripType,
-            sourceCode:this.state.sourceCode   ,
-            pointsDatBA:pointsDatBA,
-            pointsDataSS:pointsDataSS
+            auditData: JSON.stringify(auditData),
+            tripType: this.state.tripType,
+            sourceCode: this.state.sourceCode,
+            pointsDatBA: pointsDatBA,
+            pointsDataSS: pointsDataSS,
+            classSelected:this.state.selectedClass
           });
         }
       }
@@ -213,7 +218,7 @@ class MapComponent extends Component {
 
 
   renderBottomButton(buttonText, backgroundColor, onButtonPress) {
-   let destination =  (this.props.route.params.destinations)
+    let destination = (this.props.route.params.destinations)
     return (
       <TouchableOpacity
         style={[styles.buttonStyleMap, { backgroundColor: backgroundColor, position: "absolute", bottom: 40 }]}
@@ -222,7 +227,7 @@ class MapComponent extends Component {
         }}
         activeOpacity={.6}
       >
-        <Entypo name="location-pin" size={scale(24)} color="white"  />
+        <Entypo name="location-pin" size={scale(24)} color="white" />
         <Text style={{
           marginLeft: scale(4),
           color: colours.white,
@@ -233,119 +238,260 @@ class MapComponent extends Component {
         }}>{buttonText} ({destination.length})</Text>
       </TouchableOpacity>
     );
+  }
+
+  composeAvailabilityData = () => {
+    let destinations = this.props.route.params.destinations;
+    let isEconomy = false;
+    let isPremium = false;
+    let isBusiness = false;
+    let isFirst = false;
+
+    destinations && destinations.map((singleMap) => {
+      let inboundData = singleMap.availability.inbound
+      let outboundData = singleMap.availability.outbound
+      if (outboundData) {
+        for (let i of Object.keys(outboundData)) {
+          if (outboundData[i].economy) {
+            isEconomy = true
+          }
+          if (outboundData[i].premium) {
+            isPremium = true
+          }
+          if (outboundData[i].business) {
+            isBusiness = true
+          }
+          if (outboundData[i].first) {
+            isFirst = true
+          }
+        }
+      }
+      if (inboundData) {
+        for (let i of Object.keys(inboundData)) {
+          if (inboundData[i].economy) {
+            isEconomy = true
+          }
+          if (inboundData[i].premium) {
+            isPremium = true
+          }
+          if (inboundData[i].business) {
+            isBusiness = true
+          }
+          if (inboundData[i].first) {
+            isFirst = true
+          }
+        }
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', () =>
+      this.handleBackButton(this.props.navigation),
+    );
+  }
+  handleBackButton = (nav) => {
+    if (!nav.isFocused()) {
+      BackHandler.removeEventListener('hardwareBackPress', () =>
+        this.handleBackButton(this.props.navigation),
+      );
+      return false;
+    } else {
+      nav.goBack();
+      return true;
     }
+  };
 
-      composeAvailabilityData = () => {
-        let destinations = this.props.route.params.destinations;
-        let isEconomy = false;
-        let isPremium = false;
-        let isBusiness = false;
-        let isFirst = false;
-
-        destinations && destinations.map((singleMap)=>{
-          let inboundData = singleMap.availability.inbound
-          let outboundData = singleMap.availability.outbound
-          if(outboundData){
-            for(let i of Object.keys(outboundData)){      
-              if(outboundData[i].economy){
-                isEconomy = true
-              }  
-              if(outboundData[i].premium){
-                isPremium = true
-              }  
-              if(outboundData[i].business){
-                isBusiness = true
-              }  
-              if(outboundData[i].first){
-                isFirst = true
-              }
-            }            
-          }
-          if(inboundData){
-            for(let i of Object.keys(inboundData)){      
-              if(inboundData[i].economy){
-                isEconomy = true
-              }  
-              if(inboundData[i].premium){
-                isPremium = true
-              }  
-              if(inboundData[i].business){
-                isBusiness = true
-              }  
-              if(inboundData[i].first){
-                isFirst = true
-              }
-            }            
-          }
-        })
-      }
-
-      componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', () =>
-          this.handleBackButton(this.props.navigation),
-        );
-     }
-     handleBackButton = (nav) => {
-      if (!nav.isFocused()) {
-        BackHandler.removeEventListener('hardwareBackPress', () =>
-          this.handleBackButton(this.props.navigation),
-        );
-        return false;
-      } else {
-        nav.goBack();
-        return true;
-      }
-    };
-
-
-
-    renderLoader () {
-      return (
-        <Modal
-          transparent={true}
-          animationType={'none'}
-          visible={this.state.isLoader}             
-        >
-          <View style={{flex:1,justifyContent:'center',  
+  renderLoader() {
+    return (
+      <Modal
+        transparent={true}
+        animationType={'none'}
+        visible={this.state.isLoader}
+      >
+        <View style={{
+          flex: 1, justifyContent: 'center',
           backgroundColor: 'rgba(52, 52, 52, 0.4)',
-          alignItems:'center',
-          width:width+36,height:height,
-          marginStart:-scale(20),
-          marginEnd:-scale(27),
-          marginTop:Platform.OS == "ios"?  scale(-20) :scale(-40),
-          marginBottom:-scale(20),
+          alignItems: 'center',
+          width: width + 36, height: height,
+          marginStart: -scale(20),
+          marginEnd: -scale(27),
+          marginTop: Platform.OS == "ios" ? scale(-20) : scale(-40),
+          marginBottom: -scale(20),
           // borderWidth:3,borderColor:"green"
         }}>
-          <View style={{             
+          <View style={{
             position: 'absolute',
             left: 0,
             right: 0,
             top: 0,
             bottom: 0,
             alignItems: 'center',
-            justifyContent: 'center',          
+            justifyContent: 'center',
           }}>
             <View style={{ height: verticalScale(130), width: verticalScale(130), backgroundColor: "#FFF", justifyContent: 'center', alignItems: 'center', borderRadius: verticalScale(10), overflow: 'hidden' }}>
               <FastImage source={IMAGE_CONST.LOADER} style={{ height: verticalScale(200), width: verticalScale(200) }} />
             </View>
           </View>
-          </View>
-        </Modal>
-      
-      )
+        </View>
+      </Modal>
+
+    )
+  }
+
+  getIcon(icon, color) {
+    return <MaterialIcon name={icon} size={scale(16)} color={color} />;
+  }
+
+  updateSelectedClass(index) {
+    const { selectedClass } = this.state;
+
+    let shouldUpdate = false;
+
+    selectedClass.forEach((value, position) => {
+      if (value && position != index) {
+        shouldUpdate = value
+      }
+    });
+
+    if (shouldUpdate) {
+      let newClassArray = selectedClass;
+      newClassArray[index] = !newClassArray[index];
+      this.setState({
+        selectedClass: newClassArray
+      });
     }
 
+  }
+
+
+  renderClassFilter() {
+    const { filterVisible } = this.state;
+   return (
+      <View style={{
+        alignSelf: "flex-end",
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: scale(50),
+        backgroundColor: colours.white,
+        height:filterVisible ? scale(150) : scale(100),
+        width: filterVisible ? scale(150) : scale(35),
+        // borderWidth:1,
+        borderTopLeftRadius:scale(10),
+        borderBottomLeftRadius:scale(10),marginStart:scale(10)
+      }}>
+
+        <TouchableOpacity
+        onPress={ () => {
+            let showFilter = !filterVisible
+            this.setState({
+              filterVisible: showFilter
+            })
+          }}
+          style={{
+            justifyContent:'center',
+            marginStart:scale(10),
+            width:filterVisible ? scale(70):scale(70),
+          }}
+        >
+          <Text
+            style={{
+              transform: [{ rotate: '-90deg' }],
+              fontSize:scale(14),
+              color:colours.gray,
+              marginBottom:scale(20),
+              marginRight:scale(-30),
+              fontWeight:"700"
+            }}
+          >
+            {STRING_CONST.CABIN_CLASS}
+          </Text>
+        </TouchableOpacity>
+
+      {
+        filterVisible ?
+          <View style={{ flexDirection: "column", alignContent: "center",paddingStart:scale(12) }}>
+            <TouchableOpacity style={styles.classCheckbox}
+              onPress={() => { this.updateSelectedClass(0) }}>
+              <View style={styles.classView}>
+                {!this.state.selectedClass[0]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.blue
+                  )}
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.ECONOMY}</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.classCheckbox}
+              onPress={() => { this.updateSelectedClass(1) }}>
+              <View style={styles.classView}>
+
+                {!this.state.selectedClass[1]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.yellow
+                  )}
+
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{"Prem Econ"}</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.classCheckbox}
+              onPress={() => { this.updateSelectedClass(2) }}>
+              <View style={styles.classView}>
+
+                {!this.state.selectedClass[2]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.purple
+                  )}
+
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(4), paddingEnd: scale(4), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.BUSINESS}</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.classCheckbox}
+              onPress={() => { this.updateSelectedClass(3) }}>
+              <View style={styles.classView}>
+
+                {!this.state.selectedClass[3]
+                  ? this.getIcon(
+                    STRING_CONST.CHECK_EMPTY_CIRCLE,
+                    colours.lightGreyish
+                  )
+                  : this.getIcon(
+                    STRING_CONST.CHECK_CIRCLE, colours.pink
+                  )}
+
+                <Text style={{ fontSize: scale(11), textAlign: 'center', paddingStart: scale(3), color: "#132C52", fontFamily: appFonts.INTER_SEMI_BOLD, }}>{STRING_CONST.FIRST}   </Text>
+              </View>
+            </TouchableOpacity>
+
+          </View>
+          : <View style={{height:scale(100)}}/>
+      }
+      </View>
+    )
+  }
 
 
   render() {
     let destinations = (this.props.route.params.destinations)
+    const { tripType, selectedClass, zoomLevel } = this.state;
+    return (
+      <View style={{ flex: 1, borderWidth: 0, borderColor: "green", backgroundColor: "#75cff0", }}>
 
-    console.log("check here inside the render method  = = = = = = =",destinations.length)
-    const { tripType,zoomLevel} = this.state;
-  return (
-    <View style={{ flex: 1, borderWidth: 0, borderColor: "green",backgroundColor:"#75cff0", }}>
-
-      {this.renderLoader()}
+        {this.renderLoader()}
         {this.composeAvailabilityData()}
         <MapView
           style={styles.mapStyle}
@@ -354,434 +500,328 @@ class MapComponent extends Component {
             // longitude: 89.99346179538875,
             latitude: 55.3781,
             longitude: 3.4360,
-            latitudeDelta: Platform.OS == "android"? 30 : 30,
-            longitudeDelta: Platform.OS == "android" ? 150 :  150,
+            latitudeDelta: Platform.OS == "android" ? 30 : 30,
+            longitudeDelta: Platform.OS == "android" ? 150 : 150,
           }}
           customMapStyle={mapStyle}
-          >
+        >
           {destinations && destinations.map((item, index) => {
-              let economy = false
-              let premium = false
-              let business = false
-              let first = false
-            
-              if(tripType == "return"){
-                const processObject = {
-                  oubound: [],
-                  inbound: [],
-                };
-                /// Code for oubound
-                Object.keys(item.availability.outbound).map((outboundDate) => {
-                  const dateKeys = Object.keys(item.availability.outbound[outboundDate]);              
-                  if (dateKeys.map) {
-                    dateKeys.map((outboundDateKey) => {
-                      const keysForTypes = Object.keys(
-                        item.availability.outbound[outboundDate][outboundDateKey]
-                      );            
-                      if (!keysForTypes.length) {
-                        return;
-                      }
-                      processObject.oubound.push(outboundDateKey);
-                    });
-                  }
-                });
-              
-                /// Code for inbound
-                Object.keys(item.availability.inbound).map((inboundDate) => {
-                  const dateKeys = Object.keys(item.availability.inbound[inboundDate]);            
-                  if (dateKeys.map) {
-                    dateKeys.map((inboundDateKey) => {
-                      const keysForTypes = Object.keys(
-                        item.availability.inbound[inboundDate][inboundDateKey]
-                      );            
-                      if (!keysForTypes.length) {
-                        return;
-                      }
-                      processObject.inbound.push(inboundDateKey);
-                    });
-                  }
-                });
-                const uniqueOutbound = [...new Set([...processObject.oubound])];
-                const uniqueInbound = [...new Set([...processObject.inbound])];
-                                                                                                                       
-                const finalResult = {};
-                uniqueOutbound.map((f) => {
-                  if (uniqueInbound.includes(f)) {
-                    finalResult[f] = true;
-                  }
-                });
-              
-                 economy = finalResult.economy
-                 premium = finalResult.premium
-                 business = finalResult.business
-                 first = finalResult.first
-              }
-              if(tripType == "one_way") {
-                economy = item.available_classes.economy
-                premium = item.available_classes.premium
-                business = item.available_classes.business
-                first = item.available_classes.first
-              } 
-              let lat = `${item.latitude}`
-              let long = `${item.longitude}`
-              return(
-                <Marker
-                  draggable
-                  key={index}
-                  coordinate = {{latitude: parseFloat(lat),longitude: parseFloat(long)}}
-                  tracksViewChanges={true}
-                  tracksInfoWindowChanges={false}
-                  onPress={() => {
-                    this.setState({ isMarkerClick: true })
-                    let pointsData 
-                    var availableDestinations = this.props.route.params.destinations
-                    var destinations = availableDestinations.length > 0 ? availableDestinations : []
-                    let data = this.props.route.params.searchData;
-                    let auditData = this.props.route.params.auditData
-                    let mapSearchData = {
-                      airline: data.airline,
-                      sourceCode: data.sourceCode.code,
-                      destinationCode: destinations[index].code,
-                      selectedDestination: destinations[index],
-                      selectedSource: data.sourceCode,
-                      tier: data.tier,
-                      passengerCount: data.passengerCount,
-                      isReturn: data.tripType !== "one_way",
-                      classSelected: data.classesSelected,
-                      airways: data.airways,
-                      selectedStartDate: data.selectedStartDate
-                    };
-                    this.setState({
-                      mapSearchData: mapSearchData,
-                      isLoader:true
-                    })
-                    auditData['search_data']['destination'] = destinations[index].code;
-                    let flightScheduleData = {
-                      airline: mapSearchData.airline,
-                      source: mapSearchData.sourceCode,
-                      destination: mapSearchData.destinationCode
+            let economy = false
+            let premium = false
+            let business = false
+            let first = false
+
+            if (tripType == "return") {
+              const processObject = {
+                oubound: [],
+                inbound: [],
+              };
+              /// Code for oubound
+              Object.keys(item.availability.outbound).map((outboundDate) => {
+                const dateKeys = Object.keys(item.availability.outbound[outboundDate]);
+                if (dateKeys.map) {
+                  dateKeys.map((outboundDateKey) => {
+                    const keysForTypes = Object.keys(
+                      item.availability.outbound[outboundDate][outboundDateKey]
+                    );
+                    if (!keysForTypes.length) {
+                      return;
                     }
-                    this.props.getFlightScheduleAction(flightScheduleData)
-                    this.props.sendAuditDataAction(auditData);
-                    this.props.getAirlinesAvailabilityAction(mapSearchData);
-                    this.props.getSeatsAvailabilityAction(mapSearchData);
-                    this.props.getPointsAvailabilityAction(mapSearchData)
-                  }}
-                >
-                <Fragment>
+                    processObject.oubound.push(outboundDateKey);
+                  });
+                }
+              });
+
+              /// Code for inbound
+              Object.keys(item.availability.inbound).map((inboundDate) => {
+                const dateKeys = Object.keys(item.availability.inbound[inboundDate]);
+                if (dateKeys.map) {
+                  dateKeys.map((inboundDateKey) => {
+                    const keysForTypes = Object.keys(
+                      item.availability.inbound[inboundDate][inboundDateKey]
+                    );
+                    if (!keysForTypes.length) {
+                      return;
+                    }
+                    processObject.inbound.push(inboundDateKey);
+                  });
+                }
+              });
+              const uniqueOutbound = [...new Set([...processObject.oubound])];
+              const uniqueInbound = [...new Set([...processObject.inbound])];
+              const finalResult = {};
+              uniqueOutbound.map((f) => {
+                if (uniqueInbound.includes(f)) {
+                  finalResult[f] = true;
+                }
+              });
+              economy = finalResult.economy
+              premium = finalResult.premium
+              business = finalResult.business
+              first = finalResult.first
+            }
+            if (tripType == "one_way") {
+              economy = item.available_classes.economy
+              premium = item.available_classes.premium
+              business = item.available_classes.business
+              first = item.available_classes.first
+            }
+            economy = economy && selectedClass[0]
+            premium = premium && selectedClass[1]
+            business = business && selectedClass[2]
+            first = first && selectedClass[3]
+
+            let lat = `${item.latitude}`
+            let long = `${item.longitude}`
+            return (
+              <Marker
+                draggable
+                key={index}
+                coordinate={{ latitude: parseFloat(lat), longitude: parseFloat(long) }}
+                tracksViewChanges={true}
+                tracksInfoWindowChanges={false}
+                onPress={() => {
+                  this.setState({ isMarkerClick: true })
+                  let pointsData
+                  var availableDestinations = this.props.route.params.destinations
+                  var destinations = availableDestinations.length > 0 ? availableDestinations : []
+                  let data = this.props.route.params.searchData;
+                  let auditData = this.props.route.params.auditData
+                  let mapSearchData = {
+                    airline: data.airline,
+                    sourceCode: data.sourceCode.code,
+                    destinationCode: destinations[index].code,
+                    selectedDestination: destinations[index],
+                    selectedSource: data.sourceCode,
+                    tier: data.tier,
+                    passengerCount: data.passengerCount,
+                    isReturn: data.tripType !== "one_way",
+                    classSelected: data.classesSelected,
+                    airways: data.airways,
+                    selectedStartDate: data.selectedStartDate
+                  };
+                  this.setState({
+                    mapSearchData: mapSearchData,
+                    isLoader: true
+                  })
+                  auditData['search_data']['destination'] = destinations[index].code;
+                  let flightScheduleData = {
+                    airline: mapSearchData.airline,
+                    source: mapSearchData.sourceCode,
+                    destination: mapSearchData.destinationCode
+                  }
+                  this.props.getFlightScheduleAction(flightScheduleData)
+                  this.props.sendAuditDataAction(auditData);
+                  this.props.getAirlinesAvailabilityAction(mapSearchData);
+                  this.props.getSeatsAvailabilityAction(mapSearchData);
+                  this.props.getPointsAvailabilityAction(mapSearchData)
+                }}
+              >
+                <View>
                   {
                     this.state.isShowMarker ?
-                    <Fragment>
-                  {
-                    economy && premium && business && first ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
+                      <View>
+                        {
+                          economy && premium && business && first ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && premium && business && !first ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c2.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && premium && first && !business ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c3.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && business && first && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c4.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          business && premium && first && !economy ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c5.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && premium && !first && !business ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c6.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && business && !first && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c7.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && first && !business && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c8.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          premium && business && !first && !economy ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c9.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          premium && first && !economy && !business ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          business && first && !economy && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c11.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          economy && !first && !business && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c12.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          business && !first && !economy && !premium ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c13.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          premium && !first && !economy && !business ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c14.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
+                        {
+                          first && !premium && !economy && !business ?
+                            <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
+                              <Image resizeMode="contain" source={require("../../assets/mapIcon/c15.png")} style={{ height: scale(30), width: scale(19) }} />
+                            </View>
+                            : null
+                        }
                       </View>
-                      : null
+                      : <View></View>
                   }
-                  {
-                    economy && premium && business && !first ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c2.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && premium && first && !business ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c3.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && business && first && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c4.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    business && premium && first && !economy ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c5.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && premium && !first && !business ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c6.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && business && !first && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c7.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && first && !business && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c8.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    premium && business && !first && !economy ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c9.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    premium && first && !economy && !business ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    business && first && !economy && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c10.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    economy && !first && !business && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c12.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    business && !first && !economy && !premium ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c13.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    premium && !first && !economy && !business ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c14.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                  {
-                    first && !premium && !economy && !business ?
-                      <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
-                        <Image resizeMode="contain" source={require("../../assets/mapIcon/c15.png")} style={{ height: scale(30), width: scale(19) }} />
-                      </View>
-                      : null
-                  }
-                        </Fragment>
-                      : null
-                    }
-                  </Fragment>
-                </Marker>
-              )
-            }
+                </View>
+              </Marker>
+            )
+          }
           )
           }
         </MapView>
         <View
-            style={{
-              position: "absolute",
-              top: 40,
-              left: scale(20),
-              zIndex: 99,
-            }}
+          style={{
+            position: "absolute",
+            top: 40,
+            left: scale(20),
+            zIndex: 99,
+          }}
+          onPress={() => {
+            this.props.navigation.goBack();
+          }}
+        >
+          <TouchableOpacity
             onPress={() => {
               this.props.navigation.goBack();
             }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}
-              style={{
-                alignSelf: "stretch",
-                paddingVertical: verticalScale(5),
-                paddingHorizontal: scale(6),
-                backgroundColor: colours.white,
-                borderRadius: scale(5),
-                marginTop: Platform.OS == 'android' ? scale(15) : scale(5),
-              }}
-            >
-              {IMG_CONST.CHEVRON_BACK}
-            </TouchableOpacity>
-          </View>
-          {this.state.showPopUp && <PopUpComponent
-            isSingleButton={true}
-            title={STRING_CONST.NO_AVAILIBILTY_FOUND}
-            message={STRING_CONST.NO_AVAILIBILTY}
-            image={IMG_CONST.NO_AVAILIBILTY}
-            rightButtonText={STRING_CONST.EDIT_SEARCH}
-            onRightButtonPress={() => {
-              this.setState({
-                showPopUp: false
-              })
-              this.props.navigation.goBack()
+            style={{
+              alignSelf: "stretch",
+              paddingVertical: verticalScale(5),
+              paddingHorizontal: scale(6),
+              backgroundColor: colours.white,
+              borderRadius: scale(5),
+              marginTop: Platform.OS == 'android' ? scale(15) : scale(5),
             }}
-          />}
-            {this.renderBottomButton(
-            STRING_CONST.DESTINATIONS,
-            "#0e1f32",
-            () => {
-              this.props.navigation.navigate("destinationscomponent", {
-                WhereFrom: this.state.WhereFrom,
-                destinations: destinations,
-                searchData: this.props.route.params.searchData,
-                auditData: this.props.route.params.auditData,
-                tripType:this.state.tripType,
-                sourceCode:this.state.sourceCode      
-              })
-            }
-          )}
+          >
+            {IMG_CONST.CHEVRON_BACK}
+          </TouchableOpacity>
+        </View>
+        {this.renderClassFilter()}
+        {this.state.showPopUp && <PopUpComponent
+          isSingleButton={true}
+          title={STRING_CONST.NO_AVAILIBILTY_FOUND}
+          message={STRING_CONST.NO_AVAILIBILTY}
+          image={IMG_CONST.NO_AVAILIBILTY}
+          rightButtonText={STRING_CONST.EDIT_SEARCH}
+          onRightButtonPress={() => {
+            this.setState({
+              showPopUp: false
+            })
+            this.props.navigation.goBack()
+          }}
+        />}
+        {this.renderBottomButton(
+          STRING_CONST.DESTINATIONS,
+          "#0e1f32",
+          () => {
+            this.props.navigation.navigate("destinationscomponent", {
+              WhereFrom: this.state.WhereFrom,
+              destinations: destinations,
+              searchData: this.props.route.params.searchData,
+              auditData: this.props.route.params.auditData,
+              tripType: this.state.tripType,
+              sourceCode: this.state.sourceCode,
+              classSelected:this.state.selectedClass
+            })
+          }
+        )}
       </View>
-  );
-}
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
-  const { calendar ,mapKeyReducer,userInfo ,logIn } = state;
+  const { calendar, mapKeyReducer, userInfo, logIn } = state;
   return {
     userInfo: userInfo.userData,
     isLoggedIn: logIn.isLoggedIn,
     airlinesDetail: calendar.airlinesDetail,
-    calendarSeats:calendar.calendarSeats,
+    calendarSeats: calendar.calendarSeats,
     screenType: calendar.screenType,
-    
+
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getAirlinesAvailabilityAction: (mapSearchData) =>
-    dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
+      dispatch(getAirlinesAvailability(mapSearchData, 'MAP')),
     getSeatsAvailabilityAction: (mapSearchData) =>
-    dispatch(getSeatsAvailability(mapSearchData, 'MAP')),
-    // updateGuestUserPostHogAction: (guestUserPostHog) => dispatch(updateGuestUserPostHog(guestUserPostHog)),
-    updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
+      dispatch(getSeatsAvailability(mapSearchData, 'MAP')),
+     updateLoggedInUserPostHogAction: (loggedInUserPostHog) => dispatch(updateLoggedInUserPostHog(loggedInUserPostHog)),
     getPointsAvailabilityAction: (mapSearchData) => dispatch(getPointsAvailability(mapSearchData)),
     getFlightScheduleAction: (flightScheduleData) => dispatch(getFlightSchedule(flightScheduleData)),
-    // getMapKeyAction: (uuid_Key,userId) => dispatch(getMapKey(uuid_Key,userId)),
     sendAuditDataAction: (auditData) => dispatch(sendAuditData(auditData)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MapComponent);
-
-// const mapStyle = [
-//   {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-//   {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-//   {elementType: 'labels.text.stroke',  stylers: [
-//     {
-//       visibility: "off"
-//     }
-//   ]},
-//   {
-//     featureType: 'administrative.locality',
-//     elementType: 'labels.text.fill',
-//     stylers: [{color: '#d59563'}],
-//   },
-//   {
-//     featureType: 'poi',
-//     elementType: 'labels.text.fill',
-//     stylers: [{color: '#d59563'}],
-//   },
-//   {
-//     featureType: 'poi.park',
-//     elementType: 'geometry',
-//     stylers: [{color: '#263c3f'}],
-//   },
-//   {
-//     featureType: 'poi.park',
-//     elementType: 'labels.text.fill',
-//     stylers: [{color: '#6b9a76'}],
-//   },
-//   {
-//     featureType: 'road',
-//     elementType: 'geometry',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'road',
-//     elementType: 'geometry.stroke',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'road',
-//     elementType: 'labels.text.fill',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'road.highway',
-//     elementType: 'geometry',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'road.highway',
-//     elementType: 'geometry.stroke',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'road.highway',
-//     elementType: 'labels.text.fill',
-//     stylers: [
-//       {
-//         visibility: "off"
-//       }
-//     ]
-//   },
-//   {
-//     featureType: 'transit',
-//     elementType: 'geometry',
-//     stylers: [{color: '#2f3948'}],
-//   },
-//   {
-//     featureType: 'transit.station',
-//     elementType: 'labels.text.fill',
-//     stylers: [{color: '#d59563'}],
-//   },
-//   {
-//     featureType: 'water',
-//     elementType: 'geometry',
-//     stylers: [{color: '#17263c'}],
-//   },
-//   {
-//     featureType: 'water',
-//     elementType: 'labels.text.fill',
-//     stylers: [{color: '#515c6d'}],
-//   },
-//   {
-//     featureType: 'water',
-//     elementType: 'labels.text.stroke',
-//     stylers: [{color: '#17263c'}],
-//   },
-// ];
 
 const mapStyle = [
   {
@@ -802,7 +842,7 @@ const mapStyle = [
       },
     ],
   },
-  
+
 ];
 
 

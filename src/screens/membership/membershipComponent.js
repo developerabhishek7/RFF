@@ -116,7 +116,6 @@ class MembershipComponent extends Component{
       featureArray,
       member,
     });
-
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
   );
@@ -388,6 +387,9 @@ class MembershipComponent extends Component{
     );
   }
   featureList() {
+
+    console.log("yes check the featureArray - - - - - ",this.state.featureArray)
+
     return (
       <View style={{ marginTop: verticalScale(20) }}>
         <FlatList

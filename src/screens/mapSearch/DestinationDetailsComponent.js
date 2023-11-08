@@ -2776,7 +2776,7 @@ class DestinationsComponent extends Component {
     }
     const {tripType, departureDaysDiff, returnDaysDiff} = this.state
 
-    console.log(' render() >>> departureDayCount ', departureDayCount,' returnDayCount ', returnDayCount)
+    // console.log(' render() >>> departureDayCount ', departureDayCount,' returnDayCount ', returnDayCount)
    
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor:"#FFF" }}>

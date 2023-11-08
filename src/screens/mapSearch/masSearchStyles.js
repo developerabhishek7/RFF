@@ -10,8 +10,6 @@ import * as CONST from "../../constants/StringConst";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor:"#75cff0"
-    // backgroundColor: "#fff",
   },
   infoIcon: {
     height:scale(24), 
@@ -379,5 +377,22 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "stretch",
     marginBottom: verticalScale(20),
+  },
+  classCheckbox:{
+    flexDirection: "row",
+    backgroundColor: colours.lightGreyBackground,
+    marginTop: scale(6), height:scale(30),
+    justifyContent: 'start',
+    marginLeft: -scale(7), 
+    alignItems: 'start',
+    borderRadius: scale(6),
+    marginEnd: scale(6),
+  },
+  classView:{
+    margin: scale(5), 
+    borderRadius: scale(7), 
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center' 
   }
 });

@@ -557,6 +557,8 @@ export const PREMIUM = "Premium"
 export const AIRCRAFT = "Aircraft"
 export const DURATION = "Duration"
 export const CHOOSE_IF_UNSURE = "Choose if Unsure"
+export const ADVANCE_ALERT_SETTING  = "Advanced Alert Settings"
+export const POINTS_AND_TAX_PRICING_INFO =  "Point & tax pricing information"
 //  If you want to create alert for all cabin class Upgrade now.";
 export const PRICING_OBJECT = [
   {
