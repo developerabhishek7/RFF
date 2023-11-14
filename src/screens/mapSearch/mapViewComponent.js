@@ -47,7 +47,7 @@ class MapComponent extends Component {
       isLoader: true,
       sourceCode: "", accesstoken: "", deviceName: "", deviecBrand: "", isEmulator: "", isTablet: "",
       zoomLevel: 0,
-      selectedClass: [true, true, true, true],
+      classSelected: [true, true, true, true],
       filterVisible: false,
     };
     this.markerRef = null;
@@ -68,6 +68,7 @@ class MapComponent extends Component {
     //   MapToken = this.props.mapBoxToken.token     
     // }, 100);
 
+    console.log(' componentDidMount .classEselec ... ', this.state.classSelected)
 
     const accesstoken = await getAccessToken();
     setTimeout(() => {
@@ -199,6 +200,12 @@ class MapComponent extends Component {
         ) {
           this.setState({ isLoader: false })
 
+          setTimeout(() => {
+            this.setState({
+                classSelected : [true, true, true, true]
+            })
+          }, 1000);
+
           this.props.navigation.navigate("destinationdetailscomponent", {
             singleMap: JSON.stringify(singleMap),
             WhereFrom: JSON.stringify(WhereFrom),
@@ -208,7 +215,7 @@ class MapComponent extends Component {
             sourceCode: this.state.sourceCode,
             pointsDatBA: pointsDatBA,
             pointsDataSS: pointsDataSS,
-            classSelected:this.state.selectedClass
+            classSelected:this.state.classSelected
           });
         }
       }
@@ -217,8 +224,9 @@ class MapComponent extends Component {
 
 
 
-  renderBottomButton(buttonText, backgroundColor, onButtonPress) {
+  renderBottomButton(buttonText, backgroundColor, onButtonPress, destinationCount) {
     let destination = (this.props.route.params.destinations)
+
     return (
       <TouchableOpacity
         style={[styles.buttonStyleMap, { backgroundColor: backgroundColor, position: "absolute", bottom: 40 }]}
@@ -235,7 +243,7 @@ class MapComponent extends Component {
           fontFamily: STRING_CONST.appFonts.INTER_BOLD,
           fontSize: scale(16),
           fontWeight: "bold",
-        }}>{buttonText} ({destination.length})</Text>
+        }}>{buttonText} ({destinationCount})</Text>
       </TouchableOpacity>
     );
   }
@@ -344,21 +352,21 @@ class MapComponent extends Component {
   }
 
   updateSelectedClass(index) {
-    const { selectedClass } = this.state;
+    const { classSelected } = this.state;
 
     let shouldUpdate = false;
 
-    selectedClass.forEach((value, position) => {
+    classSelected.forEach((value, position) => {
       if (value && position != index) {
         shouldUpdate = value
       }
     });
 
     if (shouldUpdate) {
-      let newClassArray = selectedClass;
+      let newClassArray = classSelected;
       newClassArray[index] = !newClassArray[index];
       this.setState({
-        selectedClass: newClassArray
+        classSelected: newClassArray
       });
     }
 
@@ -375,7 +383,7 @@ class MapComponent extends Component {
         marginTop: scale(50),
         backgroundColor: colours.white,
         height:filterVisible ? scale(150) : scale(100),
-        width: filterVisible ? scale(150) : scale(35),
+        width: filterVisible ? scale(150) : scale(40),
         // borderWidth:1,
         borderTopLeftRadius:scale(10),
         borderBottomLeftRadius:scale(10),marginStart:scale(10)
@@ -397,14 +405,14 @@ class MapComponent extends Component {
           <Text
             style={{
               transform: [{ rotate: '-90deg' }],
-              fontSize:scale(14),
+              fontSize:scale(12),
               color:colours.gray,
               marginBottom:scale(20),
               marginRight:scale(-30),
               fontWeight:"700"
             }}
           >
-            {STRING_CONST.CABIN_CLASS}
+            {"Cabin Classes"}
           </Text>
         </TouchableOpacity>
 
@@ -414,7 +422,7 @@ class MapComponent extends Component {
             <TouchableOpacity style={styles.classCheckbox}
               onPress={() => { this.updateSelectedClass(0) }}>
               <View style={styles.classView}>
-                {!this.state.selectedClass[0]
+                {!this.state.classSelected[0]
                   ? this.getIcon(
                     STRING_CONST.CHECK_EMPTY_CIRCLE,
                     colours.lightGreyish
@@ -430,7 +438,7 @@ class MapComponent extends Component {
               onPress={() => { this.updateSelectedClass(1) }}>
               <View style={styles.classView}>
 
-                {!this.state.selectedClass[1]
+                {!this.state.classSelected[1]
                   ? this.getIcon(
                     STRING_CONST.CHECK_EMPTY_CIRCLE,
                     colours.lightGreyish
@@ -447,7 +455,7 @@ class MapComponent extends Component {
               onPress={() => { this.updateSelectedClass(2) }}>
               <View style={styles.classView}>
 
-                {!this.state.selectedClass[2]
+                {!this.state.classSelected[2]
                   ? this.getIcon(
                     STRING_CONST.CHECK_EMPTY_CIRCLE,
                     colours.lightGreyish
@@ -464,7 +472,7 @@ class MapComponent extends Component {
               onPress={() => { this.updateSelectedClass(3) }}>
               <View style={styles.classView}>
 
-                {!this.state.selectedClass[3]
+                {!this.state.classSelected[3]
                   ? this.getIcon(
                     STRING_CONST.CHECK_EMPTY_CIRCLE,
                     colours.lightGreyish
@@ -486,8 +494,12 @@ class MapComponent extends Component {
 
 
   render() {
+
+    let destinationCount = 0
+
+    console.log(' render() .selectedClass ... ', this.state.classSelected)
     let destinations = (this.props.route.params.destinations)
-    const { tripType, selectedClass, zoomLevel } = this.state;
+    const { tripType, classSelected, zoomLevel } = this.state;
     return (
       <View style={{ flex: 1, borderWidth: 0, borderColor: "green", backgroundColor: "#75cff0", }}>
 
@@ -566,15 +578,24 @@ class MapComponent extends Component {
               business = item.available_classes.business
               first = item.available_classes.first
             }
-            economy = economy && selectedClass[0]
-            premium = premium && selectedClass[1]
-            business = business && selectedClass[2]
-            first = first && selectedClass[3]
+            economy = economy && classSelected[0]
+            premium = premium && classSelected[1]
+            business = business && classSelected[2]
+            first = first && classSelected[3]
 
             let lat = `${item.latitude}`
             let long = `${item.longitude}`
+
+            let isShowMarker = economy || premium || business || first
+            if(isShowMarker){
+              destinationCount++
+            }
+
             return (
+              <View>
+             { isShowMarker &&
               <Marker
+                pinColor={null}
                 draggable
                 key={index}
                 coordinate={{ latitude: parseFloat(lat), longitude: parseFloat(long) }}
@@ -617,12 +638,9 @@ class MapComponent extends Component {
                   this.props.getPointsAvailabilityAction(mapSearchData)
                 }}
               >
+                
                 <View>
-                  {
-                    this.state.isShowMarker ?
-                      <View>
-                        {
-                          economy && premium && business && first ?
+                  {  economy && premium && business && first ?
                             <View style={{ borderColor: colours.black, borderWidth: 0, width: scale(30) }}>
                               <Image resizeMode="contain" source={require("../../assets/mapIcon/c1.png")} style={{ height: scale(30), width: scale(19) }} />
                             </View>
@@ -726,11 +744,11 @@ class MapComponent extends Component {
                             </View>
                             : null
                         }
-                      </View>
-                      : <View></View>
-                  }
-                </View>
+                </View> 
+               
               </Marker>
+             }
+             </View>
             )
           }
           )
@@ -781,6 +799,13 @@ class MapComponent extends Component {
           STRING_CONST.DESTINATIONS,
           "#0e1f32",
           () => {
+
+            setTimeout(() => {
+              this.setState({
+                  classSelected :  [true, true, true, true]
+              })
+            }, 1000);
+
             this.props.navigation.navigate("destinationscomponent", {
               WhereFrom: this.state.WhereFrom,
               destinations: destinations,
@@ -788,9 +813,10 @@ class MapComponent extends Component {
               auditData: this.props.route.params.auditData,
               tripType: this.state.tripType,
               sourceCode: this.state.sourceCode,
-              classSelected:this.state.selectedClass
+              classSelected:this.state.classSelected
             })
-          }
+          },
+          destinationCount
         )}
       </View>
     );

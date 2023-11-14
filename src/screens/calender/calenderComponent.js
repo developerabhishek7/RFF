@@ -54,6 +54,7 @@ export default class CalenderComponent extends Component {
       { class: "First", isSelected: false, },
       ],
       classSelected: this.props.searchData.classSelected,
+      enableBack:true,
       showCreateAlertModal: false,
       airLinesDetailsObject: this.props.airLinesDetailsObject,
       calendarSeatsObject: this.props.calendarSeatsObject && this.props.calendarSeatsObject,
@@ -2373,11 +2374,16 @@ export default class CalenderComponent extends Component {
         }
       >
         <TouchableOpacity
-          onPress={() => {
-            setTimeout(() => {
-              this.props.navigation.goBack()
-            }, 700);
-          }}
+         onPress={() => {
+          if(this.state.enableBack){
+          this.setState({
+            enableBack: false
+          })  
+          setTimeout(() => {
+            this.props.navigation.goBack()
+          }, 700);
+        }
+        }}
         >
           {IMAGE_CONST.IOS_BACK_ARROW}
         </TouchableOpacity>
